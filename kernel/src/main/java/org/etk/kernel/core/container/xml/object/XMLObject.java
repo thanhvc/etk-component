@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.jibx.runtime.BindingDirectory;
+import org.jibx.runtime.IBindingFactory;
+import org.jibx.runtime.IMarshallingContext;
+import org.jibx.runtime.IUnmarshallingContext;
+
 public class XMLObject {
 
 	public static String CURRENT_VERSION = "1.0";
@@ -25,10 +30,11 @@ public class XMLObject {
 		Class clazz = obj.getClass();
 		Map fields = getFields(clazz);
 		setType(obj.getClass().getName());
+		Iterator i = fields.values().iterator();
 		while (i.hasNext()) {
 			Field field = (Field) i.next();
 			Object value = field.get(obj);
-			addField(new XMLFiel(field.getName(), field.getType(), value));
+			addField(new XMLField(field.getName(), field.getType(), value));
 		}
 	}
 
@@ -41,7 +47,7 @@ public class XMLObject {
 	}
 
 	public XMLField getField(String name) {
-		return (XMLField) fields_.get(name);
+		return (XMLField) fields.get(name);
 	}
 
 	public void addField(Object o) {

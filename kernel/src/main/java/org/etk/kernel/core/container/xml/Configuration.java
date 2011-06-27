@@ -19,22 +19,20 @@ public class Configuration implements Cloneable {
 
   public static final String KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
 
-  
+  private Map<String, ContainerLifecyclePlugin> containerLifecyclePlugin    = new HashMap<String, ContainerLifecyclePlugin>();
 
-  private Map<String, ContainerLifecyclePlugin> containerLifecyclePlugin_    = new HashMap<String, ContainerLifecyclePlugin>();
+  private Map<String, ComponentLifecyclePlugin> componentLifecyclePlugin    = new HashMap<String, ComponentLifecyclePlugin>();
 
-  private Map<String, ComponentLifecyclePlugin> componentLifecyclePlugin_    = new HashMap<String, ComponentLifecyclePlugin>();
+  private Map<String, Component>                component                    = new HashMap<String, Component>();
 
-  private Map<String, Component>                component                   = new HashMap<String, Component>();
-
-  private Map<String, ExternalComponentPlugins> externalComponentPlugins_    = new HashMap<String, ExternalComponentPlugins>();
+  private Map<String, ExternalComponentPlugins> externalComponentPlugins    = new HashMap<String, ExternalComponentPlugins>();
 
   private ArrayList<String>                     imports;
 
   private ArrayList<String>                     removeConfiguration_;
 
   public Collection<ContainerLifecyclePlugin> getContainerLifecyclePlugins() {
-    List<ContainerLifecyclePlugin> plugins = new ArrayList<ContainerLifecyclePlugin>(containerLifecyclePlugin_.values());
+    List<ContainerLifecyclePlugin> plugins = new ArrayList<ContainerLifecyclePlugin>(this.containerLifecyclePlugin.values());
     Collections.sort(plugins);
     return plugins;
   }
@@ -42,7 +40,7 @@ public class Configuration implements Cloneable {
   public void addContainerLifecyclePlugin(Object object) {
     ContainerLifecyclePlugin plugin = (ContainerLifecyclePlugin) object;
     String key = plugin.getType();
-    containerLifecyclePlugin_.put(key, plugin);
+    this.containerLifecyclePlugin.put(key, plugin);
   }
 
   public Iterator<ContainerLifecyclePlugin> getContainerLifecyclePluginIterator() {
@@ -50,25 +48,25 @@ public class Configuration implements Cloneable {
   }
 
   public boolean hasContainerLifecyclePlugin() {
-    return containerLifecyclePlugin_.size() > 0;
+    return this.containerLifecyclePlugin.size() > 0;
   }
 
   public Collection getComponentLifecyclePlugins() {
-    return componentLifecyclePlugin_.values();
+    return this.componentLifecyclePlugin.values();
   }
 
   public void addComponentLifecyclePlugin(Object object) {
     ComponentLifecyclePlugin plugin = (ComponentLifecyclePlugin) object;
     String key = plugin.getClass().getName();
-    componentLifecyclePlugin_.put(key, plugin);
+    this.componentLifecyclePlugin.put(key, plugin);
   }
 
   public Iterator getComponentLifecyclePluginIterator() {
-    return componentLifecyclePlugin_.values().iterator();
+    return this.componentLifecyclePlugin.values().iterator();
   }
 
   public boolean hasComponentLifecyclePlugin() {
-    return componentLifecyclePlugin_.size() > 0;
+    return this.componentLifecyclePlugin.size() > 0;
   }
 
   public Component getComponent(String s) {
@@ -98,7 +96,7 @@ public class Configuration implements Cloneable {
   }
 
   public ExternalComponentPlugins getExternalComponentPlugins(String s) {
-    return externalComponentPlugins_.get(s);
+    return externalComponentPlugins.get(s);
   }
 
   public void addExternalComponentPlugins(Object o) {
@@ -108,11 +106,11 @@ public class Configuration implements Cloneable {
       // Retrieve potential existing external component
       // plugins with same target component.
       String targetComponent = eps.getTargetComponent();
-      ExternalComponentPlugins foundExternalComponentPlugins = (ExternalComponentPlugins) externalComponentPlugins_.get(targetComponent);
+      ExternalComponentPlugins foundExternalComponentPlugins = (ExternalComponentPlugins) externalComponentPlugins.get(targetComponent);
 
       if (foundExternalComponentPlugins == null) {
         // No external component plugins found. Create a new entry.
-        externalComponentPlugins_.put(targetComponent, eps);
+        externalComponentPlugins.put(targetComponent, eps);
       } else {
         // Found external component plugins. Add the specified one.
         foundExternalComponentPlugins.merge(eps);
@@ -121,11 +119,11 @@ public class Configuration implements Cloneable {
   }
 
   public Iterator getExternalComponentPluginsIterator() {
-    return externalComponentPlugins_.values().iterator();
+    return externalComponentPlugins.values().iterator();
   }
 
   public boolean hasExternalComponentPlugins() {
-    return externalComponentPlugins_.size() > 0;
+    return externalComponentPlugins.size() > 0;
   }
 
   public void addImport(String url) {
@@ -157,11 +155,11 @@ public class Configuration implements Cloneable {
   public void mergeConfiguration(Configuration other) {
     component.putAll(other.component);
 
-    componentLifecyclePlugin_.putAll(other.componentLifecyclePlugin_);
-    containerLifecyclePlugin_.putAll(other.containerLifecyclePlugin_);
+    this.componentLifecyclePlugin.putAll(other.componentLifecyclePlugin);
+    this.containerLifecyclePlugin.putAll(other.containerLifecyclePlugin);
 
     // merge the external plugins
-    Iterator i = other.externalComponentPlugins_.values().iterator();
+    Iterator i = other.externalComponentPlugins.values().iterator();
     while (i.hasNext()) {
       addExternalComponentPlugins(i.next());
     }
@@ -195,7 +193,7 @@ public class Configuration implements Cloneable {
           // Initialize with the clone of the first non null configuration
           result = (Configuration) conf.clone();
         } catch (CloneNotSupportedException e) {
-          log.warn("Could not clone the configuration", e);
+          //log.warn("Could not clone the configuration", e);
           break;
         }
       } else {
@@ -216,7 +214,7 @@ public class Configuration implements Cloneable {
       mctx.setIndent(2);
       mctx.marshalDocument(this, "UTF-8", null, w);
     } catch (Exception e) {
-      log.warn("Couldn't dump the runtime configuration in XML Format", e);
+      //log.warn("Couldn't dump the runtime configuration in XML Format", e);
     }
   }
 
@@ -229,7 +227,7 @@ public class Configuration implements Cloneable {
     try {
       toXML(sw);
     } catch (Exception e) {
-      log.warn("Cannot convert the configuration to XML format", e);
+      //log.warn("Cannot convert the configuration to XML format", e);
       return null;
     } finally {
       try {
