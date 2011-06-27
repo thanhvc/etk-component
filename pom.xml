@@ -1,0 +1,354 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   
+   <groupId>org.etk</groupId>
+   <artifactId>etk.parent</artifactId>
+   <version>0.0.1-beta1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+   <name>Engineering toolkit Framework</name>
+   <description>The Engineering projects is an tool to help the developer to make the reflection the classes to increace the programming.</description>
+   <url>http://etk.googlecode.com/</url>
+
+  <organization>
+    <name>Social Team</name>
+    <url>http://www.thanhvc.com.vn</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>LGPL, version 2.1</name>
+      <url>http://www.opensource.org/licenses/lgpl-license.php</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>thanh.vu</id>
+      <name>Thanh Vu</name>
+      <email>thanhvutcg@gmail.com</email>
+      <roles>
+        <role>Owner</role>
+      </roles>
+    </developer>
+  </developers>
+  
+  <scm>
+    <connection>scm:git:git://github.com/thanhvc/etk.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/thanhvc/etk.git</developerConnection>
+    <url>https://github.com/thanhvc/etk</url>
+  </scm>
+
+
+  <properties>
+ 
+    <!-- Dependencies versions -->
+
+    <org.slf4j.version>1.5.8</org.slf4j.version>
+    <javax.servlet.version>2.5</javax.servlet.version>
+    <org.slf4j.version>1.5.8</org.slf4j.version>
+    <org.jibx.version>1.2.2</org.jibx.version>
+    <!-- Plugins settings -->
+
+    <!-- Cross plugins settings -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- maven-compiler-plugin -->
+    <maven.compiler.target>1.5</maven.compiler.target>
+    <maven.compiler.source>1.5</maven.compiler.source>
+
+    <!-- maven-surefire-plugin -->
+    <!--<argLine>${env.MAVEN_OPTS}</argLine>-->
+    <argLine>-Xshare:auto -Xms128m -Xmx512m -XX:MaxPermSize=256M</argLine>
+
+    <!-- maven-release-plugin -->
+    <useReleaseProfile>false</useReleaseProfile>
+    <arguments>-Prelease,sign-artifacts</arguments>
+    <pushChanges>false</pushChanges>
+    <autoVersionSubmodules>true</autoVersionSubmodules>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Internal dependencies -->
+      <dependency>
+        <groupId>org.etk</groupId>
+        <artifactId>etk.core</artifactId>
+        <version>0.0.1-beta1-SNAPSHOT</version>
+      </dependency>
+      <!-- External dependencies -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>${javax.servlet.version}</version>
+      </dependency>
+      
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <!-- All plugins versions have to be set -->
+      <!-- Plugins are sorted by shortname : clean, deploy, ... -->
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>		
+          <artifactId>maven-checkstyle-plugin</artifactId>		
+          <version>2.4</version>		
+        </plugin>		
+        <plugin>		
+          <groupId>com.atlassian.maven.plugins</groupId>		
+          <artifactId>maven-clover2-plugin</artifactId>		
+          <version>2.6.3</version>		
+        </plugin>		
+        <plugin>		
+          <groupId>org.codehaus.mojo</groupId>		
+          <artifactId>cobertura-maven-plugin</artifactId>		
+          <version>2.3</version>		
+        </plugin>		
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.0.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>     
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.0-beta-1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>		
+          <artifactId>findbugs-maven-plugin</artifactId>		
+          <version>2.3</version>		
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <!-- Too many issues with 2.6 versions -->
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>		
+          <artifactId>maven-pmd-plugin</artifactId>		
+          <version>2.4</version>		
+        </plugin>		
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>2.0.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>1.0-beta-1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.1.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.4.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- export DYLD_LIBRARY_PATH=/Users/thanh_vucong/java/jprofiler5/bin/macos -->
+          <!--<argLine>-agentlib:jprofilerti=port=8849 -Xbootclasspath/a:/Users/thanh_vucong/java/jprofiler5/bin/agent.jar</argLine>-->
+          <systemProperties>
+            <property>
+              <name>com.arjuna.ats.arjuna.objectstore.objectStoreDir</name>
+              <value>${project.build.directory}</value>
+            </property>
+            <property>
+              <name>log.output.path</name>
+              <value>${project.build.directory}</value>
+            </property>
+          </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <mavenExecutorId>forked-path</mavenExecutorId>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+
+     <profile>
+        <id>Java5</id>
+        <activation>
+           <jdk>1.5</jdk>
+        </activation>
+        <modules>
+           <module>core</module>
+        </modules>
+     </profile>
+     
+     <profile>
+        <id>Java6</id>
+        <activation>
+           <jdk>1.6</jdk>
+        </activation>
+        <modules>
+<!--
+           <module>api</module>
+           <module>spi</module>
+           <module>common</module>
+           <module>model</module>
+-->
+           <module>core</module>
+           <module>kernel</module>
+	   <module>service</module>
+        </modules>
+     </profile>
+     
+    <profile>
+
+      <!-- Generation of a jar containing the source code -->
+      <!-- Generation can be inactivated by adding -P-sources or -Dskip-sources in the command line -->
+      <id>sources</id>
+      <activation>
+        <property>
+          <name>!skip-sources</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <!-- This profile is used when we are doing a release -->
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>sign-artifacts</id>
+      <build>
+        <plugins>
+          <!-- We want to sign the artifact, the POM, and all attached artifacts -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
+
+</project>
