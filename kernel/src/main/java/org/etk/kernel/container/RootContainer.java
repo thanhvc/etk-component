@@ -16,13 +16,15 @@ import javax.servlet.ServletContext;
 
 import org.etk.kernel.core.container.configuration.ConfigurationManager;
 import org.etk.kernel.core.container.configuration.ConfigurationManagerImpl;
+import org.etk.kernel.core.container.configuration.MockConfigurationManagerImpl;
 import org.etk.kernel.core.container.definition.PortalContainerConfig;
 import org.etk.kernel.core.container.definition.PortalContainerDefinition;
 import org.etk.kernel.core.container.monitor.jvm.J2EEServerInfo;
 import org.etk.kernel.core.container.monitor.jvm.OperatingSystemInfo;
 import org.etk.kernel.core.container.util.ContainerUtil;
 import org.etk.kernel.core.container.xml.Configuration;
-
+import org.etk.kernel.management.annotations.Managed;
+import org.etk.kernel.management.annotations.ManagedDescription;
 import org.etk.test.mocks.servlet.MockServletContext;
 
 
@@ -86,8 +88,7 @@ public class RootContainer extends KernelContainer {
 
 	public OperatingSystemInfo getOSEnvironment() {
 		if (osenv_ == null) {
-			osenv_ = (OperatingSystemInfo) this
-					.getComponentInstanceOfType(OperatingSystemInfo.class);
+			osenv_ = (OperatingSystemInfo) this.getComponentInstanceOfType(OperatingSystemInfo.class);
 		}
 		return osenv_;
 	}
@@ -98,8 +99,7 @@ public class RootContainer extends KernelContainer {
 	 */
 	PortalContainerConfig getPortalContainerConfig() {
 		if (config_ == null) {
-			config_ = (PortalContainerConfig) this
-					.getComponentInstanceOfType(PortalContainerConfig.class);
+			config_ = (PortalContainerConfig) this.getComponentInstanceOfType(PortalContainerConfig.class);
 		}
 		return config_;
 	}
@@ -284,7 +284,7 @@ public class RootContainer extends KernelContainer {
 			pcontainer.start(true);
 
 			// Register the portal as an mbean
-			getManagementContext().register(pcontainer);
+			//getManagementContext().register(pcontainer);
 
 			//
 			executeInitTasks(pcontainer, PortalContainerPostInitTask.TYPE);
@@ -327,24 +327,19 @@ public class RootContainer extends KernelContainer {
 	private static RootContainer buildRootContainer() {
 		try {
 			RootContainer rootContainer = new RootContainer();
-			ConfigurationManagerImpl service = new ConfigurationManagerImpl(
-					rootContainer.profiles);
-			service.addConfiguration(ContainerUtil
-					.getConfigurationURL("conf/configuration.xml"));
+			ConfigurationManagerImpl service = new ConfigurationManagerImpl(rootContainer.profiles);
+			service.addConfiguration(ContainerUtil.getConfigurationURL("conf/configuration.xml"));
 			if (System.getProperty("maven.exoplatform.dir") != null) {
-				service.addConfiguration(ContainerUtil
-						.getConfigurationURL("conf/test-configuration.xml"));
+				service.addConfiguration(ContainerUtil.getConfigurationURL("conf/test-configuration.xml"));
 			}
-			String confDir = rootContainer.getServerEnvironment()
-					.getExoConfigurationDirectory();
+			String confDir = rootContainer.getServerEnvironment().getExoConfigurationDirectory();
 			String overrideConf = confDir + "/configuration.xml";
 			File file = new File(overrideConf);
 			if (file.exists()) {
 				service.addConfiguration("file:" + overrideConf);
 			}
 			service.processRemoveConfiguration();
-			rootContainer.registerComponentInstance(ConfigurationManager.class,
-					service);
+			rootContainer.registerComponentInstance(ConfigurationManager.class,	service);
 			rootContainer.start(true);
 			return rootContainer;
 		} catch (Exception e) {
@@ -377,8 +372,7 @@ public class RootContainer extends KernelContainer {
 							result = buildRootContainer();
 							if (result != null) {
 								time += System.currentTimeMillis();
-								log.info("Root container is built (build time "
-										+ time + "ms)");
+								//log.info("Root container is built (build time "	+ time + "ms)");
 								KernelContainerContext.setTopContainer(result);
 								singleton_ = result;
 								//log.info("Root container booted");
@@ -404,7 +398,7 @@ public class RootContainer extends KernelContainer {
 	public String getConfigurationXML() {
 		Configuration config = getConfiguration();
 		if (config == null) {
-			log.warn("The configuration of the RootContainer could not be found");
+			//log.warn("The configuration of the RootContainer could not be found");
 			return null;
 		}
 		return config.toXML();
@@ -496,7 +490,7 @@ public class RootContainer extends KernelContainer {
 	 * @param type
 	 *            the type of the task to execute
 	 */
-	private void executeInitTasks(KernelContainer portalContainer, String type) {
+	private void executeInitTasks(ApplicationContainer portalContainer, String type) {
 		final String portalContainerName = portalContainer.getName();
 		final ConcurrentMap<String, Queue<PortalContainerInitTaskContext>> queues = initTasks.get(portalContainerName);
 		if (queues == null) {

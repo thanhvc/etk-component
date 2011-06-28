@@ -87,6 +87,10 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 		addConfiguration(scontext, url);
 	}
 
+	public ConfigurationManagerImpl(ServletContext context, Set<String> profiles) {
+		this.scontext = context;
+		this.profiles = profiles;
+	}
 	/**
 	 * @param context
 	 * @param url

@@ -87,7 +87,7 @@ public class ContainerUtil {
 	private static void addContainerLifecyclePlugin(KernelContainer container, ContainerLifecyclePlugin plugin) {
 		try {
 			Class clazz = Class.forName(plugin.getType());
-			ContainerLifecyclePlugin cplugin = (ContainerLifecyclePlugin) container.createComponent(clazz, plugin.getInitParams());
+			org.etk.kernel.container.ContainerLifecyclePlugin cplugin = (org.etk.kernel.container.ContainerLifecyclePlugin) container.createComponent(clazz, plugin.getInitParams());
 			cplugin.setName(plugin.getName());
 			cplugin.setDescription(plugin.getDescription());
 			container.addContainerLifecylePlugin(cplugin);
@@ -106,7 +106,7 @@ public class ContainerUtil {
 					.next();
 			try {
 				Class classType = loader.loadClass(plugin.getType());
-				ComponentLifecyclePlugin instance = (ComponentLifecyclePlugin) classType.newInstance();
+				org.etk.kernel.container.ComponentLifecyclePlugin instance = (org.etk.kernel.container.ComponentLifecyclePlugin) classType.newInstance();
 				container.addComponentLifecylePlugin(instance);
 			} catch (Exception ex) {
 				//log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);
