@@ -7,7 +7,8 @@ import java.util.Set;
 
 import javax.management.MBeanServer;
 
-import org.etk.kernel.core.container.CachingContainer;
+import org.etk.kernel.container.CachingContainer;
+import org.etk.kernel.core.container.monitor.jvm.J2EEServerInfo;
 import org.picocontainer.ComponentAdapter;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.PicoException;

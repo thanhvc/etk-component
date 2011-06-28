@@ -1,4 +1,4 @@
-package org.etk.kernel.core.container;
+package org.etk.kernel.container;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;

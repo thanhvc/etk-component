@@ -1,10 +1,8 @@
-package org.etk.kernel.core.container;
+package org.etk.kernel.container;
 
 import java.util.HashMap;
 import java.util.Set;
 
-import org.etk.kernel.core.ApplicationContainer;
-import org.etk.kernel.core.RootContainer;
 
 @SuppressWarnings("serial")
 public final class KernelContainerContext implements java.io.Serializable {

@@ -1,6 +1,5 @@
-package org.etk.kernel.core.container;
+package org.etk.kernel.container;
 
-import org.exoplatform.container.ConcurrentPicoContainer.ContainerVisitor;
 import org.picocontainer.ComponentAdapter;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.Parameter;

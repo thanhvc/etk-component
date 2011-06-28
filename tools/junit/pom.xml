@@ -6,37 +6,18 @@
     <version>0.0.1-beta1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>etk.kernel</artifactId>
+  <artifactId>etk.junit</artifactId>
 
-  <name>Engineer Toolkit Framework Kernel</name>
-  <description>Engineer Toolkit Framework Kernel</description>
+  <name>Engineer Toolkit Framework Junit</name>
+  <description>Engineer Toolkit Framework Testing</description>
 
-   <dependencies>
+  <dependencies>
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <version>${javax.servlet.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.jibx</groupId>
-        <artifactId>jibx-run</artifactId>
-        <version>${org.jibx.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>picocontainer</groupId>
-        <artifactId>picocontainer</artifactId>
-        <version>${picocontainer.version}</version>
-      </dependency> 
-      <dependency>
-        <groupId>org.etk</groupId>
-        <artifactId>etk.common</artifactId>
-        <version>${org.etk.common.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.etk</groupId>
-        <artifactId>etk.junit</artifactId>
-        <version>${org.etk.junit.version}</version>
-      </dependency>
+     
   </dependencies>
   <profiles>
     <profile>

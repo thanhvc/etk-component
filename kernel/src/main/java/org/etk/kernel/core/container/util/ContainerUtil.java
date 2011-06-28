@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.etk.kernel.core.container.KernelContainer;
+import org.etk.kernel.container.KernelContainer;
 import org.etk.kernel.core.container.configuration.ConfigurationManager;
 import org.etk.kernel.core.container.xml.Component;
 import org.etk.kernel.core.container.xml.ComponentLifecyclePlugin;
@@ -84,12 +84,10 @@ public class ContainerUtil {
 		}
 	}
 
-	private static void addContainerLifecyclePlugin(KernelContainer container,
-			ContainerLifecyclePlugin plugin) {
+	private static void addContainerLifecyclePlugin(KernelContainer container, ContainerLifecyclePlugin plugin) {
 		try {
 			Class clazz = Class.forName(plugin.getType());
-			ContainerLifecyclePlugin cplugin = (ContainerLifecyclePlugin) container
-					.createComponent(clazz, plugin.getInitParams());
+			ContainerLifecyclePlugin cplugin = (ContainerLifecyclePlugin) container.createComponent(clazz, plugin.getInitParams());
 			cplugin.setName(plugin.getName());
 			cplugin.setDescription(plugin.getDescription());
 			container.addContainerLifecylePlugin(cplugin);
@@ -100,8 +98,7 @@ public class ContainerUtil {
 
 	static public void addComponentLifecyclePlugin(KernelContainer container,
 			ConfigurationManager conf) {
-		Collection plugins = conf.getConfiguration()
-				.getComponentLifecyclePlugins();
+		Collection plugins = conf.getConfiguration().getComponentLifecyclePlugins();
 		Iterator i = plugins.iterator();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		while (i.hasNext()) {
@@ -109,8 +106,7 @@ public class ContainerUtil {
 					.next();
 			try {
 				Class classType = loader.loadClass(plugin.getType());
-				ComponentLifecyclePlugin instance = (ComponentLifecyclePlugin) classType
-						.newInstance();
+				ComponentLifecyclePlugin instance = (ComponentLifecyclePlugin) classType.newInstance();
 				container.addComponentLifecylePlugin(instance);
 			} catch (Exception ex) {
 				//log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);

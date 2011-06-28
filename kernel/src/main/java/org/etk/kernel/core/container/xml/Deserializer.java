@@ -2,10 +2,10 @@ package org.etk.kernel.core.container.xml;
 
 import java.util.Map;
 
-import org.etk.kernel.core.ApplicationContainer;
-import org.etk.kernel.core.RootContainer;
-import org.etk.kernel.core.container.KernelContainer;
-import org.etk.kernel.core.container.KernelContainerContext;
+import org.etk.kernel.container.ApplicationContainer;
+import org.etk.kernel.container.KernelContainer;
+import org.etk.kernel.container.KernelContainerContext;
+import org.etk.kernel.container.RootContainer;
 
 /**
  * A deserializer used by JIBX that resolve system properties to allow runtime

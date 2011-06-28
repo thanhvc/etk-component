@@ -1,4 +1,4 @@
-package org.etk.kernel.core.container;
+package org.etk.kernel.container;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.etk.common.utils.PropertyManager;
 import org.etk.kernel.core.container.configuration.ConfigurationManager;
 import org.etk.kernel.core.container.management.ManageableContainer;
 import org.etk.kernel.core.container.util.ContainerUtil;

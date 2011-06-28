@@ -1,4 +1,4 @@
-package org.etk.kernel.core.container;
+package org.etk.kernel.container;
 
 import org.etk.kernel.core.container.xml.InitParams;
 
