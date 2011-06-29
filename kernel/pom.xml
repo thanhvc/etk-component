@@ -34,7 +34,7 @@
       </dependency>
       <dependency>
         <groupId>org.etk</groupId>
-        <artifactId>etk.junit</artifactId>
+        <artifactId>junit</artifactId>
         <version>${org.etk.junit.version}</version>
       </dependency>
   </dependencies>
