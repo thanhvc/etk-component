@@ -1,6 +1,6 @@
 package org.etk.kernel.container;
 
-import org.etk.kernel.core.container.xml.InitParams;
+import org.etk.kernel.container.xml.InitParams;
 
 public interface ContainerLifecyclePlugin {
 

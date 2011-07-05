@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.etk.common.utils.PropertyManager;
-import org.etk.kernel.core.container.configuration.ConfigurationManager;
-import org.etk.kernel.core.container.util.ContainerUtil;
-import org.etk.kernel.core.container.xml.InitParams;
-import org.etk.kernel.core.container.xml.PropertiesParam;
-import org.etk.kernel.core.container.xml.Property;
-import org.etk.kernel.core.container.xml.ValueParam;
+import org.etk.kernel.container.configuration.ConfigurationManager;
+import org.etk.kernel.container.util.ContainerUtil;
+import org.etk.kernel.container.xml.InitParams;
+import org.etk.kernel.container.xml.PropertiesParam;
+import org.etk.kernel.container.xml.Property;
+import org.etk.kernel.container.xml.ValueParam;
 import org.picocontainer.Startable;
 
 /**

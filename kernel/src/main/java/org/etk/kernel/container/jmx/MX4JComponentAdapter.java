@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.etk.kernel.container.KernelContainer;
 import org.etk.kernel.container.component.ComponentLifecycle;
-import org.etk.kernel.core.container.xml.ComponentPlugin;
-import org.etk.kernel.core.container.configuration.ConfigurationManager;
-import org.etk.kernel.core.container.xml.Component;
-import org.etk.kernel.core.container.xml.ExternalComponentPlugins;
-import org.etk.kernel.core.container.xml.InitParams;
+import org.etk.kernel.container.configuration.ConfigurationManager;
+import org.etk.kernel.container.xml.Component;
+import org.etk.kernel.container.xml.ComponentPlugin;
+import org.etk.kernel.container.xml.ExternalComponentPlugins;
+import org.etk.kernel.container.xml.InitParams;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.defaults.AbstractComponentAdapter;
 

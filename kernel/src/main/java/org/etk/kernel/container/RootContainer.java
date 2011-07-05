@@ -14,15 +14,15 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import javax.servlet.ServletContext;
 
-import org.etk.kernel.core.container.configuration.ConfigurationManager;
-import org.etk.kernel.core.container.configuration.ConfigurationManagerImpl;
-import org.etk.kernel.core.container.configuration.MockConfigurationManagerImpl;
-import org.etk.kernel.core.container.definition.PortalContainerConfig;
-import org.etk.kernel.core.container.definition.PortalContainerDefinition;
-import org.etk.kernel.core.container.monitor.jvm.J2EEServerInfo;
-import org.etk.kernel.core.container.monitor.jvm.OperatingSystemInfo;
-import org.etk.kernel.core.container.util.ContainerUtil;
-import org.etk.kernel.core.container.xml.Configuration;
+import org.etk.kernel.container.configuration.ConfigurationManager;
+import org.etk.kernel.container.configuration.ConfigurationManagerImpl;
+import org.etk.kernel.container.configuration.MockConfigurationManagerImpl;
+import org.etk.kernel.container.definition.PortalContainerConfig;
+import org.etk.kernel.container.definition.PortalContainerDefinition;
+import org.etk.kernel.container.monitor.jvm.J2EEServerInfo;
+import org.etk.kernel.container.monitor.jvm.OperatingSystemInfo;
+import org.etk.kernel.container.util.ContainerUtil;
+import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.management.annotations.Managed;
 import org.etk.kernel.management.annotations.ManagedDescription;
 import org.etk.test.mocks.servlet.MockServletContext;
@@ -362,8 +362,7 @@ public class RootContainer extends KernelContainer {
 				result = singleton_;
 				if (result == null) {
 					if (booting) {
-						throw new IllegalStateException(
-								"Already booting by the same thread");
+						throw new IllegalStateException("Already booting by the same thread");
 					} else {
 						booting = true;
 						try {

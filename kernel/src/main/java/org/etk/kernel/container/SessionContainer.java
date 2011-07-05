@@ -2,7 +2,7 @@ package org.etk.kernel.container;
 
 import java.util.HashMap;
 
-import org.etk.kernel.core.container.client.ClientInfo;
+import org.etk.kernel.container.client.ClientInfo;
 
 public class SessionContainer extends HashMap<Object, Object> {
 	private static ThreadLocal threadLocal_ = new ThreadLocal();

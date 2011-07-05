@@ -12,10 +12,10 @@ import java.util.TreeSet;
 import javax.servlet.ServletContext;
 
 import org.etk.kernel.container.RootContainer.PortalContainerInitTask;
+import org.etk.kernel.container.definition.PortalContainerConfig;
 import org.etk.kernel.container.jmx.MX4JComponentAdapterFactory;
-import org.etk.kernel.core.container.definition.PortalContainerConfig;
-import org.etk.kernel.core.container.xml.Configuration;
-import org.etk.kernel.core.container.xml.PortalContainerInfo;
+import org.etk.kernel.container.xml.Configuration;
+import org.etk.kernel.container.xml.PortalContainerInfo;
 import org.etk.kernel.management.annotations.Managed;
 import org.etk.kernel.management.annotations.ManagedDescription;
 
@@ -46,10 +46,10 @@ public class ApplicationContainer extends KernelContainer {
 	 * The configuration of the portal containers
 	 */
 	private static final PortalContainerConfig CONFIG;
+	
 	static {
 		KernelContainer top = KernelContainerContext.getTopContainer();
-		CONFIG = top instanceof RootContainer ? ((RootContainer) top)
-				.getPortalContainerConfig() : null;
+		CONFIG = top instanceof RootContainer ? ((RootContainer) top).getPortalContainerConfig() : null;
 		if (CONFIG == null) {
 			DEFAULT_PORTAL_CONTAINER_NAME = PortalContainerConfig.DEFAULT_PORTAL_CONTAINER_NAME;
 			DEFAULT_REST_CONTEXT_NAME = PortalContainerConfig.DEFAULT_REST_CONTEXT_NAME;

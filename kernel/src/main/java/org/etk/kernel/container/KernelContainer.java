@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.etk.common.utils.PropertyManager;
-import org.etk.kernel.core.container.configuration.ConfigurationManager;
-import org.etk.kernel.core.container.util.ContainerUtil;
-import org.etk.kernel.core.container.xml.Configuration;
-import org.etk.kernel.core.container.xml.InitParams;
+import org.etk.kernel.container.configuration.ConfigurationManager;
+import org.etk.kernel.container.util.ContainerUtil;
+import org.etk.kernel.container.xml.Configuration;
+import org.etk.kernel.container.xml.InitParams;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.defaults.ComponentAdapterFactory;
 
