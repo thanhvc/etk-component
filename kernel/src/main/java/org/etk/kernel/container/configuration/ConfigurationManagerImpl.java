@@ -115,14 +115,48 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 			currentURL.set(url);
 		}
 
-		try {
-			ConfigurationUnmarshaller unmarshaller = new ConfigurationUnmarshaller(
-					profiles);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			currentURL.set(null);
-		}
+	      //
+	      try
+	      {
+	         ConfigurationUnmarshaller unmarshaller = new ConfigurationUnmarshaller(profiles);
+	         Configuration conf = unmarshaller.unmarshall(url);
+
+	         if (configurations == null)
+	            configurations = conf;
+	         else
+	            configurations.mergeConfiguration(conf);
+	         List urls = conf.getImports();
+	         if (urls != null)
+	         {
+	            for (int i = 0; i < urls.size(); i++)
+	            {
+	               String uri = (String)urls.get(i);
+	               URL urlObject = getURL(uri);
+	               if (urlObject != null)
+	               {
+	                  if (LOG_DEBUG)
+	                     //log.info("\timport " + urlObject);
+	                  // Set the URL of imported file
+	                  currentURL.set(urlObject);
+	                  conf = unmarshaller.unmarshall(urlObject);
+	                  configurations.mergeConfiguration(conf);
+	               }
+	               else
+	               {
+	                  //log.warn("Couldn't process the URL for " + uri + " configuration file ignored ");
+	               }
+	            }
+	         }
+	      }
+	      catch (Exception ex)
+	      {
+	    	  ex.printStackTrace();
+	         //log.error("Cannot process the configuration " + url, ex);
+	      }
+	      finally
+	      {
+	         currentURL.set(null);
+	      }
 
 	}
 

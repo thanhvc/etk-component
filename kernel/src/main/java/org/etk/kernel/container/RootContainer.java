@@ -197,8 +197,7 @@ public class RootContainer extends KernelContainer {
 		} finally {
 			if (hasChanged) {
 				// Re-set the old classloader
-				Thread.currentThread()
-						.setContextClassLoader(currentClassLoader);
+				Thread.currentThread().setContextClassLoader(currentClassLoader);
 			}
 		}
 		PortalContainerConfig config = getPortalContainerConfig();
@@ -216,10 +215,13 @@ public class RootContainer extends KernelContainer {
 		initTasks.clear();
 	}
 
+	/**
+	 * Creates the portalContainer base on the ServletContext.
+	 * @param context
+	 */
 	public synchronized void createPortalContainer(ServletContext context) {
 		// Keep the old ClassLoader
-		final ClassLoader currentClassLoader = Thread.currentThread()
-				.getContextClassLoader();
+		final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 		boolean hasChanged = false;
 		final String portalContainerName = context.getServletContextName();
 		try {

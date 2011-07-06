@@ -168,74 +168,48 @@ public class ConfigurationUnmarshaller {
       factory = DocumentBuilderFactory.newInstance();
     }
 
-    //
-    factory.setNamespaceAware(true);
+		//
+		factory.setNamespaceAware(true);
 
-    final DocumentBuilderFactory builderFactory = factory;
-    try {
-      return AccessController.doPrivileged(new PrivilegedExceptionAction<Configuration>() {
-        public Configuration run() throws Exception {
-          DocumentBuilder builder = builderFactory.newDocumentBuilder();
-          Document doc = builder.parse(url.openStream());
+		final DocumentBuilderFactory builderFactory = factory;
 
-          // Filter DOM
-          //ProfileDOMFilter filter = new ProfileDOMFilter(profiles);
-          //filter.process(doc.getDocumentElement());
+		DocumentBuilder builder = builderFactory.newDocumentBuilder();
+		Document doc = builder.parse(url.openStream());
 
-          // SAX event stream -> String
-          StringWriter buffer = new StringWriter();
-          SAXTransformerFactory tf = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
-          TransformerHandler hd = tf.newTransformerHandler();
-          StreamResult result = new StreamResult(buffer);
-          hd.setResult(result);
-          Transformer serializer = tf.newTransformer();
-          serializer.setOutputProperty(OutputKeys.ENCODING, "UTF8");
-          serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+      // Filter DOM
+      //ProfileDOMFilter filter = new ProfileDOMFilter(profiles);
+      //filter.process(doc.getDocumentElement());
 
-          // Transform -> SAX event stream
-          SAXResult saxResult = new SAXResult(new NoKernelNamespaceSAXFilter(hd));
+      // SAX event stream -> String
+      StringWriter buffer = new StringWriter();
+      SAXTransformerFactory tf = (SAXTransformerFactory) SAXTransformerFactory.newInstance();
+      TransformerHandler hd = tf.newTransformerHandler();
+      StreamResult result = new StreamResult(buffer);
+      hd.setResult(result);
+      Transformer serializer = tf.newTransformer();
+      serializer.setOutputProperty(OutputKeys.ENCODING, "UTF8");
+      serializer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-          // DOM -> Transform
-          serializer.transform(new DOMSource(doc), saxResult);
+      // Transform -> SAX event stream
+      SAXResult saxResult = new SAXResult(new NoKernelNamespaceSAXFilter(hd));
 
-          // Reuse the parsed document
-          String document = buffer.toString();
+      // DOM -> Transform
+      serializer.transform(new DOMSource(doc), saxResult);
 
-          // Debug
-          //if (log.isTraceEnabled())
-          //log.trace("About to parse configuration file " + document);
+      // Reuse the parsed document
+      String document = buffer.toString();
 
-          //
-          IBindingFactory bfact = BindingDirectory.getFactory(Configuration.class);
-          IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
+      // Debug
+      //if (log.isTraceEnabled())
+      //log.trace("About to parse configuration file " + document);
 
-          return (Configuration) uctx.unmarshalDocument(new StringReader(document), null);
-        }
-      });
-    } catch (PrivilegedActionException pae) {
-      Throwable cause = pae.getCause();
-      if (cause instanceof JiBXException) {
-        throw (JiBXException) cause;
-      } else if (cause instanceof ParserConfigurationException) {
-        throw (ParserConfigurationException) cause;
-      } else if (cause instanceof IOException) {
-        throw (IOException) cause;
-      } else if (cause instanceof SAXException) {
-        throw (SAXException) cause;
-      } else if (cause instanceof IllegalArgumentException) {
-        throw (IllegalArgumentException) cause;
-      } else if (cause instanceof TransformerException) {
-        throw (TransformerException) cause;
-      } else if (cause instanceof TransformerConfigurationException) {
-        throw (TransformerConfigurationException) cause;
-      } else if (cause instanceof TransformerFactoryConfigurationError) {
-        throw (TransformerFactoryConfigurationError) cause;
-      } else if (cause instanceof RuntimeException) {
-        throw (RuntimeException) cause;
-      } else {
-        throw new RuntimeException(cause);
-      }
-    }
+      //
+      IBindingFactory bfact = BindingDirectory.getFactory(Configuration.class);
+      IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
+
+      Configuration conf = (Configuration) uctx.unmarshalDocument(new StringReader(document), null);
+      
+      return conf;
   }
 
 }
