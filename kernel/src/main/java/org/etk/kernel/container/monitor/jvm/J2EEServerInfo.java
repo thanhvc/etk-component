@@ -48,8 +48,7 @@ public class J2EEServerInfo {
 		String testHome = System.getProperty("maven.exoplatform.dir");
 
 		// The name of the configuration directory
-		final String confDirName = System.getProperty(EXO_CONF_DIR_NAME_PARAM,
-				"exo-conf");
+		final String confDirName = System.getProperty(EXO_CONF_DIR_NAME_PARAM, "exo-conf");
 		if (jonasHome != null) {
 			serverName_ = "jonas";
 			serverHome_ = jonasHome;
@@ -60,12 +59,10 @@ public class J2EEServerInfo {
 
 			// try find and use jboss.server.config.url
 			// based on http://www.jboss.org/community/docs/DOC-10730
-			String jbossConfigUrl = System
-					.getProperty("jboss.server.config.url");
+			String jbossConfigUrl = System.getProperty("jboss.server.config.url");
 			if (jbossConfigUrl != null) {
 				try {
-					exoConfDir_ = new File(new File(new URI(jbossConfigUrl)),
-							confDirName).getAbsolutePath();
+					exoConfDir_ = new File(new File(new URI(jbossConfigUrl)),	confDirName).getAbsolutePath();
 				} catch (Throwable e) {
 					// don't care about it
 					exoConfDir_ = serverHome_ + "/" + confDirName;
@@ -75,8 +72,7 @@ public class J2EEServerInfo {
 
 			//
 			try {
-				Class clazz = Thread.currentThread().getContextClassLoader()
-						.loadClass("org.jboss.mx.util.MBeanServerLocator");
+				Class clazz = Thread.currentThread().getContextClassLoader().loadClass("org.jboss.mx.util.MBeanServerLocator");
 				Method m = clazz.getMethod("locateJBoss");
 				mbeanServer = (MBeanServer) m.invoke(null);
 			} catch (Exception ignore) {

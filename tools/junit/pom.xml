@@ -6,10 +6,10 @@
      <version>0.1.0-Beta1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>junit</artifactId>
+  <artifactId>org.etk.junit</artifactId>
   <name>Engineer Toolkit Framework Junit</name>
   <description>Engineer Toolkit Framework Testing</description>
-  <version>0.0.1-beta1-SNAPSHOT</version>
+  <version>0.0.1-Beta1-SNAPSHOT</version>
 
   <dependencies>
       <dependency>

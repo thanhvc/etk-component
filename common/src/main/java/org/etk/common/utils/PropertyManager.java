@@ -92,8 +92,7 @@ public class PropertyManager {
 	 * @param propertyValue
 	 *            the property value
 	 */
-	public synchronized static void setProperty(String propertyName,
-			String propertyValue) {
+	public synchronized static void setProperty(String propertyName, String propertyValue) {
 		System.setProperty(propertyName, propertyValue);
 
 		// Remove instead of put to avoid concurrent race

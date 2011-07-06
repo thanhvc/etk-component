@@ -14,7 +14,42 @@ import java.util.Map;
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IMarshallingContext;
+/**
+ * Define the rule for root element which is configured in the binding.xml. 
+ * JIBX library base on the binding.xml file for mapping to the Java Object.
+ * 
+ * Example: The content which configures in the binding.xml
+ * 
+ * <!-- configuration object mapping -->
+  <mapping name="configuration" class="org.etk.kernel.core.container.xml.Configuration">
+    <collection item-type="org.etk.kernel.core.container.xml.ContainerLifecyclePlugin" usage="optional"
+                add-method="addContainerLifecyclePlugin" iter-method="getContainerLifecyclePluginIterator"
+                test-method="hasContainerLifecyclePlugin"/>
 
+    <collection item-type="org.etk.kernel.core.container.xml.ComponentLifecyclePlugin" usage="optional"
+                add-method="addComponentLifecyclePlugin" iter-method="getComponentLifecyclePluginIterator"
+                test-method="hasComponentLifecyclePlugin"/>
+
+    <collection item-type="org.etk.kernel.core.container.xml.Component" usage="optional"
+                add-method="addComponent" iter-method="getComponentIterator"
+                test-method="hasComponent"/>
+
+    <collection item-type="org.etk.kernel.core.container.xml.ExternalComponentPlugins" usage="optional"
+                add-method="addExternalComponentPlugins" iter-method="getExternalComponentPluginsIterator"
+                test-method="hasExternalComponentPlugins"/>
+    <collection item-type="java.lang.String" field="imports_" usage="optional">
+      <value name="import" style="element"/>
+    </collection>
+
+    <collection item-type="java.lang.String"  field="removeConfiguration_" usage="optional">
+      <value name="remove-configuration" style="element"/>
+    </collection>
+  </mapping> 
+ * 
+ * 
+ * @author thanh_vucong
+ *
+ */
 public class Configuration implements Cloneable {
 
   public static final String KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
@@ -37,16 +72,32 @@ public class Configuration implements Cloneable {
     return plugins;
   }
 
+  /**
+   * <collection item-type="org.etk.kernel.core.container.xml.ContainerLifecyclePlugin" usage="optional"
+   * add-method="addContainerLifecyclePlugin" iter-method="getContainerLifecyclePluginIterator"
+   * test-method="hasContainerLifecyclePlugin"/>
+   * 
+   * @param object Type of org.etk.kernel.core.container.xml.ContainerLifecyclePlugin
+   */
   public void addContainerLifecyclePlugin(Object object) {
     ContainerLifecyclePlugin plugin = (ContainerLifecyclePlugin) object;
     String key = plugin.getType();
     this.containerLifecyclePlugin.put(key, plugin);
   }
 
+  /**
+   * Retrieving the ContainerLifecyclePlugin().getItrator
+   * @return
+   */
   public Iterator<ContainerLifecyclePlugin> getContainerLifecyclePluginIterator() {
     return getContainerLifecyclePlugins().iterator();
   }
 
+  /**
+   * Determines the containerLifecyclePlugin has size > 0.
+   * 
+   * @return containerLifecyclePlugin
+   */
   public boolean hasContainerLifecyclePlugin() {
     return this.containerLifecyclePlugin.size() > 0;
   }
@@ -55,6 +106,14 @@ public class Configuration implements Cloneable {
     return this.componentLifecyclePlugin.values();
   }
 
+  /**
+   * This method shows you how to configure for xml mapping.
+   * <collection item-type="org.etk.kernel.core.container.xml.ComponentLifecyclePlugin" usage="optional"
+     add-method="addComponentLifecyclePlugin" iter-method="getComponentLifecyclePluginIterator"
+     test-method="hasComponentLifecyclePlugin"/>
+                
+   * @param object
+   */
   public void addComponentLifecyclePlugin(Object object) {
     ComponentLifecyclePlugin plugin = (ComponentLifecyclePlugin) object;
     String key = plugin.getClass().getName();
@@ -73,6 +132,13 @@ public class Configuration implements Cloneable {
     return component.get(s);
   }
 
+  /**
+   *  <collection item-type="org.etk.kernel.core.container.xml.Component" usage="optional"
+   *  add-method="addComponent" iter-method="getComponentIterator"
+   *  test-method="hasComponent"/>
+   *             
+   * @param object
+   */
   public void addComponent(Object object) {
     Component comp = (Component) object;
     String key = comp.getKey();
@@ -83,14 +149,29 @@ public class Configuration implements Cloneable {
     component.put(key, comp);
   }
 
+  /**
+   * 
+   * @return
+   */
   public Collection getComponents() {
     return component.values();
   }
 
+  /**
+   * Provides to the binding mechanism to get element via iterator.
+   * 
+   * @return Iterator in the Component collection.
+   */
   public Iterator getComponentIterator() {
     return component.values().iterator();
   }
 
+  /**
+   * Provides the method to binding.xml configuration.
+   * test-method="hasComponent"
+   * 
+   * @return
+   */
   public boolean hasComponent() {
     return component.size() > 0;
   }
@@ -152,8 +233,14 @@ public class Configuration implements Cloneable {
 
   // -------------------------end new mapping configuration--------------------
 
+  /**
+   * Put all of the component, containerLifecyclePlugin, and componentLifecyclePlugin 
+   * from other which was contained in other(different Configuration) 
+   * to the current(Configuration).
+   */
   public void mergeConfiguration(Configuration other) {
     component.putAll(other.component);
+
 
     this.componentLifecyclePlugin.putAll(other.componentLifecyclePlugin);
     this.containerLifecyclePlugin.putAll(other.containerLifecyclePlugin);

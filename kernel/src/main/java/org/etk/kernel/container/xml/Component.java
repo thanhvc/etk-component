@@ -8,6 +8,25 @@ import java.util.List;
 import org.etk.kernel.container.configuration.ConfigurationManagerImpl;
 import org.jibx.runtime.IMarshallingContext;
 
+/**
+ *  <mapping name="component" class="org.exoplatform.container.xml.Component" pre-get="preGet">
+ *   <value name="key"  field="key" usage="optional" />
+ *   <value name="jmx-name"  field="jmxName" usage="optional" />
+ *   <value name="type"  field="type" />
+ *   <value name="description" field="description" usage="optional" />
+ *   <value name="show-deploy-info" field="showDeployInfo" usage="optional" />
+ *   <!-- threadlocal components -->
+ *   <value name="multi-instance" field="multiInstance" usage="optional"/>
+ *
+ *   <collection name="component-plugins" field="componentPlugins" usage="optional"
+ *               item-type="org.exoplatform.container.xml.ComponentPlugin" />
+ *   <structure map-as="org.exoplatform.container.xml.InitParams" usage="optional" 
+ *              get-method="getInitParams" set-method="setInitParams"/>
+ * </mapping>
+ * 
+ * @author thanh_vucong
+ *
+ */
 public class Component {
 
 	final URL documentURL;

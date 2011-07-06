@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.etk.kernel.container.KernelContainer;
 import org.etk.kernel.container.configuration.ConfigurationManager;
 import org.etk.kernel.container.xml.Component;
@@ -127,6 +126,7 @@ public class ContainerUtil {
 			String key = component.getKey();
 			try {
 				Class classType = loader.loadClass(type);
+				
 				if (key == null) {
 					if (component.isMultiInstance()) {
 						container.registerComponent(new ConstructorInjectionComponentAdapter(classType, classType));
@@ -139,18 +139,14 @@ public class ContainerUtil {
 					try {
 						Class keyType = loader.loadClass(key);
 						if (component.isMultiInstance()) {
-							container
-									.registerComponent(new ConstructorInjectionComponentAdapter(
-											keyType, classType));
+							container.registerComponent(new ConstructorInjectionComponentAdapter(keyType, classType));
 							// log.debug("===>>> Thread local component " +
 							// classType.getName() + " registered.");
 						} else {
-							container.registerComponentImplementation(keyType,
-									classType);
+							container.registerComponentImplementation(keyType, classType);
 						}
 					} catch (Exception ex) {
-						container.registerComponentImplementation(key,
-								classType);
+						container.registerComponentImplementation(key, classType);
 					}
 				}
 			} catch (ClassNotFoundException ex) {

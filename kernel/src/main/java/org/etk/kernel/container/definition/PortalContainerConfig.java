@@ -693,8 +693,7 @@ public class PortalContainerConfig implements Startable {
 			String propertyName = entry.getKey();
 			Object propertyValue = entry.getValue();
 			if (propertyValue instanceof String) {
-				propertyValue = Deserializer
-						.resolveVariables((String) propertyValue);
+				propertyValue = Deserializer.resolveVariables((String) propertyValue);
 				settings.put(propertyName, propertyValue);
 			}
 		}

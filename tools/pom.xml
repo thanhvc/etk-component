@@ -5,8 +5,8 @@
 
     <parent>
       <groupId>org.etk</groupId>
-      <artifactId>etk.parent</artifactId>
-      <version>0.0.1-beta1-SNAPSHOT</version>
+      <artifactId>org.etk.parent</artifactId>
+      <version>0.0.1-Beta1-SNAPSHOT</version>
     </parent>
 
   <groupId>org.etk</groupId>
