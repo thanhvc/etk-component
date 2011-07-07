@@ -10,7 +10,18 @@
 
   <name>Engineer Toolkit Framework Service</name>
   <description>Engineer Toolkit Framework Service</description>
-
+  <dependencies>
+      <dependency>
+        <groupId>org.etk</groupId>
+        <artifactId>org.etk.junit</artifactId>
+        <version>${org.etk.junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk</groupId>
+        <artifactId>org.etk.kernel</artifactId>
+        <version>${org.etk.kernel.version}</version>
+      </dependency>
+  </dependencies>
   <profiles>
     <profile>
       <id>Java6</id>

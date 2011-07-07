@@ -18,9 +18,6 @@ package org.etk.common.net;
 
 import junit.framework.TestCase;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
-
 /**
  * Created by The eXo Platform SAS Author : eXoPlatform exo@exoplatform.com Jun
  * 29, 2011
@@ -41,18 +38,8 @@ public class ExoHttpClientTest extends TestCase {
     exoHttpClient = null;
   }
   
-  public void testExecute() throws Exception {
-    HttpEntity entity = exoHttpClient.execute(targetURL);
-    //assertTrue("HttpResponse must be greater than zero.", entity.getContentLength()>0);
-    assertNotNull(entity);
-
-    
-    if (entity.getContentLength() != -1) {
-      String body = EntityUtils.toString(entity);
-      //assertTrue("Body's length must greater than zero.", body.length() > 0);
-      System.out.println("BODY::" + body);
-    }
-    
+  public void testHttpClient() throws Exception {
     
   }
+  
 }

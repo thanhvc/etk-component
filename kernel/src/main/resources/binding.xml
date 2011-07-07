@@ -8,7 +8,7 @@
     <value name="int"  usage="optional" get-method="getInt" set-method="setInt" deserializer="org.etk.kernel.container.xml.Deserializer.resolveInteger"/>
     <value name="long"  usage="optional" get-method="getLong" set-method="setLong" deserializer="org.etk.kernel.container.xml.Deserializer.resolveLong"/>
     <value name="double"  usage="optional" get-method="getDouble" set-method="setDouble" deserializer="org.etk.kernel.container.xml.Deserializer.resolveDouble"/>
-    <value name="boolean"  usage="optional" get-method="getBoolean" set-method="setBoolean" deserializer="org.etk.kernel.container.xml.Deserializer.resolveBoolean"/>
+    <value name="boolean"  usage="optional" get-method="getBoolean" set-method="setBoolean"  deserializer="org.etk.kernel.container.xml.Deserializer.resolveBoolean"/>
     <value name="date"  usage="optional" get-method="getDate" set-method="setDate"/>
     <structure map-as="org.etk.kernel.container.xml.object.XMLMap" usage="optional"
                get-method="getMap" set-method="setMap"/>
@@ -38,7 +38,7 @@
   
   <mapping name="collection" class="org.etk.kernel.container.xml.object.XMLCollection">
     <value name="type"  get-method="getType" set-method="setType" style="attribute"/>
-    <collection item-type="org.etk.kernel.container.xml.object.XMLValue" field="list_"/>
+    <collection item-type="org.etk.kernel.container.xml.object.XMLValue" field="list"/>
   </mapping>
 
   <mapping name="native-array" class="org.etk.kernel.container.xml.object.XMLNativeArray" 
@@ -60,7 +60,7 @@
   </mapping>
 	
  <!-- old container configuration mapping , This configuration will be removed in version 2.0-->
-  <mapping name="property" class="org.etk.kernel.container.xml.xml.Property">
+  <mapping name="property" class="org.etk.kernel.container.xml.Property">
     <value name="name" style="attribute" field="name" />
     <value name="value" style="attribute" field="value" deserializer="org.etk.kernel.container.xml.Deserializer.resolveString"/>
   </mapping>
@@ -77,8 +77,7 @@
     <value name="value"  field="value" deserializer="org.etk.kernel.container.xml.Deserializer.resolveString"/>
   </mapping>
 
-  <mapping name="values-param" class="org.etk.kernel.container.xml.ValuesParam" 
-           extends="org.etk.kernel.container.xml.Parameter">
+  <mapping name="values-param" class="org.etk.kernel.container.xml.ValuesParam" extends="org.etk.kernel.container.xml.Parameter">
     <structure map-as="org.etk.kernel.container.xml.Parameter"/>
     <collection item-type="java.lang.String" field="values">
       <value name="value" style="element"/>
@@ -184,7 +183,7 @@
     <collection item-type="org.etk.kernel.container.xml.ExternalComponentPlugins" usage="optional"
                 add-method="addExternalComponentPlugins" iter-method="getExternalComponentPluginsIterator"
                 test-method="hasExternalComponentPlugins"/>
-    <collection item-type="java.lang.String" field="imports_" usage="optional">
+    <collection item-type="java.lang.String" field="imports" usage="optional">
       <value name="import" style="element"/>
     </collection>
 
