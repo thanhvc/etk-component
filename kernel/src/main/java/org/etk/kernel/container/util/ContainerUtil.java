@@ -40,8 +40,7 @@ public class ContainerUtil {
 		return constructors;
 	}
 
-	static public Collection<URL> getConfigurationURL(String configuration)
-			throws Exception {
+	static public Collection<URL> getConfigurationURL(String configuration) throws Exception {
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		Collection c = Collections.list(cl.getResources(configuration));
 		Map<String, URL> map = new HashMap<String, URL>();
@@ -74,11 +73,9 @@ public class ContainerUtil {
 
 	static public void addContainerLifecyclePlugin(KernelContainer container,
 			ConfigurationManager conf) {
-		Iterator i = conf.getConfiguration()
-				.getContainerLifecyclePluginIterator();
+		Iterator i = conf.getConfiguration().getContainerLifecyclePluginIterator();
 		while (i.hasNext()) {
-			ContainerLifecyclePlugin plugin = (ContainerLifecyclePlugin) i
-					.next();
+			ContainerLifecyclePlugin plugin = (ContainerLifecyclePlugin) i.next();
 			addContainerLifecyclePlugin(container, plugin);
 		}
 	}
@@ -95,14 +92,12 @@ public class ContainerUtil {
 		}
 	}
 
-	static public void addComponentLifecyclePlugin(KernelContainer container,
-			ConfigurationManager conf) {
+	static public void addComponentLifecyclePlugin(KernelContainer container, ConfigurationManager conf) {
 		Collection plugins = conf.getConfiguration().getComponentLifecyclePlugins();
 		Iterator i = plugins.iterator();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		while (i.hasNext()) {
-			ComponentLifecyclePlugin plugin = (ComponentLifecyclePlugin) i
-					.next();
+			ComponentLifecyclePlugin plugin = (ComponentLifecyclePlugin) i.next();
 			try {
 				Class classType = loader.loadClass(plugin.getType());
 				org.etk.kernel.container.ComponentLifecyclePlugin instance = (org.etk.kernel.container.ComponentLifecyclePlugin) classType.newInstance();
@@ -113,8 +108,7 @@ public class ContainerUtil {
 		}
 	}
 
-	static public void addComponents(KernelContainer container,
-			ConfigurationManager conf) {
+	static public void addComponents(KernelContainer container, ConfigurationManager conf) {
 		Collection components = conf.getComponents();
 		if (components == null)
 			return;
@@ -175,8 +169,7 @@ public class ContainerUtil {
 	 *            indicates if the variables must be resolved
 	 * @return a {@link Map} of properties
 	 */
-	public static Map<String, String> loadProperties(URL url,
-			boolean resolveVariables) {
+	public static Map<String, String> loadProperties(URL url, boolean resolveVariables) {
 		LinkedHashMap<String, String> props = null;
 		String path = null;
 		InputStream in = null;
