@@ -2,22 +2,26 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.etk</groupId>
-    <artifactId>org.etk.parent</artifactId>
-    <version>0.0.1-Beta1-SNAPSHOT</version>
+    <artifactId>component</artifactId>
+    <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.etk.common</artifactId>
-
-  <name>Engineer Toolkit Framework Common</name>
-  <description>Engineer Toolkit Framework Common</description>
+  <artifactId>org.etk.component.service</artifactId>
+  <version>0.1-Beta1-SNAPSHOT</version>
+  <name>Engineer Toolkit Framework Service</name>
+  <description>Engineer Toolkit Framework Service</description>
   <dependencies>
       <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>${org.apache.httpclient.version}</version>
+        <groupId>org.etk</groupId>
+        <artifactId>org.etk.tools.junit</artifactId>
+        <version>${org.etk.junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk</groupId>
+        <artifactId>org.etk.component.kernel</artifactId>
+        <version>${org.etk.kernel.version}</version>
       </dependency>
   </dependencies>
-
   <profiles>
     <profile>
       <id>Java6</id>

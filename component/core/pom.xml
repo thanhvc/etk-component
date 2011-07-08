@@ -2,12 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.etk</groupId>
-    <artifactId>org.etk.parent</artifactId>
-    <version>0.0.1-Beta1-SNAPSHOT</version>
+    <artifactId>component</artifactId>
+    <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.etk.core</artifactId>
-
+  <artifactId>org.etk.component.core</artifactId>
+  <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Core</name>
   <description>Engineer Toolkit Framework Core</description>
 

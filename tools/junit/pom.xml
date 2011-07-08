@@ -3,13 +3,14 @@
    <parent>
      <groupId>org.etk</groupId>
      <artifactId>tools</artifactId>
-     <version>0.1.0-Beta1-SNAPSHOT</version>
+     <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.etk.junit</artifactId>
+  <artifactId>org.etk.tools.junit</artifactId>
+  <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Junit</name>
   <description>Engineer Toolkit Framework Testing</description>
-  <version>0.0.1-Beta1-SNAPSHOT</version>
+
 
   <dependencies>
       <dependency>

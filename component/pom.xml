@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
     <parent>
       <groupId>org.etk</groupId>
       <artifactId>org.etk.parent</artifactId>
@@ -10,14 +8,17 @@
     </parent>
 
   <groupId>org.etk</groupId>
-  <artifactId>tools</artifactId>
+  <artifactId>component</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Tools</name>
-  <description>Engineering toolkit Framework Tools</description>
+  <name>Engineering toolkit Framework Component</name>
+  <description>Engineering toolkit Framework Component</description>
 
   <modules>
-    <module>junit</module>
+    <module>common</module>
+    <module>core</module>
+    <module>kernel</module>
+    <module>service</module>
   </modules>
 
 </project>
