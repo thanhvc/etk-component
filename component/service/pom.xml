@@ -6,18 +6,19 @@
     <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.etk.component</groupId>
   <artifactId>org.etk.component.service</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Service</name>
   <description>Engineer Toolkit Framework Service</description>
   <dependencies>
       <dependency>
-        <groupId>org.etk</groupId>
+        <groupId>org.etk.tools</groupId>
         <artifactId>org.etk.tools.junit</artifactId>
         <version>${org.etk.junit.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.etk</groupId>
+        <groupId>org.etk.component</groupId>
         <artifactId>org.etk.component.kernel</artifactId>
         <version>${org.etk.kernel.version}</version>
       </dependency>

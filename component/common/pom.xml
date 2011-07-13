@@ -6,6 +6,7 @@
      <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.etk.component</groupId>
   <artifactId>org.etk.component.common</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Common</name>
@@ -15,6 +16,16 @@
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
         <version>${org.apache.httpclient.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>0.9.17</version>
       </dependency>
   </dependencies>
 

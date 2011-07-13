@@ -6,6 +6,7 @@
     <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
+  <groupId>org.etk.component</groupId>
   <artifactId>org.etk.component.core</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Core</name>
