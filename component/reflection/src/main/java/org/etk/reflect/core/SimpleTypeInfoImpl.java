@@ -3,8 +3,16 @@ package org.etk.reflect.core;
 import org.etk.reflect.api.SimpleTypeInfo;
 import org.etk.reflect.api.definition.LiteralKind;
 
-
-
+/**
+ * 
+ * @author thanh_vucong
+ *
+ * @param <T>
+ * @param <M>
+ * @param <A>
+ * @param <P>
+ * @param <F>
+ */
 class SimpleTypeInfoImpl<T, M, A, P, F> extends ClassTypeInfoImpl<T, M, A, P, F> implements SimpleTypeInfo {
 
 	  /** . */
@@ -17,8 +25,8 @@ class SimpleTypeInfoImpl<T, M, A, P, F> extends ClassTypeInfoImpl<T, M, A, P, F>
 	    super(typeDomain, simpleType);
 
 	    //
-	    this.literalType = domain.typeModel.getLiteralType(simpleType);
-	    this.primitive = domain.typeModel.isPrimitive(simpleType);
+	    this.literalType = domain.typeMetadata.getLiteralType(simpleType);
+	    this.primitive = domain.typeMetadata.isPrimitive(simpleType);
 	  }
 
 	  public boolean isPrimitive() {

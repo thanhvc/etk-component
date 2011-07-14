@@ -19,6 +19,7 @@ public class TypeHierarchyVisitor {
 
   private boolean _accept(Class type) {
     if (enter(type)) {
+      
       if (type.isInterface()) {
         for (Class superInterface : type.getInterfaces()) {
           if (!_accept(superInterface)) {

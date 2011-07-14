@@ -32,7 +32,7 @@ class ParameterizedTypeInfoImpl<T, M, A, P, F> extends AbstractParameterizedType
 
 	  public TypeInfo getRawType() {
 	    if (rawType == null) {
-	      T rawType = domain.typeModel.getRawType(type);
+	      T rawType = domain.typeMetadata.getRawType(type);
 	      this.rawType = domain.getType(rawType);
 	    }
 	    return rawType;
@@ -41,7 +41,7 @@ class ParameterizedTypeInfoImpl<T, M, A, P, F> extends AbstractParameterizedType
 	  public List<TypeInfo> getTypeArguments() {
 	    if (typeArguments == null) {
 	      ArrayList<TypeInfo> typeArguments = new ArrayList<TypeInfo>();
-	      for (T typeArgument : domain.typeModel.getTypeArguments(type)) {
+	      for (T typeArgument : domain.typeMetadata.getTypeArguments(type)) {
 	        AbstractTypeInfo<T, M, A, P, F> ta = domain.getType(typeArgument);
 	        typeArguments.add(ta);
 	      }

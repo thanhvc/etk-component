@@ -38,10 +38,10 @@ public class FieldInfoImpl<T, M, A, P, F> extends ReflectedObject<T, M, A, P, F>
     this.owner = owner;
     this.field = field;
     this.type = null;
-    this.name = domain.fieldModel.getName(field);
-    this.access = domain.fieldModel.getAccess(field);
-    this._final = domain.fieldModel.isFinal(field);
-    this._static = domain.fieldModel.isStatic(field);
+    this.name = domain.fieldMetadata.getName(field);
+    this.access = domain.fieldMetadata.getAccess(field);
+    this._final = domain.fieldMetadata.isFinal(field);
+    this._static = domain.fieldMetadata.isStatic(field);
     this.annotatedDelegate = null;
   }
 
@@ -51,7 +51,7 @@ public class FieldInfoImpl<T, M, A, P, F> extends ReflectedObject<T, M, A, P, F>
 
   public TypeInfo getType() {
     if (type == null) {
-      T ft = domain.fieldModel.getType(field);
+      T ft = domain.fieldMetadata.getType(field);
       type = domain.resolve(ft);
     }
     return type;
@@ -61,7 +61,7 @@ public class FieldInfoImpl<T, M, A, P, F> extends ReflectedObject<T, M, A, P, F>
     if (annotatedDelegate == null) {
       annotatedDelegate = new AnnotatedDelegate<T, M, A, P, F, F>(
         domain,
-        domain.fieldAnnotationModel,
+        domain.fieldAnnotationMetadata,
         field);
     }
     return annotatedDelegate.getDeclaredAnnotation(field, annotationType);

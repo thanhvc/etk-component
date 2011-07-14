@@ -1,10 +1,9 @@
 package org.etk.reflect.api;
 
-
-
 /**
  * The TypeInfo interface represents a type referenced to <code>Class</code> and
  * <code>Variable</code> classes, specified in the class reflection with the BuilderTypeInfo.
+ * 
  * @author thanh_vucong
  *
  */

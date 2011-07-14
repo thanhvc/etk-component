@@ -47,11 +47,11 @@ public class AnnotationParameterInfoImpl<T, M, A, P, F, E, Z> implements Annotat
 
 	    // *[] : unwrap component type
 	    T parameterType = owner.annotationModel.getAnnotationParameterType(parameter);
-	    TypeKind parameterTypeKind = owner.domain.typeModel.getKind(parameterType);
+	    TypeKind parameterTypeKind = owner.domain.typeMetadata.getKind(parameterType);
 	    boolean multiValued;
 	    if (parameterTypeKind == TypeKind.ARRAY) {
-	      parameterType = owner.domain.typeModel.getComponentType(parameterType);
-	      parameterTypeKind = owner.domain.typeModel.getKind(parameterType);
+	      parameterType = owner.domain.typeMetadata.getComponentType(parameterType);
+	      parameterTypeKind = owner.domain.typeMetadata.getKind(parameterType);
 	      multiValued = true;
 	    } else {
 	      multiValued = false;
@@ -60,22 +60,22 @@ public class AnnotationParameterInfoImpl<T, M, A, P, F, E, Z> implements Annotat
 	    //
 	    switch (parameterTypeKind) {
 	      case SIMPLE:
-	        LiteralKind parameterLiteralType = owner.domain.typeModel.getLiteralType(parameterType);
+	        LiteralKind parameterLiteralType = owner.domain.typeMetadata.getLiteralType(parameterType);
 	        type = literalToAnnotationParameterType.get(parameterLiteralType);
 	        break;
 	      case PARAMETERIZED:
 	        // We do handler Class<*> type
-	        T rawParameterType = owner.domain.typeModel.getRawType(parameterType);
-	        String className = owner.domain.typeModel.getClassName(rawParameterType);
+	        T rawParameterType = owner.domain.typeMetadata.getRawType(parameterType);
+	        String className = owner.domain.typeMetadata.getClassName(rawParameterType);
 	        if (!className.equals(Class.class.getName())) {
 	          throw new AssertionError("Does not make any sense");
 	        }
 	        type = AnnotationParameterType.CLASS;
 	        break;
 	      case CLASS:
-	        switch (owner.domain.typeModel.getClassKind(parameterType)) {
+	        switch (owner.domain.typeMetadata.getClassKind(parameterType)) {
 	          case CLASS:
-	            String parameterClassName = owner.domain.typeModel.getClassName(parameterType);
+	            String parameterClassName = owner.domain.typeMetadata.getClassName(parameterType);
 	            if (parameterClassName.equals(String.class.getName())) {
 	              type = AnnotationParameterType.STRING;
 	            } else if (parameterClassName.equals(Class.class.getName())) {

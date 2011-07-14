@@ -65,7 +65,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   
   public ClassTypeInfoImpl(TypeResolverImpl<T, M, A, P, F> domain, T classType) {
     super(domain);
-    String className = domain.typeModel.getClassName(classType);
+    String className = domain.typeMetadata.getClassName(classType);
     String simpleName;
     String packageName;
     int index = className.lastIndexOf('.');
@@ -77,7 +77,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
       packageName = className.substring(0, index);
     }
     //Getting the ClassKind via the domain.typeModel.getClassKind();
-    ClassKind kind = domain.typeModel.getClassKind(classType);
+    ClassKind kind = domain.typeMetadata.getClassKind(classType);
     this.className = className;
     this.classType = classType;
     this.interfaces = null;
@@ -108,7 +108,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
 
   public ClassTypeInfo getEnclosing() {
     if (!enclosingResolved) {
-      T enclosingType = domain.typeModel.getEnclosing(classType);
+      T enclosingType = domain.typeMetadata.getEnclosing(classType);
       if (enclosingType != null) {
         enclosing = (ClassTypeInfo)domain.resolve(enclosingType);
       }
@@ -128,7 +128,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   public List<TypeVariableInfo> getTypeParameters() {
     if (typeParameters == null) {
       ArrayList<TypeVariableInfo> typeParameters = new ArrayList<TypeVariableInfo>();
-      for(T tv : domain.typeModel.getTypeParameters(classType)) {
+      for(T tv : domain.typeMetadata.getTypeParameters(classType)) {
         TypeVariableInfoImpl<T, M, A, P, F> typeParameter = (TypeVariableInfoImpl<T, M, A, P, F>) domain.getType(tv);
         typeParameters.add(typeParameter);
       }
@@ -142,7 +142,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   public Iterable<TypeInfo> getInterfaces() {
     if (this.interfaces == null) {
       ArrayList<TypeInfo> interfaces = new ArrayList<TypeInfo>();
-      for (T interfaceType : domain.typeModel.getInterfaces(classType)) {
+      for (T interfaceType : domain.typeMetadata.getInterfaces(classType)) {
         TypeInfo itf = domain.resolve(interfaceType);
         interfaces.add(itf);
       }
@@ -154,7 +154,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   
   public TypeInfo getSuperType() {
     if (!superClassResolved) {
-      T superClassType = domain.typeModel.getSuperClass(classType);
+      T superClassType = domain.typeMetadata.getSuperClass(classType);
       if (superClassType != null) {
         superType = domain.resolve(superClassType);
       }
@@ -172,7 +172,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
     if (methods == null) {
       List<MethodInfo> methods = new ArrayList<MethodInfo>();
       
-      for (M method : domain.methodModel.getDeclaredMethods(classType)) {
+      for (M method : domain.methodMetadata.getDeclaredMethods(classType)) {
         MethodInfo mi = new MethodInfoImpl<T, M, A, P, F>(this, domain, method);
         methods.add(mi);
       }
@@ -197,7 +197,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   private Map<String, FieldInfo> getDeclaredFieldMap() {
     if (fields == null) {
       LinkedHashMap<String, FieldInfo> fields = new LinkedHashMap<String, FieldInfo>();
-      for(F field : domain.fieldModel.getDeclaredFields(classType)) {
+      for(F field : domain.fieldMetadata.getDeclaredFields(classType)) {
         FieldInfo fi = new FieldInfoImpl<T, M, A, P, F>(this, domain, field);
         fields.put(fi.getName(), fi);
       }
@@ -273,7 +273,7 @@ class ClassTypeInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F> i
   
   public <AT> AT getDeclaredAnnotation(AnnotationType<AT, ?> annotationType) {
     if (annotatedDelegate == null) {
-      annotatedDelegate = new AnnotatedDelegate<T, M, A, P, F, T>(domain, domain.typeAnnotationModel, classType);
+      annotatedDelegate = new AnnotatedDelegate<T, M, A, P, F, T>(domain, domain.typeAnnotationMetadata, classType);
     }
     
     return annotatedDelegate.getDeclaredAnnotation(classType, annotationType);

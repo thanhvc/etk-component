@@ -26,7 +26,7 @@ public class ArrayTypeInfoImpl<T, M, A, P, F> extends AbstractArrayTypeInfo<T, M
 
 	  public TypeInfo getComponentType() {
 	    if (componentType == null) {
-	      T componentType = domain.typeModel.getComponentType(type);
+	      T componentType = domain.typeMetadata.getComponentType(type);
 	      this.componentType = domain.getType(componentType);
 	    }
 	    return componentType;

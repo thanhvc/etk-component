@@ -31,7 +31,7 @@ class WildcardTypeInfoImpl<T, M, A, P, F> extends AbstractWildcardType<T, M, A, 
 	  public List<TypeInfo> getUpperBounds() {
 	    if (upperBounds == null) {
 	      List<TypeInfo> upperBounds = new ArrayList<TypeInfo>();
-	      for (T upperBound : domain.typeModel.getUpperBounds(wildcardType)) {
+	      for (T upperBound : domain.typeMetadata.getUpperBounds(wildcardType)) {
 	        upperBounds.add(domain.resolve(upperBound));
 	      }
 	      this.upperBounds = upperBounds;
@@ -42,7 +42,7 @@ class WildcardTypeInfoImpl<T, M, A, P, F> extends AbstractWildcardType<T, M, A, 
 	  public List<TypeInfo> getLowerBounds() {
 	    if (lowerBounds == null) {
 	      List<TypeInfo> lowerBounds = new ArrayList<TypeInfo>();
-	      for (T lowerBound : domain.typeModel.getLowerBounds(wildcardType)) {
+	      for (T lowerBound : domain.typeMetadata.getLowerBounds(wildcardType)) {
 	        lowerBounds.add(domain.resolve(lowerBound));
 	      }
 	      this.lowerBounds = lowerBounds;

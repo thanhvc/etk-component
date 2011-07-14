@@ -39,19 +39,19 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
     
     MethodKind type;
     
-    if (domain.methodModel.isAbstract(method)) {
+    if (domain.methodMetadata.isAbstract(method)) {
       type = MethodKind.ABSTRACT;
-    } else if (domain.methodModel.isNative(method)) {
+    } else if (domain.methodMetadata.isNative(method)) {
       type = MethodKind.NATIVE;
     } else {
       type = MethodKind.CONCRETE;
     }
     
     this.method = method;
-    this.name = domain.methodModel.getName(method);
-    this.access = domain.methodModel.getAccess(method);
-    this._final = domain.methodModel.isFinal(method);
-    this._static = domain.methodModel.isStatic(method);
+    this.name = domain.methodMetadata.getName(method);
+    this.access = domain.methodMetadata.getAccess(method);
+    this._final = domain.methodMetadata.isFinal(method);
+    this._static = domain.methodMetadata.isStatic(method);
     this.type = type;
     this.owner = owner;
     this.signature = null;
@@ -69,7 +69,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
   
   public TypeInfo getReturnType() {
     if (returnType == null) {
-      T rt = domain.methodModel.getReturnType(method);
+      T rt = domain.methodMetadata.getReturnType(method);
       returnType = domain.resolve(rt);
     }
     return returnType;
@@ -77,7 +77,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
   
   public List<String> getParameterNames() {
     if (parameterNames == null) {
-      Iterable<String> names = domain.methodModel.getParameterNames(method);
+      Iterable<String> names = domain.methodMetadata.getParameterNames(method);
       if (names != null) {
         List<String> parameterNames = new ArrayList<String>();
         for(String parameterName : names) {
@@ -95,7 +95,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
   public List<TypeInfo> getParameterTypes() {
     if (parameterTypes == null) {
       List<TypeInfo> parameterTypes = new ArrayList<TypeInfo>();
-      for (T parameterType : domain.methodModel.getParameterTypes(method)) {
+      for (T parameterType : domain.methodMetadata.getParameterTypes(method)) {
         parameterTypes.add(domain.resolve(parameterType));
       }
       this.parameterTypes = Collections.unmodifiableList(parameterTypes);
@@ -142,7 +142,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
   public List<TypeVariableInfo> getTypeParameters() {
     if (typeParameters == null) {
       ArrayList<TypeVariableInfo> typeParameters = new ArrayList<TypeVariableInfo>();
-      for (T tv : domain.methodModel.getTypeParameters(method)) {
+      for (T tv : domain.methodMetadata.getTypeParameters(method)) {
         TypeVariableInfoImpl<T, M, A, P, F> typeParameter = (TypeVariableInfoImpl<T, M, A, P, F>)domain.getType(tv);
         typeParameters.add(typeParameter);
       }
@@ -190,7 +190,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
 
   public <AT> AT getDeclaredAnnotation(AnnotationType<AT, ?> annotationType) {
     if (annotatedDelegate == null) {
-      annotatedDelegate = new AnnotatedDelegate<T, M, A, P, F, M>(domain, domain.methodAnnotationModel, method);
+      annotatedDelegate = new AnnotatedDelegate<T, M, A, P, F, M>(domain, domain.methodAnnotationMetadata, method);
     }
     return annotatedDelegate.getDeclaredAnnotation(method, annotationType);
   }
@@ -198,7 +198,7 @@ public class MethodInfoImpl<T, M, A, P, F>extends ReflectedObject<T, M, A, P, F>
   public List<ClassTypeInfo> getThrownTypes() {
     if (thrownTypes == null) {
       List<ClassTypeInfo> thrownTypes = Collections.emptyList();
-      for (T thrownType : domain.methodModel.getThrownTypes(method)) {
+      for (T thrownType : domain.methodMetadata.getThrownTypes(method)) {
         if (thrownTypes.isEmpty()) {
           thrownTypes = new ArrayList<ClassTypeInfo>();
         }

@@ -16,8 +16,8 @@ public class InstrumentorImpl implements Instrumentor {
   public MethodHandler getInvoker(Object proxy) {
     if (proxy instanceof Instrumented) {
       try {
-        Field f = proxy.getClass().getField("handler");
-        return (MethodHandler)f.get(proxy);
+        Field field = proxy.getClass().getField("handler");
+        return (MethodHandler)field.get(proxy);
       }
       catch (NoSuchFieldException e) {
         throw new AssertionError(e);

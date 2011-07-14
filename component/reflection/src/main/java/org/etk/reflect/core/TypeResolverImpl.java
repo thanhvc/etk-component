@@ -26,25 +26,25 @@ public class TypeResolverImpl<T, M, A, P, F> implements TypeResolver<T> {
 	/**
 	 * Define the typeOfModel
 	 */
-	final TypeMetadata<T> typeModel;
+	final TypeMetadata<T> typeMetadata;
 	/**
 	 * Define the fields which belong the class.
 	 */
-	final FieldMetadata<T, F> fieldModel;
+	final FieldMetadata<T, F> fieldMetadata;
 	
-	final MethodMetadata<T, M> methodModel;
-	final AnnotationMetadata<T, T, A, P> typeAnnotationModel;
-	final AnnotationMetadata<T, F, A, P> fieldAnnotationModel;
-	final AnnotationMetadata<T, M, A, P> methodAnnotationModel;
+	final MethodMetadata<T, M> methodMetadata;
+	final AnnotationMetadata<T, T, A, P> typeAnnotationMetadata;
+	final AnnotationMetadata<T, F, A, P> fieldAnnotationMetadata;
+	final AnnotationMetadata<T, M, A, P> methodAnnotationMetadata;
 	final Map<T, AbstractTypeInfo<T, M, A, P, F>> cache;
 	
 	private TypeResolverImpl(ReflectionMetadata<T, M, A, P, F> model, boolean cache) {
-		this.typeModel = model.getTypeModel();
-		this.fieldModel = model.getFieldModel();
-		this.methodModel = model.getMethodModel();
-		this.typeAnnotationModel = model.getTypeAnnotationMetadata();
-		this.fieldAnnotationModel = model.getFieldAnnotationMetadata();
-		this.methodAnnotationModel = model.getMethodAnnotationMetadata();
+		this.typeMetadata = model.getTypeModel();
+		this.fieldMetadata = model.getFieldModel();
+		this.methodMetadata = model.getMethodModel();
+		this.typeAnnotationMetadata = model.getTypeAnnotationMetadata();
+		this.fieldAnnotationMetadata = model.getFieldAnnotationMetadata();
+		this.methodAnnotationMetadata = model.getMethodAnnotationMetadata();
 		this.cache = cache ? new HashMap<T, AbstractTypeInfo<T, M, A, P, F>>() : null;
 	}
 	
@@ -85,7 +85,8 @@ public class TypeResolverImpl<T, M, A, P, F> implements TypeResolver<T> {
 	 * @return
 	 */
 	private AbstractTypeInfo<T, M, A, P, F> build(T type) {
-		TypeKind kind = typeModel.getKind(type);
+	  //Determines the TypeKind of a given TypeInfo.
+		TypeKind kind = typeMetadata.getKind(type);
 		switch (kind) {
 		case SIMPLE:
 			return new SimpleTypeInfoImpl<T, M, A, P, F>(this, type);

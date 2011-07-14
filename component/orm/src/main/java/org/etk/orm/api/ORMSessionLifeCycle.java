@@ -10,7 +10,7 @@ import org.etk.orm.plugins.jcr.SessionLifeCycle;
 
 
 
-public class ExoSessionLifeCycle implements SessionLifeCycle {
+public class ORMSessionLifeCycle implements SessionLifeCycle {
 
   /** . */
   private static final Repository repo;
@@ -26,7 +26,7 @@ public class ExoSessionLifeCycle implements SessionLifeCycle {
     }
   }
 
-  public ExoSessionLifeCycle() throws Exception {
+  public ORMSessionLifeCycle() throws Exception {
   }
 
   public Session login() throws RepositoryException {

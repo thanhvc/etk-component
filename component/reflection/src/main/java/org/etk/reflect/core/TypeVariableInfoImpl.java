@@ -23,7 +23,7 @@ class TypeVariableInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F
   public TypeVariableInfoImpl(TypeResolverImpl<T, M, A, P, F> domain, T type) {
     super(domain);
     
-    this.name = domain.typeModel.getName(type);
+    this.name = domain.typeMetadata.getName(type);
     this.type = type;
     this.genericDeclaration = null;
     this.bounds = null;
@@ -49,7 +49,7 @@ class TypeVariableInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F
   public List<TypeInfo> getBounds() {
     if (bounds == null) {
       ArrayList<TypeInfo> bounds = new ArrayList<TypeInfo>();
-      for (T b : domain.typeModel.getBounds(type)) {
+      for (T b : domain.typeMetadata.getBounds(type)) {
         AbstractTypeInfo<T, M, A, P, F> bound = domain.getType(b);
         bounds.add(bound);
       }
@@ -60,15 +60,15 @@ class TypeVariableInfoImpl<T, M, A, P, F> extends AbstractTypeInfo<T, M, A, P, F
 
   public GenericDeclarationInfo getGenericDeclaration() {
     if (genericDeclaration == null) {
-      GenericDeclarationKind kind = domain.typeModel.getGenericDeclarationKind(type);
+      GenericDeclarationKind kind = domain.typeMetadata.getGenericDeclarationKind(type);
       switch (kind) {
         case TYPE:
-          T gd = domain.typeModel.getGenericDeclaration(type);
+          T gd = domain.typeMetadata.getGenericDeclaration(type);
           genericDeclaration = (ClassTypeInfo)domain.resolve(gd);
           break;
         case METHOD:
-          M mgd = domain.methodModel.getGenericDeclaration(type);
-          T omgd = domain.methodModel.getOwner(mgd);
+          M mgd = domain.methodMetadata.getGenericDeclaration(type);
+          T omgd = domain.methodMetadata.getOwner(mgd);
           ClassTypeInfo tmp = (ClassTypeInfo)domain.resolve(omgd);
           for (MethodInfo mi : tmp.getDeclaredMethods()) {
             if (mi.unwrap().equals(mgd)) {
