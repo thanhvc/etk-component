@@ -1,6 +1,5 @@
 package org.etk.orm.core;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import org.etk.common.collection.Collections;
 import org.etk.orm.api.BuilderException;
 import org.etk.orm.api.format.ObjectFormatter;
 import org.etk.orm.plugins.bean.mapping.BeanMapping;
-import org.etk.orm.plugins.common.ObjectInstantiator;
 import org.etk.orm.plugins.common.jcr.Path;
 import org.etk.orm.plugins.common.jcr.PathException;
 import org.etk.orm.plugins.instrument.Instrumentor;
@@ -71,14 +69,14 @@ public class Domain {
   /** . */
   private final Map<Class<?>, ObjectMapper> typeMapperByClass;
 
-  /** . */
+  /** The default instrumentor */
   private final Instrumentor  defaultInstrumentor;
 
   /** . */
   private final Map<Class<?>, Instrumentor> proxyTypeToInstrumentor;
 
   /** . */
-  private final Map<Class<?>, Instrumentor> chromatticTypeToInstrumentor;
+  private final Map<Class<?>, Instrumentor> ormTypeToInstrumentor;
 
   /** . */
   final ObjectFormatter objectFormatter;
@@ -113,17 +111,16 @@ public class Domain {
   /** . */
   final QueryManager queryManager;
 
-  public Domain(
-    Collection<ObjectMapper<?>> mappers,
-    Instrumentor defaultInstrumentor,
-    ObjectFormatter objectFormatter,
-    boolean propertyCacheEnabled,
-    boolean propertyReadAheadEnabled,
-    boolean hasPropertyOptimized,
-    boolean hasNodeOptimized,
-    String rootNodePath,
-    int rootCreateMode,
-    String rootNodeType) {
+  public Domain(Collection<ObjectMapper<?>> mappers,
+                Instrumentor defaultInstrumentor,
+                ObjectFormatter objectFormatter,
+                boolean propertyCacheEnabled,
+                boolean propertyReadAheadEnabled,
+                boolean hasPropertyOptimized,
+                boolean hasNodeOptimized,
+                String rootNodePath,
+                int rootCreateMode,
+                String rootNodeType) {
 
     //
     if (!CREATE_MODES.contains(rootCreateMode)) {
@@ -132,34 +129,27 @@ public class Domain {
     
     //
     Map<Class<?>, Instrumentor> proxyTypeToInstrumentor = new HashMap<Class<?>, Instrumentor>();
-    Map<Class<?>, Instrumentor> chromatticTypeToInstrumentor = new HashMap<Class<?>, Instrumentor>();
-    mapping: for (ObjectMapper<?> mapper : mappers) {
+    Map<Class<?>, Instrumentor> ormTypeToInstrumentor = new HashMap<Class<?>, Instrumentor>();
+    
+    for (ObjectMapper<?> mapper : mappers) {
       BeanMapping beanMapping = mapper.getMapping();
-      Class<?> clazz = (Class<?>)beanMapping.getBean().getClassType().unwrap();
-      for (Annotation annotation : clazz.getAnnotations()) {
-        if ("org.chromattic.groovy.annotations.GroovyInstrumentor".equals(annotation.annotationType().getName())) {
-          Class<?> instrumentorClass = null;
-          try {
-            instrumentorClass = (Class<?>)annotation.annotationType().getMethod("value").invoke(annotation);
-          } catch (Exception ignore) {}
-          Instrumentor i = ObjectInstantiator.newInstance(instrumentorClass.getName(), Instrumentor.class);
-          proxyTypeToInstrumentor.put(i.getProxyClass(clazz).getType(), i);
-          chromatticTypeToInstrumentor.put(clazz, i);
-          continue mapping;
-        }
-      }
+      Class<?> clazz = (Class<?>) beanMapping.getBean().getClassType().unwrap();
+ 
       if (Object.class.equals(clazz)) {
         proxyTypeToInstrumentor.put(clazz, defaultInstrumentor);
-        chromatticTypeToInstrumentor.put(clazz, defaultInstrumentor);
+        ormTypeToInstrumentor.put(clazz, defaultInstrumentor);
       } else {
+        //wrapper the clazz in the ProxyTypeImpl which supports 
+        //to get the MethodHandler to invoke the method in clazz.
         proxyTypeToInstrumentor.put(defaultInstrumentor.getProxyClass(clazz).getType(), defaultInstrumentor);
-        chromatticTypeToInstrumentor.put(clazz, defaultInstrumentor);
+        ormTypeToInstrumentor.put(clazz, defaultInstrumentor);
       }
     }
 
     //
     Map<String, ObjectMapper> typeMapperByNodeType = new HashMap<String, ObjectMapper>();
     Map<Class<?>, ObjectMapper> typeMapperByClass = new HashMap<Class<?>, ObjectMapper>();
+    
     for (ObjectMapper typeMapper : mappers) {
       if (typeMapperByNodeType.containsKey(typeMapper.getNodeTypeName())) {
         throw new IllegalStateException("Duplicate node type name " + typeMapper);
@@ -172,8 +162,7 @@ public class Domain {
     final List<String> rootNodePathSegments;
     try {
       rootNodePathSegments = Path.splitAbsolutePath(Path.normalizeAbsolutePath(rootNodePath));
-    }
-    catch (PathException e) {
+    } catch (PathException e) {
       throw new BuilderException("Root node path must be valid");
     }
 
@@ -193,7 +182,7 @@ public class Domain {
     this.rootCreateMode = rootCreateMode;
     this.rootNodeType = rootNodeType;
     this.proxyTypeToInstrumentor = proxyTypeToInstrumentor;
-    this.chromatticTypeToInstrumentor = chromatticTypeToInstrumentor;
+    this.ormTypeToInstrumentor = ormTypeToInstrumentor;
   }
 
   public boolean isHasPropertyOptimized() {
@@ -210,7 +199,7 @@ public class Domain {
   }
 
   public <O> ProxyType<O> getProxyType(Class<O> type) {
-    Instrumentor instrumentor = chromatticTypeToInstrumentor.get(type);
+    Instrumentor instrumentor = ormTypeToInstrumentor.get(type);
     return instrumentor.getProxyClass(type);
   }
 
@@ -226,8 +215,22 @@ public class Domain {
     return queryManager;
   }
 
-  String decodeName(Node ownerNode, String internal, NameKind nameKind) throws
-    NullPointerException, UndeclaredThrowableException, IllegalStateException, RepositoryException {
+  /**
+   * 
+   * 
+   * @param ownerNode
+   * @param internal
+   * @param nameKind
+   * @return
+   * @throws NullPointerException
+   * @throws UndeclaredThrowableException
+   * @throws IllegalStateException
+   * @throws RepositoryException
+   */
+  String decodeName(Node ownerNode, String internal, NameKind nameKind) throws NullPointerException,
+                                                                       UndeclaredThrowableException,
+                                                                       IllegalStateException,
+                                                                       RepositoryException {
     if (ownerNode == null) {
       throw new NullPointerException();
     }
@@ -240,16 +243,31 @@ public class Domain {
     return decodeName(formatter, internal, nameKind);
   }
 
-  String decodeName(ObjectContext ownerCtx, String internal, NameKind nameKind) throws
-    NullPointerException, UndeclaredThrowableException, IllegalStateException, RepositoryException {
+  /**
+   * 
+   * 
+   * @param ownerCtx
+   * @param internal
+   * @param nameKind
+   * @return
+   * @throws NullPointerException
+   * @throws UndeclaredThrowableException
+   * @throws IllegalStateException
+   * @throws RepositoryException
+   */
+  String decodeName(ObjectContext ownerCtx, String internal, NameKind nameKind) throws NullPointerException,
+                                                                               UndeclaredThrowableException,
+                                                                               IllegalStateException,
+                                                                               RepositoryException {
     if (ownerCtx == null) {
       throw new NullPointerException();
     }
     return decodeName(ownerCtx.getMapper().getFormatter(), internal, nameKind);
   }
 
-  private String decodeName(ObjectFormatter formatter, String internal, NameKind nameKind) throws
-    UndeclaredThrowableException, IllegalStateException, RepositoryException {
+  private String decodeName(ObjectFormatter formatter, String internal, NameKind nameKind) throws UndeclaredThrowableException,
+                                                                                          IllegalStateException,
+                                                                                          RepositoryException {
     if (nameKind == NameKind.PROPERTY) {
       return internal;
     }
@@ -266,10 +284,9 @@ public class Domain {
         // external = formatter.decodePropertyName(null, internal);
         throw new UnsupportedOperationException();
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       if (e instanceof IllegalStateException) {
-        throw (IllegalStateException)e;
+        throw (IllegalStateException) e;
       }
       throw new UndeclaredThrowableException(e);
     }
@@ -292,8 +309,9 @@ public class Domain {
    * @throws UndeclaredThrowableException when the formatter throws an exception
    * @throws RepositoryException any repository exception
    */
-  String encodeName(Node ownerNode, String externalName, NameKind nameKind) throws
-    NullPointerException, UndeclaredThrowableException, RepositoryException {
+  String encodeName(Node ownerNode, String externalName, NameKind nameKind) throws NullPointerException,
+                                                                           UndeclaredThrowableException,
+                                                                           RepositoryException {
     if (ownerNode == null) {
       throw new NullPointerException();
     }
@@ -317,16 +335,28 @@ public class Domain {
    * @throws UndeclaredThrowableException when the formatter throws an exception
    * @throws RepositoryException any repository exception
    */
-  String encodeName(ObjectContext ownerCtx, String externalName, NameKind nameKind) throws
-    NullPointerException, UndeclaredThrowableException, RepositoryException {
+  String encodeName(ObjectContext ownerCtx, String externalName, NameKind nameKind) throws NullPointerException,
+                                                                                   UndeclaredThrowableException,
+                                                                                   RepositoryException {
     if (ownerCtx == null) {
       throw new NullPointerException("No null owner node accepted");
     }
     return encodeName(ownerCtx.getMapper().getFormatter(), externalName, nameKind);
   }
 
-  private String encodeName(ObjectFormatter formatter, String externalName, NameKind nameKind) throws
-    UndeclaredThrowableException, NullPointerException, RepositoryException {
+  /**
+   * 
+   * @param formatter
+   * @param externalName
+   * @param nameKind
+   * @return
+   * @throws UndeclaredThrowableException
+   * @throws NullPointerException
+   * @throws RepositoryException
+   */
+  private String encodeName(ObjectFormatter formatter, String externalName, NameKind nameKind) throws UndeclaredThrowableException,
+                                                                                              NullPointerException,
+                                                                                              RepositoryException {
     if (externalName == null) {
       throw new NullPointerException("No null name accepted");
     }
@@ -349,13 +379,12 @@ public class Domain {
         // internal = formatter.encodePropertyName(null, external);
         throw new UnsupportedOperationException();
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       if (e instanceof NullPointerException) {
-        throw (NullPointerException)e;
+        throw (NullPointerException) e;
       }
       if (e instanceof IllegalArgumentException) {
-        throw (IllegalArgumentException)e;
+        throw (IllegalArgumentException) e;
       }
       throw new UndeclaredThrowableException(e);
     }
