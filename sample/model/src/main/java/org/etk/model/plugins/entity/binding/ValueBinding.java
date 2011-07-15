@@ -33,5 +33,13 @@ public class ValueBinding<K extends ValueKind>
     return propertyDefinition;
   }
 
+  @Override
+  public void accept(BindingVisitor visitor) {
+    if (property.getValueKind() == ValueKind.SINGLE) {
+      visitor.singleValueMapping((ValueBinding<ValueKind.Single>) this);
+    } else {
+      visitor.multiValueMapping((ValueBinding<ValueKind.Multi>) this);
+    }
+  }
   
 }

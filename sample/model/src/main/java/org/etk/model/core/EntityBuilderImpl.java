@@ -24,11 +24,17 @@ import java.util.Set;
 
 import org.etk.model.api.EntityBuilder;
 import org.etk.model.api.EntityManager;
+import org.etk.model.plugins.entity.binder.BinderBuilder;
+import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.EntityBindingBuilder;
+import org.etk.model.plugins.entity.type.SimpleTypeResolver;
 import org.etk.orm.api.BuilderException;
-import org.etk.orm.plugins.bean.type.SimpleTypeResolver;
-import org.etk.orm.plugins.mapper.ObjectMapper;
+import org.etk.orm.api.ORMBuilder.Option;
+import org.etk.orm.api.format.ObjectFormatter;
+import org.etk.orm.core.Domain;
+import org.etk.orm.plugins.common.ObjectInstantiator;
+import org.etk.orm.plugins.instrument.Instrumentor;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.TypeResolver;
 import org.etk.reflect.core.TypeResolverImpl;
@@ -43,9 +49,11 @@ import org.etk.reflect.jlr.metadata.JLReflectionMetadata;
 public class EntityBuilderImpl extends EntityBuilder {
 
   /** The mappers. */
-  private Collection<ObjectMapper<?>> mappers;
+  private Collection<ObjectBinder<?>> binders;
   
   private Set<ClassTypeInfo> classTypes;
+  
+  private Collection<EntityBinding> bindings;
   
   @Override
   protected void init(Set<Class<?>> classes) throws BuilderException {
@@ -54,7 +62,6 @@ public class EntityBuilderImpl extends EntityBuilder {
     
     //Build mappings
     classTypes = new HashSet<ClassTypeInfo>();
-    
     //converts the classes to the set of ClassTypeInfo via the TypeResolver.
     for (Class clazz : classes) {
       ClassTypeInfo typeInfo = (ClassTypeInfo) typeResolver.resolve(clazz);
@@ -62,28 +69,47 @@ public class EntityBuilderImpl extends EntityBuilder {
       
     }
     
-    Map<ClassTypeInfo, EntityBinding> beanMappings = new EntityBindingBuilder().build(classTypes);
+    Map<ClassTypeInfo, EntityBinding> entityBindings = new EntityBindingBuilder().build(classTypes);
     
-    //Collection<EntityMapping> mappings = beanMappings.values();
+    Collection<EntityBinding> mappings = entityBindings.values();
 
-    // Build mappers
-    //MapperBuilder builder = new MapperBuilder(propertyTypeResolver);
-    //Collection<ObjectMapper<?>> mappers = builder.build(mappings);
+    bindings = entityBindings.values();
+    // Build binders
+    BinderBuilder builder = new BinderBuilder(propertyTypeResolver);
+    Collection<ObjectBinder<?>> binders = builder.build(mappings);
 
     //
-    //this.mappers = mappers;
+    this.binders = binders;
+  }
+  
+  public static final String  INSTRUMENTOR_CLASSNAME ="org.etk.orm.api.instrumentor.classname";
+  
+  private <T> T create(String className, Class<T> expectedClass) {
+    
+    return ObjectInstantiator.newInstance(className, expectedClass);
   }
 
   @Override
   protected EntityManager boot() throws BuilderException {
-    return null;
+    Instrumentor instrumentor = create(INSTRUMENTOR_CLASSNAME, Instrumentor.class);
+        
+    Entity domain = new Entity(binders, instrumentor);
+    
+    return new EntityManagerImpl(domain);
   }
 
   @Override
   public Set<ClassTypeInfo> getClassInfoTypes() {
     return classTypes;
   }
-  
-  
 
+  @Override
+  public Collection<EntityBinding> getBindings() {
+    return bindings;
+  }
+
+  @Override
+  public Collection<ObjectBinder<?>> getBinders() {
+    return binders;
+  }
 }

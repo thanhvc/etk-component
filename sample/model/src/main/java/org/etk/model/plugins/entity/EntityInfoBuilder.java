@@ -21,9 +21,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.etk.orm.plugins.bean.SimpleValueInfo;
+import org.etk.model.plugins.entity.type.SimpleTypeBinding;
+import org.etk.model.plugins.entity.type.SimpleTypeResolver;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.type.SimpleTypeResolver;
 import org.etk.reflect.api.ArrayTypeInfo;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.MethodInfo;
@@ -455,9 +455,8 @@ public class EntityInfoBuilder {
 
     private <K extends ValueKind> SimpleValueInfo createSimpleValueInfo(EntityInfo bean, TypeInfo type, K valueKind) {
       TypeInfo resolvedType = bean.getClassType().resolve(type);
-      //SimpleTypeMapping mapping = simpleTypeResolver.resolveType(resolvedType);
-      //return new SimpleValueInfo<K>(type, resolvedType, mapping, valueKind);
-      return null;
+      SimpleTypeBinding binding = simpleTypeResolver.resolveType(resolvedType);
+      return new SimpleValueInfo<K>(type, resolvedType, binding, valueKind);
     }
   }
 }

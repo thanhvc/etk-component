@@ -31,8 +31,7 @@ public class ObjectInstantiator {
         Class<? extends T> expectedSubclass = loadedClass.asSubclass(expectedClass);
         return newInstance(expectedSubclass);
       } else {
-        throw new BuilderException("Class " + className + " does not implement the " +
-          expectedClass.getName() + " interface");
+        throw new BuilderException("Class " + className + " does not implement the " + expectedClass.getName() + " interface");
       }
     }
     catch (ClassNotFoundException e) {

@@ -14,28 +14,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.binding;
+package org.etk.model.plugins.entity.binder;
 
+import java.lang.reflect.Method;
+
+import org.etk.model.core.MethodInvoker;
+import org.etk.model.core.ObjectContext;
 import org.etk.reflect.api.MethodInfo;
 
-/**
- * Created by The eXo Platform SAS
+/*
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Jul 15, 2011  
  */
-public abstract class MethodBinding {
+public class MethodBinder<C extends ObjectContext<C>> implements MethodInvoker<C> {
 
   /** . */
   private final MethodInfo method;
 
-  public MethodBinding(MethodInfo method) {
+  public MethodBinder(MethodInfo method) {
     this.method = method;
+  }
+
+  public Object invoke(C context) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public Object invoke(C context, Object args) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public Object invoke(C context, Object[] args) throws Throwable {
+    throw new UnsupportedOperationException();
   }
 
   public MethodInfo getMethod() {
     return method;
   }
 
-  public abstract void accept(BindingVisitor visitor);
+  @Override
+  public String toString() {
+    return "MethodBinder[" + ((Method)method.unwrap()).getDeclaringClass().getName() + "#" + method.getName() + "]";
+  }
+  
 }

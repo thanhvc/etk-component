@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.etk.model.plugins.entity.EntityInfo;
+import org.etk.orm.plugins.bean.mapping.MappingVisitor;
+import org.etk.orm.plugins.bean.mapping.MethodMapping;
+import org.etk.orm.plugins.bean.mapping.PropertyMapping;
 
 /**
  * Created by The eXo Platform SAS
@@ -120,8 +123,19 @@ public class EntityBinding {
   }
 
 
+  public void accept(BindingVisitor visitor) {
+    visitor.startBean(this);
+    for (PropertyBinding<?, ?, ?> property : properties.values()) {
+      property.accept(visitor);
+    }
+    for (MethodBinding method : methods) {
+      method.accept(visitor);
+    }
+    visitor.endBean();
+  }
+  
   @Override
   public String toString() {
-    return "EntityMapping[info=" + entityInfo + "]";
+    return "EntityBinding[info=" + entityInfo + "]";
   }
 }

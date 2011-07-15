@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.etk.orm.plugins.bean.type.SimpleTypeMapping;
 import org.etk.orm.plugins.bean.type.SimpleTypeResolver;
 import org.etk.reflect.api.ArrayTypeInfo;
 import org.etk.reflect.api.ClassTypeInfo;
@@ -455,9 +456,9 @@ public class BeanInfoBuilder {
 
     private <K extends ValueKind> SimpleValueInfo createSimpleValueInfo(BeanInfo bean, TypeInfo type, K valueKind) {
       TypeInfo resolvedType = bean.getClassType().resolve(type);
-      //SimpleTypeMapping mapping = simpleTypeResolver.resolveType(resolvedType);
-      //return new SimpleValueInfo<K>(type, resolvedType, mapping, valueKind);
-      return null;
+      SimpleTypeMapping mapping = simpleTypeResolver.resolveType(resolvedType);
+      return new SimpleValueInfo<K>(type, resolvedType, mapping, valueKind);
+      
     }
   }
 }

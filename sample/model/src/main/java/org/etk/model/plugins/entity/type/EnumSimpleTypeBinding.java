@@ -14,23 +14,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.core;
+package org.etk.model.plugins.entity.type;
 
-import org.etk.model.api.EntityManager;
+import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
+import org.etk.orm.plugins.bean.type.SimpleTypeMapping;
+import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
+import org.etk.reflect.api.ClassTypeInfo;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Jul 15, 2011  
  */
-public class EntityManagerImpl implements EntityManager {
-  /** . */
-  private Entity entity;
+public class EnumSimpleTypeBinding  implements SimpleTypeBinding {
 
-  EntityManagerImpl(Entity entity) {
-    this.entity = entity;
+  /** . */
+  private final ClassTypeInfo enumInfo;
+
+  public EnumSimpleTypeBinding(ClassTypeInfo enumInfo) {
+    this.enumInfo = enumInfo;
   }
-  
-  
+
+  public PropertyMetaType<String> getPropertyMetaType() {
+    return PropertyMetaType.STRING;
+  }
+
+  public SimpleTypeProvider<?, ?> create() {
+    // todo : maybe need a cache here?
+    Class clazz = (Class<Object>)enumInfo.unwrap();
+    return new EnumSimpleTypeProvider(clazz);
+  }
 }

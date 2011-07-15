@@ -50,4 +50,10 @@ public class PropertiesBinding<V extends ValueInfo> extends PropertyBinding<Prop
     // Implement that properly based on the type of "*"
     return true;
   }
+
+  @Override
+  public void accept(BindingVisitor visitor) {
+    visitor.propertiesBinding(this);
+    
+  }
 }

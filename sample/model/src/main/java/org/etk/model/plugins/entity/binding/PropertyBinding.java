@@ -60,6 +60,9 @@ public abstract class PropertyBinding<P extends PropertyInfo<V, K>, V extends Va
   public V getValue() {
     return property.getValue();
   }
+  
+  public abstract void accept(BindingVisitor visitor);
+
 
    /**
    * Returns true if the property type is covariant, meaning that it redefines the type from an ancestor

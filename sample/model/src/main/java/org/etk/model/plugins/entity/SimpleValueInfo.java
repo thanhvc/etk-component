@@ -1,14 +1,14 @@
 package org.etk.model.plugins.entity;
 
+import org.etk.model.plugins.entity.type.SimpleTypeBinding;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.type.SimpleTypeMapping;
 import org.etk.reflect.api.TypeInfo;
 
 public class SimpleValueInfo<K extends ValueKind> extends ValueInfo {
 
   /** . */
-  private final SimpleTypeMapping typeMapping;
+  private final SimpleTypeBinding typeMapping;
 
   /** . */
   private final K valueKind;
@@ -16,7 +16,7 @@ public class SimpleValueInfo<K extends ValueKind> extends ValueInfo {
   public SimpleValueInfo(
       TypeInfo declaredType,
       TypeInfo effectiveType,
-      SimpleTypeMapping typeMapping,
+      SimpleTypeBinding typeMapping,
       K valueKind) {
     super(declaredType, effectiveType);
 
@@ -25,7 +25,7 @@ public class SimpleValueInfo<K extends ValueKind> extends ValueInfo {
     this.valueKind = valueKind;
   }
 
-  public SimpleTypeMapping getTypeMapping() {
+  public SimpleTypeBinding getTypeMapping() {
     return typeMapping;
   }
 

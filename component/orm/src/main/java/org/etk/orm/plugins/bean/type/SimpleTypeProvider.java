@@ -9,8 +9,6 @@ import java.util.Calendar;
  * between an internal type and an external type, in addition a provider must be able to convert a string
  * value to an external representation and vice-versa.</p>
  *
- * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
- * @version $Revision$
  * @param <I> the generic internal type
  * @param <E> the generic external type
  */

@@ -14,23 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.core;
-
-import org.etk.model.api.EntityManager;
+package org.etk.model.core.entity;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Jul 15, 2011  
  */
-public class EntityManagerImpl implements EntityManager {
-  /** . */
-  private Entity entity;
+public class EntityTypeInfo {
 
-  EntityManagerImpl(Entity entity) {
-    this.entity = entity;
-  }
-  
-  
 }

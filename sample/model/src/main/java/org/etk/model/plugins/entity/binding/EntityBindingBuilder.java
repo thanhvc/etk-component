@@ -35,20 +35,17 @@ import org.etk.model.plugins.entity.EntityInfo;
 import org.etk.model.plugins.entity.EntityInfoBuilder;
 import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.model.plugins.entity.SimpleValueInfo;
+import org.etk.model.plugins.entity.type.SimpleTypeBinding;
+import org.etk.model.plugins.entity.type.SimpleTypeResolver;
 import org.etk.orm.api.annotations.DefaultValue;
 import org.etk.orm.api.annotations.NamingPrefix;
-import org.etk.orm.api.annotations.PrimaryType;
 import org.etk.orm.api.annotations.Properties;
 import org.etk.orm.plugins.bean.BeanValueInfo;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.mapping.BeanMapping;
 import org.etk.orm.plugins.bean.mapping.InvalidMappingException;
-import org.etk.orm.plugins.bean.mapping.NodeTypeKind;
 import org.etk.orm.plugins.bean.mapping.jcr.PropertyDefinitionMapping;
 import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
-import org.etk.orm.plugins.bean.type.SimpleTypeMapping;
-import org.etk.orm.plugins.bean.type.SimpleTypeResolver;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.TypeInfo;
 import org.etk.reflect.api.TypeResolver;
@@ -177,7 +174,7 @@ public class EntityBindingBuilder {
 
       Collection<? extends Annotation> annotations = entityInfo.getAnnotations(Entity.class);
       if (annotations.size() != 1) {
-        throw new InvalidMappingException(entityInfo.getClassType(), "Class is not annotated with a entity type");
+        throw new InvalidMappingException(entityInfo.getClassType(), "Class is not annotated with an Entity type");
       }
       
       //
@@ -196,27 +193,28 @@ public class EntityBindingBuilder {
       return new EntityBinding(entityInfo, entityTypeKind, entityTypeName, abstract_, prefix);
     }
 
-    private void build(EntityBinding beanMapping) {
+    
+    private void build(EntityBinding entityMapping) {
 
-      EntityInfo bean = beanMapping.getBean();
+      EntityInfo entityInfo = entityMapping.getBean();
 
       // First build the parent mapping if any
-      if (bean.getParent() != null) {
-        beanMapping.parent = resolve(bean.getParent());
+      if (entityInfo.getParent() != null) {
+        entityMapping.parent = resolve(entityInfo.getParent());
       }
 
       //
       Map<String, PropertyBinding<?, ?, ?>> properties = new HashMap<String, PropertyBinding<?, ?, ?>>();
-      
-      
-      for (PropertyInfo<?, ?> property : bean.getProperties().values()) {
+
+      for (PropertyInfo<?, ?> property : entityInfo.getProperties().values()) {
 
         // Determine kind
         Collection<? extends Annotation> annotations = property.getAnnotations(Property.class);
 
         //
         if (annotations.size() > 1) {
-          throw new InvalidMappingException(bean.getClassType(), "The property " + property + " declares too many annotations " + annotations);
+          throw new InvalidMappingException(entityInfo.getClassType(), "The property " + property
+              + " declares too many annotations " + annotations);
         }
 
         // Build the correct mapping or fail
@@ -226,45 +224,47 @@ public class EntityBindingBuilder {
           ValueInfo value = property.getValue();
           if (property.getValueKind() == ValueKind.SINGLE) {
             if (value instanceof SimpleValueInfo<?>) {
-              SimpleValueInfo<?> simpleValue = (SimpleValueInfo<?>)value;
+              SimpleValueInfo<?> simpleValue = (SimpleValueInfo<?>) value;
               if (annotation instanceof Property) {
-                Property propertyAnnotation = (Property)annotation;
+                Property propertyAnnotation = (Property) annotation;
                 if (simpleValue.getValueKind() instanceof ValueKind.Single) {
-                  PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single> propertyInfo = (PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single>)property;
+                  PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single> propertyInfo = (PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single>) property;
                   mapping = createValueMapping(propertyAnnotation, propertyInfo);
                 } else {
-                  PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single>)property;
+                  PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single>) property;
                   mapping = createValueMapping(propertyAnnotation, a);
                 }
               } else {
-                throw new InvalidMappingException(bean.getClassType(), "The property " + property + " is not annotated");
+                throw new InvalidMappingException(entityInfo.getClassType(), "The property "
+                    + property + " is not annotated");
               }
             } else {
               throw new AssertionError();
             }
           } else if (property.getValueKind() instanceof ValueKind.Multi) {
             if (value instanceof SimpleValueInfo) {
-              SimpleValueInfo<?> simpleValue = (SimpleValueInfo<?>)value;
+              SimpleValueInfo<?> simpleValue = (SimpleValueInfo<?>) value;
               if (annotation instanceof Property) {
-                Property propertyAnnotation = (Property)annotation;
+                Property propertyAnnotation = (Property) annotation;
                 if (simpleValue.getValueKind() instanceof ValueKind.Single) {
-                  PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single>)property;
+                  PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single>) property;
                   mapping = createValueMapping(propertyAnnotation, a);
                 } else {
-                  PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single>)property;
+                  PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single> a = (PropertyInfo<SimpleValueInfo<ValueKind.Multi>, ValueKind.Single>) property;
                   mapping = createValueMapping(propertyAnnotation, a);
                 }
               } else if (annotation instanceof Properties) {
-                mapping = createProperties((PropertyInfo<?, ValueKind.Map>)property);
+                mapping = createProperties((PropertyInfo<?, ValueKind.Map>) property);
               } else {
-                throw new InvalidMappingException(bean.getClassType(), "Annotation " + annotation + " is forbidden " +
-                " on property " + property);
+                throw new InvalidMappingException(entityInfo.getClassType(), "Annotation "
+                    + annotation + " is forbidden " + " on property " + property);
               }
             } else if (value instanceof BeanValueInfo) {
               if (annotation instanceof Properties) {
-                mapping = createProperties((PropertyInfo<?, ValueKind.Map>)property);
-              }  else {
-                throw new InvalidMappingException(bean.getClassType(), "Annotation " + annotation + " is forbidden " + " on property " + property);
+                mapping = createProperties((PropertyInfo<?, ValueKind.Map>) property);
+              } else {
+                throw new InvalidMappingException(entityInfo.getClassType(), "Annotation "
+                    + annotation + " is forbidden " + " on property " + property);
               }
             } else {
               throw new AssertionError();
@@ -291,16 +291,16 @@ public class EntityBindingBuilder {
       }
 
       // Wire
-      beanMapping.properties.putAll(properties);
-      for (PropertyBinding<?, ?, ?> propertyMapping : beanMapping.properties.values()) {
-        propertyMapping.owner = beanMapping;
+      entityMapping.properties.putAll(properties);
+      for (PropertyBinding<?, ?, ?> propertyMapping : entityMapping.properties.values()) {
+        propertyMapping.owner = entityMapping;
       }
 
       // Take care of methods
       MethodIntrospector introspector = new MethodIntrospector(HierarchyScope.ALL);
       Set<MethodBinding> methodMappings = new HashSet<MethodBinding>();
       //
-      beanMapping.methods.addAll(methodMappings);
+      entityMapping.methods.addAll(methodMappings);
     }
     
     private <K extends ValueKind> ValueBinding<K> createValueMapping(Property propertyAnnotation,
@@ -310,7 +310,7 @@ public class EntityBindingBuilder {
       PropertyMetaType<?> propertyMetaType = PropertyMetaType.get(propertyAnnotation.type());
 
       //
-      SimpleTypeMapping resolved = typeResolver.resolveType(property.getValue().getDeclaredType(),
+      SimpleTypeBinding resolved = typeResolver.resolveType(property.getValue().getDeclaredType(),
                                                             propertyMetaType);
       if (resolved == null) {
         throw new InvalidMappingException(property.getOwner().getClassType(),

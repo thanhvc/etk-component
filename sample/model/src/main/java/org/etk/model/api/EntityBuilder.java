@@ -16,6 +16,7 @@
  */
 package org.etk.model.api;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ServiceConfigurationError;
@@ -23,6 +24,8 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 import org.etk.common.logging.Logger;
+import org.etk.model.plugins.entity.binder.ObjectBinder;
+import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.orm.api.BuilderException;
 import org.etk.reflect.api.ClassTypeInfo;
 
@@ -167,4 +170,6 @@ public abstract class EntityBuilder {
   protected abstract EntityManager boot() throws BuilderException;
   
   public abstract Set<ClassTypeInfo> getClassInfoTypes();
+  public abstract Collection<EntityBinding> getBindings();
+  public abstract Collection<ObjectBinder<?>> getBinders();
 }

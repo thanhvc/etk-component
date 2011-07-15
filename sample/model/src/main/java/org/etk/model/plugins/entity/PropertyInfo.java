@@ -35,14 +35,14 @@ public class PropertyInfo<V extends ValueInfo, K extends ValueKind> {
   /** . */
   private final V value;
 
-  PropertyInfo(
-      EntityInfo owner,
-      PropertyInfo parent,
-      String name,
-      MethodInfo getter,
-      MethodInfo setter,
-      K valueKind,
-      V value)  throws NullPointerException, IllegalArgumentException {
+  PropertyInfo(EntityInfo owner,
+               PropertyInfo parent,
+               String name,
+               MethodInfo getter,
+               MethodInfo setter,
+               K valueKind,
+               V value) throws NullPointerException, IllegalArgumentException {
+    
     if (owner == null) {
       throw new NullPointerException("Owner cannot be null");
     }

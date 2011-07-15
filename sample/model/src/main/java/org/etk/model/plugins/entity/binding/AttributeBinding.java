@@ -14,23 +14,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.core;
+package org.etk.model.plugins.entity.binding;
 
-import org.etk.model.api.EntityManager;
+import org.etk.model.plugins.entity.PropertyInfo;
+import org.etk.model.plugins.entity.SimpleValueInfo;
+import org.etk.orm.plugins.bean.ValueKind;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Jul 15, 2011  
  */
-public class EntityManagerImpl implements EntityManager {
-  /** . */
-  private Entity entity;
+public class AttributeBinding extends PropertyBinding<PropertyInfo<SimpleValueInfo, ValueKind.Single>, SimpleValueInfo, ValueKind.Single> {
 
-  EntityManagerImpl(Entity entity) {
-    this.entity = entity;
+  /** . */
+  private final AttributeType type;
+
+  public AttributeBinding(PropertyInfo<SimpleValueInfo, ValueKind.Single> property, AttributeType type) {
+    super(property);
+    this.type = type;
   }
-  
-  
+
+  @Override
+  public boolean isTypeCovariant() {
+
+    // 
+    return false;
+  }
+
+  public AttributeType getType() {
+    return type;
+  }
+
+  @Override
+  public void accept(BindingVisitor visitor) {
+    visitor.attributeBinding(this);
+  }
 }
