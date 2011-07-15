@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.etk.common.logging.Logger;
 import org.etk.orm.api.BuilderException;
+import org.etk.reflect.api.ClassTypeInfo;
 
 /**
  * Created by The eXo Platform SAS
@@ -165,4 +166,5 @@ public abstract class EntityBuilder {
   
   protected abstract EntityManager boot() throws BuilderException;
   
+  public abstract Set<ClassTypeInfo> getClassInfoTypes();
 }

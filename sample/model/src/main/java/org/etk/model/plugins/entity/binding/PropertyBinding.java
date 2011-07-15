@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.mapping;
+package org.etk.model.plugins.entity.binding;
 
-import org.etk.orm.plugins.bean.PropertyInfo;
+import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
 
@@ -26,26 +26,26 @@ import org.etk.orm.plugins.bean.ValueKind;
  *          exo@exoplatform.com
  * Jul 14, 2011  
  */
-public abstract class PropertyMapping<P extends PropertyInfo<V, K>, V extends ValueInfo, K extends ValueKind> {
+public abstract class PropertyBinding<P extends PropertyInfo<V, K>, V extends ValueInfo, K extends ValueKind> {
 
   /** . */
-  EntityMapping owner;
+  EntityBinding owner;
 
   /** The optional parent. */
-  PropertyMapping parent;
+  PropertyBinding parent;
 
   /** . */
   final P property;
 
-  public PropertyMapping(P property) {
+  public PropertyBinding(P property) {
     this.property = property;
   }
 
-  public PropertyMapping getParent() {
+  public PropertyBinding getParent() {
     return parent;
   }
 
-  public EntityMapping getOwner() {
+  public EntityBinding getOwner() {
     return owner;
   }
 

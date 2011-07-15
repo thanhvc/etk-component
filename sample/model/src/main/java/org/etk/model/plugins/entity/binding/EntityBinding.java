@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.mapping;
+package org.etk.model.plugins.entity.binding;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.etk.model.plugins.entity.EntityInfo;
-import org.etk.reflect.api.ClassTypeInfo;
 
 /**
  * Created by The eXo Platform SAS
@@ -32,68 +31,78 @@ import org.etk.reflect.api.ClassTypeInfo;
  *          exo@exoplatform.com
  * Jul 14, 2011  
  */
-public class EntityMapping {
+public class EntityBinding {
 
   /** . */
-  final EntityInfo bean;
+  final EntityInfo entityInfo;
 
   /** . */
-  EntityMapping parent;
+  EntityBinding parent;
 
   /** . */
-  final Map<String, PropertyMapping<?, ?, ?>> properties;
+  final Map<String, PropertyBinding<?, ?, ?>> properties;
 
   /** . */
-  final Map<String, PropertyMapping<?, ?, ?>> unmodifiableProperties;
+  final Map<String, PropertyBinding<?, ?, ?>> unmodifiableProperties;
 
   /** . */
-  final List<MethodMapping> methods;
+  final List<MethodBinding> methods;
 
   /** . */
-  final List<MethodMapping> unmodifiableMethods;
-
-  /** . */
-  final ClassTypeInfo formatterClassType;
+  final List<MethodBinding> unmodifiableMethods;
 
   /** . */
   final boolean abstract_;
 
   /** . */
   final String prefix;
+  
+  /** . */
+  final EntityTypeKind entityTypeKind;
 
-  public EntityMapping (
-      EntityInfo bean,
-      ClassTypeInfo formatterClassType,
-      boolean abstract_,
-      String prefix) {
-    this.bean = bean;
+  /** . */
+  final String entityTypeName;
+
+  public EntityBinding(EntityInfo entity,
+                       EntityTypeKind entityTypeKind,
+                       String entityTypeName,
+                       boolean abstract_,
+                       String prefix) {
+    this.entityInfo = entity;
+    this.entityTypeKind = entityTypeKind;
+    this.entityTypeName = entityTypeName;
     this.abstract_ = abstract_;
-    this.properties = new HashMap<String, PropertyMapping<?, ?, ?>>();
-    this.unmodifiableProperties = Collections.unmodifiableMap(properties);
-    this.methods = new ArrayList<MethodMapping>();
-    this.unmodifiableMethods = Collections.unmodifiableList(methods);
-    this.formatterClassType = formatterClassType;
     this.prefix = prefix;
+    
+    
+    this.properties = new HashMap<String, PropertyBinding<?, ?, ?>>();
+    this.unmodifiableProperties = Collections.unmodifiableMap(properties);
+    this.methods = new ArrayList<MethodBinding>();
+    this.unmodifiableMethods = Collections.unmodifiableList(methods);
   }
 
-  public ClassTypeInfo getFormatterClassType() {
-    return formatterClassType;
+
+  public EntityTypeKind getEntityTypeKind() {
+    return this.entityTypeKind;
   }
 
-
+  public String getEntityTypeName() {
+    return this.entityTypeName;
+  }
+  
   public boolean isAbstract() {
     return abstract_;
   }
 
   public EntityInfo getBean() {
-    return bean;
+    return entityInfo;
   }
 
-  public Map<String, PropertyMapping<?, ?, ?>> getProperties() {
+  public Map<String, PropertyBinding<?, ?, ?>> getProperties() {
     return properties;
   }
 
-  public Collection<MethodMapping> getMethods() {
+  public Collection<MethodBinding> getMethods() {
     return methods;
   }
 
@@ -101,8 +110,8 @@ public class EntityMapping {
     return prefix;
   }
 
-  public <M extends PropertyMapping<?, ?, ?>> M getPropertyMapping(String name, Class<M> type) {
-    PropertyMapping<?, ?, ?> mapping = properties.get(name);
+  public <M extends PropertyBinding<?, ?, ?>> M getPropertyMapping(String name, Class<M> type) {
+    PropertyBinding<?, ?, ?> mapping = properties.get(name);
     if (type.isInstance(mapping)) {
       return type.cast(mapping);
     } else {
@@ -113,6 +122,6 @@ public class EntityMapping {
 
   @Override
   public String toString() {
-    return "EntityMapping[info=" + bean + "]";
+    return "EntityMapping[info=" + entityInfo + "]";
   }
 }

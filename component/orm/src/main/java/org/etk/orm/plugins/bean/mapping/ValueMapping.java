@@ -1,5 +1,6 @@
 package org.etk.orm.plugins.bean.mapping;
 
+
 import org.etk.orm.plugins.bean.PropertyInfo;
 import org.etk.orm.plugins.bean.SimpleValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;

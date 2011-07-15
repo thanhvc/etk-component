@@ -10,10 +10,10 @@ import org.etk.orm.api.ORMBuilder;
 public abstract class AbstractTestCase extends TestCase {
 
   /** . */
-  private EntityBuilder builder;
+  protected EntityBuilder builder;
 
   /** . */
-  private EntityManager manager;
+  protected EntityManager manager;
 
 
   @Override

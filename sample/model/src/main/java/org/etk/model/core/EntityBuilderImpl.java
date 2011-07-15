@@ -24,8 +24,8 @@ import java.util.Set;
 
 import org.etk.model.api.EntityBuilder;
 import org.etk.model.api.EntityManager;
-import org.etk.model.plugins.entity.EntityMappingBuilder;
-import org.etk.model.plugins.entity.mapping.EntityMapping;
+import org.etk.model.plugins.entity.binding.EntityBinding;
+import org.etk.model.plugins.entity.binding.EntityBindingBuilder;
 import org.etk.orm.api.BuilderException;
 import org.etk.orm.plugins.bean.type.SimpleTypeResolver;
 import org.etk.orm.plugins.mapper.ObjectMapper;
@@ -45,13 +45,15 @@ public class EntityBuilderImpl extends EntityBuilder {
   /** The mappers. */
   private Collection<ObjectMapper<?>> mappers;
   
+  private Set<ClassTypeInfo> classTypes;
+  
   @Override
   protected void init(Set<Class<?>> classes) throws BuilderException {
     SimpleTypeResolver propertyTypeResolver = new SimpleTypeResolver();
     TypeResolver<Type> typeResolver = TypeResolverImpl.create(JLReflectionMetadata.newInstance());
     
     //Build mappings
-    Set<ClassTypeInfo> classTypes = new HashSet<ClassTypeInfo>();
+    classTypes = new HashSet<ClassTypeInfo>();
     
     //converts the classes to the set of ClassTypeInfo via the TypeResolver.
     for (Class clazz : classes) {
@@ -60,21 +62,28 @@ public class EntityBuilderImpl extends EntityBuilder {
       
     }
     
-    Map<ClassTypeInfo, EntityMapping> beanMappings = new EntityMappingBuilder().build(classTypes);
+    Map<ClassTypeInfo, EntityBinding> beanMappings = new EntityBindingBuilder().build(classTypes);
     
-    Collection<EntityMapping> mappings = beanMappings.values();
+    //Collection<EntityMapping> mappings = beanMappings.values();
 
     // Build mappers
-    MapperBuilder builder = new MapperBuilder(propertyTypeResolver);
-    Collection<ObjectMapper<?>> mappers = builder.build(mappings);
+    //MapperBuilder builder = new MapperBuilder(propertyTypeResolver);
+    //Collection<ObjectMapper<?>> mappers = builder.build(mappings);
 
     //
-    this.mappers = mappers;
+    //this.mappers = mappers;
   }
 
   @Override
   protected EntityManager boot() throws BuilderException {
     return null;
   }
+
+  @Override
+  public Set<ClassTypeInfo> getClassInfoTypes() {
+    return classTypes;
+  }
+  
+  
 
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.mapping;
+package org.etk.model.plugins.entity.binding;
 
 /**
  * Created by The eXo Platform SAS
@@ -22,6 +22,6 @@ package org.etk.model.plugins.entity.mapping;
  *          exo@exoplatform.com
  * Jul 14, 2011  
  */
-public class MethodMapping {
+public class MethodBinding {
 
 }
