@@ -1,15 +1,17 @@
 package org.etk.orm.plugins.instrument;
 
 /**
- * The proxy type.
+ * The proxy type to support creating the class instance.
+ * It 's get Constructor and passes the MethodHandler such as argument 
+ * to create new instance class "_ORM"
  *
- * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
- * @version $Revision$
  */
 public interface ProxyType<O> {
 
   /**
-   * Create a proxy instance that delegates all method invocations to the provided handler
+   * Create a proxy instance that delegates all method invocations to the
+   * provided handler.
+   * 
    * @param handler the handler
    * @return a proxy instance
    */

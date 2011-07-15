@@ -43,7 +43,7 @@ public class ORMBuilderConfigurationFactoryImpl extends ORMBuilder.Configuration
     }
 
     config.setOptionValue(ORMBuilder.INSTRUMENTOR_CLASSNAME, "org.etk.orm.apt.InstrumentorImpl", false);
-    config.setOptionValue(ORMBuilder.SESSION_LIFECYCLE_CLASSNAME, "org.etk.orm.api.ExoSessionLifeCycle", false);
+    config.setOptionValue(ORMBuilder.SESSION_LIFECYCLE_CLASSNAME, "org.etk.orm.api.ORMSessionLifeCycle", false);
     config.setOptionValue(ORMBuilder.OBJECT_FORMATTER_CLASSNAME, DefaultObjectFormatter.class.getName(), false);
     config.setOptionValue(ORMBuilder.PROPERTY_CACHE_ENABLED, false, false);
     config.setOptionValue(ORMBuilder.PROPERTY_READ_AHEAD_ENABLED, false, false);

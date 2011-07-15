@@ -1,7 +1,13 @@
 package org.etk.orm.plugins.instrument;
 
 import java.lang.reflect.Method;
-
+/**
+ * It supports to receive the <code>Method</code> and <code>Object</code> target,
+ * and then invokes the given method. 
+ * 
+ * @author thanh_vucong
+ *
+ */
 public interface MethodHandler {
 
   /**

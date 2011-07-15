@@ -42,7 +42,7 @@
   <properties>
  
     <!-- Dependencies versions -->
-
+    <json_simple.version>1.1</json_simple.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
     <javax.servlet.version>2.5</javax.servlet.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
@@ -51,6 +51,7 @@
     <org.apache.httpclient.version>4.1.1</org.apache.httpclient.version>
     <org.etk.common.version>0.1-Beta1-SNAPSHOT</org.etk.common.version>
     <org.etk.kernel.version>0.1-Beta1-SNAPSHOT</org.etk.kernel.version>
+    <org.etk.orm.version>0.1-Beta1-SNAPSHOT</org.etk.orm.version>
     <org.etk.reflection.version>0.1-Beta1-SNAPSHOT</org.etk.reflection.version>
     <org.etk.junit.version>0.1-Beta1-SNAPSHOT</org.etk.junit.version>
     <!-- Plugins settings -->
@@ -289,6 +290,7 @@
         <modules>
            <module>tools</module>
            <module>component</module>
+           <module>sample</module>
         </modules>
      </profile>
      

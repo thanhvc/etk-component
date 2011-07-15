@@ -26,34 +26,25 @@ public abstract class ORMBuilder {
       "use system properties");
 
   /**
-   * The instrumentor class name for Chromattic's objects. The specified class must implement the
-   * <tt>org.chromattic.spi.instrument.Intrumentor</tt> class.
+   * The instrumentor class name for ORM's objects. The specified class must implement the
+   * <tt>org.etk.orm.plugins.instrument.Intrumentor</tt> class.
    */
   public static final Option<String>  INSTRUMENTOR_CLASSNAME =
-    new Option<String>(
-      Option.Type.STRING,
-      "org.etk.orm.api.Option.instrumentor.classname",
-      "intrumentor");
+    new Option<String>(Option.Type.STRING, "org.etk.orm.api.Option.instrumentor.classname", "intrumentor");
 
   /**
    * The JCR session life cycle class name. The specified class must implement the
-   * <tt>org.chromattic.spi.jcr.SessionLifeCycle</tt> class.
+   * <tt>org.etk.orm.plugins.jcr.SessionLifeCycle</tt> class.
    */
   public static final Option<String> SESSION_LIFECYCLE_CLASSNAME =
-    new Option<String>(
-      Option.Type.STRING,
-      "org.etk.orm.api.Option.session_lifecycle.classname",
-      "session life cycle");
+    new Option<String>(Option.Type.STRING, "org.etk.orm.api.Option.session_lifecycle.classname", "session life cycle");
 
   /**
    * The object name formatter class name. The specified class must implement the
-   * <tt>org.chromattic.api.format.ObjectFormatter</tt> class.
+   * <tt>org.etk.orm.api.format.ObjectFormatter</tt> class.
    */
   public static final Option<String> OBJECT_FORMATTER_CLASSNAME =
-    new Option<String>(
-      Option.Type.STRING,
-      "org.etk.orm.api.Option.object_formatter.classname",
-      "object formatter");
+    new Option<String>(Option.Type.STRING, "org.etk.orm.api.Option.object_formatter.classname", "object formatter");
 
   /**
    * The boolean indicating if caching is performed. When cache is enabled each session
@@ -131,18 +122,18 @@ public abstract class ORMBuilder {
       "when root node is created it is done in a lazy manner");
 
   /**
-   * A string value that is the root node type when Chromattic has to build the path to the root node.
+   * A string value that is the root node type when ORM has to build the path to the root node.
    */
   public static final Option<String> ROOT_NODE_TYPE =
     new Option<String>(
       Option.Type.STRING,
       "org.etk.orm.api.Option.root_node.root_node_type",
-      "the root node type when it is created by Chromattic");
+      "the root node type when it is created by ORM");
 
   /**
    * Create and return an instance of the builder.
    *
-   * @return the chromattic builder instance
+   * @return the ORMBuilder instance
    */
   public static ORMBuilder create() {
     ServiceLoader<ORMBuilder> loader = ServiceLoader.load(ORMBuilder.class);
@@ -151,14 +142,14 @@ public abstract class ORMBuilder {
     while (i.hasNext()) {
       try {
         ORMBuilder builder = i.next();
-        log.debug("Found ChromatticBuilder implementation " + builder.getClass().getName());
+        log.debug("Found ORMBuilder implementation " + builder.getClass().getName());
         return builder;
       }
       catch (ServiceConfigurationError error) {
         if (throwable == null) {
           throwable = error;
         }
-        log.debug("Could not load ChromatticBuilder implementation, will use next provider", error);
+        log.debug("Could not load ORMBuilder implementation, will use next provider", error);
       }
     }
     throw new BuilderException("Could not instanciate builder", throwable);
@@ -198,11 +189,11 @@ public abstract class ORMBuilder {
     while (i.hasNext()) {
       try {
         Configuration.Factory factory = i.next();
-        log.debug("Found ChromatticBuilder factory implementation " + factory.getClass().getName());
+        log.debug("Found ORMBuilder factory implementation " + factory.getClass().getName());
         return factory.create();
       }
       catch (ServiceConfigurationError ignore) {
-        log.debug("Could not load ChromatticBuilder factory implementation, will use next provider", ignore);
+        log.debug("Could not load ORMBuilder factory implementation, will use next provider", ignore);
       }
     }
     throw new BuilderException("Could not instanciate configuration factory");
@@ -262,7 +253,7 @@ public abstract class ORMBuilder {
   /**
    * Builds the runtime and return a configured {@link org.chromattic.api.Chromattic} instance.
    *
-   * @return the chromattic instance
+   * @return the ORM instance
    * @throws BuilderException any builder exception
    */
   public final ORM build() throws BuilderException {
@@ -273,7 +264,7 @@ public abstract class ORMBuilder {
    * Builds the runtime and return a configured {@link org.chromattic.api.Chromattic} instance.
    *
    * @param config the configuration to use
-   * @return the chromattic instance
+   * @return the ORM instance
    * @throws BuilderException any builder exception
    */
   public final ORM build(Configuration config) throws BuilderException {
