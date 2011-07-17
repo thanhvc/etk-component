@@ -6,7 +6,6 @@ import java.util.Set;
 import org.etk.model.api.annotations.Entity;
 import org.etk.model.apt.FormatterStyle;
 import org.etk.model.apt.TypeFormatter;
-import org.etk.model.core.ObjectContext;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.EntityTypeKind;
 import org.etk.model.plugins.entity.binding.PropertyBinding;
@@ -16,11 +15,11 @@ import org.etk.reflect.api.TypeInfo;
 import org.etk.reflect.core.AnnotationType;
 import org.etk.sample.model.test.AbstractTestCase;
 
-public class AEntityTest extends AbstractTestCase {
+public class AEntityPropertyTest extends AbstractTestCase {
 
   @Override
   protected void createDomain() {
-    addClass(AEntity.class);
+    addClass(AEntityProperty.class);
   }
   
   public void testClassTypeInfo() throws Exception {
@@ -31,7 +30,7 @@ public class AEntityTest extends AbstractTestCase {
       assertClassTypeInfo(classType);
     }
     
-    AEntity entity = entitySession.create(AEntity.class, "aentity");
+    AEntityProperty entity = entitySession.create(AEntityProperty.class, "aentityproperty");
     entity.setName("thanhvc");
     
     assertEquals("AEntity.getName() must be equal thanhvc:: ", "thanhvc", entity.getName());
@@ -56,18 +55,17 @@ public class AEntityTest extends AbstractTestCase {
    * @throws Exception
    */
   private void assertClassTypeInfo(ClassTypeInfo classType) throws Exception {
-    assertEquals(classType.getSimpleName(), "AEntity");
+    assertEquals(classType.getSimpleName(), "AEntityProperty");
     assertNotNull("Must have annotation Entity: ", classType.getDeclaredAnnotation(AnnotationType.get(Entity.class)));
     
     Entity entity = classType.getDeclaredAnnotation(AnnotationType.get(Entity.class));
     
     assertEquals(classType.getSimpleName(), entity.name());
-    assertNotNull("Name property must not be null: ", classType.getDeclaredField("name"));
-    assertNotNull("Description property must not be null: ", classType.getDeclaredField("description"));
+    
   }
 
   private void assertEntityBinding(EntityBinding binding) throws Exception {
-    assertEquals(binding.getEntityTypeName(), "AEntity");
+    assertEquals(binding.getEntityTypeName(), "AEntityProperty");
     assertEquals(binding.getEntityTypeKind(), EntityTypeKind.ENTITY);
     assertEquals(2, binding.getProperties().size());
   }
@@ -82,12 +80,6 @@ public class AEntityTest extends AbstractTestCase {
     MethodInfo getterMethodInfo = proBinding.getProperty().getGetter();
     
     System.out.println("GetterName = " + getterMethodInfo.getName());
-    
-    MethodInfo setterMethodInfo = proBinding.getProperty().getSetter();
-    
-    System.out.println("setterName = " + setterMethodInfo.getName());
-    
-    
   }
   
 

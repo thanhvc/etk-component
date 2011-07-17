@@ -38,7 +38,7 @@ import org.etk.reflect.api.MethodInfo;
 public class ObjectBinder<C extends ObjectContext<C>> {
 
   /** . */
-  private final EntityBinding mapping;
+  private final EntityBinding binding;
 
   /** . */
   protected final Class<?> objectClass;
@@ -100,7 +100,7 @@ public class ObjectBinder<C extends ObjectContext<C>> {
     }
 
     //
-    this.mapping = mapping;
+    this.binding = mapping;
     this.abstract_ = abstract_;
     this.dispatchers = dispatchers;
     this.objectClass = objectClass;
@@ -117,7 +117,7 @@ public class ObjectBinder<C extends ObjectContext<C>> {
   }
 
   public EntityBinding getBinding() {
-    return mapping;
+    return binding;
   }
 
   public boolean isAbstract() {

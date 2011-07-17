@@ -16,6 +16,11 @@
  */
 package org.etk.model.core.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.etk.model.plugins.json.type.PropertyDefinitionInfo;
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -24,4 +29,39 @@ package org.etk.model.core.entity;
  */
 public class EntityTypeInfo {
 
+  /** . */
+  private final String name;
+
+  /** . */
+  private final Map<String, PropertyDefinitionInfo> propertyDefinitions;
+
+  public EntityTypeInfo(EntityType entityType) {
+    Map<String, PropertyDefinitionInfo> propertyDefinitions = new HashMap<String, PropertyDefinitionInfo>();
+    for (String propertyName : entityType.getPropertyNames()) {
+      PropertyDefinitionInfo propertyDefinitionInfo = new PropertyDefinitionInfo(propertyName);
+      propertyDefinitions.put(propertyName, propertyDefinitionInfo);
+    }
+
+    //
+    this.name = entityType.getName();
+    this.propertyDefinitions = propertyDefinitions;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public PropertyDefinitionInfo getPropertyDefinitionInfo(String name) {
+    return propertyDefinitions.get(name);
+  }
+
+  public PropertyDefinitionInfo findPropertyDefinition(String propertyName) {
+    PropertyDefinitionInfo propertyDefinitionInfo = getPropertyDefinitionInfo(propertyName);
+    if (propertyDefinitionInfo == null) {
+      return getPropertyDefinitionInfo("*");
+    }
+    return propertyDefinitionInfo;
+  }
+  
+  
 }

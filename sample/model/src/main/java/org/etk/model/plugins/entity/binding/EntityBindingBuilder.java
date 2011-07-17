@@ -196,7 +196,7 @@ public class EntityBindingBuilder {
     
     private void build(EntityBinding entityMapping) {
 
-      EntityInfo entityInfo = entityMapping.getBean();
+      EntityInfo entityInfo = entityMapping.getEntity();
 
       // First build the parent mapping if any
       if (entityInfo.getParent() != null) {

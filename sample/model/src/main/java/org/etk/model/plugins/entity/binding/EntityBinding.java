@@ -97,7 +97,7 @@ public class EntityBinding {
     return abstract_;
   }
 
-  public EntityInfo getBean() {
+  public EntityInfo getEntity() {
     return entityInfo;
   }
 

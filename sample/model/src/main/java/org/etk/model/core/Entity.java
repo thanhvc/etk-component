@@ -20,11 +20,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.etk.model.core.entity.EntityType;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityBinding;
-import org.etk.orm.plugins.instrument.Instrumentor;
-import org.etk.orm.plugins.instrument.MethodHandler;
-import org.etk.orm.plugins.instrument.ProxyType;
+import org.etk.model.plugins.instrument.Instrumentor;
+import org.etk.model.plugins.instrument.MethodHandler;
+import org.etk.model.plugins.instrument.ProxyType;
+import org.etk.model.plugins.json.type.TypeManager;
 
 /**
  * Created by The eXo Platform SAS
@@ -34,6 +36,8 @@ import org.etk.orm.plugins.instrument.ProxyType;
  */
 public class Entity {
 
+  final TypeManager typeManager;
+  
   /** . */
   private static final ProxyType<?> NULL_PROXY_TYPE = new ProxyType<Object>() {
     public Object createProxy(MethodHandler handler) {
@@ -87,7 +91,7 @@ public class Entity {
     
     for (ObjectBinder<?> mapper : mappers) {
       EntityBinding beanMapping = mapper.getBinding();
-      Class<?> clazz = (Class<?>) beanMapping.getBean().getClassType().unwrap();
+      Class<?> clazz = (Class<?>) beanMapping.getEntity().getClassType().unwrap();
  
       if (Object.class.equals(clazz)) {
         proxyTypeToInstrumentor.put(clazz, defaultInstrumentor);
@@ -120,6 +124,8 @@ public class Entity {
     this.defaultInstrumentor = defaultInstrumentor;
     this.proxyTypeToInstrumentor = proxyTypeToInstrumentor;
     this.ormTypeToInstrumentor = ormTypeToInstrumentor;
+    //this class is very important to manage for binding with Json object, ResultSet(JDBC), JCR or any type.
+    this.typeManager = new TypeManager();
   }
 
  
@@ -140,6 +146,11 @@ public class Entity {
 
   public ObjectBinder getTypeMapper(Class<?> clazz) {
     return typeMapperByClass.get(clazz);
+  }
+  
+  public EntityType getEntityType(EntityBinding binding, EntityType.Kind kind) {
+    
+    return new EntityType(binding, kind);
   }
   
 }

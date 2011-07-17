@@ -2,6 +2,7 @@ package org.etk.orm.plugins.jcr.type;
 
 import javax.jcr.nodetype.PropertyDefinition;
 
+
 /**
  * <p>Meta information about a property definition.</p>
  *
@@ -42,4 +43,6 @@ public class PropertyDefinitionInfo {
   public boolean isMultiple() {
     return multiple;
   }
+
+  
 }

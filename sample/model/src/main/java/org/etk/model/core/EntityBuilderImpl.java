@@ -23,18 +23,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.etk.model.api.EntityBuilder;
-import org.etk.model.api.EntityManager;
 import org.etk.model.plugins.entity.binder.BinderBuilder;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.EntityBindingBuilder;
 import org.etk.model.plugins.entity.type.SimpleTypeResolver;
+import org.etk.model.plugins.instrument.Instrumentor;
 import org.etk.orm.api.BuilderException;
-import org.etk.orm.api.ORMBuilder.Option;
-import org.etk.orm.api.format.ObjectFormatter;
-import org.etk.orm.core.Domain;
 import org.etk.orm.plugins.common.ObjectInstantiator;
-import org.etk.orm.plugins.instrument.Instrumentor;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.TypeResolver;
 import org.etk.reflect.core.TypeResolverImpl;
@@ -82,7 +78,7 @@ public class EntityBuilderImpl extends EntityBuilder {
     this.binders = binders;
   }
   
-  public static final String  INSTRUMENTOR_CLASSNAME ="org.etk.orm.api.instrumentor.classname";
+  public static final String  INSTRUMENTOR_CLASSNAME ="org.etk.model.apt.InstrumentorImpl";
   
   private <T> T create(String className, Class<T> expectedClass) {
     
@@ -90,12 +86,12 @@ public class EntityBuilderImpl extends EntityBuilder {
   }
 
   @Override
-  protected EntityManager boot() throws BuilderException {
+  protected EntitySession boot() throws BuilderException {
     Instrumentor instrumentor = create(INSTRUMENTOR_CLASSNAME, Instrumentor.class);
         
     Entity domain = new Entity(binders, instrumentor);
     
-    return new EntityManagerImpl(domain);
+    return new EntitySessionImpl(domain);
   }
 
   @Override

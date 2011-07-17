@@ -24,6 +24,7 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 import org.etk.common.logging.Logger;
+import org.etk.model.core.EntitySession;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.orm.api.BuilderException;
@@ -130,7 +131,7 @@ public abstract class EntityBuilder {
    * @return the EntityManager instance
    * @throws BuilderException any builder exception
    */
-  public final EntityManager build() throws BuilderException {
+  public final EntitySession build() throws BuilderException {
 
     // Init if needed
     init();
@@ -167,7 +168,7 @@ public abstract class EntityBuilder {
   protected abstract void init(Set<Class<?>> classes) throws BuilderException;
 
   
-  protected abstract EntityManager boot() throws BuilderException;
+  protected abstract EntitySession boot() throws BuilderException;
   
   public abstract Set<ClassTypeInfo> getClassInfoTypes();
   public abstract Collection<EntityBinding> getBindings();

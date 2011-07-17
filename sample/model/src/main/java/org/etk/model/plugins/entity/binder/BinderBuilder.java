@@ -132,7 +132,7 @@ public class BinderBuilder {
       ObjectBinder<?> mapper;
       mapper = new ObjectBinder(beanMapping,
                                 beanMapping.isAbstract(),
-                                (Class<?>) beanMapping.getBean().getClassType().unwrap(),
+                                (Class<?>) beanMapping.getEntity().getClassType().unwrap(),
                                 propertyMappers,
                                 methodMappers,
                                 null,

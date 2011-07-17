@@ -18,6 +18,7 @@ package org.etk.model.core;
 
 import javax.jcr.RepositoryException;
 
+import org.etk.orm.api.BuilderException;
 import org.etk.orm.api.UndeclaredRepositoryException;
 
 /**
@@ -29,16 +30,19 @@ import org.etk.orm.api.UndeclaredRepositoryException;
 public abstract class EntitySession {
   /** . */
   final Entity entity;
+  
+  
+  
 
   public EntitySession(Entity entity) {
     this.entity = entity;
   }
 
-  protected abstract ObjectContext _create(Class<?> clazz, String localName) throws NullPointerException, IllegalArgumentException, RepositoryException;
+  protected abstract ObjectContext _createObject(Class<?> clazz, String localName) throws NullPointerException, IllegalArgumentException, RepositoryException;
   
-  public ObjectContext create(Class<?> clazz, String localName) throws NullPointerException, IllegalArgumentException, UndeclaredRepositoryException {
+  public ObjectContext createObject(Class<?> clazz, String localName) throws NullPointerException, IllegalArgumentException, UndeclaredRepositoryException {
     try {
-      return _create(clazz, localName);
+      return _createObject(clazz, localName);
     }
     catch (RepositoryException e) {
       throw new UndeclaredRepositoryException(e);
@@ -86,5 +90,26 @@ public abstract class EntitySession {
     catch (RepositoryException e) {
       throw new UndeclaredRepositoryException(e);
     }
+  }
+  
+  public <O> O insert(Object parent, Class<O> clazz, String name) throws NullPointerException, IllegalArgumentException, BuilderException {
+    O child = create(clazz, name);
+    
+    return child;
+  }
+  
+  public <O> O create(Class<O> clazz, String name) throws NullPointerException, IllegalArgumentException {
+    ObjectContext ctx = createObject(clazz, name);
+    return clazz.cast(ctx.getObject());
+  }
+
+  public <O> O insert(Object parent, Class<O> clazz, String prefix, String localName) throws NullPointerException, IllegalArgumentException, BuilderException {
+    O child = create(clazz, localName);
+    
+    return child;
+  }
+
+  public <O> O insert(Class<O> clazz, String name) throws NullPointerException, IllegalArgumentException, UndeclaredRepositoryException {
+    return insert(null, clazz, name);
   }
 }

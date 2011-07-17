@@ -24,14 +24,15 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.etk.common.logging.Logger;
+import org.etk.model.core.entity.EntityType;
 import org.etk.model.core.entity.EntityTypeInfo;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.AttributeType;
+import org.etk.model.plugins.instrument.ProxyType;
 import org.etk.orm.api.Status;
 import org.etk.orm.api.UndeclaredRepositoryException;
 import org.etk.orm.core.NameKind;
 import org.etk.orm.plugins.bean.mapping.NodeAttributeType;
-import org.etk.orm.plugins.instrument.ProxyType;
 import org.etk.orm.plugins.jcr.LinkType;
 import org.etk.orm.plugins.mapper.ObjectMapper;
 
@@ -51,25 +52,26 @@ public final class EntityContext extends ObjectContext<EntityContext> {
 
   /** The object instance. */
   final Object object;
+  
+  private EntityType entityType;
 
   /** The attributes. */
   private Map<Object, Object> attributes;
   
   EntitySession session;
 
-  EntityContext(ObjectBinder<EntityContext> mapper, EntitySession session) throws RepositoryException {
+  EntityContext(EntityType entityType, ObjectBinder<EntityContext> mapper, EntitySession session) throws RepositoryException {
 
     // Create our proxy
     ProxyType proxyType = session.entity.getProxyType(mapper.getObjectClass());
     Object object = proxyType.createProxy(this);
 
     //
-
-    
     this.session = session;
     this.mapper = mapper;
     this.object = object;
     this.attributes = null;
+    this.entityType = entityType;
   }
 
   public Object getAttribute(Object key) {
@@ -175,6 +177,7 @@ public final class EntityContext extends ObjectContext<EntityContext> {
 
   @Override
   public EntityTypeInfo getTypeInfo() {
-    return null;
+    //getEntityTypeInfo from
+    return session.entity.typeManager.getEntityTypeInfo(entityType);
   }
 }

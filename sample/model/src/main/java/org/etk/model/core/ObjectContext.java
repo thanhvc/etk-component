@@ -19,16 +19,23 @@ package org.etk.model.core;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
 
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
+import javax.jcr.Value;
 
 import org.etk.model.core.entity.EntityTypeInfo;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
+import org.etk.model.plugins.instrument.MethodHandler;
+import org.etk.model.plugins.json.type.PropertyDefinitionInfo;
+import org.etk.orm.api.NoSuchPropertyException;
 import org.etk.orm.api.ORMIOException;
+import org.etk.orm.api.UndeclaredRepositoryException;
 import org.etk.orm.core.ListType;
 import org.etk.orm.plugins.common.CloneableInputStream;
-import org.etk.orm.plugins.instrument.MethodHandler;
+import org.etk.orm.plugins.jcr.NodeTypeInfo;
 import org.etk.orm.plugins.vt2.ValueDefinition;
 
 /**
@@ -151,10 +158,34 @@ public abstract class ObjectContext<O extends ObjectContext<O>> implements Metho
     setPropertyValues(typeInfo, propertyName, type, listType, objects);
   }
   
-  
-  <V> V getPropertyValue(EntityTypeInfo nodeTypeInfo, String propertyName, ValueDefinition<?, V> vt) {
-    return null;
+  /**
+   * 
+   * @param <V>
+   * @param entityTypeInfo
+   * @param propertyName
+   * @param vt
+   * @return
+   */
+  private <V> V getPropertyValue(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt) {
+    try {
+      //
+      PropertyDefinitionInfo def = entityTypeInfo.findPropertyDefinition(propertyName);
+      if (def == null) {
+        throw new NoSuchPropertyException("Property " + propertyName + " cannot be loaded from node " + entityTypeInfo.getName());
+      }
+
+      //
+      V value = entityTypeInfo.getProperty(propertyName);
+
+      
+      //
+      return value;
+    }
+    catch (RepositoryException e) {
+      throw new UndeclaredRepositoryException(e);
+    }
   }
+
 
   <V> List<V> getPropertyValues(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, ListType listType) {
     
@@ -162,7 +193,7 @@ public abstract class ObjectContext<O extends ObjectContext<O>> implements Metho
   }
 
   <V> void setPropertyValue(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, V propertyValue) {
-    
+    //entityTypeInfo.
   }
 
   <V> void setPropertyValues(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, ListType listType, List<V> propertyValues) {

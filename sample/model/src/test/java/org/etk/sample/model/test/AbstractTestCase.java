@@ -3,9 +3,7 @@ package org.etk.sample.model.test;
 import junit.framework.TestCase;
 
 import org.etk.model.api.EntityBuilder;
-import org.etk.model.api.EntityManager;
-import org.etk.orm.api.ORM;
-import org.etk.orm.api.ORMBuilder;
+import org.etk.model.core.EntitySession;
 
 public abstract class AbstractTestCase extends TestCase {
 
@@ -13,7 +11,7 @@ public abstract class AbstractTestCase extends TestCase {
   protected EntityBuilder builder;
 
   /** . */
-  protected EntityManager manager;
+  protected EntitySession entitySession;
 
 
   @Override
@@ -34,15 +32,15 @@ public abstract class AbstractTestCase extends TestCase {
 
    
     //
-    manager = builder.build();
+    entitySession = builder.build();
 
-   
+    
   }
 
   @Override
   protected void tearDown() throws Exception {
     builder = null;
-    manager = null;
+    entitySession = null;
   }
 
   

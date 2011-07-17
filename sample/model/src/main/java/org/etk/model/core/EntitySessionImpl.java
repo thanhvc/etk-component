@@ -21,12 +21,9 @@ import java.util.Map;
 
 import javax.jcr.RepositoryException;
 
+import org.etk.model.core.entity.EntityType;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityTypeKind;
-import org.etk.orm.core.Domain;
-import org.etk.orm.plugins.bean.mapping.NodeTypeKind;
-import org.etk.orm.plugins.jcr.SessionWrapper;
-import org.etk.orm.plugins.mapper.ObjectMapper;
 
 /**
  * Created by The eXo Platform SAS
@@ -52,7 +49,7 @@ public class EntitySessionImpl extends EntitySession {
   }
   
   
-  protected ObjectContext _create(Class<?> clazz, String localName) throws NullPointerException,
+  protected ObjectContext _createObject(Class<?> clazz, String localName) throws NullPointerException,
                                                                    IllegalArgumentException,
                                                                    RepositoryException {
     if (clazz == null) {
@@ -70,9 +67,9 @@ public class EntitySessionImpl extends EntitySession {
       throw new IllegalArgumentException("The type " + clazz.getName() + " is abstract");
     }
 
-    //
+    EntityType entityType = entity.getEntityType(typeMapper.getBinding(), EntityType.Kind.JSON);
 
-    EntityContext ctx = new EntityContext((ObjectBinder<EntityContext>) typeMapper, this);
+    EntityContext ctx = new EntityContext(entityType, (ObjectBinder<EntityContext>) typeMapper, this);
 
     //
     if (localName != null) {
@@ -109,4 +106,7 @@ public class EntitySessionImpl extends EntitySession {
     // TODO Auto-generated method stub
     
   }
+  
+
+  
 }
