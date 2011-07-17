@@ -19,7 +19,8 @@ package org.etk.model.plugins.entity.type;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
+import org.etk.model.plugins.vt2.PropertyMetaType;
+
 
 /**
  * Created by The eXo Platform SAS

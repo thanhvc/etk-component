@@ -1,4 +1,4 @@
-package org.etk.orm.plugins.vt2;
+package org.etk.model.plugins.vt2;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,25 +10,17 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.ValueFactory;
 
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
 import org.etk.orm.plugins.bean.type.SimpleTypeProviders;
 
 
-public class ValueDefinition<I, E> {
+public class ValueDefinition <I, E> {
 
   /** . */
   private static final ValueDefinition<String, String> STRING = new ValueDefinition<String, String>(
     String.class,
     PropertyMetaType.STRING,
     new SimpleTypeProviders.STRING(),
-    null);
-
-  /** . */
-  private static final ValueDefinition<String, String> PATH = new ValueDefinition<String, String>(
-    String.class,
-    PropertyMetaType.PATH,
-    new SimpleTypeProviders.PATH(),
     null);
 
   /** . */
@@ -59,12 +51,6 @@ public class ValueDefinition<I, E> {
       new SimpleTypeProviders.LONG(),
       null);
 
-  /** . */
-  private static final ValueDefinition<InputStream, InputStream> BINARY = new ValueDefinition<InputStream, InputStream>(
-      InputStream.class,
-      PropertyMetaType.BINARY,
-      new SimpleTypeProviders.BINARY(),
-      null);
 
   public static ValueDefinition<?, ?> get(Object o) {
     int code;
@@ -94,8 +80,6 @@ public class ValueDefinition<I, E> {
     switch (code) {
       case PropertyType.STRING:
         return STRING;
-      case PropertyType.PATH:
-        return PATH;
       case PropertyType.NAME:
         return NAME;
       case PropertyType.LONG:
@@ -104,8 +88,6 @@ public class ValueDefinition<I, E> {
         return BOOLEAN;
       case PropertyType.DOUBLE:
         return DOUBLE;
-      case PropertyType.BINARY:
-        return BINARY;
       case PropertyType.UNDEFINED:
         return null;
       default:
@@ -134,6 +116,7 @@ public class ValueDefinition<I, E> {
     this.defaultValue = defaultValue;
     this.propertyMetaType = propertyMetaType;
   }
+
 
   public boolean isPrimitive() {
     return realType.isPrimitive();
@@ -180,13 +163,11 @@ public class ValueDefinition<I, E> {
    * @throws RepositoryException any repository exception
    * @throws ClassCastException if the value type is not the expected type
    */
-  public E get(Value value) throws RepositoryException, ClassCastException {
-    if (value.getType() == propertyMetaType.getCode()) {
-      I internal = propertyMetaType.getValue(value);
-      return valueType.getExternal(internal);
-    } else {
-      throw new ClassCastException();
-    }
+  public E getValue(Object value) throws RepositoryException, ClassCastException {
+    
+    I internal = propertyMetaType.getValue(value);
+    return valueType.getExternal(internal);
+    
   }
 
 

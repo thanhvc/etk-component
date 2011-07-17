@@ -19,7 +19,7 @@ package org.etk.model.plugins.entity.type;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
+import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.TypeInfo;
@@ -40,12 +40,10 @@ class SimpleTypeMappingImpl<I> implements SimpleTypeBinding {
     //
     Map<ClassTypeInfo, PropertyMetaType<?>> _jcrTypes = new HashMap<ClassTypeInfo, PropertyMetaType<?>>();
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.STRING.class), PropertyMetaType.STRING);
-    _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.PATH.class), PropertyMetaType.PATH);
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.NAME.class), PropertyMetaType.NAME);
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.LONG.class), PropertyMetaType.LONG);
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.DOUBLE.class), PropertyMetaType.DOUBLE);
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.BOOLEAN.class), PropertyMetaType.BOOLEAN);
-    _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.BINARY.class), PropertyMetaType.BINARY);
     _jcrTypes.put((ClassTypeInfo)SimpleTypeResolver.typeDomain.resolve(SimpleTypeProvider.DATE.class), PropertyMetaType.DATE);
     propertyMetaTypes = _jcrTypes;
   }

@@ -62,6 +62,15 @@ public class EntityTypeInfo {
     }
     return propertyDefinitionInfo;
   }
-  
+
+  public Object getValue(String propertyName) {
+    return null;
+  }
+
+  public void setProperty(String propertyName, Object value) {
+        
+  }
+
+   
   
 }

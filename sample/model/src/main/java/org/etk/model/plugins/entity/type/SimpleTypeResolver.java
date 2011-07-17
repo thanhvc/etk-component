@@ -21,8 +21,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.api.annotations.SimpleType;
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
 import org.etk.orm.plugins.bean.type.SimpleTypeProviders;
 import org.etk.reflect.api.ClassTypeInfo;

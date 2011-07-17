@@ -18,7 +18,7 @@ package org.etk.model.plugins.entity.binding;
 
 import org.etk.model.plugins.entity.type.SimpleTypeBinding;
 import org.etk.model.plugins.entity.type.SimpleTypeResolver;
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
+import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
 
 import org.etk.reflect.api.TypeInfo;

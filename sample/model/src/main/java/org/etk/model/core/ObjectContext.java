@@ -20,23 +20,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 import javax.jcr.Value;
+import javax.jcr.ValueFactory;
 
 import org.etk.model.core.entity.EntityTypeInfo;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.instrument.MethodHandler;
 import org.etk.model.plugins.json.type.PropertyDefinitionInfo;
+import org.etk.model.plugins.vt2.ValueDefinition;
 import org.etk.orm.api.NoSuchPropertyException;
 import org.etk.orm.api.ORMIOException;
 import org.etk.orm.api.UndeclaredRepositoryException;
 import org.etk.orm.core.ListType;
+import org.etk.orm.plugins.bean.type.TypeConversionException;
 import org.etk.orm.plugins.common.CloneableInputStream;
 import org.etk.orm.plugins.jcr.NodeTypeInfo;
-import org.etk.orm.plugins.vt2.ValueDefinition;
 
 /**
  * Created by The eXo Platform SAS
@@ -46,11 +50,19 @@ import org.etk.orm.plugins.vt2.ValueDefinition;
  */
 public abstract class ObjectContext<O extends ObjectContext<O>> implements MethodHandler {
 
+  /** . */
+  private final Map<String, Object> propertyCache;
   public abstract ObjectBinder<O> getMapper();
 
   public abstract Object getObject();
 
   public abstract EntityContext getEntity();
+  
+  
+  public ObjectContext() {
+    this.propertyCache = new HashMap<String, Object>();
+  }
+  
 
   /**
    * Returns the type info associated with the context. Null is returned when the context is in transient
@@ -168,16 +180,22 @@ public abstract class ObjectContext<O extends ObjectContext<O>> implements Metho
    */
   private <V> V getPropertyValue(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt) {
     try {
+      
+
+     //
+      V value = null;
       //
-      PropertyDefinitionInfo def = entityTypeInfo.findPropertyDefinition(propertyName);
-      if (def == null) {
-        throw new NoSuchPropertyException("Property " + propertyName + " cannot be loaded from node " + entityTypeInfo.getName());
+      if (propertyCache != null) {
+        // That must be ok
+        value = (V)propertyCache.get(propertyName);
       }
 
       //
-      V value = entityTypeInfo.getProperty(propertyName);
-
-      
+      if (value == null) {
+        Object propertyValue = entityTypeInfo.getValue(propertyName);
+        vt = (ValueDefinition<?, V>)ValueDefinition.get(propertyValue);
+        value = vt.getValue(propertyValue);
+      }
       //
       return value;
     }
@@ -192,8 +210,43 @@ public abstract class ObjectContext<O extends ObjectContext<O>> implements Metho
     return null;
   }
 
-  <V> void setPropertyValue(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, V propertyValue) {
-    //entityTypeInfo.
+  /**
+   * 
+   * @param <V>
+   * @param entityTypeInfo
+   * @param propertyName
+   * @param vt
+   * @param propertyValue
+   */
+  private <V> void setPropertyValue(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, V propertyValue) {
+    //
+    if (propertyCache != null) {
+      if (propertyValue instanceof InputStream && (propertyValue instanceof CloneableInputStream)) {
+        try {
+          propertyValue = (V) new CloneableInputStream((InputStream) propertyValue);
+        } catch (IOException e) {
+          throw new ORMIOException("Could not read stream", e);
+        }
+      }
+    }
+
+    entityTypeInfo.setProperty(propertyName, propertyValue);
+
+    //
+    if (propertyCache != null) {
+      if (propertyValue != null) {
+        if (propertyValue instanceof InputStream) {
+          CloneableInputStream stream = ((CloneableInputStream) propertyValue);
+          propertyValue = (V) stream.clone();
+        } else if (propertyValue instanceof Date) {
+          propertyValue = (V) ((Date) propertyValue).clone();
+        }
+        propertyCache.put(propertyName, propertyValue);
+      } else {
+        propertyCache.remove(propertyName);
+      }
+    }
+  
   }
 
   <V> void setPropertyValues(EntityTypeInfo entityTypeInfo, String propertyName, ValueDefinition<?, V> vt, ListType listType, List<V> propertyValues) {

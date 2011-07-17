@@ -1,9 +1,9 @@
 package org.etk.model.plugins.entity.binding;
 
 import org.etk.model.plugins.entity.PropertyInfo;
+import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
 
 public class PropertiesBinding<V extends ValueInfo> extends PropertyBinding<PropertyInfo<V, ValueKind.Map>,V, ValueKind.Map> {
 

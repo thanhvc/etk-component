@@ -2,12 +2,11 @@ package org.etk.model.plugins.entity.binding;
 
 import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.model.plugins.entity.SimpleValueInfo;
+import org.etk.model.plugins.json.PropertyDefinitionMapping;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyDefinitionMapping;
 
-public class ValueBinding<K extends ValueKind>
-                                               extends
-                                               PropertyBinding<PropertyInfo<SimpleValueInfo<K>, ValueKind.Single>, SimpleValueInfo<K>, ValueKind.Single> {
+public class ValueBinding<K extends ValueKind> extends
+           PropertyBinding<PropertyInfo<SimpleValueInfo<K>, ValueKind.Single>, SimpleValueInfo<K>, ValueKind.Single> {
 
   /** . */
   final PropertyDefinitionMapping<?> propertyDefinition;
@@ -41,5 +40,5 @@ public class ValueBinding<K extends ValueKind>
       visitor.multiValueMapping((ValueBinding<ValueKind.Multi>) this);
     }
   }
-  
+
 }

@@ -32,8 +32,14 @@ public class AEntityPropertyTest extends AbstractTestCase {
     
     AEntityProperty entity = entitySession.create(AEntityProperty.class, "aentityproperty");
     entity.setName("thanhvc");
+    entity.setDescription("description");
     
     assertEquals("AEntity.getName() must be equal thanhvc:: ", "thanhvc", entity.getName());
+    
+    assertEquals("AEntity.getDescription() must be equal description:: ", "description", entity.getDescription());
+    
+    entity.setName("thanhvc1");
+    assertEquals("AEntity.getName() must be equal thanhvc1:: ", "thanhvc1", entity.getName());
   }
   
   public void testEntityBinding() throws Exception {

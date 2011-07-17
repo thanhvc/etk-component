@@ -16,7 +16,7 @@
  */
 package org.etk.model.plugins.entity.type;
 
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
+import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
 
 /**

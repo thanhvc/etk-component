@@ -21,10 +21,10 @@ import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.model.plugins.entity.SimpleValueInfo;
 import org.etk.model.plugins.entity.binder.PropertyBinder;
 import org.etk.model.plugins.entity.binding.ValueBinding;
+import org.etk.model.plugins.vt2.PropertyMetaType;
+import org.etk.model.plugins.vt2.ValueDefinition;
 import org.etk.orm.plugins.bean.ValueKind;
-import org.etk.orm.plugins.bean.mapping.jcr.PropertyMetaType;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
-import org.etk.orm.plugins.vt2.ValueDefinition;
 
 /**
  * Created by The eXo Platform SAS
@@ -41,19 +41,17 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
   /** . */
   private final ValueDefinition<I, E> vt;
 
-  public JSONPropertySingleValuedPropertyBinder(
-      Class<O> contextType,
-      SimpleTypeProvider<I, E> vt,
-      ValueBinding<ValueKind.Single> info) {
+  public JSONPropertySingleValuedPropertyBinder(Class<O> contextType,
+                                                SimpleTypeProvider<I, E> vt,
+                                                ValueBinding<ValueKind.Single> info) {
     super(contextType, info);
 
     //
     this.jcrPropertyName = info.getPropertyDefinition().getName();
-    this.vt = new ValueDefinition<I, E>(
-        (Class)info.getValue().getEffectiveType().unwrap(),
-        (PropertyMetaType<I>)info.getPropertyDefinition().getMetaType(),
-        vt,
-        info.getPropertyDefinition().getDefaultValue());
+    this.vt = new ValueDefinition<I, E>((Class) info.getValue().getEffectiveType().unwrap(),
+                                        (PropertyMetaType<I>) info.getPropertyDefinition().getMetaType(),
+                                        vt,
+                                        info.getPropertyDefinition().getDefaultValue());
   }
 
   @Override
