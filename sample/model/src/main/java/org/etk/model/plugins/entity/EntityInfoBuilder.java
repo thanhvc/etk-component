@@ -56,17 +56,17 @@ public class EntityInfoBuilder {
   public Map<ClassTypeInfo, EntityInfo> build(Set<ClassTypeInfo> classTypes) {
     Context ctx = new Context(classTypes);
     ctx.build();
-    return ctx.beans;
+    return ctx.entityInfos;
   }
   
   private class Context {
 
-    private class BeanHierarchyVisitorStrategy<V extends HierarchyVisitor<V>> extends HierarchyVisitorStrategy<V> {
+    private class EntityHierarchyVisitorStrategy<V extends HierarchyVisitor<V>> extends HierarchyVisitorStrategy<V> {
 
       /** . */
       private final ClassTypeInfo current;
 
-      private BeanHierarchyVisitorStrategy(ClassTypeInfo current) {
+      private EntityHierarchyVisitorStrategy(ClassTypeInfo current) {
         this.current = current;
       }
 
@@ -80,11 +80,11 @@ public class EntityInfoBuilder {
     private final Set<ClassTypeInfo> classTypes;
 
     /** The beans being built in a method call to the builder. */
-    private final Map<ClassTypeInfo, EntityInfo> beans;
+    private final Map<ClassTypeInfo, EntityInfo> entityInfos;
 
     private Context(Set<ClassTypeInfo> classTypes) {
       this.classTypes = classTypes;
-      this.beans = new HashMap<ClassTypeInfo, EntityInfo>();
+      this.entityInfos = new HashMap<ClassTypeInfo, EntityInfo>();
     }
 
     void build() {
@@ -120,12 +120,13 @@ public class EntityInfoBuilder {
      * @return the corresponding bean instance
      */
     EntityInfo resolve(ClassTypeInfo classType) {
-      EntityInfo entity = beans.get(classType);
+      EntityInfo entity = entityInfos.get(classType);
       if (entity == null) {
         boolean accept;
         Boolean declared;
 
         if (classType.getKind() == ClassKind.CLASS || classType.getKind() == ClassKind.INTERFACE) {
+          //isPrimitive Object LONG, DOUBLE, STRING, DATE ...
           if (classType instanceof SimpleTypeInfo) {
             accept = false;
             declared = null;
@@ -152,17 +153,17 @@ public class EntityInfoBuilder {
         }
         if (accept) {
           entity = new EntityInfo(classType, declared);
-          beans.put(classType, entity);
+          entityInfos.put(classType, entity);
           build(entity);
         }
       }
       return entity;
     }
 
-    void build(EntityInfo bean) {
+    void build(EntityInfo entityInfo) {
 
       // Build parents
-      for (ClassTypeInfo ancestorClassType = bean.classType.getSuperClass();
+      for (ClassTypeInfo ancestorClassType = entityInfo.classType.getSuperClass();
                             ancestorClassType != null;ancestorClassType = ancestorClassType.getSuperClass()) {
 
         // Resolve the ancestor class type
@@ -170,17 +171,17 @@ public class EntityInfoBuilder {
 
         // If the ancestor resolves as a bean then it becomes the parent bean and we are done
         if (ancestorBean != null) {
-          bean.parent = ancestorBean;
+          entityInfo.parent = ancestorBean;
           break;
         }
       }
 
       //
-      buildProperties(bean);
+      buildProperties(entityInfo);
 
       // Now resolve types references by method return type
       // this is needed for @Create for instance
-      for (MethodInfo mi : bean.classType.getDeclaredMethods()) {
+      for (MethodInfo mi : entityInfo.classType.getDeclaredMethods()) {
         TypeInfo rti = mi.getReturnType();
         if (rti instanceof ClassTypeInfo) {
           resolve((ClassTypeInfo)rti);
@@ -227,14 +228,14 @@ public class EntityInfoBuilder {
     /**
      * Build properties of a bean.
      *
-     * @param bean the bean to build properties.
+     * @param entityInfo the bean to build properties.
      */
-    private void buildProperties(EntityInfo bean) {
+    private void buildProperties(EntityInfo entityInfo) {
 
-      BeanHierarchyVisitorStrategy strategy = new BeanHierarchyVisitorStrategy(bean.classType);
+      EntityHierarchyVisitorStrategy strategy = new EntityHierarchyVisitorStrategy(entityInfo.classType);
       MethodIntrospector introspector = new MethodIntrospector(strategy, true);
-      Map<String, MethodInfo> getterMap = introspector.getGetterMap(bean.classType);
-      Map<String, Set<MethodInfo>> setterMap = introspector.getSetterMap(bean.classType);
+      Map<String, MethodInfo> getterMap = introspector.getGetterMap(entityInfo.classType);
+      Map<String, Set<MethodInfo>> setterMap = introspector.getSetterMap(entityInfo.classType);
 
       // Gather all properties on the bean
       Map<String, ToBuild> toBuilds = new HashMap<String,ToBuild>();
@@ -282,13 +283,13 @@ public class EntityInfoBuilder {
       for (Map.Entry<String, ToBuild> toBuildEntry : toBuilds.entrySet()) {
 
         // Get parent property if any
-        PropertyInfo parentProperty = resolveProperty(bean.parent, toBuildEntry.getKey());
+        PropertyInfo parentProperty = resolveProperty(entityInfo.parent, toBuildEntry.getKey());
 
         //
         TypeInfo type = toBuildEntry.getValue().type;
 
         // First resolve as much as we can
-        TypeInfo resolvedType = bean.classType.resolve(type);
+        TypeInfo resolvedType = entityInfo.classType.resolve(type);
 
         //
         PropertyInfo<?, ?> property = null;
@@ -296,7 +297,7 @@ public class EntityInfoBuilder {
         // We could not resolve it, get the upper bound
         if (resolvedType instanceof TypeVariableInfo) {
           resolvedType = ((TypeVariableInfo)resolvedType).getBounds().get(0);
-          resolvedType = bean.classType.resolve(resolvedType);
+          resolvedType = entityInfo.classType.resolve(resolvedType);
           // is it really enough ? for now it should be OK but we should check
         }
 
@@ -317,7 +318,7 @@ public class EntityInfoBuilder {
               elementType = parameterizedType.getTypeArguments().get(0);
             } else if (rawClassName.equals("java.util.Map")) {
               TypeInfo keyType = parameterizedType.getTypeArguments().get(0);
-              TypeInfo resolvedKeyType = bean.classType.resolve(keyType);
+              TypeInfo resolvedKeyType = entityInfo.classType.resolve(keyType);
               if (resolvedKeyType instanceof ClassTypeInfo && resolvedKeyType.getName().equals("java.lang.String")) {
                 elementType = parameterizedType.getTypeArguments().get(1);
                 collectionKind = ValueKind.MAP;
@@ -339,47 +340,47 @@ public class EntityInfoBuilder {
                   if (parameterizedElementRawClassName.equals("java.util.List")) {
                     TypeInfo listElementType = parameterizedElementType.getTypeArguments().get(0);
                     property = new PropertyInfo<SimpleValueInfo, ValueKind.Multi>(
-                        bean,
+                        entityInfo,
                         parentProperty,
                         toBuildEntry.getKey(),
                         toBuildEntry.getValue().getter,
                         toBuildEntry.getValue().setter,
                         collectionKind,
-                        createSimpleValueInfo(bean, listElementType, ValueKind.LIST));
+                        createSimpleValueInfo(entityInfo, listElementType, ValueKind.LIST));
                   }
                 }
               } else {
-                ClassTypeInfo elementClassType = bean.resolveToClass(elementType);
+                ClassTypeInfo elementClassType = entityInfo.resolveToClass(elementType);
                 if (elementClassType != null) {
                   EntityInfo relatedBean = resolve(elementClassType);
                   if (relatedBean != null) {
                     property = new PropertyInfo<EntityValueInfo, ValueKind.Multi>(
-                        bean,
+                        entityInfo,
                         parentProperty,
                         toBuildEntry.getKey(),
                         toBuildEntry.getValue().getter,
                         toBuildEntry.getValue().setter,
                         collectionKind,
-                        new EntityValueInfo(type, bean.resolveToClass(elementType), relatedBean));
+                        new EntityValueInfo(type, entityInfo.resolveToClass(elementType), relatedBean));
                   } else {
                     if (collectionKind == ValueKind.LIST) {
                       property = new PropertyInfo<SimpleValueInfo, ValueKind.Single>(
-                          bean,
+                          entityInfo,
                           parentProperty,
                           toBuildEntry.getKey(),
                           toBuildEntry.getValue().getter,
                           toBuildEntry.getValue().setter,
                           ValueKind.SINGLE,
-                          createSimpleValueInfo(bean, elementType, collectionKind));
+                          createSimpleValueInfo(entityInfo, elementType, collectionKind));
                     } else if (collectionKind == ValueKind.MAP) {
                       property = new PropertyInfo<SimpleValueInfo, ValueKind.Map>(
-                          bean,
+                          entityInfo,
                           parentProperty,
                           toBuildEntry.getKey(),
                           toBuildEntry.getValue().getter,
                           toBuildEntry.getValue().setter,
                           ValueKind.MAP,
-                          createSimpleValueInfo(bean, elementType, ValueKind.SINGLE));
+                          createSimpleValueInfo(entityInfo, elementType, ValueKind.SINGLE));
                     }
                   }
                 }
@@ -397,38 +398,38 @@ public class EntityInfoBuilder {
               case LONG:
               case INT:
                 property = new PropertyInfo<SimpleValueInfo, ValueKind.Single>(
-                    bean,
+                    entityInfo,
                     parentProperty,
                     toBuildEntry.getKey(),
                     toBuildEntry.getValue().getter,
                     toBuildEntry.getValue().setter,
                     ValueKind.SINGLE,
-                    createSimpleValueInfo(bean, componentType, ValueKind.ARRAY));
+                    createSimpleValueInfo(entityInfo, componentType, ValueKind.ARRAY));
                 break;
               default:
                 break;
             }
           } else {
             property = new PropertyInfo<SimpleValueInfo, ValueKind.Single>(
-                bean,
+                entityInfo,
                 parentProperty,
                 toBuildEntry.getKey(),
                 toBuildEntry.getValue().getter,
                 toBuildEntry.getValue().setter,
                 ValueKind.SINGLE,
-                createSimpleValueInfo(bean, componentType, ValueKind.ARRAY));
+                createSimpleValueInfo(entityInfo, componentType, ValueKind.ARRAY));
           }
         } else if (resolvedType instanceof ClassTypeInfo) {
           EntityInfo related = resolve((ClassTypeInfo)resolvedType);
           if (related != null) {
             property = new PropertyInfo<EntityValueInfo, ValueKind.Single>(
-                bean,
+                entityInfo,
                 parentProperty,
                 toBuildEntry.getKey(),
                 toBuildEntry.getValue().getter,
                 toBuildEntry.getValue().setter,
                 ValueKind.SINGLE,
-                new EntityValueInfo(type, bean.resolveToClass(type), related));
+                new EntityValueInfo(type, entityInfo.resolveToClass(type), related));
           }
         }
 
@@ -436,13 +437,13 @@ public class EntityInfoBuilder {
         if (property == null) {
 
           property = new PropertyInfo<SimpleValueInfo, ValueKind.Single>(
-              bean,
+              entityInfo,
               parentProperty,
               toBuildEntry.getKey(),
               toBuildEntry.getValue().getter,
               toBuildEntry.getValue().setter,
               ValueKind.SINGLE,
-              createSimpleValueInfo(bean, type, ValueKind.SINGLE));
+              createSimpleValueInfo(entityInfo, type, ValueKind.SINGLE));
         }
 
         //
@@ -450,7 +451,7 @@ public class EntityInfoBuilder {
       }
 
       // Update properties
-      bean.properties.putAll(properties);
+      entityInfo.properties.putAll(properties);
     }
 
     private <K extends ValueKind> SimpleValueInfo createSimpleValueInfo(EntityInfo bean, TypeInfo type, K valueKind) {

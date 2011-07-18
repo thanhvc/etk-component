@@ -34,7 +34,13 @@ import org.etk.model.plugins.json.JSONPropertySingleValuedPropertyBinder;
 import org.etk.orm.core.EntityContext;
 import org.etk.orm.core.ObjectContext;
 import org.etk.orm.plugins.bean.ValueKind;
+import org.etk.orm.plugins.bean.mapping.AttributeMapping;
+import org.etk.orm.plugins.bean.mapping.CreateMapping;
+import org.etk.orm.plugins.bean.mapping.PropertiesMapping;
 import org.etk.orm.plugins.bean.type.SimpleTypeProvider;
+import org.etk.orm.plugins.mapper.MethodMapper;
+import org.etk.orm.plugins.mapper.nodeattribute.JCRNodeAttributePropertyMapper;
+import org.etk.orm.plugins.mapper.property.JCRPropertyDetypedPropertyMapper;
 
 /**
  * Created by The eXo Platform SAS
@@ -61,13 +67,13 @@ public class BinderBuilder {
 
     ctx.start();
 
-    for (EntityBinding beanMapping : beanMappings) {
-      beanMapping.accept(ctx);
+    for (EntityBinding entityBindings : beanMappings) {
+      entityBindings.accept(ctx);
     }
 
     ctx.end();
 
-    return ctx.beanMappers.values();
+    return ctx.entityBinders.values();
   }
 
   /**
@@ -80,7 +86,7 @@ public class BinderBuilder {
     private EntityBinding beanMapping;
 
 
-    private Map<EntityBinding, ObjectBinder<?>> beanMappers;
+    private Map<EntityBinding, ObjectBinder<?>> entityBinders;
 
     private Class<? extends ObjectContext> contextType;
 
@@ -88,7 +94,7 @@ public class BinderBuilder {
     Set<PropertyBinder<?, ?, ?, ?>> propertyMappers;
 
     public void start() {
-      this.beanMappers = new HashMap<EntityBinding, ObjectBinder<?>>();
+      this.entityBinders = new HashMap<EntityBinding, ObjectBinder<?>>();
     }
 
     @Override
@@ -113,13 +119,29 @@ public class BinderBuilder {
     }
 
    
-        @Override
+    @Override
     public void attributeBinding(AttributeBinding mapping) {
       JSONAttributePropertyBinder mapper = new JSONAttributePropertyBinder(mapping);
       propertyMappers.add(mapper);
     }
-
     
+    /*
+     
+     @Override
+    public void propertiesMapping(PropertiesMapping<?> mapping) {
+      JCRPropertyDetypedPropertyMapper mapper = new JCRPropertyDetypedPropertyMapper(contextType, mapping);
+      propertyMappers.add(mapper);
+    }
+
+    @Override
+    public void visit(CreateMapping mapping) {
+      MethodMapper.Create mapper = new MethodMapper.Create(mapping.getMethod());
+      methodMappers.add(mapper);
+      createMethods.get(mapping.getBeanMapping()).add(mapper);
+    }
+     */
+
+      
 
     @Override
     public void endBean() {
@@ -135,7 +157,7 @@ public class BinderBuilder {
                                 beanMapping.getEntityTypeKind());
 
       //
-      beanMappers.put(beanMapping, mapper);
+      entityBinders.put(beanMapping, mapper);
     }
 
     public void end() {
