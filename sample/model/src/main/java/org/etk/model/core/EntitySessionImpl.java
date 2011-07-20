@@ -69,7 +69,9 @@ public class EntitySessionImpl extends EntitySession {
 
     EntityType entityType = entity.getEntityType(typeMapper.getBinding(), EntityType.Kind.JSON);
 
-    EntityContext ctx = new EntityContext(entityType, (ObjectBinder<EntityContext>) typeMapper, this);
+    EntityContext ctx = new EntityContext(entityType,
+                                          (ObjectBinder<EntityContext>) typeMapper,
+                                          this);
 
     //
     if (localName != null) {
