@@ -10,9 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.reflext.test.ReflextUnitTest;
-import org.reflext.test.UnitTestPlugin;
-
 import junit.framework.TestCase;
 
 public abstract class AbstractReflectTestCase extends TestCase {

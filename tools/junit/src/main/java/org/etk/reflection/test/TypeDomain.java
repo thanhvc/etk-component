@@ -2,6 +2,12 @@ package org.etk.reflection.test;
 
 import java.util.Map;
 
+import org.etk.reflect.api.ClassTypeInfo;
+import org.etk.reflect.api.MethodInfo;
+import org.etk.reflect.api.TypeInfo;
+import org.etk.reflect.api.TypeResolver;
+import org.etk.reflect.core.AnnotationType;
+
 
 public class TypeDomain<T> {
 
@@ -33,8 +39,8 @@ public class TypeDomain<T> {
       TypeInfo ti = domain.resolve(type);
       if (ti instanceof ClassTypeInfo) {
         for (MethodInfo mi : ((ClassTypeInfo)ti).getDeclaredMethods()) {
-          org.reflext.test.Method methodAnn = mi.getDeclaredAnnotation(AnnotationType.get(org.reflext.test.Method.class));
-          if (methodAnn != null && methodAnn.value().equals(id)) {
+          org.etk.reflection.test.Method methodAnnocation = mi.getDeclaredAnnotation(AnnotationType.get(org.etk.reflection.test.Method.class));
+          if (methodAnnocation != null && methodAnnocation.value().equals(id)) {
             return mi;
           }
         }

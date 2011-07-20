@@ -19,7 +19,11 @@
         <artifactId>servlet-api</artifactId>
         <version>${javax.servlet.version}</version>
       </dependency>
-     
+      <dependency>
+        <groupId>org.etk.component</groupId>
+        <artifactId>org.etk.component.reflection</artifactId>
+        <version>${org.etk.reflection.version}</version>
+      </dependency>
   </dependencies>
   <profiles>
     <profile>

@@ -24,23 +24,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jcr.Property;
 import javax.jcr.RepositoryException;
-import javax.jcr.Value;
-import javax.jcr.ValueFactory;
 
 import org.etk.model.core.entity.EntityTypeInfo;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.instrument.MethodHandler;
-import org.etk.model.plugins.json.type.PropertyDefinitionInfo;
 import org.etk.model.plugins.vt2.ValueDefinition;
-import org.etk.orm.api.NoSuchPropertyException;
 import org.etk.orm.api.ORMIOException;
 import org.etk.orm.api.UndeclaredRepositoryException;
 import org.etk.orm.core.ListType;
-import org.etk.orm.plugins.bean.type.TypeConversionException;
 import org.etk.orm.plugins.common.CloneableInputStream;
-import org.etk.orm.plugins.jcr.NodeTypeInfo;
 
 /**
  * Created by The eXo Platform SAS
