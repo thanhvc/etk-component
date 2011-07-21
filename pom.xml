@@ -42,6 +42,7 @@
   <properties>
  
     <!-- Dependencies versions -->
+    <junit.version>3.8.2</junit.version>
     <json_simple.version>1.1</json_simple.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
     <javax.servlet.version>2.5</javax.servlet.version>
