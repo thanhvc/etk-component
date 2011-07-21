@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.reflection.java6.reflection.test;
+package org.etk.java6.reflection.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +28,12 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
+import org.etk.java5.reflection.test.ReflectUnitTest;
+import org.etk.java5.reflection.test.Type;
+import org.etk.java5.reflection.test.TypeDomain;
 import org.etk.reflect.api.TypeResolver;
 import org.etk.reflect.apt.jxlr.metadata.JxLReflectionMetadata;
 import org.etk.reflect.core.TypeResolverImpl;
-import org.etk.reflection.test.ReflectUnitTest;
-import org.etk.reflection.test.Type;
-import org.etk.reflection.test.TypeDomain;
 
 /**
  * Created by The eXo Platform SAS

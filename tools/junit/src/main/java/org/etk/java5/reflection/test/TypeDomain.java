@@ -1,4 +1,4 @@
-package org.etk.reflection.test;
+package org.etk.java5.reflection.test;
 
 import java.util.Map;
 
@@ -39,7 +39,7 @@ public class TypeDomain<T> {
       TypeInfo ti = domain.resolve(type);
       if (ti instanceof ClassTypeInfo) {
         for (MethodInfo mi : ((ClassTypeInfo)ti).getDeclaredMethods()) {
-          org.etk.reflection.test.Method methodAnnocation = mi.getDeclaredAnnotation(AnnotationType.get(org.etk.reflection.test.Method.class));
+          org.etk.java5.reflection.test.Method methodAnnocation = mi.getDeclaredAnnotation(AnnotationType.get(org.etk.java5.reflection.test.Method.class));
           if (methodAnnocation != null && methodAnnocation.value().equals(id)) {
             return mi;
           }

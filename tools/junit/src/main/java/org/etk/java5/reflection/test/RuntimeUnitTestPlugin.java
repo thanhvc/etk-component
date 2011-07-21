@@ -1,4 +1,4 @@
-package org.etk.reflection.test;
+package org.etk.java5.reflection.test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,13 +16,13 @@ public class RuntimeUnitTestPlugin extends UnitTestPlugin {
     Map<String, java.lang.reflect.Type> types = new HashMap<String, java.lang.reflect.Type>();
     
     for(Class<?> clazz : classes) {
-      org.etk.reflection.test.Type classTypeAnnotation = clazz.getAnnotation(org.etk.reflection.test.Type.class);
+      org.etk.java5.reflection.test.Type classTypeAnnotation = clazz.getAnnotation(org.etk.java5.reflection.test.Type.class);
       if(classTypeAnnotation != null) {
         types.put(classTypeAnnotation.value(), clazz);
       }
       
       for (java.lang.reflect.Method method : clazz.getDeclaredMethods()) {
-        org.etk.reflection.test.Method methodTypeAnnotation = method.getAnnotation(org.etk.reflection.test.Method.class);
+        org.etk.java5.reflection.test.Method methodTypeAnnotation = method.getAnnotation(org.etk.java5.reflection.test.Method.class);
         if (methodTypeAnnotation != null) {
           types.put(methodTypeAnnotation.value(), method.getGenericReturnType());
         }

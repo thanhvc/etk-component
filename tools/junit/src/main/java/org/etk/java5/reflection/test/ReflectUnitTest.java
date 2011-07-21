@@ -1,4 +1,4 @@
-package org.etk.reflection.test;
+package org.etk.java5.reflection.test;
 import junit.framework.Assert;
 
 public abstract class ReflectUnitTest extends Assert {

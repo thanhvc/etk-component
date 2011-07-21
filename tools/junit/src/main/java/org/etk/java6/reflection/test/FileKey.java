@@ -14,12 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.reflection.test;
+package org.etk.java6.reflection.test;
 
-import java.lang.annotation.Target;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import javax.tools.JavaFileObject;
 
 /**
  * Created by The eXo Platform SAS
@@ -27,8 +24,41 @@ import java.lang.annotation.RetentionPolicy;
  *          exo@exoplatform.com
  * Jul 20, 2011  
  */
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Method {
-  String value();
+final class FileKey {
+
+  /** . */
+  final JavaFileObject.Kind kind;
+
+  /** . */
+  final String name;
+
+  public FileKey(JavaFileObject.Kind kind, String name) {
+    if (kind == null) {
+      throw new NullPointerException();
+    }
+    if (name == null) {
+      throw new NullPointerException();
+    }
+
+    //
+    this.kind = kind;
+    this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    } else if (o instanceof FileKey) {
+      FileKey that = (FileKey)o;
+      return kind.equals(that.kind) && name.equals(that.name);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    return kind.hashCode() ^ name.hashCode();
+  }
 }

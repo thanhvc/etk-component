@@ -1,4 +1,4 @@
-package org.etk.reflection.test;
+package org.etk.java5.reflection.test;
 
 import java.util.Set;
 
