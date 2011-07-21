@@ -8,15 +8,16 @@
     </parent>
 
   <groupId>org.etk</groupId>
-  <artifactId>component</artifactId>
+  <artifactId>kernel</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Component</name>
-  <description>Engineering toolkit Framework Component</description>
+  <name>Engineering toolkit Framework Kernel</name>
+  <description>Engineering toolkit Framework Kernel</description>
 
   <modules>
-    <module>common</module>
-   </modules>
+    <module>reflection</module>
+    <module>kernel</module>
+  </modules>
 
 </project>
 

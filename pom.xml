@@ -291,6 +291,8 @@
         <modules>
            <module>tools</module>
            <module>component</module>
+           <module>kernel</module>
+           <module>core</module>
            <module>sample</module>
         </modules>
      </profile>

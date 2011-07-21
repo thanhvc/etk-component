@@ -2,12 +2,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.etk</groupId>
-    <artifactId>component</artifactId>
+    <artifactId>core</artifactId>
     <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.etk.component</groupId>
-  <artifactId>org.etk.component.orm</artifactId>
+  <groupId>org.etk.core</groupId>
+  <artifactId>org.etk.core.orm</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Object Relation Mapping</name>
   <description>Engineer Toolkit Framework Object Relation Mapping</description>
@@ -18,13 +18,13 @@
         <version>${org.etk.junit.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.etk.component</groupId>
-        <artifactId>org.etk.component.kernel</artifactId>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.kernel</artifactId>
         <version>${org.etk.kernel.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.etk.component</groupId>
-        <artifactId>org.etk.component.reflection</artifactId>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.reflection</artifactId>
         <version>${org.etk.reflection.version}</version>
       </dependency>
       <dependency>
