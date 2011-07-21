@@ -16,7 +16,7 @@
 
   <modules>
     <module>reflection</module>
-    <module>kernel</module>
+    <module>container</module>
   </modules>
 
 </project>
