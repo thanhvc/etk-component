@@ -22,6 +22,11 @@
         <artifactId>org.etk.kernel.container</artifactId>
         <version>${org.etk.kernel.version}</version>
       </dependency>
+      <dependency>
+      <groupId>org.exoplatform.kernel</groupId>
+      <artifactId>exo.kernel.component.cache</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <profiles>
     <profile>

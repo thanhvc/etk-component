@@ -14,52 +14,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.plugins.cache.model.data;
+
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class Foo {
+public class IntegerData extends SimpleCacheData<Integer>{
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
+  public IntegerData(final Integer integer) {
+    super(integer);
   }
-
-  public Foo(String id) {
-    this.id = id;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-
 }

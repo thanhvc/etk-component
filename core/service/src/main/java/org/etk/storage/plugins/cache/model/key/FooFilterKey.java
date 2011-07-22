@@ -14,27 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.mock;
-
-import java.util.List;
+package org.etk.storage.plugins.cache.model.key;
 
 import org.etk.service.foo.FooFilter;
-import org.etk.service.foo.model.Foo;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class FooStorage {
+public class FooFilterKey implements CacheKey {
 
-  public List<Foo> getFoos(int offset, int limit) {
-    return null;
-  }
-
-  public List<Foo> getFooByFilter(FooFilter fooFilter, int offset, int limit) {
-    return null;
+  public FooFilterKey(FooFilter filter) {
+    
   }
 
 }

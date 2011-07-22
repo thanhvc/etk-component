@@ -20,8 +20,6 @@ import java.util.List;
 
 import org.etk.common.utils.LazyListAccess;
 import org.etk.common.utils.ListAccessValidator;
-import org.etk.service.foo.FooFilter;
-import org.etk.service.foo.mock.FooStorage;
 import org.etk.service.foo.model.Foo;
 
 /**
@@ -32,45 +30,23 @@ import org.etk.service.foo.model.Foo;
  */
 public class FooListAccess implements LazyListAccess<Foo> {
 
-  FooStorage fooStorage;
-  FooFilter fooFilter;
-  /** The type. */
-  Type type;
+  /** The list used for identity storage. */
+  private final List<Foo> list;
   
-  /**
-   * The foo list access Type Enum.
-   */
-  public enum Type {
-    /** Gets the all Foos (for super user). */
-    ALL,
-    /** Gets the all Foos by filter. */
-    ALL_FILTER,
-  }
-  
-  public FooListAccess(FooStorage fooStorage, Type type) {
-    this.fooStorage = fooStorage;
-    this.type = type;
+  public FooListAccess(List<Foo> list) {
+    this.list = list;
   }
   
   @Override
   public Foo[] load(int offset, int limit) throws Exception, IllegalArgumentException {
     ListAccessValidator.validateIndex(offset, limit, this.getSize());
-    List<Foo> listFoos = null;
-    switch (type) {
-      case ALL: listFoos = fooStorage.getFoos(offset, limit);
-        break;
-      case ALL_FILTER: listFoos = fooStorage.getFooByFilter(this.fooFilter, offset, limit);
-        break;
-    }
-    return listFoos.toArray(new Foo[listFoos.size()]);
+    Foo result[] = new Foo[limit];
+    for (int i = 0; i < limit; i++)
+      result[i] = list.get(i + offset);
+
+    return result;
   }
 
   @Override
-  public int getSize() throws Exception {
-    switch (type) {
-      case ALL: return 0;
-      case ALL_FILTER: return 0;
-      default: return 0;
-    }
-  }
+  public int getSize() throws Exception { return list.size();}
 }

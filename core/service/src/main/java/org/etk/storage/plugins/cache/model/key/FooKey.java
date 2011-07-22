@@ -14,52 +14,47 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.plugins.cache.model.key;
+
+import org.etk.service.foo.model.Foo;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class Foo {
+public class FooKey implements CacheKey {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
+  private final String id;
+  
+  public FooKey(final Foo foo) {
+    this.id = foo.getId();
   }
 
   public String getId() {
     return id;
   }
-
-  public void setId(String id) {
-    this.id = id;
+  
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+     return true; 
+    }
+    
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    
+    FooKey that = (FooKey) o;
+    if (id != null? id.equals(that.id) : that.id != null) {
+      return false;
+    }
+    return true;
   }
-
-  public String getName() {
-    return name;
+  
+  @Override
+  public int hashCode() {
+    return id != null ? id.hashCode() : 0;
   }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-
 }

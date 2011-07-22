@@ -14,52 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.plugins.cache.loader;
 
 /**
- * Created by The eXo Platform SAS
- * Author : eXoPlatform
- *          exo@exoplatform.com
- * Jul 21, 2011  
+ * The loader interface is used by the future cache to retrieves the value from the key when it does not exist.
+ *
+ * @param <K> the key type parameter
+ * @param <V> the value type parameter
+ * @param <C> the context type parameter
  */
-public class Foo {
+public interface Loader<K, V, C>
+{
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
+   /**
+    * Retrieves the value from the key within the specified context. If the resource is not found then the value
+    * null must be returned.
+    *
+    * @param context the context
+    * @param key the key
+    * @return the value
+    * @throws Exception any exception that would prevent the value to be loaded
+    */
+   V retrieve(C context, K key) throws Exception;
 
 }

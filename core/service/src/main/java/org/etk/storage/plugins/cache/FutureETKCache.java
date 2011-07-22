@@ -14,52 +14,45 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.plugins.cache;
+
+import java.io.Serializable;
+
+import org.etk.storage.plugins.cache.loader.Loader;
+import org.exoplatform.services.cache.ExoCache;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class Foo {
+public class FutureETKCache <K extends Serializable, V, C> extends FutureCache<K, V, C> {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
+  private final ExoCache<K, V> cache;
+  
+  public FutureETKCache(Loader<K, V, C> loader, ExoCache<K, V> cache) {
+    super(loader);
+    this.cache = cache;
+    
+  }
+  
+  public void remove(K key) {
+    cache.remove(key);
+  }
+  
+  public void clear() {
+    cache.clearCache();
+  }
+  @Override
+  protected V get(K key) {
+    return cache.get(key);
   }
 
-  public Foo(String id) {
-    this.id = id;
+  @Override
+  protected void put(K key, V entry) {
+    cache.put(key, entry);
   }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
+  
 
 }

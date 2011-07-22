@@ -14,52 +14,39 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.core.impl.rest;
+
+import java.util.List;
+
+import org.etk.service.foo.FooFilter;
+import org.etk.service.foo.model.Bar;
+import org.etk.service.foo.model.Foo;
+import org.etk.storage.api.FooStorage;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class Foo {
+public class FooRestServiceImpl implements FooStorage {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
+  @Override
+  public List<Foo> getFooByFilter(FooFilter fooFilter, int offset, int limit) {
+    return null;
   }
 
-  public Foo(String id) {
-    this.id = id;
+  @Override
+  public Foo findById(String id) {
+    return null;
   }
 
-  public String getId() {
-    return id;
+  @Override
+  public Bar loadBar(Foo foo) {
+    return null;
   }
+  
+  
 
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-
+  
 }

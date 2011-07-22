@@ -14,52 +14,39 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.storage.plugins.cache.model.data;
+
+import org.etk.service.foo.model.Bar;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 22, 2011  
  */
-public class Foo {
+public class BarData implements CacheData<Bar> {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
+  private final String id;
+  private final String description;
+  
+  @Override
+  public Bar build() {
+    Bar bar = new Bar();
+    bar.setId(this.id);
+    bar.setDescription(this.description);
+    return bar;
   }
-
-  public Foo(String id) {
-    this.id = id;
+  
+  public BarData(final Bar model) {
+    this.id = model.getId();
+    this.description = model.getDescription();
   }
 
   public String getId() {
     return id;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public String getDescription() {
+    return description;
   }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-
 }

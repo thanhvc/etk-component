@@ -55,6 +55,7 @@
     <org.etk.orm.version>0.1-Beta1-SNAPSHOT</org.etk.orm.version>
     <org.etk.reflection.version>0.1-Beta1-SNAPSHOT</org.etk.reflection.version>
     <org.etk.junit.version>0.1-Beta1-SNAPSHOT</org.etk.junit.version>
+    <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>
     <!-- Plugins settings -->
 
     <!-- Cross plugins settings -->
@@ -104,6 +105,11 @@
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
         <version>0.9.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.exoplatform.kernel</groupId>
+        <artifactId>exo.kernel.component.cache</artifactId>
+        <version>${org.exoplatform.kernel.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
