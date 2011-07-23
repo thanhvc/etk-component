@@ -79,37 +79,27 @@
 
   <mapping name="values-param" class="org.etk.kernel.container.xml.ValuesParam" extends="org.etk.kernel.container.xml.Parameter">
     <structure map-as="org.etk.kernel.container.xml.Parameter"/>
-    <collection item-type="java.lang.String" field="values">
-      <value name="value" style="element"/>
+    <collection item-type="java.lang.String" field="values">   
+         <value name="value" style="element"/>
     </collection>
   </mapping>
 
-  <mapping name="properties-param" 
-           class="org.etk.kernel.container.xml.PropertiesParam" 
-           extends="org.etk.kernel.container.xml.Parameter">
+  <mapping name="properties-param" class="org.etk.kernel.container.xml.PropertiesParam" extends="org.etk.kernel.container.xml.Parameter">
     <structure map-as="org.etk.kernel.container.xml.Parameter"/>
-    <collection item-type="org.etk.kernel.container.xml.Property" 
-                add-method="addProperty" iter-method="getPropertyIterator"/>
+    <collection item-type="org.etk.kernel.container.xml.Property" add-method="addProperty" iter-method="getPropertyIterator"/>
   </mapping>
 
   <!-- new container configuration mapping -->
-  <mapping name="object-param" 
-           class="org.etk.kernel.container.xml.ObjectParameter" 
-           extends="org.etk.kernel.container.xml.Parameter">
+  <mapping name="object-param" class="org.etk.kernel.container.xml.ObjectParameter" extends="org.etk.kernel.container.xml.Parameter">
     <structure map-as="org.etk.kernel.container.xml.Parameter"/>
-    <structure map-as="org.etk.kernel.container.xml.object.XMLObject"
-               get-method="getXMLObject" set-method="setXMLObject"/>
+    <structure map-as="org.etk.kernel.container.xml.object.XMLObject" get-method="getXMLObject" set-method="setXMLObject"/>
   </mapping>
 
   <mapping name="init-params" class="org.etk.kernel.container.xml.InitParams">
-    <collection item-type="org.etk.kernel.container.xml.ValueParam" 
-                add-method="addParam" iter-method="getValueParamIterator"/>
-    <collection item-type="org.etk.kernel.container.xml.ValuesParam" 
-                add-method="addParam" iter-method="getValuesParamIterator"/>
-    <collection item-type="org.etk.kernel.container.xml.PropertiesParam" 
-                add-method="addParam" iter-method="getPropertiesParamIterator"/>
-    <collection item-type="org.etk.kernel.container.xml.ObjectParameter" 
-                add-method="addParam" iter-method="getObjectParamIterator"/>
+    <collection item-type="org.etk.kernel.container.xml.ValueParam" add-method="addParam" iter-method="getValueParamIterator"/>
+    <collection item-type="org.etk.kernel.container.xml.ValuesParam" add-method="addParam" iter-method="getValuesParamIterator"/>
+    <collection item-type="org.etk.kernel.container.xml.PropertiesParam" add-method="addParam" iter-method="getPropertiesParamIterator"/>
+    <collection item-type="org.etk.kernel.container.xml.ObjectParameter" add-method="addParam" iter-method="getObjectParamIterator"/>
   </mapping>
 
   <mapping name="component-plugin" class="org.etk.kernel.container.xml.ComponentPlugin" pre-get="preGet">

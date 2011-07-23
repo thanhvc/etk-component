@@ -16,7 +16,7 @@ public class JVMRuntimeInfoImpl implements JVMRuntimeInfo, Startable {
 	private RuntimeMXBean mxbean_;
 
 	public JVMRuntimeInfoImpl(InitParams params) throws Exception {
-		mxbean_ = ManagementFactory.getRuntimeMXBean();
+		//mxbean_ = ManagementFactory.getRuntimeMXBean();
 
 		PropertiesParam param = params.getPropertiesParam("add.system.properties");
 		if (param != null) {
@@ -24,8 +24,7 @@ public class JVMRuntimeInfoImpl implements JVMRuntimeInfo, Startable {
 			Iterator i = props.entrySet().iterator();
 			while (i.hasNext()) {
 				Map.Entry entry = (Map.Entry) i.next();
-				System.setProperty((String) entry.getKey(),
-						(String) entry.getValue());
+				System.setProperty((String) entry.getKey(), (String) entry.getValue());
 			}
 		}
 	}
@@ -120,22 +119,17 @@ public class JVMRuntimeInfoImpl implements JVMRuntimeInfo, Startable {
 		b.append("Name: ").append(getName()).append("\n");
 		b.append("Specification Name: ").append(getSpecName()).append("\n");
 		b.append("Specification Vendor: ").append(getSpecVendor()).append("\n");
-		b.append("Specification Version: ").append(getSpecVersion())
-				.append("\n");
-		b.append("Management Spec Version: ")
-				.append(getManagementSpecVersion()).append("\n\n");
+		b.append("Specification Version: ").append(getSpecVersion()).append("\n");
+		b.append("Management Spec Version: ").append(getManagementSpecVersion()).append("\n\n");
 
 		b.append("Virtual Machine Name: ").append(getVmName()).append("\n");
 		b.append("Virtual Machine Vendor: ").append(getVmVendor()).append("\n");
-		b.append("Virtual Machine Version: ").append(getVmVersion())
-				.append("\n\n");
+		b.append("Virtual Machine Version: ").append(getVmVersion()).append("\n\n");
 
 		b.append("Input Arguments: ").append(getInputArguments()).append("\n");
-		b.append("System Properties: ").append(getSystemProperties())
-				.append("\n\n");
+		b.append("System Properties: ").append(getSystemProperties()).append("\n\n");
 
-		b.append("Boot Class Path Support: ")
-				.append(getBootClassPathSupported()).append("\n");
+		b.append("Boot Class Path Support: ").append(getBootClassPathSupported()).append("\n");
 		b.append("Boot Class Path: ").append(getBootClassPath()).append("\n");
 		b.append("Class Path: ").append(getClassPath()).append("\n");
 		b.append("Library Path: ").append(getLibraryPath()).append("\n\n");

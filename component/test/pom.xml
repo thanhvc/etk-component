@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+   <parent>
+     <groupId>org.etk</groupId>
+     <artifactId>component</artifactId>
+     <version>0.1-Beta1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.etk.component</groupId>
+  <artifactId>org.etk.component.test</artifactId>
+  <version>0.1-Beta1-SNAPSHOT</version>
+  <name>Engineer Toolkit Framework - Component Testing</name>
+  <description>Engineer Toolkit Framework - Component Testing</description>
+  <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>${javax.servlet.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.component</groupId>
+        <artifactId>org.etk.component.common</artifactId>
+        <version>${org.etk.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.reflection</artifactId>
+        <version>${org.etk.reflection.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.container</artifactId>
+        <version>${org.etk.kernel.version}</version>
+      </dependency>
+  </dependencies>
+  <profiles>
+    <profile>
+      <id>Java6</id>
+      <activation>
+        <jdk>1.6</jdk>
+      </activation>
+
+    </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources1</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+          <execution>
+            <id>attach-sources2</id>
+            <goals>
+              <goal>test-jar-no-fork</goal>
+            </goals>
+            <phase>test-compile</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

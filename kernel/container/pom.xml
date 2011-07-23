@@ -33,11 +33,6 @@
         <artifactId>org.etk.component.common</artifactId>
         <version>${org.etk.common.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.etk.tools</groupId>
-        <artifactId>org.etk.tools.junit</artifactId>
-        <version>${org.etk.junit.version}</version>
-      </dependency>
   </dependencies>
   <profiles>
     <profile>

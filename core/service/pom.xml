@@ -27,6 +27,11 @@
       <artifactId>exo.kernel.component.cache</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.etk.component</groupId>
+      <artifactId>org.etk.component.test</artifactId>
+     <version>${org.etk.component.test.version}</version>
+    </dependency>
   </dependencies>
   <profiles>
     <profile>

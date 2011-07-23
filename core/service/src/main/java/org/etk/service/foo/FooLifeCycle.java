@@ -16,9 +16,9 @@
  */
 package org.etk.service.foo;
 
+import org.etk.service.core.event.AbstractLifeCycle;
 import org.etk.service.foo.spi.FooLifeCycleEvent;
 import org.etk.service.foo.spi.FooLifeCycleListener;
-import org.etk.service.kernel.AbstractLifeCycle;
 
 /**
  * Created by The eXo Platform SAS

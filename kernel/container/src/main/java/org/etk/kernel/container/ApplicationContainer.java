@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import javax.servlet.ServletContext;
 
 import org.etk.kernel.container.RootContainer.PortalContainerInitTask;
-import org.etk.kernel.container.definition.PortalContainerConfig;
+import org.etk.kernel.container.definition.ApplicationContainerConfig;
 import org.etk.kernel.container.jmx.MX4JComponentAdapterFactory;
 import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.container.xml.PortalContainerInfo;
@@ -45,15 +45,15 @@ public class ApplicationContainer extends KernelContainer {
 	/**
 	 * The configuration of the portal containers
 	 */
-	private static final PortalContainerConfig CONFIG;
+	private static final ApplicationContainerConfig CONFIG;
 	
 	static {
 		KernelContainer top = KernelContainerContext.getTopContainer();
 		CONFIG = top instanceof RootContainer ? ((RootContainer) top).getPortalContainerConfig() : null;
 		if (CONFIG == null) {
-			DEFAULT_PORTAL_CONTAINER_NAME = PortalContainerConfig.DEFAULT_PORTAL_CONTAINER_NAME;
-			DEFAULT_REST_CONTEXT_NAME = PortalContainerConfig.DEFAULT_REST_CONTEXT_NAME;
-			DEFAULT_REALM_NAME = PortalContainerConfig.DEFAULT_REALM_NAME;
+			DEFAULT_PORTAL_CONTAINER_NAME = ApplicationContainerConfig.DEFAULT_PORTAL_CONTAINER_NAME;
+			DEFAULT_REST_CONTEXT_NAME = ApplicationContainerConfig.DEFAULT_REST_CONTEXT_NAME;
+			DEFAULT_REALM_NAME = ApplicationContainerConfig.DEFAULT_REALM_NAME;
 		} else {
 			DEFAULT_PORTAL_CONTAINER_NAME = CONFIG.getDefaultPortalContainer();
 			DEFAULT_REST_CONTEXT_NAME = CONFIG.getDefaultRestContext();
@@ -115,7 +115,7 @@ public class ApplicationContainer extends KernelContainer {
 		pinfo_ = new PortalContainerInfo(portalContext);
 		registerComponentInstance(PortalContainerInfo.class, pinfo_);
 		this.name = portalContext.getServletContextName();
-		final PortalContainerConfig config = parent.getPortalContainerConfig();
+		final ApplicationContainerConfig config = parent.getPortalContainerConfig();
 		final List<String> dependencies = config == null ? null : config
 				.getDependencies(name);
 		if (dependencies == null || dependencies.isEmpty()) {
@@ -297,8 +297,7 @@ public class ApplicationContainer extends KernelContainer {
 	public static ApplicationContainer getInstance() {
 		ApplicationContainer container = getInstanceIfPresent();
 		if (container == null) {
-			container = RootContainer.getInstance().getPortalContainer(
-					DEFAULT_PORTAL_CONTAINER_NAME);
+			container = RootContainer.getInstance().getPortalContainer(DEFAULT_PORTAL_CONTAINER_NAME);
 			ApplicationContainer.setInstance(container);
 		}
 		return container;
@@ -319,7 +318,7 @@ public class ApplicationContainer extends KernelContainer {
 	}
 
 	/**
-	 * @see the method isPortalContainerName of {@link PortalContainerConfig}
+	 * @see the method isPortalContainerName of {@link ApplicationContainerConfig}
 	 */
 	public static boolean isPortalContainerName(String name) {
 		if (CONFIG == null) {
@@ -590,7 +589,7 @@ public class ApplicationContainer extends KernelContainer {
 		 * This will sort all the {@link WebAppInitContext} such that we will
 		 * first have all the web applications defined in the list of
 		 * dependencies of the related portal container (see
-		 * {@link PortalContainerConfig} for more details about the
+		 * {@link ApplicationContainerConfig} for more details about the
 		 * dependencies) ordered in the same order as the dependencies, then we
 		 * will have all the web applications undefined ordered by context name
 		 */

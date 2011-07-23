@@ -16,8 +16,8 @@
  */
 package org.etk.service.foo.spi;
 
+import org.etk.service.core.event.LifeCycleEvent;
 import org.etk.service.foo.model.Foo;
-import org.etk.service.kernel.LifeCycleEvent;
 
 /**
  * Created by The eXo Platform SAS

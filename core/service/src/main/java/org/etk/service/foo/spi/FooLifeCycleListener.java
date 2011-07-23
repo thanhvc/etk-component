@@ -16,7 +16,7 @@
  */
 package org.etk.service.foo.spi;
 
-import org.etk.service.kernel.LifeCycleListener;
+import org.etk.service.core.event.LifeCycleListener;
 
 /**
  * Created by The eXo Platform SAS
