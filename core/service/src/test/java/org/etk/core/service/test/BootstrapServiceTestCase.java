@@ -7,7 +7,7 @@ import org.etk.component.test.api.AbstractContainerTest;
 import org.etk.storage.api.FooStorage;
 
 @ConfiguredBy({
-  @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application-configuration.xml")
+  @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/configuration.xml")
 })
 public class BootstrapServiceTestCase extends AbstractContainerTest {
 

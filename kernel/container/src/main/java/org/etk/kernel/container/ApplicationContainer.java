@@ -19,7 +19,7 @@ import org.etk.kernel.container.xml.PortalContainerInfo;
 import org.etk.kernel.management.annotations.Managed;
 import org.etk.kernel.management.annotations.ManagedDescription;
 
-public class ApplicationContainer extends KernelContainer {
+public class ApplicationContainer extends KernelContainer implements SessionManagerContainer {
 
 	/**
 	 * Serial Version UID
@@ -107,8 +107,7 @@ public class ApplicationContainer extends KernelContainer {
 	 */
 	final ServletContext portalContext;
 
-	public ApplicationContainer(RootContainer parent,
-			ServletContext portalContext) {
+	public ApplicationContainer(RootContainer parent, ServletContext portalContext) {
 		super(new MX4JComponentAdapterFactory(), parent);
 		registerComponentInstance(ServletContext.class, portalContext);
 		context.setName(portalContext.getServletContextName());
@@ -259,8 +258,7 @@ public class ApplicationContainer extends KernelContainer {
 	}
 
 	public SessionContainer createSessionContainer(String id, String owner) {
-		SessionContainer scontainer = getSessionManager().getSessionContainer(
-				id);
+		SessionContainer scontainer = getSessionManager().getSessionContainer(id);
 		if (scontainer != null)
 			getSessionManager().removeSessionContainer(id);
 		scontainer = new SessionContainer(id, owner);

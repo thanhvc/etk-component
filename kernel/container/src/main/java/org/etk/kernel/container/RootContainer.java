@@ -79,7 +79,7 @@ public class RootContainer extends KernelContainer {
 		profiles.addAll(KernelContainer.getProfiles());
 
 		// Log the active profiles
-		//log.info("Active profiles " + profiles);
+		log.info("Active profiles " + profiles);
 
 		//
 		Runtime.getRuntime().addShutdownHook(new ShutdownThread(this));

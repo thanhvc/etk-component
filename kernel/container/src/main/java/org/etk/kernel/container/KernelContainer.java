@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.etk.common.logging.Logger;
 import org.etk.common.utils.PropertyManager;
 import org.etk.kernel.container.configuration.ConfigurationManager;
 import org.etk.kernel.container.util.ContainerUtil;
@@ -48,7 +49,7 @@ public class KernelContainer extends CachingContainer {
 		return Collections.unmodifiableSet(profiles);
 	}
 
-	//Log log = ExoLogger.getLogger("exo.kernel.container.ExoContainer");
+	Logger log = Logger.getLogger(KernelContainer.class);
 
 	private Map<String, ComponentLifecyclePlugin> componentLifecylePlugin = new HashMap<String, ComponentLifecyclePlugin>();
 
@@ -113,7 +114,7 @@ public class KernelContainer extends CachingContainer {
 			try {
 				plugin.initContainer(this);
 			} catch (Exception e) {
-				//log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
+				log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
 			}
 		}
 	}
@@ -162,7 +163,7 @@ public class KernelContainer extends CachingContainer {
 			try {
 				plugin.startContainer(this);
 			} catch (Exception e) {
-				//log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
+				log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
 			}
 		}
 	}
@@ -179,7 +180,7 @@ public class KernelContainer extends CachingContainer {
 			try {
 				plugin.stopContainer(this);
 			} catch (Exception e) {
-				//log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
+				log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
 			}
 		}
 	}
@@ -196,7 +197,7 @@ public class KernelContainer extends CachingContainer {
 			try {
 				plugin.destroyContainer(this);
 			} catch (Exception e) {
-				//log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
+				log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
 			}
 		}
 	}

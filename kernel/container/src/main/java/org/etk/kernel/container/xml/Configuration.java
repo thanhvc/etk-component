@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.etk.common.logging.Logger;
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IMarshallingContext;
@@ -52,6 +53,8 @@ import org.jibx.runtime.IMarshallingContext;
  */
 public class Configuration implements Cloneable {
 
+  private static final Logger log = Logger.getLogger(Configuration.class);
+  
   public static final String KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
 
   private Map<String, ContainerLifecyclePlugin> containerLifecyclePlugin    = new HashMap<String, ContainerLifecyclePlugin>();
@@ -240,8 +243,6 @@ public class Configuration implements Cloneable {
    */
   public void mergeConfiguration(Configuration other) {
     component.putAll(other.component);
-
-
     this.componentLifecyclePlugin.putAll(other.componentLifecyclePlugin);
     this.containerLifecyclePlugin.putAll(other.containerLifecyclePlugin);
 
@@ -280,7 +281,7 @@ public class Configuration implements Cloneable {
           // Initialize with the clone of the first non null configuration
           result = (Configuration) conf.clone();
         } catch (CloneNotSupportedException e) {
-          //log.warn("Could not clone the configuration", e);
+          log.warn("Could not clone the configuration", e);
           break;
         }
       } else {
@@ -301,7 +302,7 @@ public class Configuration implements Cloneable {
       mctx.setIndent(2);
       mctx.marshalDocument(this, "UTF-8", null, w);
     } catch (Exception e) {
-      //log.warn("Couldn't dump the runtime configuration in XML Format", e);
+      log.warn("Couldn't dump the runtime configuration in XML Format", e);
     }
   }
 
@@ -314,7 +315,7 @@ public class Configuration implements Cloneable {
     try {
       toXML(sw);
     } catch (Exception e) {
-      //log.warn("Cannot convert the configuration to XML format", e);
+      log.warn("Cannot convert the configuration to XML format", e);
       return null;
     } finally {
       try {

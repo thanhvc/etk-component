@@ -13,19 +13,7 @@
       <type>org.etk.kernel.container.monitor.jvm.OperatingSystemInfoImpl</type>
    </component>
 
-   <component>
-      <key>org.etk.kernel.container.monitor.jvm.JVMRuntimeInfo</key>
-      <jmx-name>info:type=JVMRuntimeInfo</jmx-name>
-      <type>org.etk.kernel.container.monitor.jvm.JVMRuntimeInfoImpl</type>
-      <init-params>
-         <properties-param>
-            <name>add.system.properties</name>
-            <property name="org.apache.lucene.maxClauseCount" value="3000" />
-         </properties-param>
-      </init-params>
-   </component>
-
-  <component>
+    <component>
     <type>org.etk.kernel.container.definition.ApplicationContainerConfig</type>
   </component>
 

@@ -1,7 +1,6 @@
 package org.etk.kernel.container.configuration;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -19,20 +18,17 @@ import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
+import org.etk.common.logging.Logger;
 import org.etk.kernel.container.xml.Configuration;
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IUnmarshallingContext;
-import org.jibx.runtime.JiBXException;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -41,6 +37,8 @@ import org.xml.sax.SAXParseException;
 
 public class ConfigurationUnmarshaller {
   private static final String[] KERNEL_NAMESPACES = Namespaces.getKernelNamespaces();
+  
+  private static final Logger log = Logger.getLogger(ConfigurationUnmarshaller.class);
   
   private class Reporter implements ErrorHandler {
     private final URL url;
@@ -52,18 +50,32 @@ public class ConfigurationUnmarshaller {
     
     @Override
     public void warning(SAXParseException exception) throws SAXException {
-      // TODO Auto-generated method stub
+      log.warn(exception.getMessage(), exception);
       
     }
-    @Override
+
     public void error(SAXParseException exception) throws SAXException {
-      // TODO Auto-generated method stub
-      
+      if (exception.getMessage()
+                   .equals("cvc-elt.1: Cannot find the declaration of element 'configuration'.")) {
+        log.info("The document "
+            + url
+            + " does not contain a schema declaration, it should have an "
+            + "XML declaration similar to\n"
+            + "<configuration\n"
+            + "   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+            + "   xsi:schemaLocation=\"http://www.exoplaform.org/xml/ns/kernel_1_1.xsd http://www.exoplaform.org/xml/ns/kernel_1_1.xsd\"\n"
+            + "   xmlns=\"http://www.exoplaform.org/xml/ns/kernel_1_1.xsd\">");
+      } else {
+        log.error("In document " + url + "  at (" + exception.getLineNumber() + ","
+            + exception.getColumnNumber() + ") :" + exception.getMessage());
+      }
+      valid = false;
     }
-    @Override
+
     public void fatalError(SAXParseException exception) throws SAXException {
-      // TODO Auto-generated method stub
-      
+      log.error("In document " + url + "  at (" + exception.getLineNumber() + ","
+          + exception.getColumnNumber() + ") :" + exception.getMessage());
+      valid = false;
     }
   }
   
@@ -126,10 +138,10 @@ public class ConfigurationUnmarshaller {
       */
       return reporter.valid;
     } catch (ParserConfigurationException e) {
+      log.error("Got a parser configuration exception when doing XSD validation");
       return false;
-    } /*catch (SAXException e) {
-      return false;
-    }*/
+    }
+   
   }
 
   public Configuration unmarshall(final URL url) throws Exception {
@@ -200,8 +212,8 @@ public class ConfigurationUnmarshaller {
       String document = buffer.toString();
 
       // Debug
-      //if (log.isTraceEnabled())
-      //log.trace("About to parse configuration file " + document);
+      if (log.isTraceEnabled())
+        log.trace("About to parse configuration file " + document);
 
       //
       IBindingFactory bfact = BindingDirectory.getFactory(Configuration.class);

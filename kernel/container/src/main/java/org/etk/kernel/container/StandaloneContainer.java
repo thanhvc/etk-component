@@ -19,6 +19,7 @@ package org.etk.kernel.container;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import org.etk.kernel.container.configuration.ConfigurationException;
 import org.etk.kernel.container.configuration.ConfigurationManager;
@@ -33,7 +34,7 @@ import org.etk.kernel.container.xml.Configuration;
  * Jul 13, 2011  
  */
 
-public class StandaloneContainer extends KernelContainer {
+public class StandaloneContainer extends KernelContainer implements SessionManagerContainer {
 
   private static final long serialVersionUID = 12L;
 
@@ -281,5 +282,49 @@ public class StandaloneContainer extends KernelContainer {
     configurationManager.addConfiguration(conf);
     configurationManager.processRemoveConfiguration();
     ContainerUtil.addComponents(StandaloneContainer.this, configurationManager);
+  }
+  
+  /**
+   * Ccreate SessionContainer.
+   * 
+   * @param id String
+   * @return SessionContainer instance
+   */
+  public SessionContainer createSessionContainer(String id) {
+    SessionContainer scontainer = getSessionManager().getSessionContainer(id);
+    if (scontainer != null)
+      getSessionManager().removeSessionContainer(id);
+    scontainer = new SessionContainer(id, null);
+    getSessionManager().addSessionContainer(scontainer);
+    SessionContainer.setInstance(scontainer);
+    return scontainer;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public SessionContainer createSessionContainer(String id, String owner) {
+    return createSessionContainer(id);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public List<SessionContainer> getLiveSessions() {
+    return getSessionManager().getLiveSessions();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void removeSessionContainer(String sessionID) {
+    getSessionManager().removeSessionContainer(sessionID);
+  }
+
+  @Override
+  public SessionManager getSessionManager() {
+     if (smanager_ == null)
+        smanager_ = (SessionManager)this.getComponentInstanceOfType(SessionManager.class);
+     return smanager_;
   }
 }

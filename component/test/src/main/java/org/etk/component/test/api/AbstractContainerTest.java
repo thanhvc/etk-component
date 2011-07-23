@@ -54,7 +54,7 @@ public class AbstractContainerTest extends AbstractBasicTest {
 
     //
     Set<String> applicationConfigPaths = new HashSet<String>();
-    applicationConfigPaths.add("conf/application-configuration.xml");
+    applicationConfigPaths.add("conf/application/configuration.xml");
 
     //
     EnumMap<ContainerScope, Set<String>> configs = new EnumMap<ContainerScope, Set<String>>(ContainerScope.class);
@@ -131,3 +131,4 @@ public class AbstractContainerTest extends AbstractBasicTest {
     Thread.currentThread().setContextClassLoader(realClassLoader);
   }
 }
+
