@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.etk.common.logging.Logger;
 import org.etk.kernel.container.KernelContainer;
 import org.etk.kernel.container.configuration.ConfigurationManager;
 import org.etk.kernel.container.xml.Component;
@@ -21,8 +23,7 @@ import org.picocontainer.defaults.ConstructorInjectionComponentAdapter;
 @SuppressWarnings("unchecked")
 public class ContainerUtil {
 	/** The logger. */
-	// private static final Log log =
-	// ExoLogger.getExoLogger(ContainerUtil.class);
+	 private static final Logger log = Logger.getLogger(ContainerUtil.class);
 
 	static public Constructor<?>[] getSortedConstructors(Class<?> clazz)
 			throws NoClassDefFoundError {
@@ -71,8 +72,7 @@ public class ContainerUtil {
 		return map.values();
 	}
 
-	static public void addContainerLifecyclePlugin(KernelContainer container,
-			ConfigurationManager conf) {
+	static public void addContainerLifecyclePlugin(KernelContainer container, ConfigurationManager conf) {
 		Iterator i = conf.getConfiguration().getContainerLifecyclePluginIterator();
 		while (i.hasNext()) {
 			ContainerLifecyclePlugin plugin = (ContainerLifecyclePlugin) i.next();
@@ -83,12 +83,13 @@ public class ContainerUtil {
 	private static void addContainerLifecyclePlugin(KernelContainer container, ContainerLifecyclePlugin plugin) {
 		try {
 			Class clazz = Class.forName(plugin.getType());
-			org.etk.kernel.container.ContainerLifecyclePlugin cplugin = (org.etk.kernel.container.ContainerLifecyclePlugin) container.createComponent(clazz, plugin.getInitParams());
+			org.etk.kernel.container.ContainerLifecyclePlugin cplugin = (org.etk.kernel.container.ContainerLifecyclePlugin) 
+			                                              container.createComponent(clazz, plugin.getInitParams());
 			cplugin.setName(plugin.getName());
 			cplugin.setDescription(plugin.getDescription());
 			container.addContainerLifecylePlugin(cplugin);
 		} catch (Exception ex) {
-			//log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);
+			log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);
 		}
 	}
 
@@ -103,7 +104,7 @@ public class ContainerUtil {
 				org.etk.kernel.container.ComponentLifecyclePlugin instance = (org.etk.kernel.container.ComponentLifecyclePlugin) classType.newInstance();
 				container.addComponentLifecylePlugin(instance);
 			} catch (Exception ex) {
-				//log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);
+				log.error("Failed to instanciate plugin " + plugin.getType() + ": " + ex.getMessage(), ex);
 			}
 		}
 	}
@@ -124,8 +125,7 @@ public class ContainerUtil {
 				if (key == null) {
 					if (component.isMultiInstance()) {
 						container.registerComponent(new ConstructorInjectionComponentAdapter(classType, classType));
-						// log.debug("===>>> Thread local component " +
-						// classType.getName() + " registered.");
+						 log.debug("===>>> Thread local component " + classType.getName() + " registered.");
 					} else {
 						container.registerComponentImplementation(classType);
 					}
@@ -134,8 +134,7 @@ public class ContainerUtil {
 						Class keyType = loader.loadClass(key);
 						if (component.isMultiInstance()) {
 							container.registerComponent(new ConstructorInjectionComponentAdapter(keyType, classType));
-							// log.debug("===>>> Thread local component " +
-							// classType.getName() + " registered.");
+							 log.debug("===>>> Thread local component " + classType.getName() + " registered.");
 						} else {
 							container.registerComponentImplementation(keyType, classType);
 						}
@@ -144,7 +143,7 @@ public class ContainerUtil {
 					}
 				}
 			} catch (ClassNotFoundException ex) {
-				//log.error("Cannot register the component corresponding to key = '" + key + "' and type = '" + type + "'", ex);
+				log.error("Cannot register the component corresponding to key = '" + key + "' and type = '" + type + "'", ex);
 			}
 		}
 	}
@@ -184,19 +183,19 @@ public class ContainerUtil {
 			if (in != null) {
 				String fileName = url.getFile();
 				if (Tools.endsWithIgnoreCase(path, ".properties")) {
-					/*
+					
 					if (log.isDebugEnabled())
-						log.debug("Attempt to load property file " + path);*/
+						log.debug("Attempt to load property file " + path);
 					props = PropertiesLoader.load(in);
 				} else if (Tools.endsWithIgnoreCase(fileName, ".xml")) {
-					/*if (log.isDebugEnabled())
+					if (log.isDebugEnabled())
 						log.debug("Attempt to load property file " + path
-								+ " with XML format");*/
+								+ " with XML format");
 					props = PropertiesLoader.loadFromXML(in);
-				} /*else if (log.isDebugEnabled()) {
+				} else if (log.isDebugEnabled()) {
 					log.debug("Will not load property file" + path
 							+ " because its format is not recognized");
-				}*/
+				}
 				if (props != null && resolveVariables) {
 					// Those properties are used for variables resolution
 					final Map<String, Object> currentProps = new HashMap<String, Object>();
@@ -210,10 +209,10 @@ public class ContainerUtil {
 					}
 				}
 			} else {
-				//log.error("Could not load property file " + path);
+				log.error("Could not load property file " + path);
 			}
 		} catch (Exception e) {
-			//log.error("Cannot load property file " + path, e);
+			log.error("Cannot load property file " + path, e);
 		} finally {
 			if (in != null) {
 				try {

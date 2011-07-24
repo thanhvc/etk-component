@@ -1,14 +1,8 @@
 package org.etk.core.service.test;
 
-import org.etk.component.test.annotaions.ConfigurationUnit;
-import org.etk.component.test.annotaions.ConfiguredBy;
-import org.etk.component.test.annotaions.ContainerScope;
 import org.etk.component.test.api.AbstractContainerTest;
 import org.etk.storage.api.FooStorage;
 
-@ConfiguredBy({
-  @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/configuration.xml")
-})
 public class BootstrapServiceTestCase extends AbstractContainerTest {
 
   public BootstrapServiceTestCase() {

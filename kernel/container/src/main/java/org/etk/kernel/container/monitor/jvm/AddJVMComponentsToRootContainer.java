@@ -21,8 +21,7 @@ public class AddJVMComponentsToRootContainer extends BaseContainerLifecyclePlugi
 		attemptToRegisterMXComponent(container, JVMRuntimeInfo.GARBAGE_COLLECTOR_MXBEANS, ManagementFactory.getGarbageCollectorMXBeans());
 	}
 
-	private void attemptToRegisterMXComponent(KernelContainer container,
-			Object mxComponent) {
+	private void attemptToRegisterMXComponent(KernelContainer container, Object mxComponent) {
 		if (mxComponent != null) {
 
 			container.registerComponentInstance(mxComponent);
@@ -30,8 +29,7 @@ public class AddJVMComponentsToRootContainer extends BaseContainerLifecyclePlugi
 		}
 	}
 
-	private void attemptToRegisterMXComponent(KernelContainer container,
-			Object mxKey, Object mxComponent) {
+	private void attemptToRegisterMXComponent(KernelContainer container, Object mxKey, Object mxComponent) {
 		if (mxComponent != null) {
 
 			container.registerComponentInstance(mxKey, mxComponent);

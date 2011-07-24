@@ -130,8 +130,8 @@ public class RootContainer extends KernelContainer {
 					pcontainer = new ApplicationContainer(this, scontext);
 					ApplicationContainer.setInstance(pcontainer);
 					ConfigurationManagerImpl cService = new MockConfigurationManagerImpl(scontext);
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/portal/configuration.xml"));
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/portal/test-configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/test-configuration.xml"));
 					cService.processRemoveConfiguration();
 					pcontainer.registerComponentInstance(ConfigurationManager.class, cService);
 					registerComponentInstance(name, pcontainer);
@@ -183,15 +183,13 @@ public class RootContainer extends KernelContainer {
 	 */
 	public synchronized void createPortalContainers() {
 		// Keep the old ClassLoader
-		final ClassLoader currentClassLoader = Thread.currentThread()
-				.getContextClassLoader();
+		final ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
 		WebAppInitContext context;
 		boolean hasChanged = false;
 		try {
 			while ((context = portalContexts.poll()) != null) {
 				// Set the context classloader of the related web application
-				Thread.currentThread().setContextClassLoader(
-						context.getWebappClassLoader());
+				Thread.currentThread().setContextClassLoader(context.getWebappClassLoader());
 				hasChanged = true;
 				createPortalContainer(context.getServletContext());
 			}

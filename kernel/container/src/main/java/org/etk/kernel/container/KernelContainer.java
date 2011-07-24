@@ -109,7 +109,6 @@ public class KernelContainer extends CachingContainer {
 		ConfigurationManager manager = (ConfigurationManager) getComponentInstanceOfType(ConfigurationManager.class);
 		ContainerUtil.addContainerLifecyclePlugin(this, manager);
 		ContainerUtil.addComponentLifecyclePlugin(this, manager);
-		ContainerUtil.addComponents(this, manager);
 		for (ContainerLifecyclePlugin plugin : containerLifecyclePlugin_) {
 			try {
 				plugin.initContainer(this);
@@ -117,6 +116,7 @@ public class KernelContainer extends CachingContainer {
 				log.warn("An error occurs with the ContainerLifecyclePlugin '" + getPluginName(plugin) + "'", e);
 			}
 		}
+		ContainerUtil.addComponents(this, manager);
 	}
 
 	@Override
@@ -217,10 +217,10 @@ public class KernelContainer extends CachingContainer {
 	}
 
 	public <T> T createComponent(Class<T> clazz, InitParams params) throws Exception {
-		/*
+		
 		if (log.isDebugEnabled())
 			log.debug(clazz.getName() + " " + ((params != null) ? params : "") + " added to " + getContext().getName());
-			*/
+			
 		Constructor<?>[] constructors = new Constructor<?>[0];
 		try {
 			constructors = ContainerUtil.getSortedConstructors(clazz);

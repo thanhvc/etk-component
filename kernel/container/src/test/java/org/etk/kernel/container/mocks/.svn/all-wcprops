@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks
+END
+MockServiceAImp.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockServiceAImp.java
+END
+PluginPriority1.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/PluginPriority1.java
+END
+MockServiceBImp.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockServiceBImp.java
+END
+PluginPriority2.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/PluginPriority2.java
+END
+PriorityService.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/PriorityService.java
+END
+PluginPriority3.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/PluginPriority3.java
+END
+MockServicePlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockServicePlugin.java
+END
+MockService.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockService.java
+END
+MockServiceA.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockServiceA.java
+END
+MockServiceB.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/projects/!svn/ver/27934/kernel/tags/2.1/container/src/test/java/org/exoplatform/mocks/MockServiceB.java
+END

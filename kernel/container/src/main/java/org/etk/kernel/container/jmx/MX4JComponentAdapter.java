@@ -3,6 +3,7 @@ package org.etk.kernel.container.jmx;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.etk.common.logging.Logger;
 import org.etk.kernel.container.KernelContainer;
 import org.etk.kernel.container.component.ComponentLifecycle;
 import org.etk.kernel.container.configuration.ConfigurationManager;
@@ -22,8 +23,7 @@ public class MX4JComponentAdapter extends AbstractComponentAdapter {
 
 	private volatile Object instance_;
 
-	// private Log log =
-	// ExoLogger.getLogger("exo.kernel.container.MX4JComponentAdapter");
+	private Logger log = Logger.getLogger(MX4JComponentAdapter.class);
 
 	public MX4JComponentAdapter(Object key, Class implementation) {
 		super(key, implementation);
@@ -119,11 +119,11 @@ public class MX4JComponentAdapter extends AbstractComponentAdapter {
 				cplugin.setName(plugin.getName());
 				cplugin.setDescription(plugin.getDescription());
 			} catch (Exception ex) {
-				/*
+				
 				log.error(
 						"Failed to instanciate plugin " + plugin.getName()
 								+ "for component " + component + ": "
-								+ ex.getMessage(), ex);*/
+								+ ex.getMessage(), ex);
 			}
 		}
 	}

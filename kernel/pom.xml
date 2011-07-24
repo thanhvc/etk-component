@@ -17,6 +17,7 @@
   <modules>
     <module>reflection</module>
     <module>container</module>
+    <module>cache</module>
   </modules>
 
 </project>

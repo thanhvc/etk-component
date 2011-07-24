@@ -32,12 +32,6 @@
       <artifactId>org.etk.component.test</artifactId>
      <version>${org.etk.component.test.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.component.test.core</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <profiles>
     <profile>

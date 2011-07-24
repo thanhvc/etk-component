@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/repos/gatein/!svn/ver/3373/portal/tags/3.1.0-GA/component/test/core/src/main/resources/conf
+END
+portal-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/gatein/!svn/ver/3373/portal/tags/3.1.0-GA/component/test/core/src/main/resources/conf/portal-configuration.xml
+END
+root-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/gatein/!svn/ver/3373/portal/tags/3.1.0-GA/component/test/core/src/main/resources/conf/root-configuration.xml
+END

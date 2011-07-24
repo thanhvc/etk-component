@@ -78,8 +78,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 		if (componentAdapterFactory == null)
 			throw new NullPointerException("componentAdapterFactory");
 		this.componentAdapterFactory = componentAdapterFactory;
-		this.parent = parent == null ? null
-				: new ImmutablePicoContainer(parent);
+		this.parent = parent == null ? null : new ImmutablePicoContainer(parent);
 	}
 
 	/**
@@ -113,8 +112,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 		return Collections.unmodifiableSet(componentAdapters);
 	}
 
-	public final ComponentAdapter getComponentAdapter(Object componentKey)
-			throws AmbiguousComponentResolutionException {
+	public final ComponentAdapter getComponentAdapter(Object componentKey) throws AmbiguousComponentResolutionException {
 		ComponentAdapter adapter = componentKeyToAdapterCache.get(componentKey);
 		if (adapter == null && parent != null) {
 			adapter = parent.getComponentAdapter(componentKey);
@@ -142,13 +140,11 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 		} else {
 			Class[] foundClasses = new Class[found.size()];
 			for (int i = 0; i < foundClasses.length; i++) {
-				ComponentAdapter componentAdapter = (ComponentAdapter) found
-						.get(i);
+				ComponentAdapter componentAdapter = (ComponentAdapter) found.get(i);
 				foundClasses[i] = componentAdapter.getComponentImplementation();
 			}
 
-			throw new AmbiguousComponentResolutionException(componentType,
-					foundClasses);
+			throw new AmbiguousComponentResolutionException(componentType, foundClasses);
 		}
 	}
 
@@ -157,8 +153,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 			return Collections.EMPTY_LIST;
 		}
 		List<ComponentAdapter> found = new ArrayList<ComponentAdapter>();
-		for (Iterator<ComponentAdapter> iterator = componentAdapters.iterator(); iterator
-				.hasNext();) {
+		for (Iterator<ComponentAdapter> iterator = componentAdapters.iterator(); iterator.hasNext();) {
 			ComponentAdapter componentAdapter = iterator.next();
 
 			if (componentType.isAssignableFrom(componentAdapter.getComponentImplementation())) {
@@ -173,8 +168,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 	 * created by the {@link ComponentAdapterFactory} passed to the constructor
 	 * of this container.
 	 */
-	public ComponentAdapter registerComponent(ComponentAdapter componentAdapter)
-			throws DuplicateComponentKeyRegistrationException {
+	public ComponentAdapter registerComponent(ComponentAdapter componentAdapter) throws DuplicateComponentKeyRegistrationException {
 		Object componentKey = componentAdapter.getComponentKey();
 
 		if (componentKeyToAdapterCache.putIfAbsent(componentKey, componentAdapter) != null) {
@@ -239,11 +233,9 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 	 * {@inheritDoc} The returned ComponentAdapter will be instantiated by the
 	 * {@link ComponentAdapterFactory} passed to the container's constructor.
 	 */
-	public ComponentAdapter registerComponentImplementation(
-			Object componentKey, Class componentImplementation)
+	public ComponentAdapter registerComponentImplementation(Object componentKey, Class componentImplementation)
 			throws PicoRegistrationException {
-		return registerComponentImplementation(componentKey,
-				componentImplementation, (Parameter[]) null);
+		return registerComponentImplementation(componentKey, componentImplementation, (Parameter[]) null);
 	}
 
 	/**
@@ -296,8 +288,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 			}
 		}
 		List<Object> result = new ArrayList<Object>();
-		for (Iterator<ComponentAdapter> iterator = orderedComponentAdapters
-				.iterator(); iterator.hasNext();) {
+		for (Iterator<ComponentAdapter> iterator = orderedComponentAdapters.iterator(); iterator.hasNext();) {
 			Object componentAdapter = iterator.next();
 			final Object componentInstance = adapterToInstanceMap.get(componentAdapter);
 			if (componentInstance != null) {
@@ -324,7 +315,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 	}
 
 	private Object getInstance(ComponentAdapter componentAdapter) {
-		// check wether this is our adapter
+		// check whether this is our adapter
 		// we need to check this to ensure up-down dependencies cannot be
 		// followed
 		final boolean isLocal = componentAdapters.contains(componentAdapter);
@@ -336,8 +327,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 
 			return instance;
 		} else if (parent != null) {
-			return parent.getComponentInstance(componentAdapter
-					.getComponentKey());
+			return parent.getComponentInstance(componentAdapter.getComponentKey());
 		}
 
 		// TODO: decide .. exception or null?
@@ -455,8 +445,7 @@ public class ConcurrentContainer implements MutablePicoContainer, Serializable {
 	 * Cans be used to indicate that we only want to visit Containers
 	 */
 	protected static abstract class ContainerVisitor extends AbstractPicoVisitor {
-		public final void visitComponentAdapter(
-				ComponentAdapter componentAdapter) {
+		public final void visitComponentAdapter(ComponentAdapter componentAdapter) {
 		}
 
 		public final void visitParameter(Parameter parameter) {
