@@ -17,6 +17,11 @@
         <artifactId>org.etk.component.common</artifactId>
         <version>${org.etk.common.version}</version>
       </dependency>
+     <dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.container</artifactId>
+        <version>${org.etk.kernel.version}</version>
+      </dependency>
   </dependencies>
   <profiles>
     <profile>
