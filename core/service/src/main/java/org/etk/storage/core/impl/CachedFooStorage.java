@@ -19,6 +19,7 @@ package org.etk.storage.core.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.etk.kernel.cache.ExoCache;
 import org.etk.service.foo.FooFilter;
 import org.etk.service.foo.model.Bar;
 import org.etk.service.foo.model.Foo;
@@ -35,7 +36,7 @@ import org.etk.storage.plugins.cache.model.data.ListFoosData;
 import org.etk.storage.plugins.cache.model.key.FooFilterKey;
 import org.etk.storage.plugins.cache.model.key.FooKey;
 import org.etk.storage.plugins.cache.model.key.ListFoosKey;
-import org.exoplatform.services.cache.ExoCache;
+
 
 /**
  * Created by The eXo Platform SAS

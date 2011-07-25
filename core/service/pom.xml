@@ -23,10 +23,11 @@
         <version>${org.etk.kernel.version}</version>
       </dependency>
       <dependency>
-      <groupId>org.exoplatform.kernel</groupId>
-      <artifactId>exo.kernel.component.cache</artifactId>
-      <scope>provided</scope>
-    </dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.cache</artifactId>
+        <version>${org.etk.cache.version}</version>
+      </dependency>
+      
     <dependency>
       <groupId>org.etk.component</groupId>
       <artifactId>org.etk.component.test</artifactId>

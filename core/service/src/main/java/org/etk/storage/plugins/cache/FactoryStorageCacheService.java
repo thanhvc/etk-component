@@ -16,15 +16,15 @@
  */
 package org.etk.storage.plugins.cache;
 
-import org.etk.storage.plugins.cache.model.data.FooData;
+import org.etk.kernel.cache.CacheService;
+import org.etk.kernel.cache.ExoCache;
 import org.etk.storage.plugins.cache.model.data.BarData;
+import org.etk.storage.plugins.cache.model.data.FooData;
 import org.etk.storage.plugins.cache.model.data.IntegerData;
 import org.etk.storage.plugins.cache.model.data.ListFoosData;
 import org.etk.storage.plugins.cache.model.key.FooFilterKey;
 import org.etk.storage.plugins.cache.model.key.FooKey;
 import org.etk.storage.plugins.cache.model.key.ListFoosKey;
-import org.exoplatform.services.cache.CacheService;
-import org.exoplatform.services.cache.ExoCache;
 
 /**
  * Created by The eXo Platform SAS

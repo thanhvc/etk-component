@@ -18,8 +18,8 @@ package org.etk.storage.plugins.cache;
 
 import java.io.Serializable;
 
+import org.etk.kernel.cache.ExoCache;
 import org.etk.storage.plugins.cache.loader.Loader;
-import org.exoplatform.services.cache.ExoCache;
 
 /**
  * Created by The eXo Platform SAS
