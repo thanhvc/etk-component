@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/impl
+END
+LoggingCacheListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/impl/LoggingCacheListener.java
+END
+CacheServiceManaged.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/impl/CacheServiceManaged.java
+END
+CacheServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/impl/CacheServiceImpl.java
+END

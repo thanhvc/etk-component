@@ -52,6 +52,7 @@
     <org.apache.httpclient.version>4.1.1</org.apache.httpclient.version>
     <org.etk.common.version>0.1-Beta1-SNAPSHOT</org.etk.common.version>
     <org.etk.kernel.version>0.1-Beta1-SNAPSHOT</org.etk.kernel.version>
+    <org.etk.cache.version>0.1-Beta1-SNAPSHOT</org.etk.cache.version>
     <org.etk.orm.version>0.1-Beta1-SNAPSHOT</org.etk.orm.version>
     <org.etk.component.test.version>0.1-Beta1-SNAPSHOT</org.etk.component.test.version>
     <org.etk.reflection.version>0.1-Beta1-SNAPSHOT</org.etk.reflection.version>

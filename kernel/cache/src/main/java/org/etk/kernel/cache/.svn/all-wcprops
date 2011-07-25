@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache
+END
+CacheInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/CacheInfo.java
+END
+CachedObjectSelector.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/CachedObjectSelector.java
+END
+ExoCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/ExoCache.java
+END
+ExpireKeyStartWithSelector.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/ExpireKeyStartWithSelector.java
+END
+FIFOExoCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/FIFOExoCache.java
+END
+CacheService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/CacheService.java
+END
+ExoCacheConfigPlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/ExoCacheConfigPlugin.java
+END
+ExoCacheConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/ExoCacheConfig.java
+END
+ObjectCacheInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/ObjectCacheInfo.java
+END
+CacheListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/CacheListener.java
+END
+SimpleExoCache.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/SimpleExoCache.java
+END
+CacheListenerContext.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/33445/kernel/tags/2.1.2/component/cache/src/main/java/org/exoplatform/services/cache/CacheListenerContext.java
+END
