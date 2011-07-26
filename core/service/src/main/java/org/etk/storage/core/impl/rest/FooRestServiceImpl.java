@@ -45,6 +45,12 @@ public class FooRestServiceImpl implements FooStorage {
   public Bar loadBar(Foo foo) {
     return null;
   }
+
+  @Override
+  public int getFooByFilterCount(FooFilter fooFilter) {
+    // TODO Auto-generated method stub
+    return 0;
+  }
   
   
 

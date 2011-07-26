@@ -37,6 +37,17 @@ public class Foo {
   public Foo(String id) {
     this.id = id;
   }
+  
+  /**
+   * Constructor creates new instance with id and description.
+   * 
+   * @param id
+   * @param description
+   */
+  public Foo(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
   public String getId() {
     return id;

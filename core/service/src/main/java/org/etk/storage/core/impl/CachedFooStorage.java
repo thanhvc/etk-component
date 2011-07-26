@@ -36,8 +36,6 @@ import org.etk.storage.plugins.cache.model.data.ListFoosData;
 import org.etk.storage.plugins.cache.model.key.FooFilterKey;
 import org.etk.storage.plugins.cache.model.key.FooKey;
 import org.etk.storage.plugins.cache.model.key.ListFoosKey;
-
-
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -85,12 +83,18 @@ public class CachedFooStorage implements FooStorage {
     for (Foo foo : foos) {
       FooKey key = new FooKey(foo);
       this.etkFooCache.put(key, new FooData(foo));
+      foo.setBar(loadBar(foo));
       this.etkBarCache.put(key, new BarData(foo.getBar()));
       fooKeys.add(new FooKey(foo));
     }
     return new ListFoosData(fooKeys);
   }
   
+  /**
+   * Constructor to initialize the CachedFooStorage.
+   * @param storage
+   * @param cacheService
+   */
   public CachedFooStorage(final FooStorageImpl storage, final FactoryStorageCacheService cacheService) {
     this.storage = storage;
     this.storage.setStorage(this);
@@ -124,11 +128,23 @@ public class CachedFooStorage implements FooStorage {
     
     return buildFoos(keys);
   }
+  
+  @Override
+  public int getFooByFilterCount(final FooFilter fooFilter) {
+    FooFilterKey key = new FooFilterKey(fooFilter);
+    
+    return foosCountCache.get(new ServiceContext<IntegerData>() {
+      @Override
+      public IntegerData execute() {
+        return new IntegerData(storage.getFooByFilterCount(fooFilter));
+      }
+    }, key).build();
+  }
 
   @Override
   public Foo findById(final String id) {
     FooKey key = new FooKey(new Foo(id));
-    Foo foo = this.fooCache.get(new ServiceContext<FooData>() {
+    Foo foo = fooCache.get(new ServiceContext<FooData>() {
       public FooData execute() {
         return new FooData(storage.findById(id));
       }
@@ -137,13 +153,14 @@ public class CachedFooStorage implements FooStorage {
     if (foo != null) {
       foo.setBar(loadBar(foo));
     }
-    return null;
+    
+    
+    return foo;
   }
   
   public Bar loadBar(final Foo foo) {
     FooKey key = new FooKey(new Foo(foo.getId()));
     return barCache.get(new ServiceContext<BarData>() {
-
       @Override
       public BarData execute() {
         return new BarData(storage.loadBar(foo));

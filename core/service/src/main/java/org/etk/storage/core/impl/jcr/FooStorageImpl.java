@@ -37,6 +37,10 @@ public class FooStorageImpl implements FooStorage {
   public List<Foo> getFooByFilter(FooFilter fooFilter, int offset, int limit) {
     return null;
   }
+  @Override
+  public int getFooByFilterCount(final FooFilter fooFilter) {
+    return 0;
+  }
 
   @Override
   public Foo findById(String id) {
@@ -49,6 +53,10 @@ public class FooStorageImpl implements FooStorage {
    */
   public void setStorage(FooStorage storage) {
     this.fooStorage = storage;
+  }
+  
+  private FooStorage getStorage() {
+    return (fooStorage != null ? fooStorage : this);
   }
 
   @Override

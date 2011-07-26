@@ -42,10 +42,10 @@ import org.apache.http.util.EntityUtils;
  *          exo@exoplatform.com
  * Jun 29, 2011  
  */
-public class ExoHttpClient {
+public class ETKHttpClient {
 
   private DefaultHttpClient httpClient = null;
-  public ExoHttpClient() {
+  public ETKHttpClient() {
     
     httpClient = new DefaultHttpClient();
   }

@@ -16,9 +16,11 @@
  */
 package org.etk.storage.plugins.cache;
 
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import org.etk.common.logging.Logger;
@@ -82,34 +84,69 @@ public abstract class FutureCache<K, V, C> {
   protected abstract void put(K key, V value);
   
   public final V get(final C context, final K key) {
-    //Step 1: We try a simple cache get.
+    // First we try a simple cache get
     V value = get(key);
-    
-    //Step 2. If it does not succeed then we go through a process that will avoid to load
-    //the same resource concurrently
-    if(value == null) {
-      //creates our future task.
-      
+
+    // If it does not succeed then we go through a process that will avoid to
+    // load
+    // the same resource concurrently
+    if (value == null) {
+      // Create our future
       FutureTask<V> future = new FutureTask<V>(new Callable<V>() {
         public V call() throws Exception {
-          //Retrieves the value from the loader.
+          // Retrieve the value from the loader
           V value = loader.retrieve(context, key);
-          //if value can be got, need to put in the cache.
-          if(value != null) {
-            //cache it, it is made avaiable to other
-            //threads(unless someone removes it)
+
+          //
+          if (value != null) {
+            // Cache it, it is made available to other threads (unless someone
+            // removes it)
             put(key, value);
+
+            // Return value
             return value;
           } else {
             return null;
           }
         }
       });
-      
-      //this boolean means we inserted in the cache.
+
+      // This boolean means we inserted in the local
+      boolean inserted = true;
+
+      //
+      try {
+        FutureTask<V> phantom = futureEntries.putIfAbsent(key, future);
+
+        // Use the value that could have been inserted by another thread
+        if (phantom != null) {
+          future = phantom;
+          inserted = false;
+        } else {
+          future.run();
+        }
+
+        // Returns the value
+        value = future.get();
+      } catch (ExecutionException e) {
+        if (e.getCause() != null) {
+          throw new UndeclaredThrowableException(e.getCause());
+        } else {
+          log.error("Computing of resource " + key + " threw an exception", e.getCause());
+        }
+      } catch (Exception e) {
+        log.error("Retrieval of resource " + key + " threw an exception", e);
+      } finally {
+        // Clean up the per key map but only if our insertion succeeded and with
+        // our future
+        if (inserted) {
+          futureEntries.remove(key, future);
+        }
+      }
     }
-    
-    return null;
+
+    //
+    return value;
   }
   
 }

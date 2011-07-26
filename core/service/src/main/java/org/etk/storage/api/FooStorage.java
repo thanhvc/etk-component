@@ -45,6 +45,13 @@ public interface FooStorage {
    * @return
    */
   List<Foo> getFooByFilter(FooFilter fooFilter, int offset, int limit);
+  
+  /**
+   * Count the number of Foo with condition FooFilter.
+   * @param fooFilter
+   * @return
+   */
+  int getFooByFilterCount(final FooFilter fooFilter);
 
   /**
    * loads Bar from Foo
@@ -52,4 +59,7 @@ public interface FooStorage {
    * @return
    */
   Bar loadBar(final Foo foo);
+  
+  
+  
 }

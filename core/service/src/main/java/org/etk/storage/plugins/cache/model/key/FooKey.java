@@ -47,7 +47,8 @@ public class FooKey implements CacheKey {
     }
     
     FooKey that = (FooKey) o;
-    if (id != null? id.equals(that.id) : that.id != null) {
+    //it's very important to compare when get from Map caching.
+    if (id != null? !id.equals(that.id) : that.id != null) {
       return false;
     }
     return true;

@@ -26,8 +26,35 @@ import org.etk.service.foo.FooFilter;
  */
 public class FooFilterKey implements CacheKey {
 
-  public FooFilterKey(FooFilter filter) {
-    
+  private final String name;
+  
+  
+  public FooFilterKey(final FooFilter filter) {
+    this.name = filter.getName();
+  }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof FooFilterKey)) {
+      return false;
+    }
+
+    FooFilterKey that = (FooFilterKey) o;
+
+    if (name != that.name) {
+      return false;
+    }
+
+    return true;
+  }
+  
+  @Override
+  public int hashCode() {
+    int result = name != null ? name.hashCode() : 0;
+    return result;
   }
 
 }

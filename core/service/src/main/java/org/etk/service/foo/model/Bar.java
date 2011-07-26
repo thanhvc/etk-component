@@ -25,6 +25,23 @@ public class Bar {
   private String id;
   private String description;
   
+  /**
+   * Constructor creates new instance with id
+   * @param id
+   */
+  public Bar(String id) {
+    this.id = id;
+  }
+  /**
+   * Constructor creates new instance with id and description.
+   * 
+   * @param id
+   * @param description
+   */
+  public Bar(String id, String description) {
+    this.id = id;
+    this.description = description;
+  }
   
   public String getId() {
     return id;

@@ -22,10 +22,40 @@ package org.etk.storage.plugins.cache.model.key;
  *          exo@exoplatform.com
  * Jul 22, 2011  
  */
-public class ListFoosKey implements CacheKey {
+public class ListFoosKey extends ListCacheKey {
 
-  public ListFoosKey(FooFilterKey key, int offset, int limit) {
+  private final FooFilterKey key;
+  public ListFoosKey(final FooFilterKey key, final long offset, final long limit) {
 
+    super(offset, limit);
+    this.key = key;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    
+    if (!(o instanceof ListFoosKey)) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+    
+    ListFoosKey that = (ListFoosKey) o;
+    if (key != null ? !key.equals(that.key) : that.key != null) {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + (key != null ? key.hashCode() : 0);
+    return result;
+  }
 }

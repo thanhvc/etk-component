@@ -32,8 +32,6 @@ import org.etk.kernel.cache.ObjectCacheInfo;
  * An {@link org.etk.kernel.cache.ExoCache} implementation based on {@link java.util.concurrent.ConcurrentHashMap}
  * that minimize locking. Cache entries are maintained in a fifo list that is used for the fifo eviction policy.
  *
- * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
- * @version $Revision$
  */
 public class ConcurrentFIFOExoCache<K extends Serializable, V> implements ExoCache<K, V> {
 
@@ -251,6 +249,7 @@ public class ConcurrentFIFOExoCache<K extends Serializable, V> implements ExoCac
   }
 
   void onPut(K key, V obj) {
+    //Because here is empty, so it can not put in the cache.
     if (!listeners.isEmpty())
       for (ListenerContext<K, V> context  : listeners)
         context.onPut(key, obj);

@@ -24,12 +24,12 @@ import junit.framework.TestCase;
  */
 public class ExoHttpClientTest extends TestCase {
   
-  private ExoHttpClient exoHttpClient = null;
+  private ETKHttpClient exoHttpClient = null;
   private final String targetURL = "/rest-socialdemo/private/api/social/v1-alpha1/socialdemo/activity/d51715397f0001010077b5d08ddf12fc.json?poster_identity=1&number_of_comments=10&activity_stream=t";
   
   protected void setUp() throws Exception {
     super.setUp();
-    exoHttpClient = new ExoHttpClient();
+    exoHttpClient = new ETKHttpClient();
   }
 
   

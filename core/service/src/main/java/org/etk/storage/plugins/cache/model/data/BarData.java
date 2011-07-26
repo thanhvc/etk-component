@@ -31,10 +31,7 @@ public class BarData implements CacheData<Bar> {
   
   @Override
   public Bar build() {
-    Bar bar = new Bar();
-    bar.setId(this.id);
-    bar.setDescription(this.description);
-    return bar;
+    return new Bar(this.id, this.description);
   }
   
   public BarData(final Bar model) {

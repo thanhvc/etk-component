@@ -36,7 +36,9 @@ class CacheState<K extends Serializable, V> {
   final Queue<ObjectRef<K, V>> queue;
 
   CacheState(ConcurrentFIFOExoCache<K, V> config, Logger log) {
+    //this.log = (log == null) ? Logger.getLogger(CacheState.class) : log;
     this.log = log;
+    
     this.config = config;
     this.map = new ConcurrentHashMap<K, ObjectRef<K, V>>();
     this.queue = new SynchronizedQueue<ObjectRef<K, V>>(log);
@@ -92,7 +94,9 @@ class CacheState<K extends Serializable, V> {
     boolean trace = isTraceEnabled();
     ObjectRef<K, V> nextRef = new SimpleObjectRef<K, V>(expirationTime, name, obj);
     ObjectRef<K, V> previousRef = map.put(name, nextRef);
-
+    //log.debug("map size = " + map.size());
+    
+    
     // Remove previous (promoted as first element)
     if (previousRef != null) {
       queue.remove(previousRef);

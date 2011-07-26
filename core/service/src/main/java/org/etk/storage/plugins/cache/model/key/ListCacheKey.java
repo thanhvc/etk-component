@@ -14,30 +14,51 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo;
+package org.etk.storage.plugins.cache.model.key;
+
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 26, 2011  
  */
-public class FooFilter {
+public class ListCacheKey  implements CacheKey {
 
-  /* filer by user Foo name*/
-  /** The name. */
-  private String name;
-  
-  public FooFilter() {
-    this.name = "";
+  private final long offset;
+  private final long limit;
+
+  public ListCacheKey(final long offset, final long limit) {
+    this.offset = offset;
+    this.limit = limit;
   }
 
-  public String getName() {
-    return name;
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ListCacheKey)) {
+      return false;
+    }
+
+    ListCacheKey that = (ListCacheKey) o;
+
+    if (limit != that.limit) {
+      return false;
+    }
+    if (offset != that.offset) {
+      return false;
+    }
+
+    return true;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  @Override
+  public int hashCode() {
+    int result = (int) (offset ^ (offset >>> 32));
+    result = 31 * result + (int) (limit ^ (limit >>> 32));
+    return result;
   }
-  
+
 }

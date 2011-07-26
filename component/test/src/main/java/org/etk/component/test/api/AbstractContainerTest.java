@@ -54,14 +54,14 @@ public class AbstractContainerTest extends AbstractBasicTest {
 
     //
     Set<String> applicationConfigPaths = new HashSet<String>();
-    applicationConfigPaths.add("conf/application/configuration.xml");
+    applicationConfigPaths.add("conf/application/test-configuration.xml");
 
     //
     EnumMap<ContainerScope, Set<String>> configs = new EnumMap<ContainerScope, Set<String>>(ContainerScope.class);
     configs.put(ContainerScope.ROOT, rootConfigPaths);
     configs.put(ContainerScope.APPLICATION, applicationConfigPaths);
 
-    //gets the annocations for testing
+    //gets the annotations for testing
     ConfiguredBy cfBy = getClass().getAnnotation(ConfiguredBy.class);
     if (cfBy != null) {
       for (ConfigurationUnit src : cfBy.value()) {
