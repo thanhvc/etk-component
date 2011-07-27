@@ -1,17 +1,11 @@
 package org.etk.kernel.container.test;
 
-import junit.framework.TestCase;
 
 import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.container.RootContainer;
-import org.etk.kernel.container.definition.ApplicationContainerConfig;
+import org.etk.kernel.container.test.spi.AbstractContainerTest;
 
-/**
- * Created by the Exo Development team. Author : Mestrallet Benjamin
- * benjamin.mestrallet@exoplatform.com
- */
-
-public class TestContainer extends TestCase {
+public class TestContainer extends AbstractContainerTest {
 
   public void setUp() throws Exception {
     System.setProperty("maven.exoplatform.dir", TestContainer.class.getResource("/").getFile());

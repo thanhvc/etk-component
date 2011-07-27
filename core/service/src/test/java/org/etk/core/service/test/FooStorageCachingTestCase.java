@@ -3,7 +3,7 @@ package org.etk.core.service.test;
 import java.util.List;
 
 import org.etk.common.logging.Logger;
-import org.etk.component.test.api.AbstractContainerTest;
+import org.etk.kernel.container.test.spi.AbstractContainerTest;
 import org.etk.service.foo.FooFilter;
 import org.etk.service.foo.model.Foo;
 import org.etk.storage.api.FooStorage;
@@ -71,4 +71,20 @@ public class FooStorageCachingTestCase extends AbstractContainerTest {
     
     assertEquals("Foos must be equal 5 and get from caching::", 5, second.size());
   }
+  
+  public void testGetFooByFilterCount() throws Exception {
+    FooStorage storage = (FooStorage) getContainer().getComponentInstanceOfType(FooStorage.class);
+    FooFilter fooFilter = new FooFilter();
+    fooFilter.setName("ThanhVC");
+    int first = storage.getFooByFilterCount(fooFilter);
+
+    assertEquals("Foos count must be equal 5::", 5, first);
+
+    log.debug("Second time to getFooByFilterCount(fooFilter) get in Cache and Can not access to MockfooStorageImpl.getFooByFilterCount(fooFilter)");
+
+    int second = storage.getFooByFilterCount(fooFilter);
+
+    assertEquals("Foos count must be equal 5::", 5, second);
+  }
+
 }

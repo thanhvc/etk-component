@@ -13,8 +13,8 @@
   <artifactId>tools</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Tools</name>
-  <description>Engineering toolkit Framework Tools</description>
+  <name>Engineering Toolkit Framework Tools</name>
+  <description>Engineering Toolkit Framework Tools</description>
 
   <modules>
     <module>junit</module>

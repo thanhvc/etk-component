@@ -11,8 +11,8 @@
   <artifactId>sample</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Sample</name>
-  <description>Engineering toolkit Framework Sample</description>
+  <name>Engineering Toolkit Framework Sample</name>
+  <description>Engineering Toolkit Framework Sample</description>
 
   <modules>
     <module>model</module>

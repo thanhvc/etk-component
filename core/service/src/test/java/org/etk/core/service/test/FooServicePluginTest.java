@@ -17,7 +17,7 @@
 package org.etk.core.service.test;
 
 import org.etk.common.logging.Logger;
-import org.etk.component.test.api.AbstractContainerTest;
+import org.etk.kernel.container.test.spi.AbstractContainerTest;
 import org.etk.service.foo.model.Foo;
 import org.etk.service.foo.spi.FooService;
 

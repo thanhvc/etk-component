@@ -9,8 +9,8 @@
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.reflection</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineer Toolkit Framework Reflection</name>
-  <description>Engineer Toolkit Framework Relection</description>
+  <name>Engineering Toolkit Framework Reflection</name>
+  <description>Engineering Toolkit Framework Relection</description>
 
   <profiles>
     <profile>

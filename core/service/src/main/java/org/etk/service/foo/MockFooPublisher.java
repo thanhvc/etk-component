@@ -34,6 +34,7 @@ public class MockFooPublisher extends FooListenerPlugin {
   
   @Override
   public void fooCreated(FooLifeCycleEvent event) {
+    
     log.debug("fooCreated::Event Type = " + event.getType());
   }
 

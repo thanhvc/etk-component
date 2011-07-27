@@ -9,8 +9,8 @@
   <groupId>org.etk.tools</groupId>
   <artifactId>org.etk.tools.sandbox</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineer Toolkit Framework SandBox</name>
-  <description>Engineer Toolkit Framework SandBox</description>
+  <name>Engineering Toolkit Framework SandBox</name>
+  <description>Engineering Toolkit Framework SandBox</description>
 
 
   <dependencies>
@@ -33,6 +33,11 @@
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.container</artifactId>
         <version>${org.etk.kernel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.core</groupId>
+        <artifactId>org.etk.core.service</artifactId>
+        <version>${org.etk.core.version}</version>
       </dependency>
   </dependencies>
   <profiles>

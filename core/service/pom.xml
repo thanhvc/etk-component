@@ -27,12 +27,6 @@
         <artifactId>org.etk.kernel.cache</artifactId>
         <version>${org.etk.kernel.version}</version>
       </dependency>
-      
-    <dependency>
-      <groupId>org.etk.component</groupId>
-      <artifactId>org.etk.component.test</artifactId>
-     <version>${org.etk.component.version}</version>
-    </dependency>
   </dependencies>
   <profiles>
     <profile>

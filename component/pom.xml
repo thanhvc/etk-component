@@ -11,12 +11,11 @@
   <artifactId>component</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Component</name>
-  <description>Engineering toolkit Framework Component</description>
+  <name>Engineering Toolkit Framework Component</name>
+  <description>Engineering Toolkit Framework Component</description>
 
   <modules>
     <module>common</module>
-    <module>test</module>
    </modules>
 
 </project>

@@ -9,8 +9,8 @@
   <groupId>org.etk.tools</groupId>
   <artifactId>org.etk.tools.junit</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineer Toolkit Framework Junit</name>
-  <description>Engineer Toolkit Framework Testing</description>
+  <name>Engineering Toolkit Framework Unit Testing</name>
+  <description>Engineering Toolkit Framework Unit Testing</description>
 
 
   <dependencies>

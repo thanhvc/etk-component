@@ -9,8 +9,8 @@
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.cache</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineer Toolkit Framework Caching</name>
-  <description>Engineer Toolkit Framework Caching</description>
+  <name>Engineering Toolkit Framework Caching</name>
+  <description>Engineering Toolkit Framework Caching</description>
   <dependencies>
       <dependency>
         <groupId>org.etk.component</groupId>

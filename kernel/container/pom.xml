@@ -9,10 +9,15 @@
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.container</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineer Toolkit Framework Kernel</name>
-  <description>Engineer Toolkit Framework Kernel</description>
+  <name>Engineering Toolkit Framework Kernel</name>
+  <description>Engineering Toolkit Framework Kernel</description>
 
    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+      </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>servlet-api</artifactId>

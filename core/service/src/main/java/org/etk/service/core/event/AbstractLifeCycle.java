@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 
 import org.etk.common.logging.Logger;
 import org.etk.kernel.container.ApplicationContainer;
+import org.etk.service.foo.MockRepositoryService;
 
 
 /**
@@ -40,7 +41,7 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
   protected final ApplicationContainer container;
  
   
-  private ThreadLocal<String> currentRepository;
+  private String currentRepository;
   
  
   protected LifeCycleCompletionService completionService;
@@ -49,7 +50,7 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
  protected AbstractLifeCycle() {
     this.container = ApplicationContainer.getInstance();
     this.completionService = (LifeCycleCompletionService) container.getComponentInstanceOfType(LifeCycleCompletionService.class);
-    currentRepository = new ThreadLocal<String>();
+    
   }
 
   /**
@@ -74,7 +75,9 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
    * @param event
    */
   protected void broadcast(final E event) {
-     addTasks(event);
+    //TODO Fixed SOC-1882
+    //currentRepository = MockRepositoryService.getCurrentRepo();
+    addTasks(event);
   }
 
  
@@ -83,6 +86,8 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
       completionService.addTask(new Callable<E>() {
         public E call() throws Exception {
           try {
+            //TODO Fixed SOC-1882
+            //MockRepositoryService.switchRepo(currentRepository);
             begin();
             dispatchEvent(listener, event);
           }

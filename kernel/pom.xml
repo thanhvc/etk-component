@@ -11,8 +11,8 @@
   <artifactId>kernel</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Engineering toolkit Framework Kernel</name>
-  <description>Engineering toolkit Framework Kernel</description>
+  <name>Engineering Toolkit Framework Kernel</name>
+  <description>Engineering Toolkit Framework Kernel</description>
 
   <modules>
     <module>reflection</module>
