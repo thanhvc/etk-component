@@ -78,5 +78,25 @@ public class MockFooStorageImpl extends FooStorageImpl {
   private Foo createFooMock(int index) {
     return new Foo("F000" + index, "Name for F000" + index);
   }
+  
+  
+  @Override
+  public Foo saveFoo(final Foo foo) {
+    log.debug("saveFoo(foo) with id = " + foo.getId());
+    return foo;
+  }
+  
+  
+  @Override
+  public void deleteFoo(final Foo existingFoo) {
+    log.debug("deleteFoo(existingFoo) with id = " + existingFoo.getId());
+  }
+  
+  
+  @Override
+  public Foo updateFoo(final Foo existingFoo) {
+    log.debug("updateFoo(existingFoo) with id = " + existingFoo.getId());
+    return existingFoo;
+  }
 
 }

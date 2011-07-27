@@ -36,6 +36,7 @@ public interface FooStorage {
    * @return
    */
   Foo findById(String id);
+  
   /**
    * Gets the Foo list base on the FooFilter with offset and limit.
    * 
@@ -61,5 +62,24 @@ public interface FooStorage {
   Bar loadBar(final Foo foo);
   
   
+  /**
+   * Creates the Foo data.
+   * @param foo
+   * @return
+   */
+  Foo saveFoo(final Foo foo);
   
+  /**
+   * Updates a Foo's information.
+   * 
+   * @param existingFoo
+   * @return
+   */
+  Foo updateFoo(final Foo existingFoo);
+  
+  /**
+   * Removes the existing Foo.
+   * @param existingFoo
+   */
+  void deleteFoo(final Foo existingFoo);
 }

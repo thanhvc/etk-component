@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import org.etk.common.logging.Logger;
-import org.etk.storage.plugins.cache.loader.Loader;
+import org.etk.storage.plugins.cache.loader.LoaderVisitor;
 
 /**
  * <p> A future cache that prevents the loading of the same resource twice.
@@ -32,14 +32,14 @@ import org.etk.storage.plugins.cache.loader.Loader;
  * be concurrently retrieved(like a classloading). </p>
  * 
  * <p> The future cache should be used with the {@link #get(Object, Object)}  method, that retrieves an object
- * from the cache. When the object is not found, then the {@link Loader#retrieve(Object, Object)} method is 
+ * from the cache. When the object is not found, then the {@link LoaderVisitor#accept(Object, Object)} method is 
  * used to retrieve the data and then this data is inserted in the cache.</p>
  * 
  * <p>The class is abstract and does not implement a cache technology by itself, the cache implement is delegated 
  * to the contractual methods {@link #get(Object)} and {@link #put(Object, Object)}. Those are intended to be used
  *  by the future cache only.</p>
  *  
- *  <p> The {@link Loader} interface provides a source to retrieve objects to put in cache implementation is delegated 
+ *  <p> The {@link LoaderVisitor} interface provides a source to retrieve objects to put in cache implementation is delegated 
  *  this interface is to decouble the cache from the object source.
  *  
  * Created by The eXo Platform SAS
@@ -53,13 +53,13 @@ import org.etk.storage.plugins.cache.loader.Loader;
 public abstract class FutureCache<K, V, C> {
 
   //Defines the loader which provides a source to retrieve objects.
-  private final Loader<K,V, C> loader;
+  private final LoaderVisitor<K,V, C> loader;
   
   private final Logger log = Logger.getLogger(FutureCache.class);
   
   private final ConcurrentMap<K, FutureTask<V>> futureEntries;
   
-  public FutureCache(Loader<K, V, C> loader) {
+  public FutureCache(LoaderVisitor<K, V, C> loader) {
     this.loader = loader;
     this.futureEntries = new ConcurrentHashMap<K, FutureTask<V>>();
   }
@@ -95,7 +95,7 @@ public abstract class FutureCache<K, V, C> {
       FutureTask<V> future = new FutureTask<V>(new Callable<V>() {
         public V call() throws Exception {
           // Retrieve the value from the loader
-          V value = loader.retrieve(context, key);
+          V value = loader.accept(context, key);
 
           //
           if (value != null) {

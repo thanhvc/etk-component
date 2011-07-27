@@ -158,6 +158,7 @@ public class CachedFooStorage implements FooStorage {
     return foo;
   }
   
+  @Override
   public Bar loadBar(final Foo foo) {
     FooKey key = new FooKey(new Foo(foo.getId()));
     return barCache.get(new ServiceContext<BarData>() {
@@ -167,6 +168,36 @@ public class CachedFooStorage implements FooStorage {
       }
       
     }, key).build();
+  }
+  
+  @Override
+  public Foo saveFoo(final Foo foo) {
+    storage.saveFoo(foo);
+    FooKey key = new FooKey(foo);
+    etkFooCache.put(key, new FooData(foo));
+    etkFoosCountCache.clearCache();
+    return foo;
+  }
+  
+  @Override
+  public void deleteFoo(final Foo existingFoo) {
+    storage.deleteFoo(existingFoo);
+    
+    FooKey key = new FooKey(existingFoo);
+    etkFooCache.put(key, new FooData(existingFoo));
+    etkFoosCountCache.clearCache();
+    
+    
+  }
+  
+  @Override
+  public Foo updateFoo(final Foo existingFoo) {
+    //
+    FooKey key = new FooKey(existingFoo);
+    etkFooCache.remove(key);
+
+    //
+    return storage.updateFoo(existingFoo);
   }
 
   

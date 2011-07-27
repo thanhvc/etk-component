@@ -31,7 +31,7 @@
       <dependency>
         <groupId>org.etk.component</groupId>
         <artifactId>org.etk.component.common</artifactId>
-        <version>${org.etk.common.version}</version>
+        <version>${org.etk.component.version}</version>
       </dependency>
   </dependencies>
   <profiles>

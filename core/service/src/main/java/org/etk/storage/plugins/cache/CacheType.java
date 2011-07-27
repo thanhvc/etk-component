@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import org.etk.kernel.cache.CacheService;
 import org.etk.kernel.cache.ExoCache;
-import org.etk.storage.plugins.cache.loader.CacheLoader;
+import org.etk.storage.plugins.cache.loader.CacheLoaderVisitor;
 import org.etk.storage.plugins.cache.loader.ServiceContext;
 import org.etk.storage.plugins.cache.model.key.CacheKey;
 
@@ -50,18 +50,23 @@ public enum CacheType {
    */
   public <K extends CacheKey, V extends Serializable> ExoCache<K,V> getFromService(CacheService service) {
     //Create the CacheInstance depend on the ExoCache configuration.
+    //CacheService help to creates the Caching region for each ExoCache 
+    //in the CacheMap for management.
     return service.getCacheInstance(name);
   }
   /**
-   * Creates the FutureETKCache base on the CacheLoader and eXoCache.
-   * 
+   * Creates the FutureETKCache for eXoCache parameter.
+   * Each FutureETKCache is added the CacheLoader which wrap the FooStorage.
+   * When CacheLoader retrieves the data from data source. It will call the retrieve(ServiceContext).
+   * and then it calls context.execute() method.
+   *  
    * @param <K> Key
    * @param <V> Value
    * @param cache eXoCache
    * @return FututeETKCache
    */
   public <K extends CacheKey, V extends Serializable> FutureETKCache<K, V, ServiceContext<V>> createFutureCache(ExoCache<K,V> cache) {
-    return new FutureETKCache<K, V, ServiceContext<V>>(new CacheLoader<K, V>(), cache);
+    return new FutureETKCache<K, V, ServiceContext<V>>(new CacheLoaderVisitor<K, V>(), cache);
   }
   
 }

@@ -127,6 +127,10 @@ public class Component {
 		initParams = ips;
 	}
 
+	/**
+	 * Configuration value for show information for debugging.
+	 * @return TRUE/FALSE Debug or NOT.
+	 */
 	public boolean getShowDeployInfo() {
 		return showDeployInfo;
 	}

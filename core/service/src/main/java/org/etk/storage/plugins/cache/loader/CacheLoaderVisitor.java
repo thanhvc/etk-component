@@ -14,45 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.storage.plugins.cache;
+package org.etk.storage.plugins.cache.loader;
 
-import java.io.Serializable;
-
-import org.etk.kernel.cache.ExoCache;
-import org.etk.storage.plugins.cache.loader.LoaderVisitor;
+import org.etk.storage.plugins.cache.model.key.CacheKey;
 
 /**
+ * Used by FuruteCache to execute the ServiceContext.
+ * 
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Jul 22, 2011  
  */
-public class FutureETKCache <K extends Serializable, V, C> extends FutureCache<K, V, C> {
-
-  private final ExoCache<K, V> cache;
-  
-  public FutureETKCache(LoaderVisitor<K, V, C> loader, ExoCache<K, V> cache) {
-    super(loader);
-    this.cache = cache;
-    
-  }
-  
-  public void remove(K key) {
-    cache.remove(key);
-  }
-  
-  public void clear() {
-    cache.clearCache();
-  }
-  @Override
-  protected V get(K key) {
-    return cache.get(key);
-  }
+public class CacheLoaderVisitor<K extends CacheKey, V> implements LoaderVisitor<K, V, ServiceContext<V>> {
 
   @Override
-  protected void put(K key, V entry) {
-    cache.put(key, entry);
+  public V accept(ServiceContext<V> context, K key) throws Exception {
+    return context.execute();
   }
-  
 
 }

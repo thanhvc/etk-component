@@ -27,7 +27,7 @@
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.reflection</artifactId>
-        <version>${org.etk.reflection.version}</version>
+        <version>${org.etk.kernel.version}</version>
       </dependency>
   </dependencies>
   <profiles>

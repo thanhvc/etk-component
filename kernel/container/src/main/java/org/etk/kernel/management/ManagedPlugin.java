@@ -14,45 +14,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.storage.plugins.cache;
+package org.etk.kernel.management;
 
-import java.io.Serializable;
-
-import org.etk.kernel.cache.ExoCache;
-import org.etk.storage.plugins.cache.loader.LoaderVisitor;
+import org.etk.kernel.container.component.BaseComponentPlugin;
+import org.etk.kernel.management.annotations.Managed;
+import org.etk.kernel.management.annotations.ManagedDescription;
+import org.etk.kernel.management.annotations.ManagedName;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 22, 2011  
+ * Jul 27, 2011  
  */
-public class FutureETKCache <K extends Serializable, V, C> extends FutureCache<K, V, C> {
+@Managed
+public abstract class ManagedPlugin extends BaseComponentPlugin {
 
-  private final ExoCache<K, V> cache;
+  @Managed
+  @ManagedName("Name")
+  @ManagedDescription("The plugin name.")
+  public String getName() {
+    return super.getName();
+  }
   
-  public FutureETKCache(LoaderVisitor<K, V, C> loader, ExoCache<K, V> cache) {
-    super(loader);
-    this.cache = cache;
+  @Managed
+  @ManagedName("Description")
+  @ManagedDescription("The plugin description.")
+  public String getDescription() {
     
+    return super.getDescription();
   }
   
-  public void remove(K key) {
-    cache.remove(key);
-  }
-  
-  public void clear() {
-    cache.clearCache();
-  }
-  @Override
-  protected V get(K key) {
-    return cache.get(key);
-  }
-
-  @Override
-  protected void put(K key, V entry) {
-    cache.put(key, entry);
-  }
-  
-
 }

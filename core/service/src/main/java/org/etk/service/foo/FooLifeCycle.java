@@ -17,9 +17,10 @@
 package org.etk.service.foo;
 
 import org.etk.service.core.event.AbstractLifeCycle;
+import org.etk.service.foo.model.Foo;
 import org.etk.service.foo.spi.FooLifeCycleEvent;
+import org.etk.service.foo.spi.FooLifeCycleEvent.Type;
 import org.etk.service.foo.spi.FooLifeCycleListener;
-
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -30,9 +31,32 @@ public class FooLifeCycle extends AbstractLifeCycle<FooLifeCycleListener, FooLif
 
   @Override
   protected void dispatchEvent(FooLifeCycleListener listener, FooLifeCycleEvent event) {
-    // TODO Auto-generated method stub
+    switch (event.getType()) {
     
+    case FOO_CREATED:
+      listener.fooCreated(event);
+      break;
+    case FOO_REMOVED:
+      listener.fooRemoved(event);
+      break;
+    case FOO_UPDATED:
+      listener.fooUpdated(event);
+      break;
+    default:
+      break;
+    }
+  }
+  
+  
+  public void fooCreated(Foo foo, String executor) {
+    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_CREATED));
   }
 
+  public void fooDeleted(Foo foo, String executor) {
+    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_REMOVED));
+  }
   
+  public void fooUpdated(Foo foo, String executor) {
+    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_UPDATED));
+  }
 }

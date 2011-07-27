@@ -14,45 +14,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.storage.plugins.cache;
+package org.etk.service.foo;
 
-import java.io.Serializable;
-
-import org.etk.kernel.cache.ExoCache;
-import org.etk.storage.plugins.cache.loader.LoaderVisitor;
+import org.etk.common.logging.Logger;
+import org.etk.service.foo.spi.FooLifeCycleEvent;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 22, 2011  
+ * Jul 27, 2011  
  */
-public class FutureETKCache <K extends Serializable, V, C> extends FutureCache<K, V, C> {
+public class MockFooPublisher extends FooListenerPlugin {
 
-  private final ExoCache<K, V> cache;
+  /**
+   * The Logger.
+   */
+  private static final Logger log = Logger.getLogger(MockFooPublisher.class);
   
-  public FutureETKCache(LoaderVisitor<K, V, C> loader, ExoCache<K, V> cache) {
-    super(loader);
-    this.cache = cache;
-    
-  }
-  
-  public void remove(K key) {
-    cache.remove(key);
-  }
-  
-  public void clear() {
-    cache.clearCache();
-  }
   @Override
-  protected V get(K key) {
-    return cache.get(key);
+  public void fooCreated(FooLifeCycleEvent event) {
+    log.debug("fooCreated::Event Type = " + event.getType());
   }
 
   @Override
-  protected void put(K key, V entry) {
-    cache.put(key, entry);
+  public void fooRemoved(FooLifeCycleEvent event) {
+    log.debug("fooRemoved::Event Type = " + event.getType());
   }
-  
+
+  @Override
+  public void fooUpdated(FooLifeCycleEvent event) {
+    log.debug("fooUpdated::Event Type = " + event.getType());
+  }
 
 }

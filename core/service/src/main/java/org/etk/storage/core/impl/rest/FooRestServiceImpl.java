@@ -51,8 +51,23 @@ public class FooRestServiceImpl implements FooStorage {
     // TODO Auto-generated method stub
     return 0;
   }
-  
-  
 
+  @Override
+  public Foo saveFoo(Foo foo) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Foo updateFoo(Foo existingFoo) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void deleteFoo(Foo existingFoo) {
+    // TODO Auto-generated method stub
+    
+  }
   
 }

@@ -16,7 +16,14 @@
  */
 package org.etk.service.foo.impl;
 
+import java.util.List;
+
+import org.etk.service.foo.FooFilter;
+import org.etk.service.foo.FooLifeCycle;
+import org.etk.service.foo.FooListenerPlugin;
+import org.etk.service.foo.model.Foo;
 import org.etk.service.foo.spi.FooService;
+import org.etk.storage.api.FooStorage;
 
 /**
  * Created by The eXo Platform SAS
@@ -25,5 +32,68 @@ import org.etk.service.foo.spi.FooService;
  * Jul 21, 2011  
  */
 public class FooServiceImpl implements FooService {
+
+  private FooStorage fooStorage;
+  private FooLifeCycle fooLifeCycle = new FooLifeCycle();
+  
+  public FooServiceImpl(FooStorage fooStorage) {
+    this.fooStorage = fooStorage;
+    
+  }
+  
+  @Override
+  public Foo getFooByName(String name) {
+    return null;
+  }
+
+  @Override
+  public Foo getFooById(String fooId) {
+    return fooStorage.findById(fooId);
+  }
+
+  @Override
+  public List<Foo> getAllFoosWithListAccess() {
+    return null;
+  }
+
+  @Override
+  public List<Foo> getAllFoosByFilter(FooFilter filter) {
+    return fooStorage.getFooByFilter(filter, 0, 5);
+  }
+
+  @Override
+  public Foo createFoo(Foo foo) {
+    fooStorage.saveFoo(foo);
+    fooLifeCycle.fooCreated(foo, "executor");
+    return foo;
+  }
+
+  @Override
+  public Foo updateFoo(Foo existingFoo) {
+    fooStorage.saveFoo(existingFoo);
+    fooLifeCycle.fooUpdated(existingFoo, "executor");
+    return existingFoo;
+  }
+
+  @Override
+  public void deleteFoo(Foo existingFoo) {
+    fooStorage.deleteFoo(existingFoo);
+    fooLifeCycle.fooDeleted(existingFoo, "executor");
+  }
+
+  @Override
+  public void registerFooListenerPlugin(FooListenerPlugin fooListenerPlugin) {
+    fooLifeCycle.addListener(fooListenerPlugin);
+    
+  }
+
+  @Override
+  public void unregisterListenerPlugin(FooListenerPlugin fooListenerPlugin) {
+    fooLifeCycle.removeListener(fooListenerPlugin);
+  }
+  
+  public void addFooListener(FooListenerPlugin plugin) {
+    registerFooListenerPlugin(plugin);
+  }
 
 }

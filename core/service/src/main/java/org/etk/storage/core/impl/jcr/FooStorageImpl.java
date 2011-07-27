@@ -63,5 +63,21 @@ public class FooStorageImpl implements FooStorage {
   public Bar loadBar(Foo foo) {
     return null;
   }
+  @Override
+  public Foo saveFoo(Foo foo) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public Foo updateFoo(Foo existingFoo) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+  @Override
+  public void deleteFoo(Foo existingFoo) {
+    // TODO Auto-generated method stub
+    
+  }
+  
   
 }

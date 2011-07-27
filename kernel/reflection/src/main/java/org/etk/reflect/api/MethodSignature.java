@@ -2,7 +2,12 @@ package org.etk.reflect.api;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * Method signature define for MethodInfo.
+ * 
+ * @author thanh_vucong
+ *
+ */
 public class MethodSignature {
 	private static final String[] NO_PARAMETERS = new String[0];
 
@@ -10,6 +15,12 @@ public class MethodSignature {
 
 	private final String[] parameterRawNames;
 
+	/**
+	 * 
+	 * 
+	 * @param name
+	 * @param parameterTypes
+	 */
 	public MethodSignature(String name, Class<?>... parameterTypes) {
 		if (name == null) {
 			throw new NullPointerException("No null name accepted");
@@ -27,8 +38,7 @@ public class MethodSignature {
 			for (int i = 0; i < parameterTypes.length; i++) {
 				Class<?> parameterType = parameterTypes[i];
 				if (parameterType == null) {
-					throw new IllegalArgumentException(
-							"Not null parameter type allowed");
+					throw new IllegalArgumentException("Not null parameter type allowed");
 				}
 
 				parameterRawNames[i] = parameterType.getName();
@@ -107,8 +117,7 @@ public class MethodSignature {
 
 	@Override
 	public String toString() {
-		return "MethodSignature[name=" + name + ",parameterRawNames="
-				+ Arrays.toString(parameterRawNames) + "]";
+		return "MethodSignature[name=" + name + ",parameterRawNames="	+ Arrays.toString(parameterRawNames) + "]";
 	}
 
 }

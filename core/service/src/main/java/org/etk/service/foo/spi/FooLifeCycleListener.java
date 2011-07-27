@@ -18,12 +18,33 @@ package org.etk.service.foo.spi;
 
 import org.etk.service.core.event.LifeCycleListener;
 
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class FooLifeCycleListener implements LifeCycleListener<FooLifeCycleEvent> {
+public interface FooLifeCycleListener extends LifeCycleListener<FooLifeCycleEvent> {
 
+  /**
+   * Invokes this method when a foo is created.
+   *
+   * @param event the space lifecycle event
+   */
+  void fooCreated(FooLifeCycleEvent event);
+
+  /**
+   * Invokes this method when a foo is removed.
+   *
+   * @param event the space lifecyle event
+   */
+  void fooRemoved(FooLifeCycleEvent event);
+  
+  /**
+   * Invokes this method when a foo is updated.
+   *
+   * @param event the space lifecyle event
+   */
+  void fooUpdated(FooLifeCycleEvent event);
 }

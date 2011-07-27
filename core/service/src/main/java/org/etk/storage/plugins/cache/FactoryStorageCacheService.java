@@ -27,6 +27,11 @@ import org.etk.storage.plugins.cache.model.key.FooKey;
 import org.etk.storage.plugins.cache.model.key.ListFoosKey;
 
 /**
+ * 
+ * This is factory which uses to support building the kind of ExoCache.
+ * And then, add the ExoCache to the CacheService(config in the configuration.xml in /kernel/cache)
+ * CacheType.FOO.getFromService(cacheSservice) to create the region in the CacheService for management.
+ * 
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com

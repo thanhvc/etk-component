@@ -15,7 +15,7 @@
       <dependency>
         <groupId>org.etk.tools</groupId>
         <artifactId>org.etk.tools.junit</artifactId>
-        <version>${org.etk.junit.version}</version>
+        <version>${org.etk.tools.version}</version>
       </dependency>
       <dependency>
         <groupId>org.etk.kernel</groupId>
@@ -25,13 +25,13 @@
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.cache</artifactId>
-        <version>${org.etk.cache.version}</version>
+        <version>${org.etk.kernel.version}</version>
       </dependency>
       
     <dependency>
       <groupId>org.etk.component</groupId>
       <artifactId>org.etk.component.test</artifactId>
-     <version>${org.etk.component.test.version}</version>
+     <version>${org.etk.component.version}</version>
     </dependency>
   </dependencies>
   <profiles>

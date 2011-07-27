@@ -15,7 +15,7 @@
       <dependency>
         <groupId>org.etk.tools</groupId>
         <artifactId>org.etk.tools.junit</artifactId>
-        <version>${org.etk.junit.version}</version>
+        <version>${org.etk.tools.version}</version>
       </dependency>
       <dependency>
         <groupId>org.etk.kernel</groupId>
@@ -25,7 +25,7 @@
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.reflection</artifactId>
-        <version>${org.etk.reflection.version}</version>
+        <version>${org.etk.kernel.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.jcr</groupId>

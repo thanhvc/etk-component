@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.etk.common.logging.Logger;
+import org.etk.kernel.container.ApplicationContainer;
 
 
 /**
@@ -36,6 +37,7 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
 
   protected Set<T> listeners = new HashSet<T>();
 
+  protected final ApplicationContainer container;
  
   
   private ThreadLocal<String> currentRepository;
@@ -45,8 +47,8 @@ public abstract class AbstractLifeCycle<T extends LifeCycleListener<E>, E extend
   
 
  protected AbstractLifeCycle() {
-
-    
+    this.container = ApplicationContainer.getInstance();
+    this.completionService = (LifeCycleCompletionService) container.getComponentInstanceOfType(LifeCycleCompletionService.class);
     currentRepository = new ThreadLocal<String>();
   }
 

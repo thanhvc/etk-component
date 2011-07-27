@@ -18,6 +18,7 @@
 
   <modules>
     <module>junit</module>
+    <module>sandbox</module>
   </modules>
 
 </project>
