@@ -8,7 +8,7 @@ import org.etk.kernel.container.test.spi.AbstractContainerTest;
 public class TestContainer extends AbstractContainerTest {
 
   public void setUp() throws Exception {
-    System.setProperty("maven.exoplatform.dir", TestContainer.class.getResource("/").getFile());
+    System.setProperty("maven.etk.dir", TestContainer.class.getResource("/").getFile());
   }
 
   public void testPortalContainer() throws Exception {

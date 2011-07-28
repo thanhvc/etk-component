@@ -11,8 +11,8 @@
       <jmx-name>info:type=OperatingSystemInfo</jmx-name>
       <type>org.etk.kernel.container.monitor.jvm.OperatingSystemInfoImpl</type>
    </component>
-
-	<component>
-		<type>org.etk.kernel.container.definition.ApplicationContainerConfig</type>
-	</component>	  
+  
+	 <component>
+		  <type>org.etk.kernel.container.definition.ApplicationContainerConfig</type>
+	 </component>	  
 </configuration>

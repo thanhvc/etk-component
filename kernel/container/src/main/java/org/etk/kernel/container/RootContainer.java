@@ -130,8 +130,8 @@ public class RootContainer extends KernelContainer {
 					pcontainer = new ApplicationContainer(this, scontext);
 					ApplicationContainer.setInstance(pcontainer);
 					ConfigurationManagerImpl cService = new MockConfigurationManagerImpl(scontext);
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/configuration.xml"));
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/test-configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/root-configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/application-configuration.xml"));
 					cService.processRemoveConfiguration();
 					pcontainer.registerComponentInstance(ConfigurationManager.class, cService);
 					registerComponentInstance(name, pcontainer);
@@ -327,8 +327,8 @@ public class RootContainer extends KernelContainer {
 			RootContainer rootContainer = new RootContainer();
 			ConfigurationManagerImpl service = new ConfigurationManagerImpl(rootContainer.profiles);
 			service.addConfiguration(ContainerUtil.getConfigurationURL("conf/configuration.xml"));
-			if (System.getProperty("maven.exoplatform.dir") != null) {
-				service.addConfiguration(ContainerUtil.getConfigurationURL("conf/test-configuration.xml"));
+			if (System.getProperty("maven.etk.dir") != null) {
+				service.addConfiguration(ContainerUtil.getConfigurationURL("conf/root-configuration.xml"));
 			}
 			String confDir = rootContainer.getServerEnvironment().getExoConfigurationDirectory();
 			String overrideConf = confDir + "/configuration.xml";
