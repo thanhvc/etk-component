@@ -27,8 +27,12 @@ import org.etk.kernel.container.util.ContainerUtil;
 import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.management.annotations.Managed;
 import org.etk.kernel.management.annotations.ManagedDescription;
+import org.etk.kernel.management.jmx.annotations.NamingContext;
+import org.etk.kernel.management.jmx.annotations.Property;
 
 
+@Managed
+@NamingContext(@Property(key = "container", value = "root"))
 public class RootContainer extends KernelContainer {
 
 	/**
