@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+  <component>
+      <key>org.etk.kernel.container.monitor.jvm.JVMRuntimeInfo</key>
+      <jmx-name>info:type=JVMRuntimeInfo</jmx-name>
+      <type>org.etk.kernel.container.monitor.jvm.JVMRuntimeInfoImpl</type>
+      <init-params>
+         <properties-param>
+            <name>add.system.properties</name>
+            <property name="org.apache.lucene.maxClauseCount" value="3000" />
+         </properties-param>
+      </init-params>
+   </component>
+</configuration>

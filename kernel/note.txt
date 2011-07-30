@@ -1,0 +1,12 @@
+Note: Important
+
+Need to make the separate the test project and add reference (all application for in the Container)to this. 
+Because RootContainer is singleton. It only initialize one time, so If configuration.xml in other project,
+it can no load in RootContainer.
+
+So when you run the Unit Test all of the project. It's wrong.
+Command in etk-component: mvn clean install
+
+
+
+

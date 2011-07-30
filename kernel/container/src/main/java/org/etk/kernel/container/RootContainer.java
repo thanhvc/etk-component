@@ -46,7 +46,7 @@ public class RootContainer extends KernelContainer {
 
 	private ApplicationContainerConfig config_;
 
-	private static final Logger log = Logger.getLogger("exo.kernel.container.RootContainer");
+	private static final Logger log = Logger.getLogger(RootContainer.class);
 
 	private static volatile boolean booting = false;
 
@@ -235,7 +235,7 @@ public class RootContainer extends KernelContainer {
 
 			// add configs from services
 			try {
-				cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/configuration.xml"));
+				cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/application-configuration.xml"));
 			} catch (Exception ex) {
 				log.error("Cannot add configuration conf/application/configuration.xml. ServletContext: " + context, ex);
 			}

@@ -15,12 +15,17 @@
       <dependency>
         <groupId>org.etk.component</groupId>
         <artifactId>org.etk.component.common</artifactId>
-        <version>0.1-Beta1-SNAPSHOT</version>
+        <version>${org.etk.component.version}</version>
       </dependency>
      <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.container</artifactId>
-        <version>0.1-Beta1-SNAPSHOT</version>
+        <version>${org.etk.kernel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.test</artifactId>
+        <version>${org.etk.kernel.version}</version>
       </dependency>
   </dependencies>
   <profiles>

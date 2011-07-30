@@ -3,7 +3,7 @@ package org.etk.core.service.test;
 import java.util.List;
 
 import org.etk.common.logging.Logger;
-import org.etk.kernel.container.test.spi.AbstractContainerTest;
+import org.etk.kernel.test.spi.AbstractContainerTest;
 import org.etk.service.foo.FooFilter;
 import org.etk.service.foo.model.Foo;
 import org.etk.storage.api.FooStorage;

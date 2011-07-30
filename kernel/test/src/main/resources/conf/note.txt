@@ -1,0 +1,5 @@
+Note:
+
+Only uses the root-configuration.xml and conf/application/application-configuration.xml, because if you need to configure the configuration.xml file in the main/java/conf. 
+The org.exoplatform.... in classpath of orm will initialize it. So it is wrong when run: mvn clean install of ORM.
+
