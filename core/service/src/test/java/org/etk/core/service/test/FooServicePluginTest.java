@@ -17,7 +17,7 @@
 package org.etk.core.service.test;
 
 import org.etk.common.logging.Logger;
-import org.etk.kernel.container.test.spi.AbstractContainerTest;
+import org.etk.kernel.test.spi.AbstractApplicationTest;
 import org.etk.service.foo.model.Foo;
 import org.etk.service.foo.spi.FooService;
 
@@ -27,7 +27,7 @@ import org.etk.service.foo.spi.FooService;
  *          exo@exoplatform.com
  * Jul 27, 2011  
  */
-public class FooServicePluginTest extends AbstractContainerTest {
+public class FooServicePluginTest extends AbstractApplicationTest {
 
   private Logger log = Logger.getLogger(FooServicePluginTest.class);
   

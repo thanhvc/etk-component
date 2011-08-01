@@ -50,7 +50,7 @@ public class RootContainer extends KernelContainer {
 
 	private ApplicationContainerConfig config_;
 
-	private static final Logger log = Logger.getLogger("exo.kernel.container.RootContainer");
+	private static final Logger log = Logger.getLogger(RootContainer.class);
 
 	private static volatile boolean booting = false;
 
@@ -134,8 +134,8 @@ public class RootContainer extends KernelContainer {
 					pcontainer = new ApplicationContainer(this, scontext);
 					ApplicationContainer.setInstance(pcontainer);
 					ConfigurationManagerImpl cService = new MockConfigurationManagerImpl(scontext);
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/configuration.xml"));
-					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/test-configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/root-configuration.xml"));
+					cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/application-configuration.xml"));
 					cService.processRemoveConfiguration();
 					pcontainer.registerComponentInstance(ConfigurationManager.class, cService);
 					registerComponentInstance(name, pcontainer);
@@ -239,7 +239,7 @@ public class RootContainer extends KernelContainer {
 
 			// add configs from services
 			try {
-				cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/configuration.xml"));
+				cService.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/application-configuration.xml"));
 			} catch (Exception ex) {
 				log.error("Cannot add configuration conf/application/configuration.xml. ServletContext: " + context, ex);
 			}
@@ -331,8 +331,8 @@ public class RootContainer extends KernelContainer {
 			RootContainer rootContainer = new RootContainer();
 			ConfigurationManagerImpl service = new ConfigurationManagerImpl(rootContainer.profiles);
 			service.addConfiguration(ContainerUtil.getConfigurationURL("conf/configuration.xml"));
-			if (System.getProperty("maven.exoplatform.dir") != null) {
-				service.addConfiguration(ContainerUtil.getConfigurationURL("conf/test-configuration.xml"));
+			if (System.getProperty("maven.etk.dir") != null) {
+				service.addConfiguration(ContainerUtil.getConfigurationURL("conf/root-configuration.xml"));
 			}
 			String confDir = rootContainer.getServerEnvironment().getExoConfigurationDirectory();
 			String overrideConf = confDir + "/configuration.xml";
