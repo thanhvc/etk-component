@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource
+END
+SubResourceMethodDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/SubResourceMethodDescriptorImpl.java
+END
+SubResourceLocatorDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/SubResourceLocatorDescriptorImpl.java
+END
+PathValue.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/PathValue.java
+END
+ResourceMethodDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/ResourceMethodDescriptorImpl.java
+END
+AbstractResourceDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/AbstractResourceDescriptorImpl.java
+END
+ResourceDescriptorValidator.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/ResourceDescriptorValidator.java
+END
+OptionsRequestResourceMethodDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/resource/OptionsRequestResourceMethodDescriptorImpl.java
+END

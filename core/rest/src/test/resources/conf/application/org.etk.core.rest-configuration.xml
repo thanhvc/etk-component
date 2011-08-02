@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+   xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+
+  <component>
+    <key>org.etk.core.rest.impl.ResourceBinder</key>
+    <type>org.etk.core.rest.impl.ResourceBinder</type>
+  </component>
+  <component>
+    <key>org.etk.core.rest.impl.RequestHandlerImpl</key>
+    <type>org.etk.core.rest.impl.RequestHandlerImpl</type>
+  </component>
+</configuration>

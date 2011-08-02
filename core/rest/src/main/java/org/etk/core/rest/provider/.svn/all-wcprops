@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/provider
+END
+EntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/provider/EntityProvider.java
+END
+ProviderDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/provider/ProviderDescriptor.java
+END

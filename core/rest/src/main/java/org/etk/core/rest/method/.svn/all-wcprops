@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/method
+END
+MethodParameter.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/method/MethodParameter.java
+END
+MethodInvokerFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/method/MethodInvokerFilter.java
+END
+TypeProducer.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/method/TypeProducer.java
+END
+MethodInvoker.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/method/MethodInvoker.java
+END

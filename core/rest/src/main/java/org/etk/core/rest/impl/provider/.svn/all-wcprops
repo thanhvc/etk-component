@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider
+END
+MultivaluedMapEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/MultivaluedMapEntityProvider.java
+END
+DataSourceEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/DataSourceEntityProvider.java
+END
+JAXBElementEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/JAXBElementEntityProvider.java
+END
+MultipartFormDataEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/MultipartFormDataEntityProvider.java
+END
+IOHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/IOHelper.java
+END
+DOMSourceEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/DOMSourceEntityProvider.java
+END
+ReaderEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/ReaderEntityProvider.java
+END
+ProviderDescriptorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/ProviderDescriptorImpl.java
+END
+JAXBContextResolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/JAXBContextResolver.java
+END
+ByteEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/ByteEntityProvider.java
+END
+StringEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/StringEntityProvider.java
+END
+JsonEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/JsonEntityProvider.java
+END
+JAXBObjectEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/JAXBObjectEntityProvider.java
+END
+InputStreamEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/InputStreamEntityProvider.java
+END
+SAXSourceEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/SAXSourceEntityProvider.java
+END
+StreamOutputEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/StreamOutputEntityProvider.java
+END
+StreamSourceEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/StreamSourceEntityProvider.java
+END
+FileEntityProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/FileEntityProvider.java
+END
+EntityProviderComponentPlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/EntityProviderComponentPlugin.java
+END
+JAXBContextComponentPlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/impl/provider/JAXBContextComponentPlugin.java
+END
