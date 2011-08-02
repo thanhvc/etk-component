@@ -48,6 +48,8 @@
     <javax.servlet.version>2.5</javax.servlet.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
     <org.jibx.version>1.2.3</org.jibx.version>
+    <javax.ws.rs.version>1.0</javax.ws.rs.version>
+    <javax.xml.bind.version>2.1</javax.xml.bind.version>
     <picocontainer.version>1.1</picocontainer.version>
     <org.apache.httpclient.version>4.1.1</org.apache.httpclient.version>
     <org.etk.version>0.1-Beta1-SNAPSHOT</org.etk.version>
@@ -121,6 +123,16 @@
        <groupId>picocontainer</groupId>
        <artifactId>picocontainer</artifactId>
        <version>${picocontainer.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>jsr311-api</artifactId>
+        <version>${javax.ws.rs.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${javax.xml.bind.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

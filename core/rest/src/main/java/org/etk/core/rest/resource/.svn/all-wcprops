@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource
+END
+SubResourceMethodMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/SubResourceMethodMap.java
+END
+SubResourceMethodDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/SubResourceMethodDescriptor.java
+END
+SubResourceLocatorMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/SubResourceLocatorMap.java
+END
+SubResourceLocatorDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/SubResourceLocatorDescriptor.java
+END
+GenericMethodResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/GenericMethodResource.java
+END
+ResourceDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/ResourceDescriptor.java
+END
+ResourceDescriptorVisitor.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/ResourceDescriptorVisitor.java
+END
+ResourceMethodMap.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/ResourceMethodMap.java
+END
+ResourceMethodDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/ResourceMethodDescriptor.java
+END
+AbstractResourceDescriptor.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/AbstractResourceDescriptor.java
+END
+ResourceContainer.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/main/java/org/exoplatform/services/rest/resource/ResourceContainer.java
+END

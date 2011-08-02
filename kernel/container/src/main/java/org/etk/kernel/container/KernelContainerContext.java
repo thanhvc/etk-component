@@ -3,6 +3,8 @@ package org.etk.kernel.container;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.etk.common.logging.Logger;
+
 
 @SuppressWarnings("serial")
 public final class KernelContainerContext implements java.io.Serializable {
@@ -17,8 +19,7 @@ public final class KernelContainerContext implements java.io.Serializable {
 
 	private String name;
 
-	// private static final Log log =
-	// ExoLogger.getLogger("exo.kernel.container.ExoContainerContext");
+	private static final Logger log = Logger.getLogger(KernelContainerContext.class);
 
 	public KernelContainerContext(KernelContainer container) {
 		this.container = container;
@@ -92,9 +93,8 @@ public final class KernelContainerContext implements java.io.Serializable {
 
 	static void setTopContainer(KernelContainer cont) {
 		if (topContainer != null && cont != null)
-			throw new IllegalStateException(
-					"Two top level containers created, but must be only one.");
-		// log.info("Set the top container in its context");
+			throw new IllegalStateException("Two top level containers created, but must be only one.");
+		log.info("Set the top container in its context");
 		topContainer = cont;
 	}
 
