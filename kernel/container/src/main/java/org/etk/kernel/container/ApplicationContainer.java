@@ -18,7 +18,13 @@ import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.container.xml.PortalContainerInfo;
 import org.etk.kernel.management.annotations.Managed;
 import org.etk.kernel.management.annotations.ManagedDescription;
+import org.etk.kernel.management.jmx.annotations.Property;
+import org.etk.kernel.management.jmx.annotations.NamingContext;
+import org.etk.kernel.management.jmx.annotations.NameTemplate;
 
+@Managed
+@NamingContext(@Property(key = "application", value = "{Name}"))
+@NameTemplate({@Property(key = "container", value = "application"), @Property(key = "name", value = "{Name}")})
 public class ApplicationContainer extends KernelContainer implements SessionManagerContainer {
 
 	/**
@@ -235,7 +241,7 @@ public class ApplicationContainer extends KernelContainer implements SessionMana
 	}
 
 	@Managed
-	@ManagedDescription("The portal container name")
+	@ManagedDescription("The application container name")
 	public String getName() {
 		return name;
 	}
@@ -245,13 +251,13 @@ public class ApplicationContainer extends KernelContainer implements SessionMana
 	public String getConfigurationXML() {
 		Configuration conf = getConfiguration();
 		if (conf == null) {
-			// log.warn("The configuration of the PortalContainer could not be found");
+			log.warn("The configuration of the ApplicationContainer could not be found");
 			return null;
 		}
 		Configuration result = Configuration.merge(
 				((KernelContainer) parent).getConfiguration(), conf);
 		if (result == null) {
-			// log.warn("The configurations could not be merged");
+			log.warn("The configurations could not be merged");
 			return null;
 		}
 		return result.toXML();

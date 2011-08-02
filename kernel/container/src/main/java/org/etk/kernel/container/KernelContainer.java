@@ -12,13 +12,14 @@ import java.util.Set;
 import org.etk.common.logging.Logger;
 import org.etk.common.utils.PropertyManager;
 import org.etk.kernel.container.configuration.ConfigurationManager;
+import org.etk.kernel.container.management.ManageableContainer;
 import org.etk.kernel.container.util.ContainerUtil;
 import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.container.xml.InitParams;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.defaults.ComponentAdapterFactory;
 
-public class KernelContainer extends CachingContainer {
+public class KernelContainer extends ManageableContainer {
 
 	/**
 	 * Serial Version UID
@@ -49,7 +50,7 @@ public class KernelContainer extends CachingContainer {
 		return Collections.unmodifiableSet(profiles);
 	}
 
-	Logger log = Logger.getLogger(KernelContainer.class);
+	static Logger log = Logger.getLogger(KernelContainer.class);
 
 	private Map<String, ComponentLifecyclePlugin> componentLifecylePlugin = new HashMap<String, ComponentLifecyclePlugin>();
 
