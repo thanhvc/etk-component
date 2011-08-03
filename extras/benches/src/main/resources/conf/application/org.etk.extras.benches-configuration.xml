@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+
+	<component>
+		<type>org.etk.extras.benches.service.DataInjector</type>
+	</component>
+  <component>
+    <type>org.etk.extras.benches.service.StartupInjectionConfig</type>
+    <init-params>
+      <properties-param>
+        <name>inject.conf</name>
+        <description>possible properties are 'foo', and 'bar' as long values</description>
+        <property name="foo" value="1000"/>
+        <property name="bar" value="50"/>
+        <property name="multhread" value="0"/> <!--multihread = 1 running with multi threading otherwise main threading -->
+      </properties-param>
+    </init-params>
+  </component>
+</configuration>

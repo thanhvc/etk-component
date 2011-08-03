@@ -2,31 +2,31 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
    xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
 	<component>
-	    <key>org.etk.service.core.event.LifeCycleCompletionService</key>
-	    <type>org.etk.service.core.event.LifeCycleCompletionService</type>
-	    <init-params>
-	      <value-param>
-		<name>thread-number</name>
-		<value>10</value>
-	      </value-param>
-	      <value-param>
-		<name>async-execution</name>
-		<value>true</value>
-	      </value-param>
-	    </init-params>
+		<key>org.etk.service.core.event.LifeCycleCompletionService</key>
+		<type>org.etk.service.core.event.LifeCycleCompletionService</type>
+		<init-params>
+			<value-param>
+				<name>thread-number</name>
+				<value>15</value>
+			</value-param>
+			<value-param>
+				<name>async-execution</name>
+				<value>false</value>
+			</value-param>
+		</init-params>
 	</component>
-        <component>
-	    <key>org.etk.service.foo.spi.FooService</key>
-            <type>org.etk.service.foo.impl.FooServiceImpl</type>
-            <component-plugins>
-	      <component-plugin>
-		<name>MockFooPublisher</name>
-		<set-method>addFooListener</set-method>
-		<type>org.etk.service.foo.MockFooPublisher</type>
-	     </component-plugin>
-            </component-plugins>
-        </component>
-        <component>
+	<component>
+		<key>org.etk.service.foo.spi.FooService</key>
+		<type>org.etk.service.foo.impl.FooServiceImpl</type>
+		<component-plugins>
+			<component-plugin>
+				<name>MockFooPublisher</name>
+				<set-method>addFooListener</set-method>
+				<type>org.etk.service.foo.MockFooPublisher</type>
+			</component-plugin>
+		</component-plugins>
+	</component>
+	<component>
 		<key>org.etk.storage.api.FooStorage</key>
 		<type>org.etk.storage.core.impl.CachedFooStorage</type>
 	</component>
@@ -34,11 +34,11 @@
 		<key>org.etk.storage.api.FooStorage</key>
 		<type>org.etk.storage.core.impl.CachedFooStorage</type>
 	</component>
-        <component>
-                <key>org.etk.storage.core.impl.jcr.FooStorageImpl</key>
-                <type>org.etk.storage.core.mock.MockFooStorageImpl</type>
-        </component>
-        <component>
-                <type>org.etk.storage.plugins.cache.FactoryStorageCacheService</type>
-        </component>
+	<component>
+		<key>org.etk.storage.core.impl.jcr.FooStorageImpl</key>
+		<type>org.etk.storage.core.mock.MockFooStorageImpl</type>
+	</component>
+	<component>
+		<type>org.etk.storage.plugins.cache.FactoryStorageCacheService</type>
+	</component>
 </configuration>

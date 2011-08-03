@@ -17,10 +17,10 @@
 package org.etk.service.foo;
 
 import org.etk.service.core.event.AbstractLifeCycle;
+import org.etk.service.foo.api.FooLifeCycleEvent;
+import org.etk.service.foo.api.FooLifeCycleListener;
+import org.etk.service.foo.api.FooLifeCycleEvent.Type;
 import org.etk.service.foo.model.Foo;
-import org.etk.service.foo.spi.FooLifeCycleEvent;
-import org.etk.service.foo.spi.FooLifeCycleEvent.Type;
-import org.etk.service.foo.spi.FooLifeCycleListener;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform

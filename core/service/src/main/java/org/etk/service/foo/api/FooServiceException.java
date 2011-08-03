@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.spi;
-
-import org.etk.service.core.event.LifeCycleListener;
-
+package org.etk.service.foo.api;
 
 /**
  * Created by The eXo Platform SAS
@@ -25,26 +22,6 @@ import org.etk.service.core.event.LifeCycleListener;
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public interface FooLifeCycleListener extends LifeCycleListener<FooLifeCycleEvent> {
+public class FooServiceException {
 
-  /**
-   * Invokes this method when a foo is created.
-   *
-   * @param event the space lifecycle event
-   */
-  void fooCreated(FooLifeCycleEvent event);
-
-  /**
-   * Invokes this method when a foo is removed.
-   *
-   * @param event the space lifecyle event
-   */
-  void fooRemoved(FooLifeCycleEvent event);
-  
-  /**
-   * Invokes this method when a foo is updated.
-   *
-   * @param event the space lifecyle event
-   */
-  void fooUpdated(FooLifeCycleEvent event);
 }

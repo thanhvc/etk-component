@@ -14,38 +14,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo;
+package org.etk.service.foo.api;
 
-import org.etk.common.logging.Logger;
-import org.etk.service.foo.api.FooLifeCycleEvent;
+import org.etk.service.core.event.LifeCycleListener;
+
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 27, 2011  
+ * Jul 21, 2011  
  */
-public class MockFooPublisher extends FooListenerPlugin {
+public interface FooLifeCycleListener extends LifeCycleListener<FooLifeCycleEvent> {
 
   /**
-   * The Logger.
+   * Invokes this method when a foo is created.
+   *
+   * @param event the space lifecycle event
    */
-  private static final Logger log = Logger.getLogger(MockFooPublisher.class);
+  void fooCreated(FooLifeCycleEvent event);
+
+  /**
+   * Invokes this method when a foo is removed.
+   *
+   * @param event the space lifecyle event
+   */
+  void fooRemoved(FooLifeCycleEvent event);
   
-  @Override
-  public void fooCreated(FooLifeCycleEvent event) {
-    
-    log.debug("fooCreated::Event Type = " + event.getType());
-  }
-
-  @Override
-  public void fooRemoved(FooLifeCycleEvent event) {
-    log.debug("fooRemoved::Event Type = " + event.getType());
-  }
-
-  @Override
-  public void fooUpdated(FooLifeCycleEvent event) {
-    log.debug("fooUpdated::Event Type = " + event.getType());
-  }
-
+  /**
+   * Invokes this method when a foo is updated.
+   *
+   * @param event the space lifecyle event
+   */
+  void fooUpdated(FooLifeCycleEvent event);
 }

@@ -40,6 +40,9 @@ public class MockFooStorageImpl extends FooStorageImpl {
     return createFooMock(1);
   }
   
+  
+  
+  
   @Override
   public List<Foo> getFooByFilter(FooFilter fooFilter, int offset, int limit) {
     log.debug("Access to getFooByFilter() method \n\n");

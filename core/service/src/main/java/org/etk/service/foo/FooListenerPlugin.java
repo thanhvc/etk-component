@@ -17,8 +17,8 @@
 package org.etk.service.foo;
 
 import org.etk.kernel.management.ManagedPlugin;
-import org.etk.service.foo.spi.FooLifeCycleEvent;
-import org.etk.service.foo.spi.FooLifeCycleListener;
+import org.etk.service.foo.api.FooLifeCycleEvent;
+import org.etk.service.foo.api.FooLifeCycleListener;
 
 
 /**

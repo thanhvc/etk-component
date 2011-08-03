@@ -14,14 +14,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.spi;
+package org.etk.service.foo.api;
 
 /**
+ * Bar is child of Foo, so when you want to create the foo, 
+ * needs to guarantee that Foo is existing.
+ * 
+ * 
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class FooServiceException {
+public class FooBarHandler {
 
 }

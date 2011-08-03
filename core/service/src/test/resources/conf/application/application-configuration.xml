@@ -39,29 +39,26 @@
 	      </value-param>
 	    </init-params>
 	</component>
-        <component>
-	    <key>org.etk.service.foo.spi.FooService</key>
-            <type>org.etk.service.foo.impl.FooServiceImpl</type>
-            <component-plugins>
-	      <component-plugin>
-		<name>MockFooPublisher</name>
-		<set-method>addFooListener</set-method>
-		<type>org.etk.service.foo.MockFooPublisher</type>
-	     </component-plugin>
-            </component-plugins>
-        </component>
-        <component>
-		<key>org.etk.storage.api.FooStorage</key>
-		<type>org.etk.storage.core.impl.CachedFooStorage</type>
-	</component>
 	<component>
+		<key>org.etk.service.foo.spi.FooService</key>
+		<type>org.etk.service.foo.impl.FooServiceImpl</type>
+		<component-plugins>
+			<component-plugin>
+				<name>MockFooPublisher</name>
+				<set-method>addFooListener</set-method>
+				<type>org.etk.service.foo.MockFooPublisher</type>
+			</component-plugin>
+		</component-plugins>
+	</component>
+        
+  <component>
 		<key>org.etk.storage.api.FooStorage</key>
 		<type>org.etk.storage.core.impl.CachedFooStorage</type>
 	</component>
-        <component>
-                <key>org.etk.storage.core.impl.jcr.FooStorageImpl</key>
-                <type>org.etk.storage.core.mock.MockFooStorageImpl</type>
-        </component>
+  <component>
+    <key>org.etk.storage.core.impl.jcr.FooStorageImpl</key>
+    <type>org.etk.storage.core.mock.MockFooStorageImpl</type>
+  </component>
         <component>
                 <type>org.etk.storage.plugins.cache.FactoryStorageCacheService</type>
         </component>

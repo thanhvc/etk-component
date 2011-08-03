@@ -9,8 +9,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.etk.sandbox.rest.api.Util;
+import org.etk.service.foo.api.FooService;
 import org.etk.service.foo.model.Foo;
-import org.etk.service.foo.spi.FooService;
 
 @Path("/etk/rest/foo")
 public class FooRestService {

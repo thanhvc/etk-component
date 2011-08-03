@@ -14,7 +14,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.container.KernelContainerContext;
-import org.etk.service.foo.spi.FooService;
+import org.etk.service.foo.api.FooService;
 
 public final class Util {
   /**

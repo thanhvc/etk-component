@@ -313,6 +313,7 @@
            <module>kernel</module>
            <module>core</module>
            <module>sample</module>
+           <module>extras</module>
         </modules>
      </profile>
      

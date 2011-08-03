@@ -1,37 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-   <parent>
-     <groupId>org.etk</groupId>
-     <artifactId>tools</artifactId>
-     <version>0.1-Beta1-SNAPSHOT</version>
+  <parent>
+    <groupId>org.etk</groupId>
+    <artifactId>extras</artifactId>
+    <version>0.1-Beta1-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.etk.tools</groupId>
-  <artifactId>org.etk.tools.sandbox</artifactId>
+  <groupId>org.etk.extras</groupId>
+  <artifactId>org.etk.extras.benches</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineering Toolkit Framework SandBox</name>
-  <description>Engineering Toolkit Framework SandBox</description>
+  <name>DataInjector for benchmark performance</name>
+  <description>DataInjector for benchmark performance</description>
   <dependencies>
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${junit.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>servlet-api</artifactId>
-        <version>${javax.servlet.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>javax.ws.rs</groupId>
-        <artifactId>jsr311-api</artifactId>
-        <scope>provided</scope>
-     </dependency>
-      <dependency>
-        <groupId>javax.xml.bind</groupId>
-        <artifactId>jaxb-api</artifactId>
-        <scope>provided</scope>
-      </dependency>
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.reflection</artifactId>
@@ -54,10 +34,8 @@
       <activation>
         <jdk>1.6</jdk>
       </activation>
-
     </profile>
   </profiles>
-
   <build>
     <plugins>
       <plugin>
@@ -94,5 +72,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
