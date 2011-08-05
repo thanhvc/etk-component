@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.service.common.event;
 
 /**
  * Created by The eXo Platform SAS
@@ -22,60 +22,32 @@ package org.etk.service.foo.model;
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class Foo {
+public class LifeCycleEvent<S,P> {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
-  }
-  
   /**
-   * Constructor creates new instance with id and description.
-   * 
-   * @param id
-   * @param description
+   * space where the event occurs
    */
-  public Foo(String id, String name) {
-    this.id = id;
-    this.name = name;
+  protected P  payload;
+
+  /**
+   * source of the event.
+   */
+  protected S source;
+
+  public LifeCycleEvent(S source, P payload) {
+    this.payload = payload;
+    this.source = source;
   }
 
-  public String getId() {
-    return id;
+
+  public P getPayload() {
+    return payload;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public S getSource() {
+    return source;
   }
 
-  public String getName() {
-    return name;
-  }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-  
-  @Override
-  public String toString() {
-    return "[id = " + this.id + " and name = " + this.name + " ]";
-  }
 
 }

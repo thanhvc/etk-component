@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.etk.common.logging.Logger;
 import org.etk.extras.benches.service.util.NameGenerator;
 import org.etk.kernel.container.ApplicationContainer;
-import org.etk.service.core.event.LifeCycleCompletionService;
+import org.etk.service.common.event.LifeCycleCompletionService;
 import org.etk.service.foo.api.FooService;
 import org.etk.service.foo.model.Bar;
 import org.etk.service.foo.model.Foo;

@@ -4,18 +4,67 @@
 	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
 
 	<component>
-		<type>org.etk.extras.benches.service.DataInjector</type>
+	  <key>org.etk.extras.benches.service.DataInjectionExecutor</key>
+		<type>org.etk.extras.benches.service.DataInjectionExecutor</type>
 	</component>
-  <component>
-    <type>org.etk.extras.benches.service.StartupInjectionConfig</type>
-    <init-params>
-      <properties-param>
-        <name>inject.conf</name>
-        <description>possible properties are 'foo', and 'bar' as long values</description>
-        <property name="foo" value="1000"/>
-        <property name="bar" value="50"/>
-        <property name="multhread" value="0"/> <!--multihread = 1 running with multi threading otherwise main threading -->
-      </properties-param>
-    </init-params>
-  </component>
+
+	<component>
+		<key>org.etk.extras.benches.service.common.InjectorCompletionService</key>
+		<type>org.etk.extras.benches.service.common.InjectorCompletionService</type>
+		<init-params>
+			<value-param>
+				<name>thread-number</name>
+				<value>20</value>
+			</value-param>
+			<value-param>
+				<name>async-execution</name>
+				<value>true</value>
+			</value-param>
+		</init-params>
+	</component>
+  
+ <external-component-plugins>
+  <target-component>org.etk.extras.benches.service.DataInjectionExecutor</target-component>
+    <component-plugin>
+      <name>BarDataInjector</name>
+      <set-method>addInjectorTask</set-method>
+      <type>org.etk.extras.benches.service.BarTaskInjector</type>
+      <description>Inject Bar data for ETK</description>
+      <init-params>
+        <value-param>
+          <name>data-amount</name> <!-- maximum data for injection -->
+          <value>100</value>
+        </value-param>
+        <value-param>
+          <name>priority-executor</name> <!-- priority to execute -->
+          <value>1</value>
+        </value-param>
+        <value-param>
+          <name>parallel-executor</name> <!-- parallel processing -->
+          <value>true</value>
+        </value-param>
+      </init-params>
+    </component-plugin>
+     <component-plugin>
+      <name>FooDataInjector</name>
+      <set-method>addInjectorTask</set-method>
+      <type>org.etk.extras.benches.service.FooTaskInjector</type>
+      <description>Inject Foo data for ETK</description>
+      <init-params>
+        <value-param>
+          <name>data-amount</name> <!-- maximum data for injection -->
+          <value>100</value>
+        </value-param>
+        <value-param>
+          <name>priority-executor</name> <!-- priority to execute -->
+          <value>0</value>
+        </value-param>
+        <value-param>
+          <name>parallel-executor</name> <!-- parallel processing -->
+          <value>true</value>
+        </value-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+	
 </configuration>

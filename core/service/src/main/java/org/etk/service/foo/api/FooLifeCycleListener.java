@@ -16,7 +16,7 @@
  */
 package org.etk.service.foo.api;
 
-import org.etk.service.core.event.LifeCycleListener;
+import org.etk.service.common.event.LifeCycleListener;
 
 
 /**

@@ -56,5 +56,9 @@ public class Bar {
     this.description = description;
   }
   
+  @Override
+  public String toString() {
+    return "[id = " + this.id + " and description = " + this.description + " ]";
+  }
   
 }

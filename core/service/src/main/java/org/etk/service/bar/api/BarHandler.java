@@ -14,40 +14,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.core.event;
+package org.etk.service.bar.api;
 
 /**
+ * Bar is child of Foo, so when you want to create the foo, 
+ * needs to guarantee that Foo is existing.
+ * 
+ * 
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class LifeCycleEvent<S,P> {
-
-  /**
-   * space where the event occurs
-   */
-  protected P  payload;
-
-  /**
-   * source of the event.
-   */
-  protected S source;
-
-  public LifeCycleEvent(S source, P payload) {
-    this.payload = payload;
-    this.source = source;
-  }
-
-
-  public P getPayload() {
-    return payload;
-  }
-
-  public S getSource() {
-    return source;
-  }
-
-
+public class BarHandler {
 
 }

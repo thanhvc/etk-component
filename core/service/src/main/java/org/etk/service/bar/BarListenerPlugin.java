@@ -14,7 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.service.bar;
+
+import org.etk.kernel.management.ManagedPlugin;
+import org.etk.service.bar.api.BarLifeCycleListener;
+import org.etk.service.bar.api.BarLifeCycleEvent;
+
 
 /**
  * Created by The eXo Platform SAS
@@ -22,60 +27,20 @@ package org.etk.service.foo.model;
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class Foo {
+public abstract class BarListenerPlugin extends ManagedPlugin implements BarLifeCycleListener {
 
-  private String id;
+  /**
+   * {@inheritDoc}
+   */
+  public abstract void barCreated(BarLifeCycleEvent event);
 
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
-  }
+  /**
+   * {@inheritDoc}
+   */
+  public abstract void barRemoved(BarLifeCycleEvent event);
   
   /**
-   * Constructor creates new instance with id and description.
-   * 
-   * @param id
-   * @param description
+   * {@inheritDoc}
    */
-  public Foo(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
-  
-  @Override
-  public String toString() {
-    return "[id = " + this.id + " and name = " + this.name + " ]";
-  }
-
+  public abstract void barUpdated(BarLifeCycleEvent event);
 }

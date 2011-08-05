@@ -14,7 +14,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.service.bar.api;
+
+import java.util.List;
+
+import org.etk.common.utils.LazyListAccess;
+import org.etk.common.utils.ListAccessValidator;
+import org.etk.service.foo.model.Foo;
 
 /**
  * Created by The eXo Platform SAS
@@ -22,60 +28,25 @@ package org.etk.service.foo.model;
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class Foo {
+public class BarListAccess implements LazyListAccess<Foo> {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
-  }
+  /** The list used for identity storage. */
+  private final List<Foo> list;
   
-  /**
-   * Constructor creates new instance with id and description.
-   * 
-   * @param id
-   * @param description
-   */
-  public Foo(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
+  public BarListAccess(List<Foo> list) {
+    this.list = list;
   }
   
   @Override
-  public String toString() {
-    return "[id = " + this.id + " and name = " + this.name + " ]";
+  public Foo[] load(int offset, int limit) throws Exception, IllegalArgumentException {
+    ListAccessValidator.validateIndex(offset, limit, this.getSize());
+    Foo result[] = new Foo[limit];
+    for (int i = 0; i < limit; i++)
+      result[i] = list.get(i + offset);
+
+    return result;
   }
 
+  @Override
+  public int getSize() throws Exception { return list.size();}
 }

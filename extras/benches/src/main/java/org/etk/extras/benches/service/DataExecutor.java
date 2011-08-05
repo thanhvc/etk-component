@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.core.event;
-
+package org.etk.extras.benches.service;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Aug 5, 2011  
  */
-public interface LifeCycleListener <E extends LifeCycleEvent<?,?>> {
+public interface DataExecutor {
 
+  
 }
-

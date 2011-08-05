@@ -2,8 +2,8 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
    xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
 	<component>
-		<key>org.etk.service.core.event.LifeCycleCompletionService</key>
-		<type>org.etk.service.core.event.LifeCycleCompletionService</type>
+		<key>org.etk.service.common.event.LifeCycleCompletionService</key>
+		<type>org.etk.service.common.event.LifeCycleCompletionService</type>
 		<init-params>
 			<value-param>
 				<name>thread-number</name>
@@ -16,7 +16,7 @@
 		</init-params>
 	</component>
 	<component>
-		<key>org.etk.service.foo.spi.FooService</key>
+		<key>org.etk.service.foo.api.FooService</key>
 		<type>org.etk.service.foo.impl.FooServiceImpl</type>
 		<component-plugins>
 			<component-plugin>
@@ -26,6 +26,24 @@
 			</component-plugin>
 		</component-plugins>
 	</component>
+	
+	<component>
+    <key>org.etk.service.bar.api.BarService</key>
+    <type>org.etk.service.bar.impl.BarServiceImpl</type>
+    <component-plugins>
+      <component-plugin>
+        <name>MockBarPublisher</name>
+        <set-method>addBarListener</set-method>
+        <type>org.etk.service.foo.MockFooPublisher</type>
+      </component-plugin>
+    </component-plugins>
+  </component>
+  
+	<component>
+    <key>org.etk.storage.api.BarStorage</key>
+    <type>org.etk.storage.core.mock.MockBarStorageImpl</type>
+  </component>
+  
 	<component>
 		<key>org.etk.storage.api.FooStorage</key>
 		<type>org.etk.storage.core.impl.CachedFooStorage</type>

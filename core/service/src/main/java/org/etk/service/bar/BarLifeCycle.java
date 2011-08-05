@@ -14,49 +14,48 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo;
+package org.etk.service.bar;
 
+import org.etk.service.bar.api.BarLifeCycleEvent;
+import org.etk.service.bar.api.BarLifeCycleEvent.Type;
+import org.etk.service.bar.api.BarLifeCycleListener;
 import org.etk.service.common.event.AbstractLifeCycle;
-import org.etk.service.foo.api.FooLifeCycleEvent;
-import org.etk.service.foo.api.FooLifeCycleListener;
-import org.etk.service.foo.api.FooLifeCycleEvent.Type;
-import org.etk.service.foo.model.Foo;
+import org.etk.service.foo.model.Bar;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class FooLifeCycle extends AbstractLifeCycle<FooLifeCycleListener, FooLifeCycleEvent> {
+public class BarLifeCycle extends AbstractLifeCycle<BarLifeCycleListener, BarLifeCycleEvent> {
 
   @Override
-  protected void dispatchEvent(FooLifeCycleListener listener, FooLifeCycleEvent event) {
+  protected void dispatchEvent(BarLifeCycleListener listener, BarLifeCycleEvent event) {
     switch (event.getType()) {
     
-    case FOO_CREATED:
-      listener.fooCreated(event);
+    case BAR_CREATED:
+      listener.barCreated(event);
       break;
-    case FOO_REMOVED:
-      listener.fooRemoved(event);
+    case BAR_REMOVED:
+      listener.barRemoved(event);
       break;
-    case FOO_UPDATED:
-      listener.fooUpdated(event);
+    case BAR_UPDATED:
+      listener.barUpdated(event);
       break;
     default:
       break;
     }
   }
   
-  
-  public void fooCreated(Foo foo, String executor) {
-    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_CREATED));
+  public void barCreated(Bar bar, String executor) {
+    broadcast(new BarLifeCycleEvent(bar, executor, Type.BAR_CREATED));
   }
 
-  public void fooDeleted(Foo foo, String executor) {
-    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_REMOVED));
+  public void barDeleted(Bar bar, String executor) {
+    broadcast(new BarLifeCycleEvent(bar, executor, Type.BAR_REMOVED));
   }
   
-  public void fooUpdated(Foo foo, String executor) {
-    broadcast(new FooLifeCycleEvent(foo, executor, Type.FOO_UPDATED));
+  public void barUpdated(Bar bar, String executor) {
+    broadcast(new BarLifeCycleEvent(bar, executor, Type.BAR_UPDATED));
   }
 }

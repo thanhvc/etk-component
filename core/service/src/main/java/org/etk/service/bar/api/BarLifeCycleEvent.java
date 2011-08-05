@@ -14,7 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.service.bar.api;
+
+import org.etk.service.common.event.LifeCycleEvent;
+import org.etk.service.foo.model.Bar;
 
 /**
  * Created by The eXo Platform SAS
@@ -22,60 +25,46 @@ package org.etk.service.foo.model;
  *          exo@exoplatform.com
  * Jul 21, 2011  
  */
-public class Foo {
+public class BarLifeCycleEvent extends LifeCycleEvent<String, Bar> {
 
-  private String id;
+  public enum Type {
+    BAR_CREATED, BAR_REMOVED, BAR_UPDATED
+  };
 
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
+  private Type type;
+  
+  public BarLifeCycleEvent(Bar bar, String target, Type eventType) {
+    super(target, bar);
+    this.type = eventType;
   }
   
-  /**
-   * Constructor creates new instance with id and description.
-   * 
-   * @param id
-   * @param description
-   */
-  public Foo(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
   
-  @Override
-  public String toString() {
-    return "[id = " + this.id + " and name = " + this.name + " ]";
+ public Type getType() {
+    return type;
   }
+
+
+/**
+  *  
+  * @return
+  */
+ public Bar getBar() {
+   return payload;
+ }
+ 
+ public String getTarget() {
+   return source;
+ }
+ 
+ /**
+  * Gets toString
+  */
+ public String toString() {
+   return source + ":" + type + "@" + payload.getId();
+ }
+ 
+ 
+
+  
 
 }

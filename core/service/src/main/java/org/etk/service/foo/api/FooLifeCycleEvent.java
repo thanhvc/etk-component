@@ -16,7 +16,7 @@
  */
 package org.etk.service.foo.api;
 
-import org.etk.service.core.event.LifeCycleEvent;
+import org.etk.service.common.event.LifeCycleEvent;
 import org.etk.service.foo.model.Foo;
 
 /**

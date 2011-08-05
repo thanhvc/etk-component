@@ -1,4 +1,4 @@
-package org.etk.service.core.bootstrap.basic;
+package org.etk.service.common.bootstrap.basic;
 
 import org.etk.kernel.bootstrap.AbstractBootstrap;
 import org.etk.kernel.container.RootContainer;

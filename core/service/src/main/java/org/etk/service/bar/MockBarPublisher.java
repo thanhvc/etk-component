@@ -14,68 +14,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.service.foo.model;
+package org.etk.service.bar;
+
+import org.etk.common.logging.Logger;
+import org.etk.service.bar.MockBarPublisher;
+import org.etk.service.bar.api.BarLifeCycleEvent;
+
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 21, 2011  
+ * Jul 27, 2011  
  */
-public class Foo {
+public class MockBarPublisher extends BarListenerPlugin {
 
-  private String id;
-
-  private String name;
-
-  private Bar    bar;
-
-  public Foo() {
-
-  }
-
-  public Foo(String id) {
-    this.id = id;
-  }
-  
   /**
-   * Constructor creates new instance with id and description.
-   * 
-   * @param id
-   * @param description
+   * The Logger.
    */
-  public Foo(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Bar getBar() {
-    return bar;
-  }
-
-  public void setBar(Bar bar) {
-    this.bar = bar;
-  }
+  private static final Logger log = Logger.getLogger(MockBarPublisher.class);
   
   @Override
-  public String toString() {
-    return "[id = " + this.id + " and name = " + this.name + " ]";
+  public void barCreated(BarLifeCycleEvent event) {
+    
+    log.debug("barCreated::Event Type = " + event.getType());
   }
+
+  @Override
+  public void barRemoved(BarLifeCycleEvent event) {
+    log.debug("barRemoved::Event Type = " + event.getType());
+  }
+
+  @Override
+  public void barUpdated(BarLifeCycleEvent event) {
+    log.debug("barUpdated::Event Type = " + event.getType());
+  }
+  
 
 }
