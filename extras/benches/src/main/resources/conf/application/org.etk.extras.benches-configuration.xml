@@ -33,7 +33,7 @@
       <init-params>
         <value-param>
           <name>data-amount</name> <!-- maximum data for injection -->
-          <value>100</value>
+          <value>1000</value>
         </value-param>
         <value-param>
           <name>priority-executor</name> <!-- priority to execute -->
@@ -41,7 +41,7 @@
         </value-param>
         <value-param>
           <name>parallel-executor</name> <!-- parallel processing -->
-          <value>true</value>
+          <value>false</value>
         </value-param>
       </init-params>
     </component-plugin>
@@ -53,7 +53,7 @@
       <init-params>
         <value-param>
           <name>data-amount</name> <!-- maximum data for injection -->
-          <value>100</value>
+          <value>1000</value>
         </value-param>
         <value-param>
           <name>priority-executor</name> <!-- priority to execute -->
@@ -61,7 +61,7 @@
         </value-param>
         <value-param>
           <name>parallel-executor</name> <!-- parallel processing -->
-          <value>true</value>
+          <value>false</value>
         </value-param>
       </init-params>
     </component-plugin>

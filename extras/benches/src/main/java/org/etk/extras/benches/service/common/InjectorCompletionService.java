@@ -33,7 +33,9 @@ import org.etk.kernel.container.xml.ValueParam;
  * Aug 5, 2011  
  */
 public class InjectorCompletionService {
+  /** Threads number which is configured for Data Injector Execution **/
   private final String THREAD_NUMBER = "thread-number";
+  /** Threads number which is configured for Data Injector Execution **/
   private final String ASYNC_EXECUTION = "async-execution";
   
   private Executor executor = null;

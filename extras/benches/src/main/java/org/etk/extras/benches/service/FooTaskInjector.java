@@ -21,6 +21,7 @@ import java.util.concurrent.CountDownLatch;
 
 import org.etk.common.logging.Logger;
 import org.etk.extras.benches.service.common.BaseTaskInjector;
+import org.etk.extras.benches.service.common.InjectionException;
 import org.etk.extras.benches.service.common.InjectorCompletionService;
 import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.container.xml.InitParams;
@@ -51,9 +52,6 @@ public class FooTaskInjector extends BaseTaskInjector<Foo> {
   @Override
   public void initEnv() {
     fooService = (FooService) container.getComponentInstanceOfType(FooService.class);
-    if (parallelExecution) {
-      endSignal = new CountDownLatch(dataAmount);
-    }
   }
 
   @Override
@@ -63,14 +61,16 @@ public class FooTaskInjector extends BaseTaskInjector<Foo> {
   }
 
   @Override
-  public List<Foo> inject() throws Exception {
-    synchronized (endSignal) {
-      for (int i = 0; i < dataAmount; i++) {
-        Foo model = new Foo(String.valueOf(i), nameGenerator.compose(4) + String.valueOf(i));
-        addTask(model);
-      }
-      if (parallelExecution) {
+  public List<Foo> inject() throws InjectionException {
+    for (int i = 0; i < dataAmount; i++) {
+      Foo model = new Foo(String.valueOf(i), nameGenerator.compose(4) + String.valueOf(i));
+      addTask(model);
+    }
+    if (parallelExecution == false) {
+      try {
         endSignal.await();
+      } catch (InterruptedException e) {
+        throw new InjectionException(e.getMessage(), e);
       }
     }
     log.info("\n\n\nresultList's size = " + resultList.size());
@@ -79,7 +79,7 @@ public class FooTaskInjector extends BaseTaskInjector<Foo> {
   }
 
   @Override
-  public void reject() throws Exception {
+  public void reject() throws InjectionException {
     // TODO Auto-generated method stub
     
   }
@@ -87,7 +87,7 @@ public class FooTaskInjector extends BaseTaskInjector<Foo> {
   
 
   @Override
-  public Foo doExecute(Foo model) {
+  public Foo callService(Foo model) {
     log.info("created the model name: " + model.getName());
     return fooService.createFoo(model);
   }

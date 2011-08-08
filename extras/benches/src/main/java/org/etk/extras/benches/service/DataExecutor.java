@@ -16,6 +16,11 @@
  */
 package org.etk.extras.benches.service;
 
+import java.util.List;
+import java.util.concurrent.ConcurrentMap;
+
+import org.etk.extras.benches.service.common.InjectionException;
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -24,5 +29,15 @@ package org.etk.extras.benches.service;
  */
 public interface DataExecutor {
 
+  /**
+   * Entry point to executes the DataInjector task.
+   * The Task which was configured in the configuration.xml and adds task 
+   * to InjectorCompletionService for executing.
+   *   
+   * @throws Exception
+   */
+  public void execute() throws InjectionException;
   
+  
+  public ConcurrentMap<String, List<?>> getExchanger();
 }

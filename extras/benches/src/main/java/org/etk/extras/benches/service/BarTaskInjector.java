@@ -17,16 +17,15 @@
 package org.etk.extras.benches.service;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import org.etk.common.logging.Logger;
 import org.etk.extras.benches.service.common.BaseTaskInjector;
+import org.etk.extras.benches.service.common.InjectionException;
 import org.etk.extras.benches.service.common.InjectorCompletionService;
 import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.container.xml.InitParams;
 import org.etk.service.bar.api.BarService;
 import org.etk.service.foo.model.Bar;
-import org.etk.service.foo.model.Foo;
 
 /**
  * Created by The eXo Platform SAS
@@ -52,9 +51,6 @@ public class BarTaskInjector extends BaseTaskInjector<Bar> {
   @Override
   public void initEnv() {
     barService = (BarService) container.getComponentInstanceOfType(BarService.class);
-    if (this.parallelExecution) {
-      endSignal = new CountDownLatch(dataAmount);
-    }
   }
 
   @Override
@@ -64,28 +60,30 @@ public class BarTaskInjector extends BaseTaskInjector<Bar> {
   }
 
   @Override
-  public List<Bar> inject() throws Exception {
+  public List<Bar> inject() throws InjectionException {
     for (int i = 0; i < dataAmount; i++) {
       Bar model = new Bar(String.valueOf(i), nameGenerator.compose(4) + String.valueOf(i)); 
       addTask(model);
     }
-    if (parallelExecution) {
-      endSignal.await();
+    if (parallelExecution == false) {
+      try {
+        endSignal.await();
+      } catch (InterruptedException e) {
+        throw new InjectionException(e.getMessage(), e);
+      }
     }
     return resultList;
     
   }
 
   @Override
-  public void reject() throws Exception {
+  public void reject() throws InjectionException {
     // TODO Auto-generated method stub
     
   }
 
-  
-
   @Override
-  public Bar doExecute(Bar model) {
+  public Bar callService(Bar model) {
     log.info("created the BAR model name: " + model.getDescription());
     return barService.createBar(model);
   }

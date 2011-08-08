@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.etk.common.logging.Logger;
 import org.etk.extras.benches.service.common.BaseTaskInjector;
+import org.etk.extras.benches.service.common.InjectionException;
 import org.etk.extras.benches.service.common.InjectorCompletionService;
 
 /**
@@ -35,20 +36,29 @@ import org.etk.extras.benches.service.common.InjectorCompletionService;
  */
 public class DataInjectionExecutor implements DataExecutor {
 
-  private final ConcurrentMap<String, List<?>> exchanger; 
-  private InjectorCompletionService ics = null;
   private Logger log = Logger.getLogger(DataInjectionExecutor.class);
+  
+  /**
+   * The Exchanger which uses to exchange the data between the DataInjectorTask.
+   */
+  private final ConcurrentMap<String, List<?>> exchanger;
+  
+  
+  /** The task which uses to contains the Injector Task for executor.**/
   List<BaseTaskInjector<?>> taskInjectors = new ArrayList<BaseTaskInjector<?>>();
   /**
    * Constructor build with {@link InjectorCompletionService}}
    * @param ics
    */
-  public DataInjectionExecutor(InjectorCompletionService ics) {
-    this.ics = ics;
+  public DataInjectionExecutor() {
     exchanger = new ConcurrentHashMap<String, List<?>>();
   }
 
-  
+  /**
+   * Using the configuration.xml to config.
+   * @param task DataInjector task.
+   * @throws Exception
+   */
   public void addInjectorTask(BaseTaskInjector<?> task) throws Exception {
     taskInjectors.add(task);
     log.info("Added the " + task.getTaskName() + " into the TaskList.");
@@ -58,7 +68,7 @@ public class DataInjectionExecutor implements DataExecutor {
    * @param task
    * @throws Exception
    */
-  private void preCondition (BaseTaskInjector<?> task) throws Exception {
+  private void preCondition (BaseTaskInjector<?> task) throws InjectionException {
     task.initEnv();
     task.accept(this);
     
@@ -68,7 +78,7 @@ public class DataInjectionExecutor implements DataExecutor {
    * 
    * @throws Exception
    */
-  public void execute() throws Exception {
+  public void execute() throws InjectionException {
     Collections.sort(taskInjectors, new TaskComparator());
     for(BaseTaskInjector<?> task : taskInjectors) {
       preCondition(task);
@@ -76,21 +86,25 @@ public class DataInjectionExecutor implements DataExecutor {
     }
   }
 
+  /**
+   * Gets the Caching data which keeps data for exchange.
+   * @return
+   */
   public ConcurrentMap<String, List<?>> getExchanger() {
     return exchanger;
   }
   
+  /** Decorator more processing for DataInjectorTask.**/
   public interface TaskVisitor {
     void accept(DataExecutor executor);
   }
   
+  /** TaskComparator which provides for Task sort by it's priority.**/
   private class TaskComparator implements Comparator<BaseTaskInjector<?>> {
 
     @Override
     public int compare(BaseTaskInjector<?> task1, BaseTaskInjector<?> task2) {
       return task1.priorityExecution - task2.priorityExecution;
     }
-
-        
   }
 }

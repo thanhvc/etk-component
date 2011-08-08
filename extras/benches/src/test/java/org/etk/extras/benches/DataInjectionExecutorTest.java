@@ -60,9 +60,9 @@ public class DataInjectionExecutorTest  extends AbstractApplicationTest {
     ConcurrentMap<String, List<?>> exchanger = executor.getExchanger();
     assertTrue("Exchanger's size must be greater than zero.", exchanger.size() > 0);
     List<?> foos = exchanger.get(FooTaskInjector.class.getName());
-    assertEquals("Foos's size must be equals 100.", 100, foos.size());
+    assertEquals("Foos's size must be equals 1000.", 1000, foos.size());
     
     List<?> bars = exchanger.get(BarTaskInjector.class.getName());
-    assertEquals("Bars's size must be equals 100.", 100, bars.size());
+    assertEquals("Bars's size must be equals 1000.", 1000, bars.size());
   }
 }
