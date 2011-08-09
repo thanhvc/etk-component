@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+  xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+  <component>
+    <key>org.etk.component.database.jdbc.DBSchemaCreator</key>
+    <type>org.etk.component.database.jdbc.DBSchemaCreator</type>
+    <component-plugins>
+      <component-plugin>
+        <name>create.dbschema</name>
+        <set-method>addPlugin</set-method>
+        <type>org.etk.component.database.jdbc.CreateDBSchemaPlugin</type>
+        <init-params>
+          <value-param>
+            <name>data-source</name>
+            <value>jdbcjcr</value>
+          </value-param>
+          <value-param>
+            <name>script</name>
+            <value>
+                <![CDATA[CREATE TABLE JCR_MITEM(
+                  ID VARCHAR(255) NOT NULL PRIMARY KEY,
+                  VERSION INTEGER NOT NULL,
+                  PATH VARCHAR(1024) NOT NULL
+                  ); ]]>
+            </value>
+          </value-param>
+        </init-params>
+      </component-plugin>
+    </component-plugins>
+  </component>
+
+  <component>
+    <key>org.etk.component.base.naming.InitialContextInitializer</key>
+    <type>org.etk.component.base.naming.InitialContextInitializer</type>
+    <component-plugins>
+      <component-plugin>
+        <name>bind.datasource</name>
+        <set-method>addPlugin</set-method>
+        <type>org.etk.component.base.naming.BindReferencePlugin</type>
+        <init-params>
+          <value-param>
+            <name>bind-name</name>
+            <value>jdbcjcr</value>
+          </value-param>
+          <value-param>
+            <name>class-name</name>
+            <value>javax.sql.DataSource</value>
+          </value-param>
+          <value-param>
+            <name>factory</name>
+            <value>org.apache.commons.dbcp.BasicDataSourceFactory</value>
+          </value-param>
+          <properties-param>
+            <name>ref-addresses</name>
+            <description>ref-addresses</description>
+            <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+            <property name="url"
+              value="jdbc:hsqldb:file:target/temp/data/portal" />
+            <property name="username" value="sa" />
+            <property name="password" value="" />
+          </properties-param>
+        </init-params>
+      </component-plugin>
+    </component-plugins>
+    <init-params>
+      <properties-param>
+        <name>default-properties</name>
+        <description>Default initial context properties</description>
+        <property name="java.naming.factory.initial"
+          value="org.exoplatform.services.naming.SimpleContextFactory" />
+      </properties-param>
+      <!-- properties-param> <name>mandatory-properties</name> <description>Mandatory 
+        initial context properties</description> <property name="java.naming.factory.initial" 
+        value="org.exoplatform.services.naming.SimpleContextFactory"/> <property 
+        name="java.naming.provider.url" value="rmi://localhost:9999"/> </properties-param -->
+    </init-params>
+  </component>
+</configuration>

@@ -17,14 +17,17 @@
 
 package org.etk.core.rest.wadl;
 
-import javax.annotation.Resources;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
 import org.etk.core.rest.method.MethodParameter;
 import org.etk.core.rest.resource.AbstractResourceDescriptor;
 import org.etk.core.rest.resource.ResourceMethodDescriptor;
-import org.kohsuke.rngom.digested.DDataPattern.Param;
+
+import org.etk.core.rest.wadl.research.Application;
+import org.etk.core.rest.wadl.research.Param;
+import org.etk.core.rest.wadl.research.RepresentationType;
+import org.etk.core.rest.wadl.research.Resources;
+
 
 
 
@@ -59,7 +62,7 @@ public interface WadlGenerator {
    * @return {@link org.exoplatform.services.rest.wadl.research.Resource.Resource}
    *         describes application resource, each resource identified by a URI
    */
-  org.etk.core.rest.wadl.Resource createResource(String path);
+  org.etk.core.rest.wadl.research.Resource createResource(String path);
 
   /**
    * @param md See {@link ResourceMethodDescriptor}
@@ -67,7 +70,7 @@ public interface WadlGenerator {
    *         describes the input to and output from an HTTP protocol method they
    *         may be applied to a resource
    */
-  org.etk.core.rest.wadl.wadl.research.Method createMethod(ResourceMethodDescriptor md);
+  org.etk.core.rest.wadl.research.Method createMethod(ResourceMethodDescriptor md);
 
   /**
    * @return {@link org.exoplatform.services.rest.wadl.research.Request}

@@ -70,7 +70,7 @@
 
     <!-- maven-surefire-plugin -->
     <!--<argLine>${env.MAVEN_OPTS}</argLine>-->
-    <argLine>-Xshare:auto -Xms128m -Xmx512m -XX:MaxPermSize=256M</argLine>
+    <argLine>-Xshare:auto -Xms128m -Xmx1024m -XX:MaxPermSize=1024M</argLine>
 
     <!-- maven-release-plugin -->
     <useReleaseProfile>false</useReleaseProfile>
@@ -258,6 +258,11 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.4.3</version>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.1</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -386,6 +391,7 @@
       </build>
     </profile>
 
+  
   </profiles>
 
 </project>

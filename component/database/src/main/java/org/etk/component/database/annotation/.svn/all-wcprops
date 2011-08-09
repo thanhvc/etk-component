@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation
+END
+Query.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/Query.java
+END
+Table.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/Table.java
+END
+TableField.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/TableField.java
+END

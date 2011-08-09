@@ -22,19 +22,21 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import javax.annotation.Resources;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.MatrixParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.xml.namespace.QName;
 
 import org.etk.core.rest.method.MethodParameter;
 import org.etk.core.rest.resource.AbstractResourceDescriptor;
 import org.etk.core.rest.resource.ResourceMethodDescriptor;
-import org.kohsuke.rngom.digested.DDataPattern.Param;
+import org.etk.core.rest.wadl.research.Application;
+import org.etk.core.rest.wadl.research.Param;
+import org.etk.core.rest.wadl.research.ParamStyle;
+import org.etk.core.rest.wadl.research.RepresentationType;
+import org.etk.core.rest.wadl.research.Resources;
 
 
 /**
@@ -71,7 +73,7 @@ public class BaseWadlGeneratorImpl implements WadlGenerator {
    * {@inheritDoc}
    */
   public org.etk.core.rest.wadl.research.Resource createResource(String path) {
-    org.exoplatform.services.rest.wadl.research.Resource wadlResource = new org.exoplatform.services.rest.wadl.research.Resource();
+    org.etk.core.rest.wadl.research.Resource wadlResource = new org.etk.core.rest.wadl.research.Resource();
     if (path != null)
       wadlResource.setPath(path);
     return wadlResource;

@@ -8,7 +8,7 @@
 
   <groupId>org.etk.tools</groupId>
   <artifactId>org.etk.tools.sandbox</artifactId>
-  <version>0.1-Beta1-SNAPSHOT</version>
+  <version>0.1</version>
   <name>Engineering Toolkit Framework SandBox</name>
   <description>Engineering Toolkit Framework SandBox</description>
   <dependencies>
@@ -48,18 +48,43 @@
         <version>${org.etk.core.version}</version>
       </dependency>
   </dependencies>
-  <profiles>
-    <profile>
-      <id>Java6</id>
-      <activation>
-        <jdk>1.6</jdk>
-      </activation>
 
+  <profiles>
+     <profile>
+      <id>run-chp02a</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1</version>
+	      <executions>  
+	        <execution>  
+	        <phase>install</phase>  
+	        <goals>  
+	        <goal>java</goal>  
+	        </goals>  
+	        <configuration>  
+	        <mainClass>org.etk.sandbox.security.jaas.ch02.Ch02aMain</mainClass>  
+	        <arguments>  
+                   <argument>-Xdebug</argument>
+                   <argument>-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</argument>
+	           <argument>-Djava.security.manager</argument>
+                   <argument>-Djava.security.debug=access:failure</argument>
+	          <argument>-Djava.security.policy=${project.build.directory}/classes/conf/chp02a.policy</argument>  
+	        </arguments>  
+	     </configuration>  
+	    </execution>  
+	   </executions>  
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
   <build>
     <plugins>
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>

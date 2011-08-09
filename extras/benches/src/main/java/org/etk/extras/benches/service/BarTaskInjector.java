@@ -37,7 +37,7 @@ public class BarTaskInjector extends BaseTaskInjector<Bar> {
 
   private Logger log = Logger.getLogger(BarTaskInjector.class);
   
-  BarService barService = null;
+  private BarService barService = null;
   private ApplicationContainer container;
   /**
    * 

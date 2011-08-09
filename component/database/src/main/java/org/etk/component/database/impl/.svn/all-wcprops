@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl
+END
+HibernateEntityResolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/HibernateEntityResolver.java
+END
+XAPoolTxSupportDatabaseService.java
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/XAPoolTxSupportDatabaseService.java
+END
+HibernateServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/HibernateServiceImpl.java
+END
+AddHibernateMappingPlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/AddHibernateMappingPlugin.java
+END
+TextClobType.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/TextClobType.java
+END
+ExoCacheProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/ExoCacheProvider.java
+END
+HibernateSettingsFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/HibernateSettingsFactory.java
+END
+HibernateConfigurationImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/HibernateConfigurationImpl.java
+END
+ExoCachePlugin.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl/ExoCachePlugin.java
+END

@@ -10,9 +10,9 @@ public class StandardBootstrap extends AbstractBootstrap {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		RootContainer container = RootContainer.getInstance();
-		ConfigurationManager cm = (ConfigurationManager) container.getComponentInstanceOfType(ConfigurationManager.class);
-	}
+  public static void main(String[] args) {
+    RootContainer container = RootContainer.getInstance();
+    ConfigurationManager cm = (ConfigurationManager) container.getComponentInstanceOfType(ConfigurationManager.class);
+  }
 
 }

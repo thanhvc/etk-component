@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/test/resources/xslt
+END
+book.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/test/resources/xslt/book.xsl
+END
+test.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/projects/!svn/ver/34301/ws/branches/2.0.x/rest/core/src/test/resources/xslt/test.xsl
+END

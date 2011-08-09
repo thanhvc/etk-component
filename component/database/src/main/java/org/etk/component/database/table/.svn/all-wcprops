@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/table
+END
+IDGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/table/IDGenerator.java
+END
+ExoLongID.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/table/ExoLongID.java
+END

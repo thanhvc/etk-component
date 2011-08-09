@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security
+END
+RolesExtractor.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/RolesExtractor.java
+END
+IdentityRegistry.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/IdentityRegistry.java
+END
+ConversationRegistry.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/ConversationRegistry.java
+END
+Identity.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/Identity.java
+END
+StateKey.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/StateKey.java
+END
+Authenticator.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/Authenticator.java
+END
+Credential.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/Credential.java
+END
+UsernameCredential.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/UsernameCredential.java
+END
+ConversationState.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/ConversationState.java
+END
+MembershipEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/MembershipEntry.java
+END
+PasswordCredential.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/PasswordCredential.java
+END
+PasswordEncrypter.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/PasswordEncrypter.java
+END
