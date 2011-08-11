@@ -29,6 +29,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -47,7 +48,7 @@ public class SimpleLoginModule implements LoginModule {
                          Map<String, ?> sharedState,
                          Map<String, ?> options) {
     this.subject = subject;
-    this.callBackHandler = callBackHandler;
+    this.callBackHandler = callbackHandler;
   }
 
   @Override

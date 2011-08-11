@@ -1,19 +1,15 @@
 10
 
 dir
-72169
-http://svn.exoplatform.org/projects/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation
-http://svn.exoplatform.org/projects
+4733
+http://anonsvn.jboss.org/repos/exo-jcr/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/annotation
+http://anonsvn.jboss.org/repos/exo-jcr
 
 
 
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
-
-
-
-
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -24,7 +20,11 @@ tolusha
 
 
 
-42d3c691-033b-0410-95b4-af486b8189e5
+
+
+
+
+9589c786-c48d-49fa-b7d5-3f388c4be621
 
 Query.java
 file
@@ -32,11 +32,11 @@ file
 
 
 
-2011-08-06T00:14:26.645460Z
-cfd6e663491ae2a4270e10f8b46be5a1
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.899585Z
+20673cdbb6a3df317f6128440942b3f2
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -58,7 +58,7 @@ tolusha
 
 
 
-1459
+1583
 
 Table.java
 file
@@ -66,11 +66,11 @@ file
 
 
 
-2011-08-06T00:14:26.645460Z
-f784f65df6fbc77cd3b46c6946a7a3d6
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.899585Z
+e1ad9f1666fc9efcae2c075bc5c3e3bf
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -92,7 +92,7 @@ tolusha
 
 
 
-1136
+1252
 
 TableField.java
 file
@@ -100,11 +100,11 @@ file
 
 
 
-2011-08-06T00:14:26.649462Z
-9953525ec281d1936bbf5263fe561b63
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.899585Z
+130d2969f144c0cc42e8f3d08ccfd7dd
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -126,5 +126,5 @@ tolusha
 
 
 
-1300
+1421
 

@@ -1,19 +1,15 @@
 10
 
 dir
-72169
-http://svn.exoplatform.org/projects/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/table
-http://svn.exoplatform.org/projects
+4733
+http://anonsvn.jboss.org/repos/exo-jcr/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/table
+http://anonsvn.jboss.org/repos/exo-jcr
 
 
 
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
-
-
-
-
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -24,7 +20,11 @@ tolusha
 
 
 
-42d3c691-033b-0410-95b4-af486b8189e5
+
+
+
+
+9589c786-c48d-49fa-b7d5-3f388c4be621
 
 IDGenerator.java
 file
@@ -32,11 +32,11 @@ file
 
 
 
-2011-08-06T00:14:25.921098Z
-1a092e7d7744d5562868327e9bf5bd76
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:17.339585Z
+01ca45ede2e5ac49edf10cfb1e389df6
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -58,7 +58,7 @@ tolusha
 
 
 
-4933
+5335
 
 ExoLongID.java
 file
@@ -66,11 +66,11 @@ file
 
 
 
-2011-08-06T00:14:25.921098Z
-2e53f33c8b3c1aba76375a95dd09eecf
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:17.339585Z
+411634bf8fd09b296aab0a477aad1fc7
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -92,5 +92,5 @@ tolusha
 
 
 
-1843
+1987
 

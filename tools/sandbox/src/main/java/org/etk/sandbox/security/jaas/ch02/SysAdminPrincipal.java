@@ -14,32 +14,46 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.common.net;
+package org.etk.sandbox.security.jaas.ch02;
 
-import junit.framework.TestCase;
+import java.io.Serializable;
+import java.security.Principal;
+
+import com.sun.security.auth.UserPrincipal;
 
 /**
- * Created by The eXo Platform SAS Author : eXoPlatform exo@exoplatform.com Jun
- * 29, 2011
+ * Created by The eXo Platform SAS
+ * Author : eXoPlatform
+ *          thanhvucong.78@google.com
+ * Aug 9, 2011  
  */
-public class ExoHttpClientTest extends TestCase {
-  
-  private ETKHttpClient exoHttpClient = null;
-  private final String targetURL = "/rest-socialdemo/private/api/social/v1-alpha1/socialdemo/activity/d51715397f0001010077b5d08ddf12fc.json?poster_identity=1&number_of_comments=10&activity_stream=t";
-  
-  protected void setUp() throws Exception {
-    super.setUp();
-    exoHttpClient = new ETKHttpClient();
-  }
+public class SysAdminPrincipal implements Principal, Serializable {
 
+  private String name;
   
-  protected void tearDown() throws Exception {
-    super.tearDown();
-    exoHttpClient = null;
-  }
-  
-  public void testHttpClient() throws Exception {
+  /**
+   * 
+   * @param name
+   */
+  public SysAdminPrincipal(String name) {
+    this.name = name;
     
   }
   
+  @Override
+  public String getName() {
+    return name;
+  }
+  /**
+   * 
+   */
+  public boolean equals(Object obj) {
+    if (!(obj instanceof UserPrincipal)) {
+      return false;
+    }
+    
+    SysAdminPrincipal other = (SysAdminPrincipal) obj;
+    return getName().equals(other.getName());
+  }
+
 }

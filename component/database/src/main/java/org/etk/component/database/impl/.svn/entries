@@ -1,19 +1,15 @@
 10
 
 dir
-72169
-http://svn.exoplatform.org/projects/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/impl
-http://svn.exoplatform.org/projects
+4733
+http://anonsvn.jboss.org/repos/exo-jcr/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/impl
+http://anonsvn.jboss.org/repos/exo-jcr
 
 
 
-2009-06-30T10:28:21.798832Z
-33190
-dkatayev
-
-
-
-
+2011-04-27T13:22:03.357401Z
+4313
+areshetnyak
 
 
 
@@ -24,7 +20,11 @@ dkatayev
 
 
 
-42d3c691-033b-0410-95b4-af486b8189e5
+
+
+
+
+9589c786-c48d-49fa-b7d5-3f388c4be621
 
 HibernateEntityResolver.java
 file
@@ -32,78 +32,10 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-e28c10d45867c16f7de4f6c1761ec995
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2125
-
-XAPoolTxSupportDatabaseService.java
-file
-
-
-
-
-2011-08-06T00:14:26.285280Z
-79177770e4faf574412b03d570c4912d
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3767
-
-HibernateServiceImpl.java
-file
-
-
-
-
-2011-08-06T00:14:26.285280Z
-0ac7e82d76b265ee611d60972d31d3b9
-2009-06-30T10:28:21.798832Z
-33190
+2011-08-10T14:00:18.527585Z
+cb650a64481e42ac82835f435ceb99c8
+2009-08-27T10:26:52.298875Z
+12
 dkatayev
 
 
@@ -126,7 +58,75 @@ dkatayev
 
 
 
-8612
+3067
+
+XAPoolTxSupportDatabaseService.java
+file
+
+
+
+
+2011-08-10T14:00:18.527585Z
+a88f48491199465c0f18ac04d8adda67
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3975
+
+HibernateServiceImpl.java
+file
+
+
+
+
+2011-08-10T14:00:18.527585Z
+717f4de9e6a1d9177bca95e7b15be82a
+2011-04-27T13:22:03.357401Z
+4313
+areshetnyak
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14139
 
 AddHibernateMappingPlugin.java
 file
@@ -134,11 +134,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-93902b513fe5f769163a637da93ce440
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.527585Z
+923edb777c8255305478c5a2e8a10bb5
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -160,7 +160,7 @@ tolusha
 
 
 
-1279
+1742
 
 TextClobType.java
 file
@@ -168,11 +168,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-7900c97a9ee6bed3be3dc113e22472ed
-2009-03-13T15:23:25.451223Z
-29587
-pnedonosko
+2011-08-10T14:00:18.527585Z
+57ebf8dc803504bd43e5928ab8765785
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -194,7 +194,7 @@ pnedonosko
 
 
 
-15570
+16527
 
 ExoCacheProvider.java
 file
@@ -202,12 +202,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-c28e0885a53b7580bda7b05cc2e91dc6
-2009-06-18T14:10:15.619776Z
-32789
-andrew00x
-has-props
+2011-08-10T14:00:18.527585Z
+8ee899bd1ea294d02e8d4299bfd9c9b9
+2011-04-27T13:22:03.357401Z
+4313
+areshetnyak
 
 
 
@@ -228,7 +227,8 @@ has-props
 
 
 
-2574
+
+2962
 
 HibernateSettingsFactory.java
 file
@@ -236,11 +236,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-7312f40bb33e6e1eb2108bbf3c3c3cbc
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.527585Z
+123b076e5668b765545d5f09a878b7a7
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -262,7 +262,7 @@ tolusha
 
 
 
-1770
+1903
 
 HibernateConfigurationImpl.java
 file
@@ -270,11 +270,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-f9c26674c48dd8b10dcc8f01ab167c19
-2008-09-19T14:57:12.787060Z
-20166
-tolusha
+2011-08-10T14:00:18.527585Z
+c5d8b40b1afaab53ecc77a6311f5c029
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -296,7 +296,7 @@ tolusha
 
 
 
-1380
+1595
 
 ExoCachePlugin.java
 file
@@ -304,11 +304,11 @@ file
 
 
 
-2011-08-06T00:14:26.285280Z
-d6ba552964e3f7810caf12779359991c
-2009-06-18T14:10:15.619776Z
-32789
-andrew00x
+2011-08-10T14:00:18.527585Z
+36514a0a88e869aed7afc69d9c636e1e
+2009-08-27T10:26:52.298875Z
+12
+dkatayev
 
 
 
@@ -330,5 +330,5 @@ andrew00x
 
 
 
-4089
+4491
 

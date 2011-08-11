@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database
+END
+TestQueryManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/TestQueryManager.java
+END
+TestHibernateService.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/TestHibernateService.java
+END
+TestDAO.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/TestDAO.java
+END
+DBCreatorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/DBCreatorTest.java
+END
+TestDBCreator.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/TestDBCreator.java
+END
+TestDatabaseService.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/TestDatabaseService.java
+END
+Mock.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/test/java/org/exoplatform/services/database/Mock.java
+END

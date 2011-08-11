@@ -1,27 +1,33 @@
 /*
- * Copyright (C) 2003-2007 eXo Platform SAS.
+ * Copyright (C) 2009 eXo Platform SAS.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Affero General Public License
- * as published by the Free Software Foundation; either version 3
- * of the License, or (at your option) any later version.
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see<http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.etk.component.database;
 
+import org.etk.common.logging.Logger;
+import org.etk.common.utils.SecurityHelper;
+import org.etk.component.database.table.IDGenerator;
+
+import java.security.PrivilegedExceptionAction;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
-
-import org.etk.component.database.table.IDGenerator;
 
 /**
  * Created by The eXo Platform SAS Author : Tuan Nguyen
@@ -32,46 +38,51 @@ import org.etk.component.database.table.IDGenerator;
  */
 public class ExoDatasource {
 
+  /**
+   * Logger.
+   */
+  private static final Logger LOG = Logger.getLogger(ExoDatasource.class);
+
   final public static int STANDARD_DB_TYPE = 0;
 
-  final public static int HSQL_DB_TYPE     = 1;
+  final public static int HSQL_DB_TYPE = 1;
 
-  final public static int MYSQL_DB_TYPE    = 2;
+  final public static int MYSQL_DB_TYPE = 2;
 
-  final public static int DB2_DB_TYPE      = 3;
+  final public static int DB2_DB_TYPE = 3;
 
-  final public static int DERBY_DB_TYPE    = 4;
+  final public static int DERBY_DB_TYPE = 4;
 
-  final public static int ORACLE_DB_TYPE   = 5;
+  final public static int ORACLE_DB_TYPE = 5;
 
-  final public static int SQL_SERVER_TYPE  = 6;
+  final public static int SQL_SERVER_TYPE = 6;
 
   // TODO need remove
-  static int              totalGetConnect  = 0;
+  static int totalGetConnect = 0;
 
   // static int totalCommit = 0;
   // static int totalCloseConnect = 0;
-  final public static int MSSQL_DB_TYPE    = 6;
+  final public static int MSSQL_DB_TYPE = 6;
 
-  final public static int SYSBASE_DB_TYPE  = 7;
+  final public static int SYSBASE_DB_TYPE = 7;
 
   final public static int POSTGRES_DB_TYPE = 8;
 
-  private DataSource      xaDatasource_;
+  private DataSource xaDatasource_;
 
-  private DBTableManager  tableManager_;
+  private DBTableManager tableManager_;
 
-  private IDGenerator     idGenerator_;
+  private IDGenerator idGenerator_;
 
-  private QueryBuilder    queryManager_;
+  private QueryBuilder queryManager_;
 
-  private String          databaseName_;
+  private String databaseName_;
 
-  private String          databaseVersion_;
+  private String databaseVersion_;
 
-  private int             dbType_          = STANDARD_DB_TYPE;
+  private int dbType_ = STANDARD_DB_TYPE;
 
-  Connection              conn;
+  Connection conn;
 
   /**
    * The constructor should: 1. Keep track of the datasource object 2. Create
@@ -81,14 +92,19 @@ public class ExoDatasource {
    * @param ds
    * @throws Exception
    */
-  public ExoDatasource(DataSource ds) throws Exception {
+  public ExoDatasource(final DataSource ds) throws Exception {
     xaDatasource_ = ds;
-    DatabaseMetaData metaData = ds.getConnection().getMetaData();
+    DatabaseMetaData metaData = SecurityHelper.doPrivilegedSQLExceptionAction(new PrivilegedExceptionAction<DatabaseMetaData>() {
+      public DatabaseMetaData run() throws SQLException {
+        return ds.getConnection().getMetaData();
+      }
+    });
+
     databaseName_ = metaData.getDatabaseProductName();
     databaseVersion_ = metaData.getDatabaseProductVersion();
 
     String dbname = databaseName_.toLowerCase();
-    System.out.println("\n\n\n\n------->DB Name: " + dbname + "\n\n\n\n");
+    LOG.info("\n\n\n\n------->DB Name: " + dbname + "\n\n\n\n");
     if (dbname.indexOf("oracle") >= 0) {
       dbType_ = ORACLE_DB_TYPE;
     } else if (dbname.indexOf("hsql") >= 0) {
@@ -158,7 +174,7 @@ public class ExoDatasource {
     conn.setAutoCommit(false);
     conn.commit();
     // totalCommit += System.currentTimeMillis() - startGet;
-    //System.out.println(" \n\n\n == > total time to Commit "+totalCommit+"\n\n"
+    // System.out.println(" \n\n\n == > total time to Commit "+totalCommit+"\n\n"
     // );
   }
 

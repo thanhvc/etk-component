@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.xml.stream.XMLStreamException;
 
+import org.etk.common.utils.PrivilegedSystemHelper;
 import org.etk.common.utils.SystemHelper;
 import org.etk.common.logging.Logger;
 import org.etk.kernel.container.component.ComponentPlugin;
@@ -41,29 +43,35 @@ import org.etk.kernel.container.xml.PropertiesParam;
 import org.etk.kernel.container.xml.Property;
 import org.etk.kernel.container.xml.ValueParam;
 
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          thanhvucong.78@google.com
  * Aug 6, 2011  
  */
-public class InitialContextInitializer {
+public class InitialContextInitializer
+{
 
-   final public static String PROPERTIES_DEFAULT = "default-properties";
+   static String DEFAULT_INITIAL_CONTEXT_FACTORY = PrivilegedSystemHelper.getProperty(Context.INITIAL_CONTEXT_FACTORY);
+   
+   public static final String PROPERTIES_DEFAULT = "default-properties";
 
-   final public static String PROPERTIES_MANDATORY = "mandatory-properties";
+   public static final String PROPERTIES_MANDATORY = "mandatory-properties";
 
-   final public static String BINDINGS_STORE_PATH = "bindings-store-path";
+   /**
+    * This parameter is used to overload the default initial context factory in order to ensure that binded objects are shared
+    */
+   public static final String OVERLOAD_CONTEXT_FACTORY = "overload-context-factory";
 
-   final public static String DEFAULT_BINDING_STORE_PATH = SystemHelper.getProperty("java.io.tmpdir") + File.separator + "bind-references.xml";
+   public static final String BINDINGS_STORE_PATH = "bindings-store-path";
+
+   public static final String DEFAULT_BINDING_STORE_PATH = PrivilegedSystemHelper.getProperty("java.io.tmpdir")
+      + File.separator + "bind-references.xml";
 
    private static Logger LOG = Logger.getLogger(InitialContextInitializer.class);
 
    private List<BindReferencePlugin> bindReferencesPlugins;
-   
-   private String defaultContextFactory;
-
-   private final InitialContext initialContext;
 
    private final InitialContextBinder binder;
 
@@ -75,7 +83,8 @@ public class InitialContextInitializer {
     * @throws XMLStreamException if error of serialized bindings read
     * @throws FileNotFoundException if cannot open file with serialized bindings
     */
-   public InitialContextInitializer(InitParams params) throws NamingException, ConfigurationException, FileNotFoundException, XMLStreamException
+   public InitialContextInitializer(InitParams params) throws NamingException, ConfigurationException,
+      FileNotFoundException, XMLStreamException
    {
       for (Iterator propsParams = params.getPropertiesParamIterator(); propsParams.hasNext();)
       {
@@ -87,7 +96,7 @@ public class InitialContextInitializer {
             Property prop = (Property)props.next();
             String propName = prop.getName();
             String propValue = prop.getValue();
-            String existedProp = SystemHelper.getProperty(propName);
+            String existedProp = PrivilegedSystemHelper.getProperty(propName);
             if (isMandatory)
             {
                setSystemProperty(propName, propValue, propParam.getName());
@@ -105,10 +114,21 @@ public class InitialContextInitializer {
             }
          }
       }
-      initialContext = new InitialContext();
       bindReferencesPlugins = new ArrayList<BindReferencePlugin>();
 
       ValueParam bindingStorePathParam = params.getValueParam(BINDINGS_STORE_PATH);
+
+      if (LOG.isDebugEnabled())
+      {
+         LOG.debug("The default initial context factory is " + DEFAULT_INITIAL_CONTEXT_FACTORY);         
+      }
+      ValueParam overloadContextFactoryParam = params.getValueParam(OVERLOAD_CONTEXT_FACTORY);
+      if (overloadContextFactoryParam != null && overloadContextFactoryParam.getValue() != null
+         && Boolean.valueOf(overloadContextFactoryParam.getValue()))
+      {
+         PrivilegedSystemHelper.setProperty(Context.INITIAL_CONTEXT_FACTORY, ExoContainerContextFactory.class.getName());
+
+      }
 
       // binder
       if (bindingStorePathParam == null)
@@ -119,25 +139,24 @@ public class InitialContextInitializer {
       {
          binder = new InitialContextBinder(this, bindingStorePathParam.getValue());
       }
-
    }
 
    private void setSystemProperty(String propName, String propValue, String propParamName)
    {
-     SystemHelper.setProperty(propName, propValue);
+      PrivilegedSystemHelper.setProperty(propName, propValue);
       if (propName.equals(Context.INITIAL_CONTEXT_FACTORY))
       {
-         defaultContextFactory = propValue;
+         DEFAULT_INITIAL_CONTEXT_FACTORY = PrivilegedSystemHelper.getProperty(Context.INITIAL_CONTEXT_FACTORY);
       }
-      LOG.info("Using mandatory system property: " + propName + " = " + SystemHelper.getProperty(propName));
+      LOG.info("Using mandatory system property: " + propName + " = " + PrivilegedSystemHelper.getProperty(propName));
    }
 
    // for out-of-container testing
    private InitialContextInitializer(String name, Reference reference) throws NamingException, FileNotFoundException,
       XMLStreamException
    {
-      
-      initialContext = new InitialContext();
+      PrivilegedSystemHelper.setProperty(Context.INITIAL_CONTEXT_FACTORY, DEFAULT_INITIAL_CONTEXT_FACTORY);
+      InitialContext initialContext = getInitialContext();
       initialContext.rebind(name, reference);
 
       // binder
@@ -149,13 +168,14 @@ public class InitialContextInitializer {
     * of app using different copy of Context, for example per web app
     * InitialContext in Tomcat
     */
+   @Deprecated
    public void recall()
    {
       for (BindReferencePlugin plugin : bindReferencesPlugins)
       {
          try
          {
-            InitialContext ic = new InitialContext();
+            InitialContext ic = getInitialContext();
             ic.bind(plugin.getBindName(), plugin.getReference());
             LOG.info("Reference bound (by recall()): " + plugin.getBindName());
          }
@@ -177,8 +197,8 @@ public class InitialContextInitializer {
          BindReferencePlugin brplugin = (BindReferencePlugin)plugin;
          try
          {
-            // initialContext = new InitialContext();
-            initialContext.rebind(brplugin.getBindName(), brplugin.getReference());
+            InitialContext ic = getInitialContext();
+            ic.rebind(brplugin.getBindName(), brplugin.getReference());
             LOG.info("Reference bound: " + brplugin.getBindName());
             bindReferencesPlugins.add((BindReferencePlugin)plugin);
          }
@@ -204,15 +224,24 @@ public class InitialContextInitializer {
     */
    public String getDefaultContextFactory()
    {
-      return defaultContextFactory;
+      return DEFAULT_INITIAL_CONTEXT_FACTORY;
    }
 
    /**
     * @return stored InitialContext
     */
-   public synchronized InitialContext getInitialContext()
+   public InitialContext getInitialContext()
    {
-      return initialContext;
+      try
+      {
+         Hashtable<String, Object> env = new Hashtable<String, Object>();
+         env.put(InitialContextInitializer.class.getName(), "true");
+         return new InitialContext(env);
+      }
+      catch (NamingException e)
+      {
+         throw new RuntimeException("Cannot create the intial context", e);
+      }
    }
 
    // for out-of-container testing
@@ -223,49 +252,10 @@ public class InitialContextInitializer {
    }
 
    /**
-    * Constructs references from params, binds in initial contexts and persists list of all binded
-    * references into file.
-    * 
-    * @param bindName
-    *          bind name
-    * @param className
-    *          class name
-    * @param factory
-    *          factory name
-    * @param factoryLocation
-    *          factory location
-    * @param refAddr
-    *          map of references's properties
-    * 
-    * @throws NamingException
-    *          if error occurs due to binding
-    * @throws XMLStreamException 
-    * @throws FileNotFoundException
+    * Returns InitialContextBinder.
     */
-   public void bind(String bindName, String className, String factory, String factoryLocation,
-      Map<String, String> refAddr) throws NamingException, FileNotFoundException, XMLStreamException
+   public InitialContextBinder getInitialContextBinder()
    {
-      if (LOG.isDebugEnabled())
-      {
-         StringBuilder refAddrString = new StringBuilder();
-         refAddrString.append('{');
-         Set<Map.Entry<String, String>> refs = refAddr.entrySet();
-         int i = 1;
-         for (Map.Entry<String, String> ent : refs)
-         {
-            refAddrString.append(ent.getKey());
-            refAddrString.append('=');
-            refAddrString.append(ent.getValue());
-            if (i < refs.size())
-            {
-               refAddrString.append(' ');
-            }
-            i++;
-         }
-         refAddrString.append('}');
-         LOG.debug("Bind: " + bindName + " class-name:" + className + " factory:" + factory + " factoryLocation:" + factoryLocation + " refAddr:" + refAddrString);
-      }
-
-      binder.bind(bindName, className, factory, factoryLocation, refAddr);
+      return binder;
    }
 }

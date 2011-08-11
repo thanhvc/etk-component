@@ -1,19 +1,15 @@
 10
 
 dir
-72169
-http://svn.exoplatform.org/projects/core/tags/2.2.2/component/database/src/main/java/org
-http://svn.exoplatform.org/projects
+4733
+http://anonsvn.jboss.org/repos/exo-jcr/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org
+http://anonsvn.jboss.org/repos/exo-jcr
 
 
 
-2009-06-30T10:28:21.798832Z
-33190
-dkatayev
-
-
-
-
+2011-07-01T08:57:52.353026Z
+4571
+tolusha
 
 
 
@@ -24,7 +20,11 @@ dkatayev
 
 
 
-42d3c691-033b-0410-95b4-af486b8189e5
+
+
+
+
+9589c786-c48d-49fa-b7d5-3f388c4be621
 
 exoplatform
 dir

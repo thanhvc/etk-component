@@ -1,23 +1,23 @@
 K 25
 svn:wc:ra_dav:version-url
-V 118
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation
+V 135
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/annotation
 END
 Query.java
 K 25
 svn:wc:ra_dav:version-url
-V 129
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/Query.java
+V 146
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/annotation/Query.java
 END
 Table.java
 K 25
 svn:wc:ra_dav:version-url
-V 129
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/Table.java
+V 146
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/annotation/Table.java
 END
 TableField.java
 K 25
 svn:wc:ra_dav:version-url
-V 134
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/annotation/TableField.java
+V 151
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/annotation/TableField.java
 END

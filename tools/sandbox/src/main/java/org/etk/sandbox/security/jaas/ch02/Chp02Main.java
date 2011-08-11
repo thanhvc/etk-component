@@ -17,6 +17,8 @@
 package org.etk.sandbox.security.jaas.ch02;
 
 import java.io.File;
+import java.net.URL;
+import java.security.PrivilegedAction;
 
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;
@@ -31,7 +33,10 @@ import javax.security.auth.login.LoginException;
 public class Chp02Main {
   
   public static void main(String[] args) throws Exception {
-    File policyFile = new File("/conf/chp02.policy");
+    ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    URL policyFileURL = cl.getResource("conf/chp02.policy");
+    if (policyFileURL == null) return;
+    File policyFile = new File(policyFileURL.getPath());
     testAccess(policyFile, "user", "passowrd");
     testAccess(policyFile, "sysadmin", "password");
   }
@@ -44,7 +49,7 @@ public class Chp02Main {
    * @param password
    * @throws LoginException
    */
-  static void testAccess(final File policyFile, String userName, String password) throws LoginException {
+  static void testAccess(final File policyFile, final String userName, final String password) throws LoginException {
     //a custom CallbackHandler , SimpleCallbackHandler is instantiated and passed
     //to the LoginMadule
     SimpleCallbackHandler cb = new SimpleCallbackHandler(userName, password);
@@ -53,8 +58,16 @@ public class Chp02Main {
     Subject subject = ctx.getSubject();
     System.out.println("Logged in " + subject);
     
+ // Create privileged action block which limits permissions
+    // to only the Subject's permissions.
     try {
-      
+      Subject.doAsPrivileged(subject, new PrivilegedAction() {
+        public Object run() {
+          policyFile.canRead();
+          System.out.println(userName + " can access Policy file.");
+          return null;
+        }
+      }, null);
     } catch (SecurityException e) {
       System.out.println(userName + " can NOT access Policy file.");
     }

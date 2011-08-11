@@ -62,6 +62,14 @@ public class SimpleContext implements Context {
     return obj;
   }
 
+  /**
+   * Converts a Name to a flat String.
+   */
+  protected String nameToString(Name name) throws NamingException
+  {
+     return name.toString();
+  }
+  
   public void bind(Name name, Object value) throws NamingException {
     throw new NamingException("Not supported");
   }

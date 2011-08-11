@@ -80,11 +80,29 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.1.2</version>
-			<scope>compile</scope>
-		</dependency>
+		   <groupId>com.experlog</groupId>
+		   <artifactId>xapool</artifactId>
+	        </dependency>
+	        <dependency>
+		 <groupId>org.hibernate</groupId>
+		 <artifactId>hibernate-core</artifactId>
+		 <exclusions>
+		    <exclusion>
+		       <groupId>org.slf4j</groupId>
+		       <artifactId>slf4j-api</artifactId>
+		    </exclusion>
+		 </exclusions> 
+	      </dependency>
+	      <dependency>
+		 <groupId>org.hibernate</groupId>
+		 <artifactId>hibernate-annotations</artifactId>
+		 <exclusions>
+		    <exclusion>
+		       <groupId>org.slf4j</groupId>
+		       <artifactId>slf4j-api</artifactId>
+		    </exclusion>
+		 </exclusions> 
+	      </dependency>
 
 		<dependency>
 			<groupId>xdoclet</groupId>

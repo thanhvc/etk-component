@@ -1,17 +1,17 @@
 K 25
 svn:wc:ra_dav:version-url
-V 112
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/jdbc
+V 129
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/jdbc
 END
 DBSchemaCreator.java
 K 25
 svn:wc:ra_dav:version-url
-V 133
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/jdbc/DBSchemaCreator.java
+V 150
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/jdbc/DBSchemaCreator.java
 END
 CreateDBSchemaPlugin.java
 K 25
 svn:wc:ra_dav:version-url
-V 138
-/projects/!svn/ver/33451/core/tags/2.2.2/component/database/src/main/java/org/exoplatform/services/database/jdbc/CreateDBSchemaPlugin.java
+V 155
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/java/org/exoplatform/services/database/jdbc/CreateDBSchemaPlugin.java
 END
