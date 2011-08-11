@@ -68,7 +68,7 @@ public class TestLoginModule extends TestCase {
       assertNotNull(conversationRegistry);
       
       //
-      identityRegistry = (IdentityRegistry) container.getComponentAdapterOfType(IdentityRegistry.class);
+      identityRegistry = (IdentityRegistry) container.getComponentInstanceOfType(IdentityRegistry.class);
       assertNotNull(identityRegistry);
     }
     

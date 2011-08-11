@@ -27,14 +27,14 @@ import javax.security.auth.login.LoginException;
 import org.etk.common.logging.Logger;
 import org.etk.core.membership.Membership;
 import org.etk.core.membership.OrganizationService;
-import org.exoplatform.services.security.Authenticator;
-import org.exoplatform.services.security.Credential;
-import org.exoplatform.services.security.Identity;
-import org.exoplatform.services.security.MembershipEntry;
-import org.exoplatform.services.security.PasswordCredential;
-import org.exoplatform.services.security.PasswordEncrypter;
-import org.exoplatform.services.security.RolesExtractor;
-import org.exoplatform.services.security.UsernameCredential;
+import org.etk.core.security.Authenticator;
+import org.etk.core.security.Credential;
+import org.etk.core.security.Identity;
+import org.etk.core.security.MembershipEntry;
+import org.etk.core.security.PasswordCredential;
+import org.etk.core.security.PasswordEncrypter;
+import org.etk.core.security.RolesExtractor;
+import org.etk.core.security.UsernameCredential;
 
 /**
  * Created by The eXo Platform SAS . An authentication wrapper over Organization

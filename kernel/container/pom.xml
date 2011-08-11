@@ -9,8 +9,8 @@
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.container</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineering Toolkit Framework Kernel</name>
-  <description>Engineering Toolkit Framework Kernel</description>
+  <name>Engineering Toolkit Framework Container</name>
+  <description>Engineering Toolkit Framework Container</description>
 
    <dependencies>
       <dependency>

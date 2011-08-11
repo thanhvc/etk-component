@@ -16,9 +16,11 @@
 
   <modules>
     <module>service</module>
+    <module>rest</module>
     <module>orm</module>
     <module>security</module>
     <module>membership</module>
+
   </modules>
 
 </project>

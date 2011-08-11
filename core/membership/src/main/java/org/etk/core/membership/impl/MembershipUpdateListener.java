@@ -22,11 +22,12 @@ import java.util.Iterator;
 import org.etk.common.logging.Logger;
 import org.etk.core.membership.Membership;
 import org.etk.core.membership.MembershipEventListener;
-import org.exoplatform.services.security.ConversationRegistry;
-import org.exoplatform.services.security.ConversationState;
-import org.exoplatform.services.security.Identity;
-import org.exoplatform.services.security.MembershipEntry;
-import org.exoplatform.services.security.StateKey;
+import org.etk.core.security.ConversationRegistry;
+import org.etk.core.security.ConversationState;
+import org.etk.core.security.Identity;
+import org.etk.core.security.MembershipEntry;
+import org.etk.core.security.StateKey;
+
 
 /**
  * @author <a href="mailto:andrew00x@gmail.com">Andrey Parfonov</a>
