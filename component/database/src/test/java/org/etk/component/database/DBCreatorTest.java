@@ -18,13 +18,14 @@
  */
 package org.etk.component.database;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.etk.component.database.jdbc.CreateDBSchemaPlugin;
 import org.etk.component.database.jdbc.DBSchemaCreator;
 import org.etk.kernel.container.ApplicationContainer;
-
-import java.util.List;
+import org.etk.kernel.container.StandaloneContainer;
 
 /**
  * Created by The eXo Platform SAS .
@@ -38,14 +39,11 @@ public class DBCreatorTest extends TestCase
    //  private StandaloneContainer container;
    private DBSchemaCreator dbcreator;
 
-   public void setUp() throws Exception
-   {
-      // >>>>> to avoid  two top-level container exception  
-      //    StandaloneContainer.setConfigurationPath("src/main/java/conf/standalone/test-configuration.xml");
-      //    container = StandaloneContainer.getInstance();
-      ApplicationContainer container = ApplicationContainer.getInstance();
-      dbcreator = (DBSchemaCreator)container.getComponentInstanceOfType(DBSchemaCreator.class);
-   }
+  public void setUp() throws Exception {
+    // >>>>> to avoid two top-level container exception
+    ApplicationContainer container = ApplicationContainer.getInstance();
+    dbcreator = (DBSchemaCreator) container.getComponentInstanceOfType(DBSchemaCreator.class);
+  }
 
    public void testConf() throws Exception
    {

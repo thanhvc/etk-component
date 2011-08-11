@@ -61,7 +61,7 @@ public class TestLoginModule extends TestCase {
       //
       StandaloneContainer container = StandaloneContainer.getInstance();
       //
-      authenticator = (DummyAuthenticatorImpl) container.getComponentInstancesOfType(DummyAuthenticatorImpl.class);
+      authenticator = (DummyAuthenticatorImpl) container.getComponentInstanceOfType(DummyAuthenticatorImpl.class);
       assertNotNull(authenticator);
       //
       conversationRegistry = (ConversationRegistry) container.getComponentInstanceOfType(ConversationRegistry.class);

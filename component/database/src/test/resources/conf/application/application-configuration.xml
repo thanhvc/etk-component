@@ -30,7 +30,7 @@
          <object-param>
             <name>cache.config.default</name>
             <description>The default cache configuration</description>
-            <object type="org.exoplatform.services.cache.ExoCacheConfig">
+            <object type="org.etk.kernel.cache.ExoCacheConfig">
                <field name="name">
                   <string>default</string>
                </field>
@@ -53,7 +53,7 @@
 
    <component>
       <key>org.etk.component.database.DatabaseService</key>
-      <type>oorg.etk.component.database.impl.XAPoolTxSupportDatabaseService</type>
+      <type>org.etk.component.database.impl.XAPoolTxSupportDatabaseService</type>
       <description>support the transaction db connection pool implementation</description>
       <init-params>
          <properties-param>

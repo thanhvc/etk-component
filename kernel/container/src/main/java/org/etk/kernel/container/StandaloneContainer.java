@@ -246,24 +246,24 @@ public class StandaloneContainer extends KernelContainer implements SessionManag
       final J2EEServerInfo env = new J2EEServerInfo();
 
       // (2) exo-configuration.xml in AS (standalone) home directory
-      configurationURL = (new File(env.getServerHome() + "/exo-configuration.xml")).toURI().toURL();
+      configurationURL = (new File(env.getServerHome() + "/configuration.xml")).toURI().toURL();
 
       // (3) AS_HOME/conf/exo-conf (JBossAS usecase)
       if (!fileExists(configurationURL)) {
-        configurationURL = (new File(env.getExoConfigurationDirectory() + "/exo-configuration.xml")).toURI().toURL();
+        configurationURL = (new File(env.getExoConfigurationDirectory() + "/configuration.xml")).toURI().toURL();
 
       }
 
       // (4) conf/exo-configuration.xml in war/ear(?)
       if (!fileExists(configurationURL) && configClassLoader != null) {
-        configurationURL = configClassLoader.getResource("conf/exo-configuration.xml");
+        configurationURL = configClassLoader.getResource("conf/test-configuration.xml");
       }
     }
   }
 
   private void initDefaultConf() throws Exception {
      configurationManager.addConfiguration(ContainerUtil.getConfigurationURL("conf/configuration.xml"));
-     configurationManager.addConfiguration(ContainerUtil.getConfigurationURL("conf/portal/configuration.xml"));
+     configurationManager.addConfiguration(ContainerUtil.getConfigurationURL("conf/application/test-configuration.xml"));
     try {
       configurationManager.addConfiguration("war:/conf/configuration.xml");
     } catch (Exception ex) {

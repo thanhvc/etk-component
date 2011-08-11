@@ -17,6 +17,8 @@
   <modules>
     <module>service</module>
     <module>orm</module>
+    <module>security</module>
+    <module>membership</module>
   </modules>
 
 </project>

@@ -90,8 +90,7 @@ public class TestDBCreator extends TestCase
       connectionProperties.put("password", "");
 
       ConfigurationManager cm = (ConfigurationManager)container.getComponentInstanceOfType(ConfigurationManager.class);
-      DBCreator dbCreator =
-         new DBCreator(serverUrl, connectionProperties, "classpath:/dbcreator/test.sql", "sa", "", cm);
+      DBCreator dbCreator = new DBCreator(serverUrl, connectionProperties, "classpath:/dbcreator/test.sql", "sa", "", cm);
 
       DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
       DBConnectionInfo dbInfo1 = dbCreator.getDBConnectionInfo("testdb");

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/resources/conf/portal
+END
+configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/resources/conf/portal/configuration.xml
+END
+jdbcexo-configuration.db.xml
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/resources/conf/portal/jdbcexo-configuration.db.xml
+END
+jdbcexo-configuration.hsql.xml
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.database/src/main/resources/conf/portal/jdbcexo-configuration.hsql.xml
+END
