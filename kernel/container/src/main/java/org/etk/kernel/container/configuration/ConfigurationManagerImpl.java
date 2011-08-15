@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.etk.common.logging.Logger;
 import org.etk.kernel.container.xml.Component;
 import org.etk.kernel.container.xml.Configuration;
 import org.etk.kernel.container.xml.Deserializer;
@@ -33,6 +34,8 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 	private boolean validateSchema = true;
 
 	private final Set<String> profiles;
+	
+	private final static Logger log = Logger.getLogger(ConfigurationManagerImpl.class);
 
 	/**
 	 * The URL the current document being unmarshaller.
@@ -135,7 +138,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 	               if (urlObject != null)
 	               {
 	                  if (LOG_DEBUG)
-	                     //log.info("\timport " + urlObject);
+	                     log.info("\timport " + urlObject);
 	                  // Set the URL of imported file
 	                  currentURL.set(urlObject);
 	                  conf = unmarshaller.unmarshall(urlObject);
@@ -143,15 +146,15 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 	               }
 	               else
 	               {
-	                  //log.warn("Couldn't process the URL for " + uri + " configuration file ignored ");
+	                  log.warn("Couldn't process the URL for " + uri + " configuration file ignored ");
 	               }
 	            }
 	         }
 	      }
 	      catch (Exception ex)
 	      {
-	    	  ex.printStackTrace();
-	         //log.error("Cannot process the configuration " + url, ex);
+	    	  ex.printStackTrace();	         
+	    	  log.error("Cannot process the configuration " + url, ex);
 	      }
 	      finally
 	      {
@@ -207,8 +210,7 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
 					configurations.mergeConfiguration(conf);
 					importConf(unmarshaller, conf, depth + 1);
 				} else {
-					// log.warn("Couldn't process the URL for " + uri +
-					// " configuration file ignored ");
+					 log.warn("Couldn't process the URL for " + uri + " configuration file ignored ");
 				}
 			}
 		}

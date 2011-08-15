@@ -19,8 +19,8 @@
     <module>rest</module>
     <module>orm</module>
     <module>security</module>
-    <module>membership</module>
-
+    <module>membership.api</module>
+    <module>membership.jdbc</module>
   </modules>
 
 </project>

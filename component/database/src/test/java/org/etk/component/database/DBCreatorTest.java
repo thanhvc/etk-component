@@ -25,7 +25,6 @@ import junit.framework.TestCase;
 import org.etk.component.database.jdbc.CreateDBSchemaPlugin;
 import org.etk.component.database.jdbc.DBSchemaCreator;
 import org.etk.kernel.container.ApplicationContainer;
-import org.etk.kernel.container.StandaloneContainer;
 
 /**
  * Created by The eXo Platform SAS .

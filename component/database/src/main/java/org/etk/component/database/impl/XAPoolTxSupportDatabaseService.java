@@ -49,6 +49,7 @@ public class XAPoolTxSupportDatabaseService implements DatabaseService
    {
       datasources_ = new HashMap<String, ExoDatasource>(5);
       txService_ = txService;
+      
       Iterator i = params.getPropertiesParamIterator();
       while (i.hasNext())
       {

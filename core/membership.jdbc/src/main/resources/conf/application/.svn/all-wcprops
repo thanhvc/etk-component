@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/resources/conf/portal
+END
+activedirectory-organization-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/resources/conf/portal/activedirectory-organization-configuration.xml
+END
+ldap-organization-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/resources/conf/portal/ldap-organization-configuration.xml
+END
+hibernate-organization-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/resources/conf/portal/hibernate-organization-configuration.xml
+END
+jdbc-organization-configuration.xml
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/resources/conf/portal/jdbc-organization-configuration.xml
+END

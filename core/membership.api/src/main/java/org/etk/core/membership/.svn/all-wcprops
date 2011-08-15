@@ -1,0 +1,155 @@
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization
+END
+UserProfile.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserProfile.java
+END
+MembershipEventListenerHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/MembershipEventListenerHandler.java
+END
+GroupEventListenerHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/GroupEventListenerHandler.java
+END
+MembershipEventListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/MembershipEventListener.java
+END
+GroupEventListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/GroupEventListener.java
+END
+Query.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/Query.java
+END
+UserProfileEventListenerHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserProfileEventListenerHandler.java
+END
+UserProfileEventListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 166
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserProfileEventListener.java
+END
+UserHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserHandler.java
+END
+User.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/User.java
+END
+BaseOrganizationService.java
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/BaseOrganizationService.java
+END
+UserEventListenerHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 166
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserEventListenerHandler.java
+END
+OrganizationService.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/OrganizationService.java
+END
+UserEventListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserEventListener.java
+END
+MembershipHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/MembershipHandler.java
+END
+OrganizationServiceInitializer.java
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/OrganizationServiceInitializer.java
+END
+OrganizationConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/OrganizationConfig.java
+END
+GroupHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/GroupHandler.java
+END
+MembershipTypeHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/MembershipTypeHandler.java
+END
+Membership.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/Membership.java
+END
+Group.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/Group.java
+END
+OrganizationDatabaseInitializer.java
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/OrganizationDatabaseInitializer.java
+END
+MembershipType.java
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/MembershipType.java
+END
+ExtendedUserHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/ExtendedUserHandler.java
+END
+UserProfileHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/UserProfileHandler.java
+END

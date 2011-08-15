@@ -39,16 +39,6 @@
         <version>${org.etk.component.version}</version>
       </dependency>
   </dependencies>
-  <profiles>
-    <profile>
-      <id>Java6</id>
-      <activation>
-        <jdk>1.6</jdk>
-      </activation>
-
-    </profile>
-  </profiles>
-
   <build>
     <plugins>
      <plugin>

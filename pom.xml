@@ -48,6 +48,7 @@
     <javax.servlet.version>2.5</javax.servlet.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
     <org.jibx.version>1.2.3</org.jibx.version>
+    <org.hsqldb.version>2.0.0</org.hsqldb.version>
     <javax.ws.rs.version>1.0</javax.ws.rs.version>
     <javax.xml.bind.version>2.1</javax.xml.bind.version>
     <picocontainer.version>1.1</picocontainer.version>
@@ -142,8 +143,7 @@
       <dependency>
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
-        <version>2.0.0</version>
-        <scope>test</scope>
+        <version>${org.hsqldb.version}</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -160,7 +160,47 @@
          <artifactId>jotm-core</artifactId>
          <version>2.1.9</version>
        </dependency>
+       <dependency>
+         <groupId>xstream</groupId>
+         <artifactId>xstream</artifactId>
+         <version>1.0.2</version>
+       </dependency>
+       <dependency>
+         <groupId>javax.resource</groupId>
+         <artifactId>connector-api</artifactId>
+         <version>1.5</version>
+       </dependency>
+       <dependency>
+         <groupId>org.javassist</groupId>
+         <artifactId>javassist</artifactId>
+         <version>3.14.0-GA</version>
+       </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xdoclet-hibernate-module</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xdoclet-xdoclet-module</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xjavadoc</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.6</version>
+         </dependency>
     </dependencies>
+    
   </dependencyManagement>
   <dependencies>
     <dependency>

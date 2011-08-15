@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate
+END
+MembershipDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/MembershipDAOImpl.java
+END
+GroupDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/GroupDAOImpl.java
+END
+MembershipTypeDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 174
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/MembershipTypeDAOImpl.java
+END
+UserDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/UserDAOImpl.java
+END
+UserProfileDAOImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/UserProfileDAOImpl.java
+END
+OrganizationServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/OrganizationServiceImpl.java
+END
+SimpleHibernateUserListAccess.java
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/SimpleHibernateUserListAccess.java
+END
+HibernateUserListAccess.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/hibernate/HibernateUserListAccess.java
+END

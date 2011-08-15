@@ -61,404 +61,321 @@ import javax.sql.DataSource;
  * @author dhodnett $Id: HibernateServiceImpl.java,v 1.3 2004/10/30 02:27:52
  *         tuan08 Exp $
  */
-public class HibernateServiceImpl implements HibernateService, ComponentRequestLifecycle
-{
+public class HibernateServiceImpl implements HibernateService, ComponentRequestLifecycle {
 
-   public static final String AUTO_DIALECT = "AUTO";
+  public static final String AUTO_DIALECT = "AUTO";
 
-   private ThreadLocal<Session> threadLocal_;
+  private ThreadLocal<Session> threadLocal_;
 
-   private static Logger log_ = Logger.getLogger(HibernateServiceImpl.class);
+  private static Logger log_ = Logger.getLogger(HibernateServiceImpl.class);
 
-   private HibernateConfigurationImpl conf_;
+  private HibernateConfigurationImpl conf_;
 
-   private SessionFactory sessionFactory_;
+  private SessionFactory sessionFactory_;
 
-   private HashSet<String> mappings_ = new HashSet<String>();
+  private HashSet<String> mappings_ = new HashSet<String>();
 
-   @SuppressWarnings("unchecked")
-   public HibernateServiceImpl(InitParams initParams, CacheService cacheService)
-   {
-      threadLocal_ = new ThreadLocal<Session>();
-      PropertiesParam param = initParams.getPropertiesParam("hibernate.properties");
-      final HibernateSettingsFactory settingsFactory = new HibernateSettingsFactory(new ExoCacheProvider(cacheService));
-      conf_ = SecurityHelper.doPrivilegedAction(new PrivilegedAction<HibernateConfigurationImpl>()
-      {
-         public HibernateConfigurationImpl run()
-         {
-            return new HibernateConfigurationImpl(settingsFactory);
-         }
-      });
-      Iterator properties = param.getPropertyIterator();
-      while (properties.hasNext())
-      {
-         Property p = (Property)properties.next();
+  @SuppressWarnings("unchecked")
+  public HibernateServiceImpl(InitParams initParams, CacheService cacheService) {
+    threadLocal_ = new ThreadLocal<Session>();
+    PropertiesParam param = initParams.getPropertiesParam("hibernate.properties");
+    final HibernateSettingsFactory settingsFactory = new HibernateSettingsFactory(new ExoCacheProvider(cacheService));
+    conf_ = SecurityHelper.doPrivilegedAction(new PrivilegedAction<HibernateConfigurationImpl>() {
+      public HibernateConfigurationImpl run() {
+        return new HibernateConfigurationImpl(settingsFactory);
+      }
+    });
+    Iterator properties = param.getPropertyIterator();
+    while (properties.hasNext()) {
+      Property p = (Property) properties.next();
 
-         //
-         String name = p.getName();
-         String value = p.getValue();
+      //
+      String name = p.getName();
+      String value = p.getValue();
 
-         // Julien: Don't remove that unless you know what you are doing
-         if (name.equals("hibernate.dialect") && !value.equalsIgnoreCase(AUTO_DIALECT))
-         {
-            Package pkg = Dialect.class.getPackage();
-            String dialect = value.substring(22);
-            value = pkg.getName() + "." + dialect; // 22 is the length of
-            // "org.hibernate.dialect"
-            log_.info("Using dialect " + dialect);
-         }
-
-         //
-         conf_.setProperty(name, value);
+      // Julien: Don't remove that unless you know what you are doing
+      if (name.equals("hibernate.dialect") && !value.equalsIgnoreCase(AUTO_DIALECT)) {
+        Package pkg = Dialect.class.getPackage();
+        String dialect = value.substring(22);
+        value = pkg.getName() + "." + dialect; // 22 is the length of
+        // "org.hibernate.dialect"
+        log_.info("Using dialect " + dialect);
       }
 
-      // Replace the potential "java.io.tmpdir" variable in the connection URL
-      String connectionURL = conf_.getProperty("hibernate.connection.url");
-      if (connectionURL != null)
-      {
-         connectionURL =
-            connectionURL.replace("${java.io.tmpdir}", PrivilegedSystemHelper.getProperty("java.io.tmpdir"));
-         conf_.setProperty("hibernate.connection.url", connectionURL);
-      }
+      //
+      conf_.setProperty(name, value);
+    }
 
-      // Auto-detect dialect if "hibernate.dialect" is set as AUTO or is not set.
+    // Replace the potential "java.io.tmpdir" variable in the connection URL
+    String connectionURL = conf_.getProperty("hibernate.connection.url");
+    if (connectionURL != null) {
+      connectionURL = connectionURL.replace("${java.io.tmpdir}",
+                                            PrivilegedSystemHelper.getProperty("java.io.tmpdir"));
+      conf_.setProperty("hibernate.connection.url", connectionURL);
+    }
 
-      String dialect = conf_.getProperty("hibernate.dialect");
+    // Auto-detect dialect if "hibernate.dialect" is set as AUTO or is not set.
 
-      if (dialect == null || dialect.equalsIgnoreCase(AUTO_DIALECT))
-      {
-         // detect dialect and replace parameter
-         Connection connection = null;
+    String dialect = conf_.getProperty("hibernate.dialect");
 
-         try
-         {
-            // check is there is data source
-            String dataSourceName = conf_.getProperty("hibernate.connection.datasource");
-            if (dataSourceName != null)
-            {
-               //detect dialect by data source
-               DataSource dataSource;
-               try
-               {
-                  dataSource = (DataSource)new InitialContext().lookup(dataSourceName);
-                  if (dataSource == null)
-                  {
-                     log_.error("DataSource is configured but not finded.", new Exception());
-                  }
-                  else
-                  {
-                     connection = dataSource.getConnection();
+    if (dialect == null || dialect.equalsIgnoreCase(AUTO_DIALECT)) {
+      // detect dialect and replace parameter
+      Connection connection = null;
 
-                     Dialect d = DialectFactory.buildDialect(new Properties(), connection);
-                     conf_.setProperty("hibernate.dialect", d.getClass().getName());
-                  }
-               }
-               catch (NamingException e)
-               {
-                  log_.error(e.getMessage(), e);
-               }
+      try {
+        // check is there is data source
+        String dataSourceName = conf_.getProperty("hibernate.connection.datasource");
+        if (dataSourceName != null) {
+          // detect dialect by data source
+          DataSource dataSource;
+          try {
+            dataSource = (DataSource) new InitialContext().lookup(dataSourceName);
+            if (dataSource == null) {
+              log_.error("DataSource is configured but not finded.", new Exception());
+            } else {
+              connection = dataSource.getConnection();
+
+              Dialect d = DialectFactory.buildDialect(new Properties(), connection);
+              conf_.setProperty("hibernate.dialect", d.getClass().getName());
             }
-            else
-            {
-               String url = conf_.getProperty("hibernate.connection.url");
-               if (url != null)
-               {
-                  //detect dialect by url               
-                  try
-                  {
-                     //load driver class
-                     Class.forName(conf_.getProperty("hibernate.connection.driver_class")).newInstance();
-                  }
-                  catch (InstantiationException e)
-                  {
-                     log_.error(e.getMessage(), e);
-                  }
-                  catch (IllegalAccessException e)
-                  {
-                     log_.error(e.getMessage(), e);
-                  }
-                  catch (ClassNotFoundException e)
-                  {
-                     log_.error(e.getMessage(), e);
-                  }
-
-                  String dbUserName = conf_.getProperty("hibernate.connection.username");
-                  String dbPassword = conf_.getProperty("hibernate.connection.password");
-
-                  connection =
-                     dbUserName != null ? DriverManager.getConnection(url, dbUserName, dbPassword) : DriverManager
-                        .getConnection(url);
-
-                  Dialect d = DialectFactory.buildDialect(new Properties(), connection);
-                  conf_.setProperty("hibernate.dialect", d.getClass().getName());
-               }
-               else
-               {
-                  Exception e = new Exception("Any data source is not configured!");
-                  log_.error(e.getMessage(), e);
-               }
-            }
-         }
-         catch (SQLException e)
-         {
+          } catch (NamingException e) {
             log_.error(e.getMessage(), e);
-         }
-         finally
-         {
-            if (connection != null)
-            {
-               try
-               {
-                  connection.close();
-               }
-               catch (SQLException e)
-               {
-                  log_.error(e.getMessage(), e);
-               }
-            }
-         }
-      }
-   }
-
-   public void addPlugin(ComponentPlugin plugin)
-   {
-      if (plugin instanceof AddHibernateMappingPlugin)
-      {
-         AddHibernateMappingPlugin impl = (AddHibernateMappingPlugin)plugin;
-         try
-         {
-            List path = impl.getMapping();
-            ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
-            if (path != null)
-            {
-
-               for (int i = 0; i < path.size(); i++)
-               {
-                  String relativePath = (String)path.get(i);
-                  if (!mappings_.contains(relativePath))
-                  {
-                     mappings_.add(relativePath);
-                     URL url = cl.getResource(relativePath);
-                     log_.info("Adding  Hibernate Mapping: " + relativePath);
-                     conf_.addURL(url);
-                  }
-               }
+          }
+        } else {
+          String url = conf_.getProperty("hibernate.connection.url");
+          if (url != null) {
+            // detect dialect by url
+            try {
+              // load driver class
+              Class.forName(conf_.getProperty("hibernate.connection.driver_class")).newInstance();
+            } catch (InstantiationException e) {
+              log_.error(e.getMessage(), e);
+            } catch (IllegalAccessException e) {
+              log_.error(e.getMessage(), e);
+            } catch (ClassNotFoundException e) {
+              log_.error(e.getMessage(), e);
             }
 
-            // Annotations
+            String dbUserName = conf_.getProperty("hibernate.connection.username");
+            String dbPassword = conf_.getProperty("hibernate.connection.password");
 
-            List<String> annotations = impl.getAnnotations();
+            connection = dbUserName != null ? DriverManager.getConnection(url,
+                                                                          dbUserName,
+                                                                          dbPassword)
+                                           : DriverManager.getConnection(url);
 
-            if (annotations != null)
-            {
-               for (String annotation : annotations)
-               {
-                  Class clazz = cl.loadClass(annotation);
-                  conf_.addAnnotatedClass(clazz);
+            Dialect d = DialectFactory.buildDialect(new Properties(), connection);
+            conf_.setProperty("hibernate.dialect", d.getClass().getName());
+          } else {
+            Exception e = new Exception("Any data source is not configured!");
+            log_.error(e.getMessage(), e);
+          }
+        }
+      } catch (SQLException e) {
+        log_.error(e.getMessage(), e);
+      } finally {
+        if (connection != null) {
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            log_.error(e.getMessage(), e);
+          }
+        }
+      }
+    }
+  }
 
-               }
+  public void addPlugin(ComponentPlugin plugin) {
+    if (plugin instanceof AddHibernateMappingPlugin) {
+      AddHibernateMappingPlugin impl = (AddHibernateMappingPlugin) plugin;
+      try {
+        List path = impl.getMapping();
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+
+        if (path != null) {
+
+          for (int i = 0; i < path.size(); i++) {
+            String relativePath = (String) path.get(i);
+            if (!mappings_.contains(relativePath)) {
+              mappings_.add(relativePath);
+              URL url = cl.getResource(relativePath);
+              log_.info("Adding  Hibernate Mapping: " + relativePath);
+              log_.info("URL XML file: " + url);
+              conf_.addURL(url);
             }
-         }
-         catch (Exception ex)
-         {
-            log_.error(ex.getLocalizedMessage(), ex);
-         }
+          }
+        }
+
+        // Annotations
+
+        List<String> annotations = impl.getAnnotations();
+
+        if (annotations != null) {
+          for (String annotation : annotations) {
+            Class clazz = cl.loadClass(annotation);
+            conf_.addAnnotatedClass(clazz);
+
+          }
+        }
+      } catch (Exception ex) {
+        log_.error(ex.getLocalizedMessage(), ex);
       }
-   }
+    }
+  }
 
-   public ComponentPlugin removePlugin(String name)
-   {
-      return null;
-   }
+  public ComponentPlugin removePlugin(String name) {
+    return null;
+  }
 
-   public Collection getPlugins()
-   {
-      return null;
-   }
+  public Collection getPlugins() {
+    return null;
+  }
 
-   public Configuration getHibernateConfiguration()
-   {
-      return conf_;
-   }
+  public Configuration getHibernateConfiguration() {
+    return conf_;
+  }
 
-   /**
-    * @return the SessionFactory
-    */
-   public SessionFactory getSessionFactory()
-   {
-      if (sessionFactory_ == null)
-      {
-         sessionFactory_ = SecurityHelper.doPrivilegedAction(new PrivilegedAction<SessionFactory>()
-         {
-            public SessionFactory run()
-            {
-               SessionFactory factory = conf_.buildSessionFactory();
-               new SchemaUpdate(conf_).execute(false, true);
-               return factory;
-            }
-         });
-      }
-      return sessionFactory_;
-   }
+  /**
+   * @return the SessionFactory
+   */
+  public SessionFactory getSessionFactory() {
+    if (sessionFactory_ == null) {
+      sessionFactory_ = SecurityHelper.doPrivilegedAction(new PrivilegedAction<SessionFactory>() {
+        public SessionFactory run() {
+          SessionFactory factory = conf_.buildSessionFactory();
+          new SchemaUpdate(conf_).execute(false, true);
+          return factory;
+        }
+      });
+    }
+    return sessionFactory_;
+  }
 
-   public Session openSession()
-   {
-      Session currentSession = threadLocal_.get();
-      if (currentSession == null)
-      {
-         if (log_.isDebugEnabled())
-            log_.debug("open new hibernate session in openSession()");
-         currentSession = getSessionFactory().openSession();
-         threadLocal_.set(currentSession);
-      }
-      return currentSession;
-   }
-
-   public Session openNewSession()
-   {
-      Session currentSession = threadLocal_.get();
-      if (currentSession != null)
-      {
-         closeSession(currentSession);
-      }
+  public Session openSession() {
+    Session currentSession = threadLocal_.get();
+    if (currentSession == null) {
+      if (log_.isDebugEnabled())
+        log_.debug("open new hibernate session in openSession()");
       currentSession = getSessionFactory().openSession();
       threadLocal_.set(currentSession);
-      return currentSession;
-   }
+    }
+    return currentSession;
+  }
 
-   public void closeSession(Session session)
-   {
-      if (session == null)
-         return;
-      try
-      {
-         session.close();
-         if (log_.isDebugEnabled())
-            log_.debug("close hibernate session in openSession(Session session)");
-      }
-      catch (Throwable t)
-      {
-         log_.error("Error closing hibernate session : " + t.getMessage(), t);
-      }
-      threadLocal_.set(null);
-   }
+  public Session openNewSession() {
+    Session currentSession = threadLocal_.get();
+    if (currentSession != null) {
+      closeSession(currentSession);
+    }
+    currentSession = getSessionFactory().openSession();
+    threadLocal_.set(currentSession);
+    return currentSession;
+  }
 
-   final public void closeSession()
-   {
-      Session s = threadLocal_.get();
-      if (s != null)
-         s.close();
-      threadLocal_.set(null);
-   }
+  public void closeSession(Session session) {
+    if (session == null)
+      return;
+    try {
+      session.close();
+      if (log_.isDebugEnabled())
+        log_.debug("close hibernate session in openSession(Session session)");
+    } catch (Throwable t) {
+      log_.error("Error closing hibernate session : " + t.getMessage(), t);
+    }
+    threadLocal_.set(null);
+  }
 
-   public Object findExactOne(Session session, String query, String id) throws Exception
-   {
-      Object res = session.createQuery(query).setString(0, id).uniqueResult();
-      if (res == null)
-      {
-         throw new ObjectNotFoundException("Cannot find the object with id: " + id);
-      }
-      return res;
-   }
+  final public void closeSession() {
+    Session s = threadLocal_.get();
+    if (s != null)
+      s.close();
+    threadLocal_.set(null);
+  }
 
-   public Object findOne(Session session, String query, String id) throws Exception
-   {
-      List l = session.createQuery(query).setString(0, id).list();
-      if (l.size() == 0)
-      {
-         return null;
-      }
-      else if (l.size() > 1)
-      {
-         throw new Exception("Expect only one object but found" + l.size());
-      }
-      else
-      {
-         return l.get(0);
-      }
-   }
+  public Object findExactOne(Session session, String query, String id) throws Exception {
+    Object res = session.createQuery(query).setString(0, id).uniqueResult();
+    if (res == null) {
+      throw new ObjectNotFoundException("Cannot find the object with id: " + id);
+    }
+    return res;
+  }
 
-   public Object findOne(Class clazz, Serializable id) throws Exception
-   {
-      Session session = openSession();
-      Object obj = session.get(clazz, id);
-      return obj;
-   }
+  public Object findOne(Session session, String query, String id) throws Exception {
+    List l = session.createQuery(query).setString(0, id).list();
+    if (l.size() == 0) {
+      return null;
+    } else if (l.size() > 1) {
+      throw new Exception("Expect only one object but found" + l.size());
+    } else {
+      return l.get(0);
+    }
+  }
 
-   public Object findOne(ObjectQuery q) throws Exception
-   {
-      Session session = openSession();
-      List l = session.createQuery(q.getHibernateQuery()).list();
-      if (l.size() == 0)
-      {
-         return null;
-      }
-      else if (l.size() > 1)
-      {
-         throw new Exception("Expect only one object but found" + l.size());
-      }
-      else
-      {
-         return l.get(0);
-      }
-   }
+  public Object findOne(Class clazz, Serializable id) throws Exception {
+    Session session = openSession();
+    Object obj = session.get(clazz, id);
+    return obj;
+  }
 
-   public Object create(Object obj) throws Exception
-   {
-      Session session = openSession();
-      session.save(obj);
-      session.flush();
-      return obj;
-   }
+  public Object findOne(ObjectQuery q) throws Exception {
+    Session session = openSession();
+    List l = session.createQuery(q.getHibernateQuery()).list();
+    if (l.size() == 0) {
+      return null;
+    } else if (l.size() > 1) {
+      throw new Exception("Expect only one object but found" + l.size());
+    } else {
+      return l.get(0);
+    }
+  }
 
-   public Object update(Object obj) throws Exception
-   {
-      Session session = openSession();
-      session.update(obj);
-      session.flush();
-      return obj;
-   }
+  public Object create(Object obj) throws Exception {
+    Session session = openSession();
+    session.save(obj);
+    session.flush();
+    return obj;
+  }
 
-   public Object save(Object obj) throws Exception
-   {
-      Session session = openSession();
-      session.merge(obj);
-      session.flush();
-      return obj;
-   }
+  public Object update(Object obj) throws Exception {
+    Session session = openSession();
+    session.update(obj);
+    session.flush();
+    return obj;
+  }
 
-   public Object remove(Object obj) throws Exception
-   {
-      Session session = openSession();
-      session.delete(obj);
-      session.flush();
-      return obj;
-   }
+  public Object save(Object obj) throws Exception {
+    Session session = openSession();
+    session.merge(obj);
+    session.flush();
+    return obj;
+  }
 
-   public Object remove(Class clazz, Serializable id) throws Exception
-   {
-      Session session = openSession();
-      Object obj = session.get(clazz, id);
-      session.delete(obj);
-      session.flush();
-      return obj;
-   }
+  public Object remove(Object obj) throws Exception {
+    Session session = openSession();
+    session.delete(obj);
+    session.flush();
+    return obj;
+  }
 
-   public Object remove(Session session, Class clazz, Serializable id) throws Exception
-   {
-      Object obj = session.get(clazz, id);
-      session.delete(obj);
-      return obj;
-   }
+  public Object remove(Class clazz, Serializable id) throws Exception {
+    Session session = openSession();
+    Object obj = session.get(clazz, id);
+    session.delete(obj);
+    session.flush();
+    return obj;
+  }
 
-   public void startRequest(KernelContainer container)
-   {
+  public Object remove(Session session, Class clazz, Serializable id) throws Exception {
+    Object obj = session.get(clazz, id);
+    session.delete(obj);
+    return obj;
+  }
 
-   }
+  public void startRequest(KernelContainer container) {
 
-   public void endRequest(KernelContainer container)
-   {
-      closeSession();
-   }
+  }
+
+  public void endRequest(KernelContainer container) {
+    closeSession();
+  }
 }
