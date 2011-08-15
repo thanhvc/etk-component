@@ -46,21 +46,21 @@ public class MembershipDAOImpl implements MembershipHandler, MembershipEventList
 {
 
    private static final String queryFindMembershipByUserGroupAndType =
-      "from m in class org.exoplatform.services.organization.impl.MembershipImpl " + "where m.userName = ? "
+      "from m in class org.etk.core.membership.impl.MembershipImpl " + "where m.userName = ? "
          + "  and m.groupId = ? " + "  and m.membershipType = ? ";
 
    private static final String queryFindMembershipsByUserAndGroup =
-      "from m in class org.exoplatform.services.organization.impl.MembershipImpl " + "where m.userName = ? "
+      "from m in class org.etk.core.membership.impl.MembershipImpl " + "where m.userName = ? "
          + "  and m.groupId = ? ";
 
    private static final String queryFindMembershipsByGroup =
-      "from m in class org.exoplatform.services.organization.impl.MembershipImpl " + "where m.groupId = ? ";
+      "from m in class org.etk.core.membership.impl.MembershipImpl " + "where m.groupId = ? ";
 
    private static final String queryFindMembership =
-      "from m in class org.exoplatform.services.organization.impl.MembershipImpl " + "where m.id = ? ";
+      "from m in class org.etk.core.membership.impl.MembershipImpl " + "where m.id = ? ";
 
    private static final String queryFindMembershipsByUser =
-      "from m in class org.exoplatform.services.organization.impl.MembershipImpl " + "where m.userName = ? ";
+      "from m in class org.etk.core.membership.impl.MembershipImpl " + "where m.userName = ? ";
 
    private HibernateService service_;
 

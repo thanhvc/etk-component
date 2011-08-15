@@ -18,12 +18,6 @@
  */
 package org.etk.core.membership.hibernate;
 
-/*
-import org.exoplatform.services.database.HibernateService;
-import org.exoplatform.services.organization.MembershipType;
-import org.exoplatform.services.organization.MembershipTypeHandler;
-import org.exoplatform.services.organization.impl.MembershipTypeImpl;
-*/
 import org.etk.component.database.HibernateService;
 import org.etk.core.membership.MembershipType;
 import org.etk.core.membership.MembershipTypeHandler;
@@ -42,10 +36,10 @@ import java.util.List;
 public class MembershipTypeDAOImpl implements MembershipTypeHandler
 {
    private static final String queryFindMembershipType =
-      "from m in class org.exoplatform.services.organization.impl.MembershipTypeImpl " + "where m.name = ? ";
+      "from m in class org.etk.core.membership.impl.MembershipTypeImpl " + "where m.name = ? ";
 
    private static final String queryFindAllMembershipType =
-      "from m in class org.exoplatform.services.organization.impl.MembershipTypeImpl";
+      "from m in class org.etk.core.membership.impl.MembershipTypeImpl";
 
    private HibernateService service_;
 
@@ -95,7 +89,7 @@ public class MembershipTypeDAOImpl implements MembershipTypeHandler
       {
          List entries =
             session.createQuery(
-               "from m in class " + " org.exoplatform.services.organization.impl.MembershipImpl "
+               "from m in class " + " org.etk.core.membership.impl.MembershipImpl "
                   + "where m.membershipType = '" + name + "'").list();
          for (int i = 0; i < entries.size(); i++)
             session.delete(entries.get(i));

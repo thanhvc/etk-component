@@ -45,7 +45,7 @@ public class UserProfileDAOImpl implements UserProfileHandler, UserProfileEventL
    static private UserProfile NOT_FOUND = new UserProfileImpl();
 
    private static final String queryFindUserProfileByName =
-      "from u in class org.exoplatform.services.organization.impl.UserProfileData " + "where u.userName = ?";
+      "from u in class org.etk.core.membership.impl.UserProfileData " + "where u.userName = ?";
 
    private HibernateService service_;
 

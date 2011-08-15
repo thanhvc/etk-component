@@ -39,29 +39,29 @@ import org.hibernate.Session;
  * tuan08@users.sourceforge.net Date: Aug 22, 2003 Time: 4:51:21 PM
  */
 public class GroupDAOImpl implements GroupHandler, GroupEventListenerHandler {
-  public static final String queryFindGroupByName = "from g in class org.exoplatform.services.organization.impl.GroupImpl "
+  public static final String queryFindGroupByName = "from g in class org.etk.core.membership.impl.GroupImpl "
       + "where g.groupName = ? ";
 
-  public static final String queryFindGroupById = "from g in class org.exoplatform.services.organization.impl.GroupImpl "
+  public static final String queryFindGroupById = "from g in class org.etk.core.membership.impl.GroupImpl "
       + "where g.id = ? ";
 
-  public static final String queryFindGroupByParent = "from g in class org.exoplatform.services.organization.impl.GroupImpl "
+  public static final String queryFindGroupByParent = "from g in class org.etk.core.membership.impl.GroupImpl "
       + "where g.parentId = ? ";
 
-  private static final String queryFindRootGroups = "from g in class org.exoplatform.services.organization.impl.GroupImpl "
+  private static final String queryFindRootGroups = "from g in class org.etk.core.membership.impl.GroupImpl "
       + "where g.parentId is null";
 
   private static final String queryFindGroupsOfUser = "select distinct g "
-      + "from g in class org.exoplatform.services.organization.impl.GroupImpl, "
-      + "     m in class org.exoplatform.services.organization.impl.MembershipImpl "
+      + "from g in class org.etk.core.membership.impl.GroupImpl, "
+      + "     m in class org.etk.core.membership.impl.MembershipImpl "
       + "where m.groupId = g.id " + "  and m.userName = ?";
 
   private static final String queryFindGroupByMembership = "select g "
-      + "from m in class org.exoplatform.services.organization.impl.MembershipImpl, "
-      + "     g in class org.exoplatform.services.organization.impl.GroupImpl "
+      + "from m in class org.etk.core.membership.impl.MembershipImpl, "
+      + "     g in class org.etk.core.membership.impl.GroupImpl "
       + "where m.groupId = g.id " + "  and m.userName = ? " + "  and m.membershipType = ? ";
 
-  private static final String queryGetAllGroups = "from g in class org.exoplatform.services.organization.impl.GroupImpl";
+  private static final String queryGetAllGroups = "from g in class org.etk.core.membership.impl.GroupImpl";
 
   private HibernateService service_;
 

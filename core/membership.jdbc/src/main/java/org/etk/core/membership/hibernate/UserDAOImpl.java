@@ -51,7 +51,7 @@ import java.util.List;
 public class UserDAOImpl implements UserHandler, UserEventListenerHandler, ExtendedUserHandler
 {
    public static final String queryFindUserByName =
-      "from u in class org.exoplatform.services.organization.impl.UserImpl " + "where u.userName = ?";
+      "from u in class org.etk.core.membership.impl.UserImpl " + "where u.userName = ?";
 
    private HibernateService service_;
 
@@ -242,12 +242,12 @@ public class UserDAOImpl implements UserHandler, UserEventListenerHandler, Exten
    public ListAccess<User> findUsersByGroupId(String groupId) throws Exception
    {
       String queryFindUsersInGroup =
-         "select u " + "from u in class org.exoplatform.services.organization.impl.UserImpl, "
-            + "     m in class org.exoplatform.services.organization.impl.MembershipImpl "
+         "select u " + "from u in class org.etk.core.membership.impl.UserImpl, "
+            + "     m in class org.etk.core.membership.impl.MembershipImpl "
             + "where m.userName = u.userName " + "     and m.groupId =  '" + groupId + "'";
       String countUsersInGroup =
-         "select count(u) " + "from u in class org.exoplatform.services.organization.impl.UserImpl, "
-            + "     m in class org.exoplatform.services.organization.impl.MembershipImpl "
+         "select count(u) " + "from u in class org.etk.core.membership.impl.UserImpl, "
+            + "     m in class org.etk.core.membership.impl.MembershipImpl "
             + "where m.userName = u.userName " + "  and m.groupId =  '" + groupId + "'";
 
       return new SimpleHibernateUserListAccess(service_, queryFindUsersInGroup, countUsersInGroup);
@@ -256,9 +256,9 @@ public class UserDAOImpl implements UserHandler, UserEventListenerHandler, Exten
    public Collection findUsersByGroupAndRole(String groupName, String role) throws Exception
    {
       String queryFindUsersByGroupAndRole =
-         "select u " + "from u in class org.exoplatform.services.organization.impl.UserImpl, "
-            + "     m in class org.exoplatform.services.organization.impl.MembershipImpl, "
-            + "     g in class org.exoplatform.services.organization.impl.GroupImpl " + "where m.user = u "
+         "select u " + "from u in class org.etk.core.membership.impl.UserImpl, "
+            + "     m in class org.etk.core.membership.impl.MembershipImpl, "
+            + "     g in class org.etk.core.membership.impl.GroupImpl " + "where m.user = u "
             + "  and m.group = g " + "  and g.groupName = ? " + "  and m.role = ? ";
       Session session = service_.openSession();
       org.hibernate.Query q =
