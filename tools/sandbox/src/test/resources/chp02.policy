@@ -1,0 +1,22 @@
+grant Principal org.etk.sandbox.security.jaas.ch02.UserPrincipal "user"
+{
+   //not granted anything
+};
+
+grant Principal org.etk.sandbox.security.jaas.ch02.SysAdminPrincipal "sysadmin"
+{
+  permission java.io.FilePermission "@TEST_CLASSES@/conf/chp02.policy", "read";
+};
+grant codeBase "@MAIN_CLASSES@-" 
+{
+  permission javax.security.auth.AuthPermission "modifyPrincipals";
+  permission javax.security.auth.AuthPermission "modifyPublicCredentials";
+  permission javax.security.auth.AuthPermission "modifyPrivateCredentials";
+  permission javax.security.auth.AuthPermission "createLoginContext.*";
+  permission javax.security.auth.AuthPermission "doAs";
+  permission javax.security.auth.AuthPermission "doAsPrivileged";
+  permission java.security.SecurityPermission "setPolicy";
+  permission java.security.SecurityPermission "getPolicy";
+  permission java.lang.RuntimePermission "accessClassInPackage.sun.security.provider";
+  permission java.lang.RuntimePermission "getProtectionDomain";
+};
