@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sv:node xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" sv:name="/"
+xlink:href="http://localhost:8080/portal/rest/jcr/repository/">
+  <sv:property sv:name="jcr:primaryType" xlink:href="http://localhost:8080/portal/rest/jcr/repository/jcr:primaryType"/>
+  <sv:property sv:name="jcr:mixinTypes" xlink:href="http://localhost:8080/portal/rest/jcr/repository/jcr:mixinTypes"/>
+  <sv:property sv:name="exo:owner" xlink:href="http://localhost:8080/portal/rest/jcr/repository/exo:owner"/>
+  <sv:property sv:name="exo:permissions" xlink:href="http://localhost:8080/portal/rest/jcr/repository/exo:permissions"/>
+  <sv:node sv:name="exo:portal-registry" xlink:href="http://localhost:8080/portal/rest/jcr/repository/exo:portal-registry"/>
+  <sv:node sv:name="users" xlink:href="http://localhost:8080/portal/rest/jcr/repository/users"/>
+  <sv:node sv:name="groups" xlink:href="http://localhost:8080/portal/rest/jcr/repository/groups"/>
+  <sv:node sv:name="home" xlink:href="http://localhost:8080/portal/rest/jcr/repository/home"/> 
+  <sv:node sv:name="cms" xlink:href="http://localhost:8080/portal/rest/jcr/repository/cms"/>
+  <sv:node sv:name="exo:registry" xlink:href="http://localhost:8080/portal/rest/jcr/repository/exo:registry"/>
+</sv:node>

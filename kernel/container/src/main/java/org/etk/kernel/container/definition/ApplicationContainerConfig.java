@@ -27,8 +27,9 @@ import org.picocontainer.Startable;
  * containers themselves. It is mainly dedicated to the {@link RootContainer} to
  * allows to understand how to manage and deploy all the portal containers
  * 
- * Created by The eXo Platform SAS Author : Nicolas Filotto
- * nicolas.filotto@exoplatform.com 26 ao�t 2009
+ * Note: It read the ApplicationContainerConfig from the /server/tomcat/patch/scr/main/
+ * tomcat/gatein/conf/configuration.xml
+ *  
  */
 public class ApplicationContainerConfig implements Startable {
 	/**
@@ -214,10 +215,8 @@ public class ApplicationContainerConfig implements Startable {
 	/**
 	 * Initialize the value of the rest context name
 	 */
-	private void initRestContextName(InitParams params,
-			PortalContainerDefinition def) {
-		if (def.getRestContextName() == null
-				|| def.getRestContextName().trim().length() == 0) {
+	private void initRestContextName(InitParams params, PortalContainerDefinition def) {
+		if (def.getRestContextName() == null || def.getRestContextName().trim().length() == 0) {
 			// The rest context name is empty
 			// We first set the default value
 			def.setRestContextName(DEFAULT_REST_CONTEXT_NAME);
@@ -248,8 +247,7 @@ public class ApplicationContainerConfig implements Startable {
 			if (params == null) {
 				return;
 			}
-			final ValueParam vp = params
-					.getValueParam("default.portal.container");
+			final ValueParam vp = params.getValueParam("default.portal.container");
 			if (vp != null && vp.getValue().trim().length() > 0) {
 				// A name has been defined in the value parameter, thus we use
 				// it
@@ -302,12 +300,10 @@ public class ApplicationContainerConfig implements Startable {
 	 */
 	public synchronized void registerPortalContainerName(String name) {
 		if (!portalContainerNames.contains(name)) {
-			final List<String> lPortalContainerNames = new ArrayList<String>(
-					portalContainerNames.size() + 1);
+			final List<String> lPortalContainerNames = new ArrayList<String>(portalContainerNames.size() + 1);
 			lPortalContainerNames.add(name);
 			lPortalContainerNames.addAll(portalContainerNames);
-			this.portalContainerNames = Collections
-					.unmodifiableList(lPortalContainerNames);
+			this.portalContainerNames = Collections.unmodifiableList(lPortalContainerNames);
 		}
 	}
 
@@ -320,11 +316,9 @@ public class ApplicationContainerConfig implements Startable {
 	 */
 	public synchronized void unregisterPortalContainerName(String name) {
 		if (portalContainerNames.contains(name)) {
-			final List<String> lPortalContainerNames = new ArrayList<String>(
-					portalContainerNames);
+			final List<String> lPortalContainerNames = new ArrayList<String>(portalContainerNames);
 			lPortalContainerNames.remove(name);
-			this.portalContainerNames = Collections
-					.unmodifiableList(lPortalContainerNames);
+			this.portalContainerNames = Collections.unmodifiableList(lPortalContainerNames);
 		}
 	}
 
@@ -351,15 +345,12 @@ public class ApplicationContainerConfig implements Startable {
 	 */
 	public List<String> getPortalContainerNames(String contextName) {
 		if (contextName == null) {
-			throw new IllegalArgumentException(
-					"The context name cannot be null");
+			throw new IllegalArgumentException("The context name cannot be null");
 		}
 		final List<String> result = scopes.get(contextName);
 		if (result == null || result.isEmpty()) {
 			// we assume the old behavior is expected
-			final String portalContainerName = portalContainerNames
-					.contains(contextName) ? contextName : defaultDefinition
-					.getName();
+			final String portalContainerName = portalContainerNames.contains(contextName) ? contextName : defaultDefinition.getName();
 			return Collections.singletonList(portalContainerName);
 		}
 		return result;
@@ -426,18 +417,15 @@ public class ApplicationContainerConfig implements Startable {
 			throw new IllegalArgumentException(
 					"The setting name cannot be null");
 		}
-		final PortalContainerDefinition definition = definitions
-				.get(portalContainerName);
+		final PortalContainerDefinition definition = definitions.get(portalContainerName);
 		if (definition != null) {
 			final Map<String, Object> settings = definition.getSettings();
 			if (settings != null) {
 				return settings.get(settingName);
 			}
 		}
-		final Map<String, Object> defaultSettings = defaultDefinition
-				.getSettings();
-		return defaultSettings == null ? null : defaultSettings
-				.get(settingName);
+		final Map<String, Object> defaultSettings = defaultDefinition.getSettings();
+		return defaultSettings == null ? null : defaultSettings.get(settingName);
 	}
 
 	/**
@@ -515,13 +503,11 @@ public class ApplicationContainerConfig implements Startable {
 	 *            {@link PortalContainerDefinition} to define
 	 */
 	public void registerPlugin(PortalContainerDefinitionPlugin plugin) {
-		final List<PortalContainerDefinition> lDefs = plugin
-				.getPortalContainerDefinitions();
+		final List<PortalContainerDefinition> lDefs = plugin.getPortalContainerDefinitions();
 		if (lDefs != null && !lDefs.isEmpty()) {
 			synchronized (this) {
 				if (initialized) {
-					throw new IllegalStateException(
-							"The PortalContainerConfig has already been initialized");
+					throw new IllegalStateException("The PortalContainerConfig has already been initialized");
 				}
 				final Map<String, PortalContainerDefinition> tempDefinitions = new HashMap<String, PortalContainerDefinition>(
 						definitions);
@@ -552,8 +538,9 @@ public class ApplicationContainerConfig implements Startable {
 	 * @param scopes
 	 *            the map in which the scope must be defined
 	 */
-	private void registerDependencies(PortalContainerDefinition definition,
-			Map<String, List<String>> scopes) {
+  private void registerDependencies(PortalContainerDefinition definition,
+                                    Map<String, List<String>> scopes) {
+    
 		List<String> dependencies = definition.getDependencies();
 		if (dependencies == null || dependencies.isEmpty()) {
 			// Try to get the default dependencies
@@ -573,12 +560,10 @@ public class ApplicationContainerConfig implements Startable {
 			} else {
 				// The existing collection is unmodifiable thus we need to
 				// create a new one
-				lPortalContainerNames = new ArrayList<String>(
-						lPortalContainerNames);
+				lPortalContainerNames = new ArrayList<String>(lPortalContainerNames);
 			}
 			lPortalContainerNames.add(definition.getName());
-			scopes.put(context,
-					Collections.unmodifiableList(lPortalContainerNames));
+			scopes.put(context, Collections.unmodifiableList(lPortalContainerNames));
 		}
 	}
 
@@ -602,8 +587,7 @@ public class ApplicationContainerConfig implements Startable {
 	 *            indicates whether the settings of the default portal container
 	 *            definition has to be loaded first
 	 */
-	private void initializeSettings(PortalContainerDefinition def,
-			boolean addDefaultSettings) {
+	private void initializeSettings(PortalContainerDefinition def, boolean addDefaultSettings) {
 		// The list of portal container definition for which we want to load the
 		// settings
 		final PortalContainerDefinition[] defs;
@@ -641,9 +625,9 @@ public class ApplicationContainerConfig implements Startable {
 	 * main settings and try to resolve variables defined in the external
 	 * settings
 	 */
-	private void resolveExternalSettings(PortalContainerDefinition def,
-			final Map<String, Object> settings,
-			final Map<String, String> externalSettings) {
+  private void resolveExternalSettings(PortalContainerDefinition def,
+                                       final Map<String, Object> settings,
+                                       final Map<String, String> externalSettings) {
 		// Create the context for variable resolution
 		final Map<String, Object> ctx = new LinkedHashMap<String, Object>();
 		ctx.putAll(settings);
@@ -663,9 +647,9 @@ public class ApplicationContainerConfig implements Startable {
 	 * Loads the external settings of all the given
 	 * {@link PortalContainerDefinition}
 	 */
-	private void loadExternalSettings(PortalContainerDefinition def,
-			final PortalContainerDefinition[] defs,
-			final Map<String, String> externalSettings) {
+  private void loadExternalSettings(PortalContainerDefinition def,
+                                    final PortalContainerDefinition[] defs,
+                                    final Map<String, String> externalSettings) {
 		for (PortalContainerDefinition pcd : defs) {
 			// We then load the external settings, if they exists
 			String path = pcd.getExternalSettingsPath();
@@ -729,14 +713,9 @@ public class ApplicationContainerConfig implements Startable {
 		// We add the portal container name
 		settings.put(PORTAL_CONTAINER_SETTING_NAME, def.getName());
 		// We add the rest context name
-		settings.put(
-				REST_CONTEXT_SETTING_NAME,
-				def.getRestContextName() == null ? defaultDefinition
-						.getRestContextName() : def.getRestContextName());
+		settings.put(REST_CONTEXT_SETTING_NAME,	def.getRestContextName() == null ? defaultDefinition.getRestContextName() : def.getRestContextName());
 		// We add the realm name
-		settings.put(REALM_SETTING_NAME,
-				def.getRealmName() == null ? defaultDefinition.getRealmName()
-						: def.getRealmName());
+		settings.put(REALM_SETTING_NAME, def.getRealmName() == null ? defaultDefinition.getRealmName() : def.getRealmName());
 		return settings;
 	}
 
@@ -777,16 +756,13 @@ public class ApplicationContainerConfig implements Startable {
 	 * @return A {@link Map} of settings if the file could be loaded,
 	 *         <code>null</code> otherwise
 	 */
-	private Map<String, String> loadExternalSettings(String path,
-			boolean isPath4DefaultPCD, PortalContainerDefinition def) {
+	private Map<String, String> loadExternalSettings(String path, boolean isPath4DefaultPCD, PortalContainerDefinition def) {
 		try {
 			URL url = null;
 			if (path.indexOf(':') == -1) {
 				// We first check if the file is not in eXo configuration
 				// directory
-				String fullPath = serverInfo.getExoConfigurationDirectory()
-						+ "/portal/"
-						+ (isPath4DefaultPCD ? "" : def.getName() + "/") + path;
+        String fullPath = serverInfo.getExoConfigurationDirectory() + "/portal/" + (isPath4DefaultPCD ? "" : def.getName() + "/") + path;
 				File file = new File(fullPath);
 				if (file.exists()) {
 					// The file exists so we will use it
@@ -933,13 +909,12 @@ public class ApplicationContainerConfig implements Startable {
 	 *            the list of all the portal container definition to treat
 	 */
 	private void initialize(Map<String, PortalContainerDefinition> mDefinitions) {
-		final List<String> lPortalContainerNames = new ArrayList<String>(
-				mDefinitions.size() + 1);
+		final List<String> lPortalContainerNames = new ArrayList<String>(mDefinitions.size() + 1);
+		
 		// Add the default portal container name
 		lPortalContainerNames.add(defaultDefinition.getName());
 		final Map<String, List<String>> mScopes = new HashMap<String, List<String>>();
-		for (Map.Entry<String, PortalContainerDefinition> entry : mDefinitions
-				.entrySet()) {
+		for (Map.Entry<String, PortalContainerDefinition> entry : mDefinitions.entrySet()) {
 			PortalContainerDefinition definition = entry.getValue();
 			String name = definition.getName();
 			boolean hasChanged = false;
@@ -978,8 +953,7 @@ public class ApplicationContainerConfig implements Startable {
 			// dependencies have been defined
 			registerDependencies(defaultDefinition, mScopes);
 		}
-		this.portalContainerNames = Collections
-				.unmodifiableList(lPortalContainerNames);
+		this.portalContainerNames = Collections.unmodifiableList(lPortalContainerNames);
 		this.scopes = Collections.unmodifiableMap(mScopes);
 	}
 

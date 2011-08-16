@@ -9,7 +9,7 @@
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.test</artifactId>
   <version>0.1-Beta1-SNAPSHOT</version>
-  <name>Engineering Toolkit Framework Kernel Container Testing</name>
+  <name>Engineering Toolkit Framework Container Testing</name>
   <description>Engineering Toolkit Framework Container Testing</description>
 
    <dependencies>

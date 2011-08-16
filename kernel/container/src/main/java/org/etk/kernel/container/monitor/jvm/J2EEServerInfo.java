@@ -17,13 +17,13 @@ public class J2EEServerInfo {
 	 * The name of the JVM parameter that allows us to change the location of
 	 * the configuration directory
 	 */
-	public static final String EXO_CONF_PARAM = "exo.conf.dir";
+	public static final String ETK_CONF_PARAM = "etk.conf.dir";
 
 	/**
 	 * The name of the JVM parameter that allows us to change the default name
 	 * of the configuration directory which is "exo-conf"
 	 */
-	public static final String EXO_CONF_DIR_NAME_PARAM = "exo.conf.dir.name";
+	public static final String ETK_CONF_DIR_NAME_PARAM = "etk.conf.dir.name";
 
 	private String serverName_;
 
@@ -48,7 +48,7 @@ public class J2EEServerInfo {
 		String testHome = System.getProperty("maven.exoplatform.dir");
 
 		// The name of the configuration directory
-		final String confDirName = System.getProperty(EXO_CONF_DIR_NAME_PARAM, "exo-conf");
+		final String confDirName = System.getProperty(ETK_CONF_DIR_NAME_PARAM, "etk-conf");
 		if (jonasHome != null) {
 			serverName_ = "jonas";
 			serverHome_ = jonasHome;
@@ -111,7 +111,7 @@ public class J2EEServerInfo {
 			mbeanServer = ManagementFactory.getPlatformMBeanServer();
 		}
 
-		String exoConfHome = System.getProperty(EXO_CONF_PARAM);
+		String exoConfHome = System.getProperty(ETK_CONF_PARAM);
 		if (exoConfHome != null && exoConfHome.length() > 0) {
 			//log.info("Override exo-conf directory '" + exoConfDir_ + "' with location '" + exoConfHome + "'");
 			exoConfDir_ = exoConfHome;

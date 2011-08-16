@@ -72,5 +72,10 @@ public class Foo {
   public void setBar(Bar bar) {
     this.bar = bar;
   }
+  
+  @Override
+  public String toString() {
+    return "[id = " + this.id + " and name = " + this.name + " ]";
+  }
 
 }

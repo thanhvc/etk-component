@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas
+END
+UserPrincipal.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/UserPrincipal.java
+END
+DefaultLoginModule.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/DefaultLoginModule.java
+END
+RolePrincipal.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/RolePrincipal.java
+END
+IdentitySetLoginModule.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/IdentitySetLoginModule.java
+END
+SharedStateLoginModule.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/SharedStateLoginModule.java
+END
+JAASGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/JAASGroup.java
+END
+BasicCallbackHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/jaas/BasicCallbackHandler.java
+END

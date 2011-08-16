@@ -32,6 +32,7 @@
         <artifactId>org.etk.kernel.test</artifactId>
         <version>${org.etk.kernel.version}</version>
       </dependency>
+     
   </dependencies>
   <profiles>
     <profile>

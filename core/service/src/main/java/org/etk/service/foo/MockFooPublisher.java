@@ -17,7 +17,7 @@
 package org.etk.service.foo;
 
 import org.etk.common.logging.Logger;
-import org.etk.service.foo.spi.FooLifeCycleEvent;
+import org.etk.service.foo.api.FooLifeCycleEvent;
 
 /**
  * Created by The eXo Platform SAS

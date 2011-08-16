@@ -78,35 +78,81 @@
 
   <build>
     <plugins>
-      <plugin>
+     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <!--exclude>**/AcceptResourceTest.java</exclude-->
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.1</version>
         <executions>
           <execution>
-            <phase>package</phase>
+            <id>generate wadl classes</id>
             <goals>
-              <goal>test-jar</goal>
+              <goal>generate</goal>
             </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <schemaDirectory>src/main/resources</schemaDirectory>
+              <catalog>src/main/resources/catalog.xml</catalog>
+              <generateDirectory>target/generated-sources</generateDirectory>
+              <generatePackage>org.etk.core.rest.wadl.research</generatePackage>
+              <args>
+                <arg>-extension</arg>
+              </args>
+              <schemaIncludes>
+                <include>wadl.xsd</include>
+              </schemaIncludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate classes for test</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <schemaDirectory>src/test/resources</schemaDirectory>
+              <catalog>src/main/resources/catalog.xml</catalog>
+              <generateDirectory>target/generated-test-sources</generateDirectory>
+              <generatePackage>org.etk.core.rest.generated</generatePackage>
+              <args>
+                <arg>-extension</arg>
+              </args>
+              <schemaIncludes>
+                <include>book.xsd</include>
+              </schemaIncludes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.3</version>
         <executions>
           <execution>
-            <id>attach-sources1</id>
+            <id>0</id>
             <goals>
-              <goal>jar-no-fork</goal>
+              <goal>run</goal>
             </goals>
-            <phase>compile</phase>
-          </execution>
-          <execution>
-            <id>attach-sources2</id>
-            <goals>
-              <goal>test-jar-no-fork</goal>
-            </goals>
-            <phase>test-compile</phase>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <tasks>
+                <echo>copy files gnerated by JAXB to test source directory</echo>
+                <copy todir="src/test/java">
+                  <fileset dir="target/generated-test-sources">
+                    <include name="org/**" />
+                  </fileset>
+                </copy>
+              </tasks>
+            </configuration>
           </execution>
         </executions>
       </plugin>

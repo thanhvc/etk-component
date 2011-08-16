@@ -3,7 +3,7 @@ package org.etk.sandbox.service;
 import org.etk.common.logging.Logger;
 import org.etk.service.foo.FooListenerPlugin;
 import org.etk.service.foo.MockRepositoryService;
-import org.etk.service.foo.spi.FooLifeCycleEvent;
+import org.etk.service.foo.api.FooLifeCycleEvent;
 
 public class MockFooBarPublisher extends FooListenerPlugin {
 

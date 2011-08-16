@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+  xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+
+  <component>
+    <type>org.etk.core.security.IdentityRegistry</type>
+  </component>
+
+  <component>
+    <type>org.etk.core.security.ConversationRegistry</type>
+  </component>
+
+  <component>
+    <key>org.etk.core.security.RolesExtractor</key>
+    <type>org.etk.core.security.impl.DefaultRolesExtractorImpl</type>
+    <init-params>
+      <value-param>
+        <name>user.role.parent.group</name>
+        <description>authentication service use this value to
+          authenticate</description>
+        <value>platform</value>
+      </value-param>
+    </init-params>
+  </component>
+  
+   <component>
+      <key>org.etk.component.base.event.ListenerService</key>
+      <type>org.etk.component.base.event.ListenerService</type>
+   </component>
+  
+
+  <component>
+    <key>org.etk.core.security.Authenticator</key>
+    <type>org.etk.core.security.DummyAuthenticatorImpl</type>
+  </component>
+
+
+</configuration>

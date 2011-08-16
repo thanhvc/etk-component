@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/j2ee/websphere
+END
+WebsphereJAASLoginModule.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/j2ee/websphere/WebsphereJAASLoginModule.java
+END
+WebsphereFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/projects/!svn/ver/34298/core/branches/2.2.x/component/security/core/src/main/java/org/exoplatform/services/security/j2ee/websphere/WebsphereFilter.java
+END

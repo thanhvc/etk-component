@@ -10,6 +10,7 @@ import org.etk.kernel.test.annotations.ContainerScope;
   @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application/org.etk.kernel.cache-configuration.xml"),
   @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application/org.etk.core.service-configuration.xml"),
   @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application/org.etk.core.rest-configuration.xml"),
+  @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application/org.etk.extras.benches-configuration.xml"),
   @ConfigurationUnit(scope = ContainerScope.APPLICATION, path = "conf/application/org.etk.tools.sandbox-configuration.xml")
 })
 public abstract class AbstractApplicationTest extends AbstractContainerTest {

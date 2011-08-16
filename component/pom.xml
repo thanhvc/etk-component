@@ -16,6 +16,9 @@
 
   <modules>
     <module>common</module>
+    <module>base</module>
+    <module>database</module>
+    
    </modules>
 
 </project>

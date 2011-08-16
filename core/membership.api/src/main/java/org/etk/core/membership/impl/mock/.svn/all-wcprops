@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/impl/mock
+END
+DummyOrganizationService.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/impl/mock/DummyOrganizationService.java
+END
+LazyListImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.api/src/main/java/org/exoplatform/services/organization/impl/mock/LazyListImpl.java
+END

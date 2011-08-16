@@ -39,4 +39,8 @@ public class BaseTest extends AbstractApplicationTest {
   public boolean unregistry(Class<?> resourceClass) {
     return binder.unbind(resourceClass);
   }
+  
+  public void testMe() throws Exception {
+    assertTrue(true);
+  }
 }

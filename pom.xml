@@ -48,6 +48,7 @@
     <javax.servlet.version>2.5</javax.servlet.version>
     <org.slf4j.version>1.5.8</org.slf4j.version>
     <org.jibx.version>1.2.3</org.jibx.version>
+    <org.hsqldb.version>2.0.0</org.hsqldb.version>
     <javax.ws.rs.version>1.0</javax.ws.rs.version>
     <javax.xml.bind.version>2.1</javax.xml.bind.version>
     <picocontainer.version>1.1</picocontainer.version>
@@ -70,7 +71,7 @@
 
     <!-- maven-surefire-plugin -->
     <!--<argLine>${env.MAVEN_OPTS}</argLine>-->
-    <argLine>-Xshare:auto -Xms128m -Xmx512m -XX:MaxPermSize=256M</argLine>
+    <argLine>-Xshare:auto -Xms128m -Xmx1024m -XX:MaxPermSize=1024M</argLine>
 
     <!-- maven-release-plugin -->
     <useReleaseProfile>false</useReleaseProfile>
@@ -134,7 +135,72 @@
         <artifactId>jaxb-api</artifactId>
         <version>${javax.xml.bind.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.experlog</groupId>
+        <artifactId>xapool</artifactId>
+        <version>1.5.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>${org.hsqldb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>3.3.2.GA</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-annotations</artifactId>
+        <version>3.4.0.GA</version>
+       </dependency>
+       <dependency>
+         <groupId>org.ow2.jotm</groupId>
+         <artifactId>jotm-core</artifactId>
+         <version>2.1.9</version>
+       </dependency>
+       <dependency>
+         <groupId>xstream</groupId>
+         <artifactId>xstream</artifactId>
+         <version>1.0.2</version>
+       </dependency>
+       <dependency>
+         <groupId>javax.resource</groupId>
+         <artifactId>connector-api</artifactId>
+         <version>1.5</version>
+       </dependency>
+       <dependency>
+         <groupId>org.javassist</groupId>
+         <artifactId>javassist</artifactId>
+         <version>3.14.0-GA</version>
+       </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xdoclet-hibernate-module</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xdoclet-xdoclet-module</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+
+         <dependency>
+            <groupId>xdoclet</groupId>
+            <artifactId>xjavadoc</artifactId>
+            <version>1.2.3</version>
+         </dependency>
+         
+         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.7.6</version>
+         </dependency>
     </dependencies>
+    
   </dependencyManagement>
   <dependencies>
     <dependency>
@@ -258,6 +324,11 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.4.3</version>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.1</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -313,6 +384,7 @@
            <module>kernel</module>
            <module>core</module>
            <module>sample</module>
+           <module>extras</module>
         </modules>
      </profile>
      
@@ -385,6 +457,7 @@
       </build>
     </profile>
 
+  
   </profiles>
 
 </project>

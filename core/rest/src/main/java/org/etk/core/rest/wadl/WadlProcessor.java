@@ -26,8 +26,14 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import org.etk.core.rest.impl.resource.AbstractResourceDescriptorImpl;
 import org.etk.core.rest.method.MethodParameter;
 import org.etk.core.rest.resource.AbstractResourceDescriptor;
+import org.etk.core.rest.resource.ResourceMethodDescriptor;
+import org.etk.core.rest.resource.ResourceMethodMap;
+import org.etk.core.rest.resource.SubResourceLocatorDescriptor;
+import org.etk.core.rest.resource.SubResourceMethodDescriptor;
+import org.etk.core.rest.resource.SubResourceMethodMap;
 import org.etk.core.rest.wadl.research.Application;
 import org.etk.core.rest.wadl.research.Param;
 import org.etk.core.rest.wadl.research.ParamStyle;
@@ -185,8 +191,7 @@ public final class WadlProcessor {
   private void processSubResourceLocators(org.etk.core.rest.wadl.research.Resource wadlResource,
                                           AbstractResourceDescriptor resourceDescriptor) {
     for (SubResourceLocatorDescriptor srld : resourceDescriptor.getSubResourceLocators().values()) {
-      AbstractResourceDescriptor subResourceDescriptor = new AbstractResourceDescriptorImpl(srld.getMethod()
-                                                                                                .getReturnType());
+      AbstractResourceDescriptor subResourceDescriptor = new AbstractResourceDescriptorImpl(srld.getMethod().getReturnType());
       org.etk.core.rest.wadl.research.Resource wadlSubResource = processResource(subResourceDescriptor);
       wadlSubResource.setPath(srld.getPathValue().getPath());
       wadlResource.getMethodOrResource().add(wadlSubResource);
@@ -199,15 +204,14 @@ public final class WadlProcessor {
    * @return {@link org.etk.core.rest.wadl.research.Method}
    */
   private org.etk.core.rest.wadl.research.Method processMethod(ResourceMethodDescriptor rmd,
-                                                                           Map<String, Param> wadlResourceParams) {
+                                                               Map<String, Param> wadlResourceParams) {
     org.etk.core.rest.wadl.research.Method wadlMethod = wadlGenerator.createMethod(rmd);
     // See description of this in
     // BaseWadlGeneratorImpl.createMethod(ResourceMethodDescriptor)
     if (wadlMethod == null)
       return null;
 
-    org.etk.core.rest.wadl.research.Request wadlRequest = processRequest(rmd,
-                                                                                     wadlResourceParams);
+    org.etk.core.rest.wadl.research.Request wadlRequest = processRequest(rmd, wadlResourceParams);
     if (wadlRequest != null)
       wadlMethod.setRequest(wadlRequest);
 

@@ -22,8 +22,8 @@ import org.etk.service.foo.FooFilter;
 import org.etk.service.foo.FooLifeCycle;
 import org.etk.service.foo.FooListenerPlugin;
 import org.etk.service.foo.MockRepositoryService;
+import org.etk.service.foo.api.FooService;
 import org.etk.service.foo.model.Foo;
-import org.etk.service.foo.spi.FooService;
 import org.etk.storage.api.FooStorage;
 
 /**

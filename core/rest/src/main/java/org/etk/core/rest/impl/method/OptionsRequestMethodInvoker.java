@@ -17,7 +17,6 @@
 
 package org.etk.core.rest.impl.method;
 
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import org.etk.core.rest.impl.ApplicationContext;
@@ -25,6 +24,7 @@ import org.etk.core.rest.impl.header.MediaTypeHelper;
 import org.etk.core.rest.method.MethodInvoker;
 import org.etk.core.rest.resource.GenericMethodResource;
 import org.etk.core.rest.wadl.WadlProcessor;
+import org.etk.core.rest.wadl.research.Application;
 
 
 public class OptionsRequestMethodInvoker implements MethodInvoker {

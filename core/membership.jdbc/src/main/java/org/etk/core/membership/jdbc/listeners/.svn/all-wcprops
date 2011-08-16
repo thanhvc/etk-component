@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners
+END
+RemoveMembershipListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/RemoveMembershipListener.java
+END
+RemoveGroupListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/RemoveGroupListener.java
+END
+MembershipListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/MembershipListener.java
+END
+MembershipTypeListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 180
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/MembershipTypeListener.java
+END
+RemoveUserProfileListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 183
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/RemoveUserProfileListener.java
+END
+UserListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/UserListener.java
+END
+CreateUserListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/repos/exo-jcr/!svn/ver/4650/core/tags/2.4.0-CR4/exo.core.component.organization.jdbc/src/main/java/org/exoplatform/services/organization/jdbc/listeners/CreateUserListener.java
+END

@@ -18,8 +18,8 @@ package org.etk.core.service.test;
 
 import org.etk.common.logging.Logger;
 import org.etk.kernel.test.spi.AbstractApplicationTest;
+import org.etk.service.foo.api.FooService;
 import org.etk.service.foo.model.Foo;
-import org.etk.service.foo.spi.FooService;
 
 /**
  * Created by The eXo Platform SAS
