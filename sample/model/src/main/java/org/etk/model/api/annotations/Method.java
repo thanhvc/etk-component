@@ -14,30 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.binding;
+package org.etk.model.api.annotations;
 
-import org.etk.reflect.api.MethodInfo;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Aug 17, 2011  
  */
-public class MethodBinding {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Method {
 
-  /** . */
-  private final MethodInfo method;
-
-  public MethodBinding(MethodInfo method) {
-    this.method = method;
-  }
-
-  public MethodInfo getMethod() {
-    return method;
-  }
-
-  public void accept(BindingVisitor visitor) {
-    
-  }
+  /*Declares the name of method.*/
+  String name();
 }

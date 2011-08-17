@@ -24,7 +24,7 @@ import org.etk.reflect.api.MethodInfo;
 
 /*
  * Author : eXoPlatform
- *          exo@exoplatform.com
+ *          thanhvc@exoplatform.com
  * Jul 15, 2011  
  */
 public class MethodBinder<C extends ObjectContext<C>> implements MethodInvoker<C> {

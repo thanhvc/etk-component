@@ -101,6 +101,7 @@ public abstract class EntityBuilder {
   
   /**
    * Create and return an instance of the builder.
+   * Using the ServiceLoader which is configured in the META-INF
    *
    * @return the EntityBuilder instance
    */
@@ -125,7 +126,7 @@ public abstract class EntityBuilder {
   }
   
   /**
-   * Builds the runtime and return a configured {@link org.etk.sample.model.EntityManager} instance.
+   * Builds the runtime and return a configured instance.
    *
    * @param config the configuration to use
    * @return the EntityManager instance

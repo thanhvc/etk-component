@@ -50,8 +50,8 @@ public class EntitySessionImpl extends EntitySession {
   
   
   protected ObjectContext _createObject(Class<?> clazz, String localName) throws NullPointerException,
-                                                                   IllegalArgumentException,
-                                                                   RepositoryException {
+                                                                         IllegalArgumentException,
+                                                                         RepositoryException {
     if (clazz == null) {
       throw new NullPointerException();
     }

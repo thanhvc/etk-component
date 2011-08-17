@@ -30,9 +30,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.etk.model.api.annotations.Entity;
+import org.etk.model.api.annotations.Method;
 import org.etk.model.api.annotations.Property;
 import org.etk.model.plugins.entity.EntityInfo;
-import org.etk.model.plugins.entity.EntityInfoBuilder;
+import org.etk.model.plugins.entity.EntityResolver;
 import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.model.plugins.entity.SimpleValueInfo;
 import org.etk.model.plugins.entity.type.SimpleTypeBinding;
@@ -46,11 +47,15 @@ import org.etk.orm.plugins.bean.BeanValueInfo;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
 import org.etk.orm.plugins.bean.mapping.InvalidMappingException;
+import org.etk.orm.plugins.bean.mapping.MethodMapping;
 import org.etk.reflect.api.ClassTypeInfo;
+import org.etk.reflect.api.MethodInfo;
 import org.etk.reflect.api.TypeInfo;
 import org.etk.reflect.api.TypeResolver;
+import org.etk.reflect.api.introspection.AnnotationTarget;
 import org.etk.reflect.api.introspection.MethodIntrospector;
 import org.etk.reflect.api.visit.HierarchyScope;
+import org.etk.reflect.core.AnnotationType;
 import org.etk.reflect.core.TypeResolverImpl;
 import org.etk.reflect.jlr.metadata.JLReflectionMetadata;
 
@@ -60,18 +65,18 @@ import org.etk.reflect.jlr.metadata.JLReflectionMetadata;
  *          exo@exoplatform.com
  * Jul 14, 2011  
  */
-public class EntityBindingBuilder {
+public class BindingBuilder {
 
   /** Used for receiving {@code java.lang.Object} */
   private final TypeResolver<Type> domain = TypeResolverImpl.create(JLReflectionMetadata.newInstance());
   
   private final SimpleTypeResolver simpleTypeResolver;
   
-  public EntityBindingBuilder() {
+  public BindingBuilder() {
     this(new SimpleTypeResolver());
   }
   
-  public EntityBindingBuilder(SimpleTypeResolver simpleTypeResolver) {
+  public BindingBuilder(SimpleTypeResolver simpleTypeResolver) {
     this.simpleTypeResolver = simpleTypeResolver;
     
   }
@@ -82,7 +87,7 @@ public class EntityBindingBuilder {
     classTypes = new HashSet<ClassTypeInfo>(classTypes);
 
    
-    Map<ClassTypeInfo, EntityInfo> entityMap = new EntityInfoBuilder(simpleTypeResolver).build(classTypes);
+    Map<ClassTypeInfo, EntityInfo> entityMap = new EntityResolver(simpleTypeResolver).build(classTypes);
 
     // Create context to resolve the EntityMapping
     Context ctx = new Context(new SimpleTypeResolver(), new HashSet<EntityInfo>(entityMap.values()));
@@ -299,6 +304,11 @@ public class EntityBindingBuilder {
       // Take care of methods
       MethodIntrospector introspector = new MethodIntrospector(HierarchyScope.ALL);
       Set<MethodBinding> methodMappings = new HashSet<MethodBinding>();
+      Collection<AnnotationTarget<MethodInfo, Method>> methodInfos = introspector.resolveMethods(entityInfo.getClassType(), AnnotationType.get(Method.class));
+      
+      for(AnnotationTarget<MethodInfo, Method> method : methodInfos) {
+        methodMappings.add(new MethodBinding(method.getTarget()));
+      }
       //
       entityMapping.methods.addAll(methodMappings);
     }

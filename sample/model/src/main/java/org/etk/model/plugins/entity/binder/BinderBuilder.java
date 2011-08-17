@@ -45,7 +45,7 @@ import org.etk.orm.plugins.mapper.property.JCRPropertyDetypedPropertyMapper;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          exo@exoplatform.com
+ *          thanhvc@exoplatform.com
  * Jul 15, 2011  
  */
 public class BinderBuilder {
@@ -116,6 +116,7 @@ public class BinderBuilder {
 
     @Override
     public void multiValueMapping(ValueBinding<ValueKind.Multi> mapping) {
+      
     }
 
    
@@ -124,24 +125,6 @@ public class BinderBuilder {
       JSONAttributePropertyBinder mapper = new JSONAttributePropertyBinder(mapping);
       propertyMappers.add(mapper);
     }
-    
-    /*
-     
-     @Override
-    public void propertiesMapping(PropertiesMapping<?> mapping) {
-      JCRPropertyDetypedPropertyMapper mapper = new JCRPropertyDetypedPropertyMapper(contextType, mapping);
-      propertyMappers.add(mapper);
-    }
-
-    @Override
-    public void visit(CreateMapping mapping) {
-      MethodMapper.Create mapper = new MethodMapper.Create(mapping.getMethod());
-      methodMappers.add(mapper);
-      createMethods.get(mapping.getBeanMapping()).add(mapper);
-    }
-     */
-
-      
 
     @Override
     public void endBean() {

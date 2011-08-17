@@ -14,30 +14,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.binding;
+package org.etk.sandbox.orm;
 
-import org.etk.reflect.api.MethodInfo;
+import junit.framework.TestCase;
+
+import org.etk.sandbox.orm.builder.ETKBuilder;
+import org.etk.sandbox.orm.builder.ETKBuilderImpl;
+import org.etk.sandbox.orm.core.ETKSession;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Aug 17, 2011  
  */
-public class MethodBinding {
+public abstract class BaseTestCase extends TestCase {
 
-  /** . */
-  private final MethodInfo method;
-
-  public MethodBinding(MethodInfo method) {
-    this.method = method;
-  }
-
-  public MethodInfo getMethod() {
-    return method;
-  }
-
-  public void accept(BindingVisitor visitor) {
+  protected ETKSession session;
+  protected ETKBuilder builder;
+  
+  
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    builder = new ETKBuilderImpl();
     
+    createDomain();
+    
+    builder.build();
+    session = builder.boot();
   }
+  
+  @Override
+  protected void tearDown() throws Exception {
+    super.tearDown();
+  }
+  
+  public abstract void createDomain();
 }

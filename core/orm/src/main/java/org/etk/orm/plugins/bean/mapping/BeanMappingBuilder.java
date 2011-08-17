@@ -288,17 +288,15 @@ public class BeanMappingBuilder {
       for (PropertyInfo<?, ?> property : bean.getProperties().values()) {
 
         // Determine kind
-        Collection<? extends Annotation> annotations = property.getAnnotations(
-            Property.class,
-            Properties.class,
-            OneToOne.class,
-            OneToMany.class,
-            ManyToOne.class,
-            Id.class,
-            Path.class,
-            Name.class,
-            WorkspaceName.class
-        );
+        Collection<? extends Annotation> annotations = property.getAnnotations(Property.class,
+                                                                               Properties.class,
+                                                                               OneToOne.class,
+                                                                               OneToMany.class,
+                                                                               ManyToOne.class,
+                                                                               Id.class,
+                                                                               Path.class,
+                                                                               Name.class,
+                                                                               WorkspaceName.class);
 
         //
         if (annotations.size() > 1) {
@@ -579,11 +577,8 @@ public class BeanMappingBuilder {
       return new PropertiesMapping<V>(property, prefix, mt, valueKind);
     }
 
-    private <K extends ValueKind>
-        ValueMapping<K>
-        createValueMapping(
-        Property propertyAnnotation,
-        PropertyInfo<SimpleValueInfo<K>, ValueKind.Single> property) {
+    private <K extends ValueKind> ValueMapping<K> createValueMapping(Property propertyAnnotation,
+                                                                     PropertyInfo<SimpleValueInfo<K>, ValueKind.Single> property) {
 
       //
       PropertyMetaType<?> propertyMetaType = PropertyMetaType.get(propertyAnnotation.type());
@@ -628,7 +623,9 @@ public class BeanMappingBuilder {
       return mapping;
     }
 
-    private RelationshipMapping.OneToMany.Hierarchic createHierarchicOneToMany(BeanMapping beanMapping, OneToMany annotation, PropertyInfo<BeanValueInfo, ?> property) {
+    private RelationshipMapping.OneToMany.Hierarchic createHierarchicOneToMany(BeanMapping beanMapping,
+                                                                               OneToMany annotation,
+                                                                               PropertyInfo<BeanValueInfo, ?> property) {
       RelationshipMapping.OneToMany.Hierarchic mapping;
       NamingPrefix namingPrefix = property.getAnnotation(NamingPrefix.class);
       String declaredPrefix = namingPrefix != null ? namingPrefix.value() : null;
@@ -668,10 +665,9 @@ public class BeanMappingBuilder {
       return mapping;
     }
 
-    private RelationshipMapping.OneToOne.Hierarchic createHierarchicOneToOne(
-        BeanMapping beanMapping,
-        OneToOne annotation,
-        PropertyInfo<BeanValueInfo, ValueKind.Single> property) {
+    private RelationshipMapping.OneToOne.Hierarchic createHierarchicOneToOne(BeanMapping beanMapping,
+                                                                             OneToOne annotation,
+                                                                             PropertyInfo<BeanValueInfo, ValueKind.Single> property) {
       MappedBy mappedBy = property.getAnnotation(MappedBy.class);
       if (mappedBy == null) {
         throw new InvalidMappingException(property.getOwner().getClassType(), "The @OneToOne relationship " + property + "must carry an @MappedBy annotation");

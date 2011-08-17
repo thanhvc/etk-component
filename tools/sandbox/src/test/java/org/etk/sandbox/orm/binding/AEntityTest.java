@@ -1,0 +1,56 @@
+/*
+ * Copyright (C) 2003-2011 eXo Platform SAS.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.etk.sandbox.orm.binding;
+
+import java.util.Map;
+import java.util.Set;
+
+import org.etk.reflect.api.ClassTypeInfo;
+import org.etk.sandbox.orm.BaseTestCase;
+
+/**
+ * Created by The eXo Platform SAS
+ * Author : eXoPlatform
+ *          exo@exoplatform.com
+ * Aug 17, 2011  
+ */
+public class AEntityTest extends BaseTestCase {
+
+  @Override
+  public void createDomain() {
+    builder.add(AEntity.class);
+  }
+  
+  public void testClassesSize() throws Exception {
+    Set<Class<?>> classes = builder.getClasses();
+    assertEquals(1, classes.size());
+  }
+  
+  
+  public void testClassTypeSize() throws Exception {
+    Map<String, ClassTypeInfo> classTypes = builder.getClassTypes();
+    assertEquals(1, classTypes.size());
+    
+    ClassTypeInfo classTypeInfo = classTypes.get(AEntity.class.getName());
+    assertEquals("AEntity", classTypeInfo.getSimpleName());
+    assertEquals("Field's size must be equal 2 " ,2, classTypeInfo.getDeclaredFields().size());
+    assertEquals("Method's size must be equal 4 " ,4, classTypeInfo.getDeclaredMethods().size());
+  }
+  
+  
+
+}

@@ -43,11 +43,11 @@ import org.etk.reflect.api.visit.HierarchyVisitorStrategy;
  *          exo@exoplatform.com
  * Jul 14, 2011  
  */
-public class EntityInfoBuilder {
+public class EntityResolver {
 
   private final SimpleTypeResolver simpleTypeResolver;
 
-  public EntityInfoBuilder(SimpleTypeResolver simpleTypeResolver) {
+  public EntityResolver(SimpleTypeResolver simpleTypeResolver) {
     this.simpleTypeResolver = simpleTypeResolver;
 
   }
@@ -130,26 +130,26 @@ public class EntityInfoBuilder {
           if (classType instanceof SimpleTypeInfo) {
             accept = false;
             declared = null;
-//            BeanMappingBuilder.println("rejected simple type " + classType.getName());
+           //BeanMappingBuilder.println("rejected simple type " + classType.getName());
           } else if (classType instanceof VoidTypeInfo) {
             accept = false;
             declared = null;
-//            BeanMappingBuilder.println("rejected void " + classType.getName());
+            //BeanMappingBuilder.println("rejected void " + classType.getName());
           } else {
             if (classTypes.remove(classType)) {
-//              log.debug("resolved declared " + classType.getName());
+              //log.debug("resolved declared " + classType.getName());
               accept = true;
               declared = true;
             } else {
               accept = false;
               declared = null;
-//              BeanMappingBuilder.println("rejected " + classType.getName());
+              //BeanMappingBuilder.println("rejected " + classType.getName());
             }
           }
         } else {
           accept = false;
           declared = null;
-//          BeanMappingBuilder.println("rejected non class or non interface " + classType.getName());
+          //BeanMappingBuilder.println("rejected non class or non interface " + classType.getName());
         }
         if (accept) {
           entity = new EntityInfo(classType, declared);

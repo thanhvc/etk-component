@@ -26,7 +26,7 @@ import org.etk.model.api.EntityBuilder;
 import org.etk.model.plugins.entity.binder.BinderBuilder;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.EntityBinding;
-import org.etk.model.plugins.entity.binding.EntityBindingBuilder;
+import org.etk.model.plugins.entity.binding.BindingBuilder;
 import org.etk.model.plugins.entity.type.SimpleTypeResolver;
 import org.etk.model.plugins.instrument.Instrumentor;
 import org.etk.orm.api.BuilderException;
@@ -65,7 +65,7 @@ public class EntityBuilderImpl extends EntityBuilder {
       
     }
     
-    Map<ClassTypeInfo, EntityBinding> entityBindings = new EntityBindingBuilder().build(classTypes);
+    Map<ClassTypeInfo, EntityBinding> entityBindings = new BindingBuilder().build(classTypes);
     
     Collection<EntityBinding> mappings = entityBindings.values();
 

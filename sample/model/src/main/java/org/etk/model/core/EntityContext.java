@@ -17,10 +17,8 @@
 package org.etk.model.core;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.etk.common.logging.Logger;
@@ -29,12 +27,6 @@ import org.etk.model.core.entity.EntityTypeInfo;
 import org.etk.model.plugins.entity.binder.ObjectBinder;
 import org.etk.model.plugins.entity.binding.AttributeType;
 import org.etk.model.plugins.instrument.ProxyType;
-import org.etk.orm.api.Status;
-import org.etk.orm.api.UndeclaredRepositoryException;
-import org.etk.orm.core.NameKind;
-import org.etk.orm.plugins.bean.mapping.NodeAttributeType;
-import org.etk.orm.plugins.jcr.LinkType;
-import org.etk.orm.plugins.mapper.ObjectMapper;
 
 /**
  * Created by The eXo Platform SAS

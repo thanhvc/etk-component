@@ -4,14 +4,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.etk.model.api.annotations.Entity;
-import org.etk.model.apt.FormatterStyle;
-import org.etk.model.apt.TypeFormatter;
 import org.etk.model.plugins.entity.binding.EntityBinding;
-import org.etk.model.plugins.entity.binding.EntityTypeKind;
-import org.etk.model.plugins.entity.binding.PropertyBinding;
 import org.etk.reflect.api.ClassTypeInfo;
-import org.etk.reflect.api.MethodInfo;
-import org.etk.reflect.api.TypeInfo;
 import org.etk.reflect.core.AnnotationType;
 import org.etk.sample.model.test.AbstractTestCase;
 
@@ -45,13 +39,7 @@ public class AEntityPropertyTest extends AbstractTestCase {
   public void testEntityBinding() throws Exception {
     Collection<EntityBinding> bindings = builder.getBindings();
 
-    for (EntityBinding binding : bindings) {
-      assertEntityBinding(binding);
-      for (PropertyBinding proBinding : binding.getProperties().values()) {
-        dumpPropertyBinding(binding.getEntity().getClassType(), proBinding);
-      }
-    }
-    
+    DumpUtils.dumpEntityBinding(bindings);
     
   }
   
@@ -69,24 +57,4 @@ public class AEntityPropertyTest extends AbstractTestCase {
     assertEquals(classType.getSimpleName(), entity.name());
     
   }
-
-  private void assertEntityBinding(EntityBinding binding) throws Exception {
-    assertEquals(binding.getEntityTypeName(), "AEntityProperty");
-    assertEquals(binding.getEntityTypeKind(), EntityTypeKind.ENTITY);
-    assertEquals(2, binding.getProperties().size());
-  }
-  
-  private void dumpPropertyBinding(ClassTypeInfo owner, PropertyBinding proBinding) throws Exception {
-    System.out.println("PropertyName = " + proBinding.getName());
-    TypeInfo type = proBinding.getValue().getEffectiveType();
-    StringBuilder toto = new StringBuilder();
-    new TypeFormatter(owner, FormatterStyle.CAST, toto).format(type);
-    
-    System.out.println("PropertyValue = " + toto.toString());
-    MethodInfo getterMethodInfo = proBinding.getProperty().getGetter();
-    
-    System.out.println("GetterName = " + getterMethodInfo.getName());
-  }
-  
-
 }

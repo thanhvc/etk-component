@@ -32,7 +32,7 @@ import org.etk.reflect.api.MethodInfo;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          exo@exoplatform.com
+ *          thanhvc@exoplatform.com
  * Jul 15, 2011  
  */
 public class ObjectBinder<C extends ObjectContext<C>> {

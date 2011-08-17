@@ -79,11 +79,13 @@ public class Entity {
   /** . */
   private final Map<Class<?>, Instrumentor> ormTypeToInstrumentor;
 
-
-  
-
-  public Entity(Collection<ObjectBinder<?>> mappers,
-                Instrumentor defaultInstrumentor) {
+  /**
+   * Constructor the Entity with the ClassMapper which output from MapperBuilder.
+   * 
+   * @param mappers
+   * @param defaultInstrumentor
+   */
+  public Entity(Collection<ObjectBinder<?>> mappers, Instrumentor defaultInstrumentor) {
        
     //
     Map<Class<?>, Instrumentor> proxyTypeToInstrumentor = new HashMap<Class<?>, Instrumentor>();

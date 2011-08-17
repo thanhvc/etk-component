@@ -24,7 +24,7 @@ import javax.tools.JavaFileObject;
 
 import org.etk.model.api.annotations.Entity;
 import org.etk.model.plugins.entity.binding.EntityBinding;
-import org.etk.model.plugins.entity.binding.EntityBindingBuilder;
+import org.etk.model.plugins.entity.binding.BindingBuilder;
 import org.etk.orm.api.annotations.NamespaceMapping;
 import org.etk.orm.api.annotations.NodeTypeDefs;
 import org.etk.orm.plugins.bean.mapping.BeanMapping;
@@ -148,7 +148,7 @@ public class EntityProcessor extends AbstractProcessor {
     }
 
     // Build mapping
-    EntityBindingBuilder amp = new EntityBindingBuilder();
+    BindingBuilder amp = new BindingBuilder();
     Map<ClassTypeInfo, EntityBinding> beanMappings = amp.build(classTypes);
 
     // Build property literals

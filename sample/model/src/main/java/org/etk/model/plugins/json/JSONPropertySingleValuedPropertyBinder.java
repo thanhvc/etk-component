@@ -36,7 +36,7 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
        extends PropertyBinder<PropertyInfo<SimpleValueInfo<ValueKind.Single>, ValueKind.Single>, SimpleValueInfo<ValueKind.Single>, O, ValueKind.Single> {
 
   /** . */
-  private final String jcrPropertyName;
+  private final String jsonPropertyName;
 
   /** . */
   private final ValueDefinition<I, E> vt;
@@ -47,7 +47,7 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
     super(contextType, info);
 
     //
-    this.jcrPropertyName = info.getPropertyDefinition().getName();
+    this.jsonPropertyName = info.getPropertyDefinition().getName();
     this.vt = new ValueDefinition<I, E>((Class) info.getValue().getEffectiveType().unwrap(),
                                         (PropertyMetaType<I>) info.getPropertyDefinition().getMetaType(),
                                         vt,
@@ -60,7 +60,7 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
   }
 
   private <V> V get(O context, ValueDefinition<?, V> d) throws Throwable {
-    return context.getPropertyValue(jcrPropertyName, d);
+    return context.getPropertyValue(jsonPropertyName, d);
   }
 
   @Override
@@ -71,10 +71,10 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
   private <V> void set(O context, ValueDefinition<?, V> vt, Object o) throws Throwable {
     Class<V> javaType = vt.getObjectType();
     if (o == null) {
-      context.setPropertyValue(jcrPropertyName, vt, null);
+      context.setPropertyValue(jsonPropertyName, vt, null);
     } else if (javaType.isInstance(o)) {
       V v = javaType.cast(o);
-      context.setPropertyValue(jcrPropertyName, vt, v);
+      context.setPropertyValue(jsonPropertyName, vt, v);
     } else {
       throw new ClassCastException("Cannot cast " + o.getClass().getName() + " to " + javaType.getName());
     }

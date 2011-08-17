@@ -14,30 +14,30 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.binding;
-
-import org.etk.reflect.api.MethodInfo;
+package org.etk.sandbox.orm.binding;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Jul 14, 2011  
+ * Aug 17, 2011  
  */
-public class MethodBinding {
+public class AEntity {
 
-  /** . */
-  private final MethodInfo method;
-
-  public MethodBinding(MethodInfo method) {
-    this.method = method;
+  private String name;
+  private String description;
+  
+  
+  public String getName() {
+    return name;
   }
-
-  public MethodInfo getMethod() {
-    return method;
+  public void setName(String name) {
+    this.name = name;
   }
-
-  public void accept(BindingVisitor visitor) {
-    
+  public String getDescription() {
+    return description;
+  }
+  public void setDescription(String description) {
+    this.description = description;
   }
 }

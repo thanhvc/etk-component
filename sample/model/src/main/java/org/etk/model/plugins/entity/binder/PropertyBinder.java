@@ -26,7 +26,7 @@ import org.etk.orm.plugins.bean.ValueKind;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          exo@exoplatform.com
+ *          thanhvc@exoplatform.com
  * Jul 15, 2011  
  */
 public abstract class PropertyBinder<P extends PropertyInfo<V, K>, V extends ValueInfo, O extends ObjectContext<O>, K extends ValueKind> {
