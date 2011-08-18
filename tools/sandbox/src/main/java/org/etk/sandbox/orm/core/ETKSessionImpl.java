@@ -22,6 +22,6 @@ package org.etk.sandbox.orm.core;
  *          exo@exoplatform.com
  * Aug 17, 2011  
  */
-public class ETKSessionImpl {
+public class ETKSessionImpl extends ETKSession {
 
 }

@@ -16,17 +16,53 @@
  */
 package org.etk.sandbox.orm.binding;
 
+import org.etk.sandbox.orm.info.PropertyInfo;
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
  * Aug 17, 2011  
  */
-public class PropertyBinding {
+public class PropertyBinding<P extends PropertyInfo> {
 
   public void accept(BindingVisitor visitor) {
 
 
+  }
+  
+  /** . */
+  ETKBinding owner;
+
+  /** The optional parent. */
+  PropertyBinding parent;
+
+  /** . */
+  final P property;
+
+  public PropertyBinding(P property) {
+    this.property = property;
+  }
+
+  public PropertyBinding getParent() {
+    return parent;
+  }
+
+  public ETKBinding getOwner() {
+    return owner;
+  }
+
+  public String getName() {
+    return property.getName();
+  }
+
+  public P getProperty() {
+    return property;
+  }
+
+  public Object getValue() {
+    //return property.getValue();
+    return null;
   }
 
   

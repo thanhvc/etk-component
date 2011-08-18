@@ -26,11 +26,9 @@ import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.TypeResolver;
 import org.etk.reflect.core.TypeResolverImpl;
 import org.etk.reflect.jlr.metadata.JLReflectionMetadata;
-import org.etk.sandbox.orm.binding.AEntity;
 import org.etk.sandbox.orm.binding.ETKBinding;
 import org.etk.sandbox.orm.core.ETKSession;
-import org.etk.sandbox.orm.info.ETKInfo;
-import org.etk.sandbox.orm.info.ETKResolver;
+import org.etk.sandbox.orm.core.ETKSessionImpl;
 
 /**
  * Created by The eXo Platform SAS
@@ -51,7 +49,7 @@ public abstract class ETKBuilder {
     
   }
   
-  public void add(Class<AEntity> clazz) {
+  public void add(Class<?> clazz) {
     classes.add(clazz);
     
   }
@@ -89,7 +87,7 @@ public abstract class ETKBuilder {
    */
   public ETKSession boot() {
     
-    return null;
+    return new ETKSessionImpl();
   }
   
   

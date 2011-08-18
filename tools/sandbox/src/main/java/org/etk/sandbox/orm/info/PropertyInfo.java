@@ -56,6 +56,5 @@ public class PropertyInfo {
   public MethodInfo getSetter() {
     return setter;
   }
-
- 
+  
 }

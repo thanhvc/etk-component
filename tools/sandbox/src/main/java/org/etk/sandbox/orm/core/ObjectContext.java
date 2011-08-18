@@ -20,11 +20,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.jcr.RepositoryException;
-
-import org.etk.model.core.MethodInvoker;
-import org.etk.model.core.entity.EntityTypeInfo;
-import org.etk.model.plugins.vt2.ValueDefinition;
 import org.etk.sandbox.orm.binder.ObjectBinder;
 import org.etk.sandbox.orm.info.ETKInfo;
 import org.etk.sandbox.orm.instrusment.MethodHandler;
@@ -108,13 +103,13 @@ public abstract class ObjectContext<O extends ObjectContext<O>> implements Metho
     return new AssertionError(msg);
   }
   
-  public final <V> V getPropertyValue(String propertyName, int valueType) {
+  public final Object getPropertyValue(String propertyName, int valueType) {
     
     ETKInfo typeInfo = getETKInfo();
-    return getPropertyValue(typeInfo, propertyName, type);
+    return getPropertyValue(typeInfo, propertyName, valueType);
   }
 
-  private V getPropertyValue(ETKInfo typeInfo, String propertyName, int valueType) {
+  public final Object getPropertyValue(ETKInfo typeInfo, String propertyName, int valueType) {
     return null;
   }
 }

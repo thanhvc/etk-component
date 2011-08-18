@@ -16,12 +16,46 @@
  */
 package org.etk.sandbox.orm.binder;
 
+import java.lang.reflect.Method;
+
+import org.etk.reflect.api.MethodInfo;
+import org.etk.sandbox.orm.core.MethodInvoker;
+import org.etk.sandbox.orm.core.ObjectContext;
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          thanhvucong.78@google.com
  * Aug 18, 2011  
  */
-public class MethodBinder {
+public class MethodBinder <C extends ObjectContext<C>> implements MethodInvoker<C> {
 
+  /** . */
+  private final MethodInfo method;
+
+  public MethodBinder(MethodInfo method) {
+    this.method = method;
+  }
+
+  public Object invoke(C context) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public Object invoke(C context, Object args) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public Object invoke(C context, Object[] args) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public MethodInfo getMethod() {
+    return method;
+  }
+
+  @Override
+  public String toString() {
+    return "MethodBinder[" + ((Method)method.unwrap()).getDeclaringClass().getName() + "#" + method.getName() + "]";
+  }
+  
 }

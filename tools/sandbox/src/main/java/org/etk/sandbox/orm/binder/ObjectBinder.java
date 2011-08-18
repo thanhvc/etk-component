@@ -16,6 +16,17 @@
  */
 package org.etk.sandbox.orm.binder;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+
+
+import org.etk.reflect.api.MethodInfo;
+import org.etk.sandbox.orm.binding.ETKBinding;
+import org.etk.sandbox.orm.binding.PropertyBinding;
+import org.etk.sandbox.orm.core.MethodInvoker;
 import org.etk.sandbox.orm.core.ObjectContext;
 
 /**
@@ -25,5 +36,105 @@ import org.etk.sandbox.orm.core.ObjectContext;
  * Aug 18, 2011  
  */
 public class ObjectBinder<C extends ObjectContext<C>> {
+  /** . */
+  private final ETKBinding binding;
 
+  /** . */
+  protected final Class<?> objectClass;
+
+  /** . */
+  private final String entityTypeName;
+
+  /** . */
+  final Set<MethodBinder<C>> methodBinders;
+
+  /** . */
+  final Set<PropertyBinder<?, C>> propertyBinders;
+
+  /** . */
+  private final Map<Method, MethodInvoker<C>> dispatchers;
+
+  /** . */
+  private final boolean abstract_;
+
+  /** . */
+  private final Map<String, PropertyBinder<?, C>> propertyBinderMap;
+
+  public ObjectBinder(ETKBinding mapping,
+                      boolean abstract_,
+                      Class<?> objectClass,
+                      Set<PropertyBinder<?, C>> propertyMappers,
+                      Set<MethodBinder<C>> methodMappers,
+                      String typeName) {
+
+    // Build the mapper map
+    Map<String, PropertyBinder<?, C>> propertyMapperMap = new HashMap<String, PropertyBinder<?, C>>();
+    for (PropertyBinder<?, C> propertyMapper : propertyMappers) {
+      propertyMapperMap.put(propertyMapper.getInfo().getName(), propertyMapper);
+    }
+
+    // Build the dispatcher map
+    Map<Method, MethodInvoker<C>> dispatchers = new HashMap<Method, MethodInvoker<C>>();
+    for (PropertyBinder<?, C> propertyMapper : propertyMappers) {
+      PropertyBinding<?> info = propertyMapper.getInfo();
+      MethodInfo getter = info.getProperty().getGetter();
+      if (getter != null) {
+        dispatchers.put((Method)getter.unwrap(), propertyMapper.getGetter());
+      }
+      MethodInfo setter = info.getProperty().getSetter();
+      if (setter != null) {
+        dispatchers.put((Method)setter.unwrap(), propertyMapper.getSetter());
+      }
+    }
+    for (MethodBinder<C> methodMapper : methodMappers) {
+      dispatchers.put((Method)methodMapper.getMethod().unwrap(), methodMapper);
+    }
+
+    //
+    this.binding = mapping;
+    this.abstract_ = abstract_;
+    this.dispatchers = dispatchers;
+    this.objectClass = objectClass;
+    this.methodBinders = methodMappers;
+    this.propertyBinders = propertyMappers;
+    this.entityTypeName = typeName;
+    this.propertyBinderMap = propertyMapperMap;
+  }
+
+  public MethodInvoker<C> getInvoker(Method method) {
+    return dispatchers.get(method);
+  }
+
+  public ETKBinding getBinding() {
+    return binding;
+  }
+
+  public boolean isAbstract() {
+    return abstract_; 
+  }
+  public String getEntityTypeName() {
+    return entityTypeName;
+  }
+
+  public Set<MethodBinder<C>> getMethodBinders() {
+    return methodBinders;
+  }
+
+  public Set<PropertyBinder<?, C>> getPropertyMappers() {
+    return propertyBinders;
+  }
+
+  public PropertyBinder<?, C> getPropertyMapper(String name) {
+    return propertyBinderMap.get(name);
+  }
+
+  public Class<?> getObjectClass() {
+    return objectClass;
+  }
+
+
+  @Override
+  public String toString() {
+    return "EntityBinder[class=" + objectClass + ",typeName=" + entityTypeName + "]";
+  }
 }

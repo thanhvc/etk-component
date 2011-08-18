@@ -16,12 +16,77 @@
  */
 package org.etk.sandbox.orm.binder;
 
+
+import org.etk.sandbox.orm.binding.PropertyBinding;
+import org.etk.sandbox.orm.core.MethodInvoker;
+import org.etk.sandbox.orm.core.ObjectContext;
+import org.etk.sandbox.orm.info.PropertyInfo;
+
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          thanhvucong.78@google.com
  * Aug 18, 2011  
  */
-public class PropertyBinder {
+public class PropertyBinder <P extends PropertyInfo, O extends ObjectContext<O>> {
+  /** . */
+  protected final Class<O> contextType;
 
+  /** . */
+  protected final PropertyBinding<P> info;
+
+  public PropertyBinder(Class<O> contextType, PropertyBinding<P> info) {
+    this.contextType = contextType;
+    this.info = info;
+  }
+
+  public Class<O> getType() {
+    return contextType;
+  }
+
+  public PropertyBinding<P> getInfo() {
+    return info;
+  }
+
+  public Object get(O context) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public void set(O context, Object value) throws Throwable {
+    throw new UnsupportedOperationException();
+  }
+
+  public MethodInvoker<O> getGetter() {
+    return getter;
+  }
+
+  public MethodInvoker<O> getSetter() {
+    return setter;
+  }
+
+  private final MethodInvoker<O> getter = new MethodInvoker<O>() {
+    public Object invoke(O ctx) throws Throwable {
+      return get(ctx);
+    }
+    public Object invoke(O ctx, Object arg) throws Throwable {
+      throw new AssertionError();
+    }
+    public Object invoke(O ctx, Object[] args) throws Throwable {
+      throw new AssertionError();
+    }
+  };
+
+  private final MethodInvoker<O> setter = new MethodInvoker<O>() {
+    public Object invoke(O ctx) throws Throwable {
+      throw new AssertionError();
+    }
+    public Object invoke(O ctx, Object arg) throws Throwable {
+      set(ctx, arg);
+      return null;
+    }
+    public Object invoke(O ctx, Object[] args) throws Throwable {
+      throw new AssertionError();
+    }
+  };
 }

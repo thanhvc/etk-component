@@ -19,7 +19,6 @@ package org.etk.sandbox.orm.builder;
 import java.util.Map;
 
 import org.etk.reflect.api.ClassTypeInfo;
-import org.etk.sandbox.orm.binding.ETKBinding;
 import org.etk.sandbox.orm.binding.ETKBindingBuilder;
 import org.etk.sandbox.orm.info.ETKInfo;
 import org.etk.sandbox.orm.info.ETKResolver;
