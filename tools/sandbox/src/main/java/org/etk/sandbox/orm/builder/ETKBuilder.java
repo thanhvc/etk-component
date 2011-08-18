@@ -16,6 +16,7 @@
  */
 package org.etk.sandbox.orm.builder;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -39,9 +40,11 @@ import org.etk.sandbox.orm.info.ETKResolver;
  */
 public abstract class ETKBuilder {
 
-  private Set<Class<?>> classes = null;
-  private Map<String, ClassTypeInfo> classTypes = null;
-  private Map<ClassTypeInfo, ETKBinding> bindings = null;
+  protected Set<Class<?>> classes = null;
+  protected Map<String, ClassTypeInfo> classTypes = null;
+  protected Map<ClassTypeInfo, ETKBinding> bindings = null;
+  /** Used for receiving {@code java.lang.Object} */
+  private final TypeResolver<Type> domain = TypeResolverImpl.create(JLReflectionMetadata.newInstance());
   
   public ETKBuilder() {
     classes = new HashSet<Class<?>>();
@@ -62,20 +65,10 @@ public abstract class ETKBuilder {
     binder();
   }
   
-  /**
-   * Executes the binder
-   */
-  private void binder() {
-    Map<ClassTypeInfo, ETKInfo> etkMap = new ETKResolver().build(classTypes);
-  }
+  abstract void binding();
+  abstract void binder();
   
-  /**
-   * Executes the binding
-   */
-  private void binding() {
-    
-    
-  }
+ 
   /**
    * Executes the initialize
    */

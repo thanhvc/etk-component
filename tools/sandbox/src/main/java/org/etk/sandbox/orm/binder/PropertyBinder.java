@@ -19,9 +19,9 @@ package org.etk.sandbox.orm.binder;
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          exo@exoplatform.com
- * Aug 17, 2011  
+ *          thanhvucong.78@google.com
+ * Aug 18, 2011  
  */
-public class ETKBinder {
+public class PropertyBinder {
 
 }

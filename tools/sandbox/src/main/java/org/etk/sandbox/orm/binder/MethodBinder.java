@@ -14,17 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.orm.binding;
-
+package org.etk.sandbox.orm.binder;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          thanhvucong.78@gmail.com
- * Aug 17, 2011  
+ *          thanhvucong.78@google.com
+ * Aug 18, 2011  
  */
-public class BindingVisitor {
+public class MethodBinder {
 
-  public void start(ETKBinding binding) { }
-  public void endBean() { }
 }

@@ -32,8 +32,8 @@ import org.etk.sandbox.orm.info.ETKInfo;
  */
 public class ETKBinding {
 
-  private ETKBinding parent;
-  private final ETKInfo etkInfo;
+  ETKBinding parent;
+  final ETKInfo etkInfo;
   
   final Map<String, PropertyBinding> properties;
   final Map<String, PropertyBinding> unmodifiableProperties;
@@ -52,7 +52,7 @@ public class ETKBinding {
   }
   
   public void accept(BindingVisitor visitor) {
-    visitor.startBean(this);
+    visitor.start(this);
     for (PropertyBinding property : properties.values()) {
       property.accept(visitor);
     }

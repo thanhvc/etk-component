@@ -21,8 +21,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.etk.model.plugins.entity.PropertyInfo;
-import org.etk.model.plugins.entity.EntityResolver.Context.ToBuild;
+
+
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.MethodInfo;
 import org.etk.reflect.api.SimpleTypeInfo;
@@ -114,6 +114,7 @@ public class ETKResolver {
     }
 
     private void buildMethods(ETKInfo etkInfo) {
+      ClassTypeInfo classTypeInfo = etkInfo.classTypeInfo;
       
     }
     
@@ -128,6 +129,10 @@ public class ETKResolver {
       }
     }
 
+    /**
+     * Creates the Property for ETKInfo which contains the Setter and Getter
+     * @param etkInfo
+     */
     private void buildProperties(ETKInfo etkInfo) {
       EntityHierarchyVisitorStrategy strategy = new EntityHierarchyVisitorStrategy(etkInfo.classTypeInfo);
       MethodIntrospector introspector = new MethodIntrospector(strategy, true);
@@ -174,16 +179,18 @@ public class ETKResolver {
      }
      
      // Now we have all the info to build each property correctly
-     Map<String, PropertyInfo<?, ?>> properties = new HashMap<String, PropertyInfo<?, ?>>();     
+     Map<String, PropertyInfo> properties = new HashMap<String, PropertyInfo>();     
      //resolve the ValueKind of Property
      for (Map.Entry<String, ToBuild> toBuildEntry : toBuilds.entrySet()) {
-       TypeInfo type = toBuildEntry.getValue().type;
-       TypeInfo resolvedTypeInfo = etkInfo.classTypeInfo.resolve(type);
-       PropertyInfo<?, ?> property = null;
-       
+             
+        PropertyInfo property = new PropertyInfo(etkInfo,
+                                                 toBuildEntry.getKey(),
+                                                 toBuildEntry.getValue().getter,
+                                                 toBuildEntry.getValue().setter);
+        properties.put(property.getName(), property);
      }
      
-     
+     etkInfo.properties.putAll(properties);
      
     }
   }

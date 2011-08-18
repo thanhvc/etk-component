@@ -82,7 +82,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-       
+        <configuration>
+           <argLine>${env.MAVEN_OPTS} -Djava.security.manager=org.etk.common.test.TestSecurityManager -Djava.security.policy=${project.build.directory}/test-classes/test.policy</argLine>
+            </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

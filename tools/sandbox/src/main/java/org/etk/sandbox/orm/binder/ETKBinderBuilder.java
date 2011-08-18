@@ -14,17 +14,40 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.orm.binding;
+package org.etk.sandbox.orm.binder;
 
+import java.util.Map;
+
+import org.etk.reflect.api.ClassTypeInfo;
+import org.etk.sandbox.orm.binding.BindingVisitor;
+import org.etk.sandbox.orm.binding.ETKBinding;
+import org.etk.sandbox.orm.core.ObjectContext;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          thanhvucong.78@gmail.com
+ *          thanhvucong.78@exoplatform.com
  * Aug 17, 2011  
  */
-public class BindingVisitor {
+public class ETKBinderBuilder {
 
-  public void start(ETKBinding binding) { }
-  public void endBean() { }
+  public void build(Map<ClassTypeInfo, ETKBinding> bindingMap) {
+    Context ctx = new Context();
+    ctx.start();
+    
+  }
+  
+  
+  private class Context extends BindingVisitor {
+
+    private ETKBinding binding;
+    private Map<ETKBinding, ObjectBinder<?>> bindingBinders;
+    private Class<? extends ObjectContext> contextType;
+    
+    public void start() {
+            
+    }
+  }
+  
+  
 }

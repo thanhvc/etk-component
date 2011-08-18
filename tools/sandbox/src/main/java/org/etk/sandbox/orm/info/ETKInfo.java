@@ -31,15 +31,21 @@ import org.etk.reflect.api.ClassTypeInfo;
 public class ETKInfo {
 
   final ClassTypeInfo classTypeInfo;
-  final Map<String, PropertyInfo<?,?>> properties;
-  final Map<String, PropertyInfo<?,?>> unmodifiableProperties;
+  final Map<String, PropertyInfo> properties;
+  final Map<String, PropertyInfo> unmodifiableProperties;
   
   
   public ETKInfo(ClassTypeInfo classTypeInfo) {
     this.classTypeInfo = classTypeInfo;
-    this.properties = new HashMap<String, PropertyInfo<?,?>>();
+    this.properties = new HashMap<String, PropertyInfo>();
     this.unmodifiableProperties = Collections.unmodifiableMap(this.properties);
   }
+
+
+  public ClassTypeInfo getClassTypeInfo() {
+    return classTypeInfo;
+  }
   
+
   
 }

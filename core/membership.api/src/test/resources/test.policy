@@ -7,9 +7,10 @@ grant codeBase "@MAIN_CLASSES@-"{
 };
 
 grant codeBase "@TEST_CLASSES@-"{
+  permission java.security.AllPermission;
 };
 
-grant codeBase "@MAIN_CLASSES@../../../org.etk.core.security/-"{
+grant codeBase "@MAIN_CLASSES@../../../security/-"{
    permission java.security.AllPermission;
 };
 

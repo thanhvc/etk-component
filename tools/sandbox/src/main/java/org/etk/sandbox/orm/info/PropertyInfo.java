@@ -24,7 +24,7 @@ import org.etk.reflect.api.MethodInfo;
  *          exo@exoplatform.com
  * Aug 17, 2011  
  */
-public class PropertyInfo<V extends ValueInfo, K extends ValueKind> {
+public class PropertyInfo {
 
   private final ETKInfo owner;
   private PropertyInfo parent;
@@ -32,16 +32,12 @@ public class PropertyInfo<V extends ValueInfo, K extends ValueKind> {
   private final String name;
   private final MethodInfo getter;
   private final MethodInfo setter;
-  private final K valueKind;
-  private final V value;
   
-  public PropertyInfo(ETKInfo etkInfo, String name, MethodInfo getter, MethodInfo setter, K valueKind, V value) {
+  public PropertyInfo(ETKInfo etkInfo, String name, MethodInfo getter, MethodInfo setter) {
     this.owner = etkInfo;
     this.name = name;
     this.getter = getter;
     this.setter = setter;
-    this.valueKind = valueKind;
-    this.value = value;
   }
 
 
@@ -61,11 +57,5 @@ public class PropertyInfo<V extends ValueInfo, K extends ValueKind> {
     return setter;
   }
 
-  public K getValueKind() {
-    return valueKind;
-  }
-
-  public V getValue() {
-    return value;
-  }
+ 
 }

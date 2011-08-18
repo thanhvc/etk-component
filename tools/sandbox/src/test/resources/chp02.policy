@@ -5,7 +5,7 @@ grant Principal org.etk.sandbox.security.jaas.ch02.UserPrincipal "user"
 
 grant Principal org.etk.sandbox.security.jaas.ch02.SysAdminPrincipal "sysadmin"
 {
-  permission java.io.FilePermission "@TEST_CLASSES@/conf/chp02.policy", "read";
+  permission java.io.FilePermission "@TEST_CLASSES@chp02.policy", "read";
 };
 grant codeBase "@MAIN_CLASSES@-" 
 {
@@ -19,4 +19,8 @@ grant codeBase "@MAIN_CLASSES@-"
   permission java.security.SecurityPermission "getPolicy";
   permission java.lang.RuntimePermission "accessClassInPackage.sun.security.provider";
   permission java.lang.RuntimePermission "getProtectionDomain";
+  
+};
+grant codeBase "@MAIN_CLASSES@-"{
+   permission java.security.AllPermission;
 };

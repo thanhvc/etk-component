@@ -14,17 +14,41 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.orm.binding;
+package org.etk.sandbox.orm.core;
 
+import org.etk.sandbox.orm.binder.ObjectBinder;
+import org.etk.sandbox.orm.info.ETKInfo;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          thanhvucong.78@gmail.com
- * Aug 17, 2011  
+ *          thanhvucong.78@google.com
+ * Aug 18, 2011  
  */
-public class BindingVisitor {
+public final class EntityContext extends ObjectContext<EntityContext> {
 
-  public void start(ETKBinding binding) { }
-  public void endBean() { }
+  @Override
+  public ObjectBinder<EntityContext> getMapper() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Object getObject() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public EntityContext getEntity() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public ETKInfo getETKInfo() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }
