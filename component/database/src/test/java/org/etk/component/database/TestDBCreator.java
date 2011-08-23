@@ -46,131 +46,135 @@ public class TestDBCreator extends TestCase
    private ApplicationContainer container;
 
    @Override
-   public void setUp() throws Exception
-   {
-      container = ApplicationContainer.getInstance();
-      dbCreator = (DBCreator)container.getComponentInstanceOfType(DBCreator.class);
-      initContext = (InitialContextInitializer)container.getComponentInstanceOfType(InitialContextInitializer.class);
-   }
+  public void setUp() throws Exception {
+    container = ApplicationContainer.getInstance();
+    dbCreator = (DBCreator) container.getComponentInstanceOfType(DBCreator.class);
+    initContext = (InitialContextInitializer) container.getComponentInstanceOfType(InitialContextInitializer.class);
+  }
 
-   public void testDBCreate() throws Exception
-   {
-      assertNotNull(dbCreator);
+  public void testDBCreate() throws Exception {
+    assertNotNull(dbCreator);
 
-      DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
-      DBConnectionInfo dbInfo1 = dbCreator.getDBConnectionInfo("testdb");
+    DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
+    DBConnectionInfo dbInfo1 = dbCreator.getDBConnectionInfo("testdb");
 
-      Map<String, String> connProps = dbInfo.getProperties();
-      Map<String, String> connProps1 = dbInfo1.getProperties();
+    Map<String, String> connProps = dbInfo.getProperties();
+    Map<String, String> connProps1 = dbInfo1.getProperties();
 
-      assertEquals(connProps.get("driverClassName"), connProps1.get("driverClassName"));
-      assertEquals(connProps.get("username"), connProps1.get("username"));
-      assertEquals(connProps.get("url"), connProps1.get("url"));
-      assertEquals(connProps.get("password"), connProps1.get("password"));
+    assertEquals(connProps.get("driverClassName"), connProps1.get("driverClassName"));
+    assertEquals(connProps.get("username"), connProps1.get("username"));
+    assertEquals(connProps.get("url"), connProps1.get("url"));
+    assertEquals(connProps.get("password"), connProps1.get("password"));
 
-      Map<String, String> refAddr = dbInfo.getProperties();
+    Map<String, String> refAddr = dbInfo.getProperties();
 
-      initContext.getInitialContextBinder().bind("testjdbcjcr", "javax.sql.DataSource", "org.apache.commons.dbcp.BasicDataSourceFactory", null, refAddr);
+    initContext.getInitialContextBinder().bind("testjdbcjcr",
+                                               "javax.sql.DataSource",
+                                               "org.apache.commons.dbcp.BasicDataSourceFactory",
+                                               null,
+                                               refAddr);
 
-      DataSource ds = (DataSource)initContext.getInitialContext().lookup("testjdbcjcr");
+    DataSource ds = (DataSource) initContext.getInitialContext().lookup("testjdbcjcr");
+    assertNotNull(ds);
+
+    Connection conn = ds.getConnection();
+    assertNotNull(conn);
+  }
+
+  public void testDBCreateWithSpecificProperties() throws Exception {
+    assertNotNull(dbCreator);
+
+    String serverUrl = "jdbc:hsqldb:file:target/temp/data/dbcreator_test";
+    Map<String, String> connectionProperties = new HashMap<String, String>();
+    connectionProperties.put("driverClassName", "org.hsqldb.jdbcDriver");
+    connectionProperties.put("username", "sa");
+    connectionProperties.put("password", "");
+
+    ConfigurationManager cm = (ConfigurationManager) container.getComponentInstanceOfType(ConfigurationManager.class);
+    DBCreator dbCreator = new DBCreator(serverUrl,
+                                        connectionProperties,
+                                        "classpath:/dbcreator/test.sql",
+                                        "sa",
+                                        "",
+                                        cm);
+
+    DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
+    DBConnectionInfo dbInfo1 = dbCreator.getDBConnectionInfo("testdb");
+
+    Map<String, String> connProps = dbInfo.getProperties();
+    Map<String, String> connProps1 = dbInfo1.getProperties();
+
+    assertEquals(connProps.get("driverClassName"), connProps1.get("driverClassName"));
+    assertEquals(connProps.get("username"), connProps1.get("username"));
+    assertEquals(connProps.get("url"), connProps1.get("url"));
+    assertEquals(connProps.get("password"), connProps1.get("password"));
+
+    Map<String, String> refAddr = dbInfo.getProperties();
+
+    initContext.getInitialContextBinder().bind("testjdbcjcr2",
+                                               "javax.sql.DataSource",
+                                               "org.apache.commons.dbcp.BasicDataSourceFactory",
+                                               null,
+                                               refAddr);
+
+    DataSource ds = (DataSource) initContext.getInitialContext().lookup("testjdbcjcr2");
+    assertNotNull(ds);
+
+    Connection conn = ds.getConnection();
+    assertNotNull(conn);
+  }
+
+  public void testDBCreateMultiThread() throws Exception {
+    DBCreateThread[] queue = new DBCreateThread[100];
+
+    for (int i = 0; i < queue.length; i++) {
+      queue[i] = new DBCreateThread(i);
+      queue[i].start();
+    }
+
+    for (int i = 0; i < queue.length; i++) {
+      queue[i].join();
+    }
+
+    for (int i = 0; i < queue.length; i++) {
+      DataSource ds = (DataSource) initContext.getInitialContext().lookup("testjdbcjcr_" + i);
       assertNotNull(ds);
 
       Connection conn = ds.getConnection();
       assertNotNull(conn);
-   }
+    }
 
-   public void testDBCreateWithSpecificProperties() throws Exception
-   {
-      assertNotNull(dbCreator);
-      
-      String serverUrl = "jdbc:hsqldb:file:target/temp/data/dbcreator_test";
-      Map<String, String> connectionProperties = new HashMap<String, String>();
-      connectionProperties.put("driverClassName", "org.hsqldb.jdbcDriver");
-      connectionProperties.put("username", "sa");
-      connectionProperties.put("password", "");
+  }
 
-      ConfigurationManager cm = (ConfigurationManager)container.getComponentInstanceOfType(ConfigurationManager.class);
-      DBCreator dbCreator = new DBCreator(serverUrl, connectionProperties, "classpath:/dbcreator/test.sql", "sa", "", cm);
+  class DBCreateThread extends Thread {
 
-      DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
-      DBConnectionInfo dbInfo1 = dbCreator.getDBConnectionInfo("testdb");
+    private final int threadNumber;
 
-      Map<String, String> connProps = dbInfo.getProperties();
-      Map<String, String> connProps1 = dbInfo1.getProperties();
+    DBCreateThread(int threadNumber) {
+      this.threadNumber = threadNumber;
+    }
 
-      assertEquals(connProps.get("driverClassName"), connProps1.get("driverClassName"));
-      assertEquals(connProps.get("username"), connProps1.get("username"));
-      assertEquals(connProps.get("url"), connProps1.get("url"));
-      assertEquals(connProps.get("password"), connProps1.get("password"));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void run() {
+      try {
+        DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb_" + threadNumber);
 
-      Map<String, String> refAddr = dbInfo.getProperties();
+        Map<String, String> refAddr = dbInfo.getProperties();
 
-      initContext.getInitialContextBinder().bind("testjdbcjcr2", "javax.sql.DataSource", "org.apache.commons.dbcp.BasicDataSourceFactory", null, refAddr);
-
-      DataSource ds = (DataSource)initContext.getInitialContext().lookup("testjdbcjcr2");
-      assertNotNull(ds);
-
-      Connection conn = ds.getConnection();
-      assertNotNull(conn);
-   }
-
-   public void testDBCreateMultiThread() throws Exception
-   {
-      DBCreateThread[] queue = new DBCreateThread[100];
-
-      for (int i = 0; i < queue.length; i++)
-      {
-         queue[i] = new DBCreateThread(i);
-         queue[i].start();
+        initContext.getInitialContextBinder()
+                   .bind("testjdbcjcr_" + threadNumber,
+                         "javax.sql.DataSource",
+                         "org.apache.commons.dbcp.BasicDataSourceFactory",
+                         null,
+                         refAddr);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
       }
-
-      for (int i = 0; i < queue.length; i++)
-      {
-         queue[i].join();
-      }
-
-      for (int i = 0; i < queue.length; i++)
-      {
-         DataSource ds = (DataSource)initContext.getInitialContext().lookup("testjdbcjcr_" + i);
-         assertNotNull(ds);
-
-         Connection conn = ds.getConnection();
-         assertNotNull(conn);
-      }
-
-   }
-
-   class DBCreateThread extends Thread
-   {
-
-      private final int threadNumber;
-
-      DBCreateThread(int threadNumber)
-      {
-         this.threadNumber = threadNumber;
-      }
-
-      /**
-       * {@inheritDoc}
-       */
-      @Override
-      public void run()
-      {
-         try
-         {
-            DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb_" + threadNumber);
-
-            Map<String, String> refAddr = dbInfo.getProperties();
-
-            initContext.getInitialContextBinder().bind("testjdbcjcr_" + threadNumber, "javax.sql.DataSource",
-               "org.apache.commons.dbcp.BasicDataSourceFactory", null, refAddr);
-         }
-         catch (Exception e)
-         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         }
-      }
-   }
+    }
+  }
 
 }

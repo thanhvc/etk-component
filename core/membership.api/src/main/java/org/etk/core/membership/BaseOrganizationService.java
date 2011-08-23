@@ -28,93 +28,68 @@ import java.util.List;
  * Created by The eXo Platform SAS Author : Tuan Nguyen
  * tuan08@users.sourceforge.net Oct 13, 2005
  */
-abstract public class BaseOrganizationService implements OrganizationService, Startable
-{
-   protected UserHandler userDAO_;
+abstract public class BaseOrganizationService implements OrganizationService, Startable {
+  protected UserHandler                          userDAO_;
 
-   protected UserProfileHandler userProfileDAO_;
+  protected UserProfileHandler                   userProfileDAO_;
 
-   protected GroupHandler groupDAO_;
+  protected GroupHandler                         groupDAO_;
 
-   protected MembershipHandler membershipDAO_;
+  protected MembershipHandler                    membershipDAO_;
 
-   protected MembershipTypeHandler membershipTypeDAO_;
+  protected MembershipTypeHandler                membershipTypeDAO_;
 
-   protected List<OrganizationServiceInitializer> listeners_ = new ArrayList<OrganizationServiceInitializer>(3);
+  protected List<OrganizationServiceInitializer> listeners_ = new ArrayList<OrganizationServiceInitializer>(3);
 
-   public UserHandler getUserHandler()
-   {
-      return userDAO_;
-   }
+  public UserHandler getUserHandler() {
+    return userDAO_;
+  }
 
-   public UserProfileHandler getUserProfileHandler()
-   {
-      return userProfileDAO_;
-   }
+  public UserProfileHandler getUserProfileHandler() {
+    return userProfileDAO_;
+  }
 
-   public GroupHandler getGroupHandler()
-   {
-      return groupDAO_;
-   }
+  public GroupHandler getGroupHandler() {
+    return groupDAO_;
+  }
 
-   public MembershipTypeHandler getMembershipTypeHandler()
-   {
-      return membershipTypeDAO_;
-   }
+  public MembershipTypeHandler getMembershipTypeHandler() {
+    return membershipTypeDAO_;
+  }
 
-   public MembershipHandler getMembershipHandler()
-   {
-      return membershipDAO_;
-   }
+  public MembershipHandler getMembershipHandler() {
+    return membershipDAO_;
+  }
 
-   public void start()
-   {
-      for (OrganizationServiceInitializer listener : listeners_)
-      {
-         try
-         {
-            listener.init(this);
-         }
-         catch (Exception ex)
-         {
-            String msg =
-               "Failed start Organization Service " + getClass().getName()
-                  + ", probably because of configuration error. Error occurs when initialize "
-                  + listener.getClass().getName();
-            throw new RuntimeException(msg, ex);
-         }
+  public void start() {
+    for (OrganizationServiceInitializer listener : listeners_) {
+      try {
+        listener.init(this);
+      } catch (Exception ex) {
+        String msg = "Failed start Organization Service " + getClass().getName()
+            + ", probably because of configuration error. Error occurs when initialize "
+            + listener.getClass().getName();
+        throw new RuntimeException(msg, ex);
       }
-   }
+    }
+  }
 
-   public void stop()
-   {
-   }
+  public void stop() {
+  }
 
-   synchronized public void addListenerPlugin(ComponentPlugin listener) throws Exception
-   {
-      if (listener instanceof UserEventListener)
-      {
-         userDAO_.addUserEventListener((UserEventListener)listener);
-      }
-      else if (listener instanceof GroupEventListener)
-      {
-         groupDAO_.addGroupEventListener((GroupEventListener)listener);
-      }
-      else if (listener instanceof MembershipEventListener)
-      {
-         membershipDAO_.addMembershipEventListener((MembershipEventListener)listener);
-      }
-      else if (listener instanceof UserProfileEventListener)
-      {
-         userProfileDAO_.addUserProfileEventListener((UserProfileEventListener)listener);
-      }
-      else if (listener instanceof OrganizationServiceInitializer)
-      {
-         listeners_.add((OrganizationServiceInitializer)listener);
-      }
-      else
-      {
-         throw new RuntimeException(listener.getClass().getName() + " is an unknown listener type");
-      }
-   }
+  synchronized public void addListenerPlugin(ComponentPlugin listener) throws Exception {
+    if (listener instanceof UserEventListener) {
+      userDAO_.addUserEventListener((UserEventListener) listener);
+    } else if (listener instanceof GroupEventListener) {
+      groupDAO_.addGroupEventListener((GroupEventListener) listener);
+    } else if (listener instanceof MembershipEventListener) {
+      membershipDAO_.addMembershipEventListener((MembershipEventListener) listener);
+    } else if (listener instanceof UserProfileEventListener) {
+      userProfileDAO_.addUserProfileEventListener((UserProfileEventListener) listener);
+    } else if (listener instanceof OrganizationServiceInitializer) {
+      listeners_.add((OrganizationServiceInitializer) listener);
+    } else {
+      throw new RuntimeException(listener.getClass().getName() + " is an unknown listener type");
+    }
+  }
 }

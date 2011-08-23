@@ -30,145 +30,113 @@ import java.sql.Statement;
  * Created by The eXo Platform SAS Author : Tuan Nguyen
  * tuan08@users.sourceforge.net Apr 4, 2006
  */
-public class StandardSQLTableManager extends DBTableManager
-{
-   
-   /**
-    * Logger.
-    */
-   private static final Logger LOG = Logger.getLogger(StandardSQLTableManager.class);
+public class StandardSQLTableManager extends DBTableManager {
 
-   private ExoDatasource exoDatasource;
+  /**
+   * Logger.
+   */
+  private static final Logger LOG = Logger.getLogger(StandardSQLTableManager.class);
 
-   public StandardSQLTableManager(ExoDatasource datasource)
-   {
-      exoDatasource = datasource;
-   }
+  private ExoDatasource       exoDatasource;
 
-   public <T extends DBObject> void createTable(Class<T> type, boolean dropIfExist) throws Exception
-   {
-      Table table = type.getAnnotation(Table.class);
-      if (table == null)
-      {
-         throw new Exception("Cannot find the annotation for class " + type.getClass().getName());
-      }
-      StringBuilder builder = new StringBuilder(1000);
-      builder.append("CREATE TABLE ").append(table.name()).append(" (");
-      appendId(builder);
-      TableField[] fields = table.field();
-      for (int i = 0; i < fields.length; i++)
-      {
-         TableField field = fields[i];
-         String fieldType = field.type();
-         if ("string".equals(fieldType))
-         {
-            appendStringField(field, builder);
-         }
-         else if ("int".equals(fieldType))
-         {
-            appendIntegerField(field, builder);
-         }
-         else if ("long".equals(fieldType))
-         {
-            appendLongField(field, builder);
-         }
-         else if ("float".equals(fieldType))
-         {
-            appendFloatField(field, builder);
-         }
-         else if ("double".equals(fieldType))
-         {
-            appendDoubleField(field, builder);
-         }
-         else if ("boolean".equals(fieldType))
-         {
-            appendBooleanField(field, builder);
-         }
-         else if ("date".equals(fieldType))
-         {
-            appendDateField(field, builder);
-         }
-         else if ("binary".equals(fieldType))
-         {
-            appendBinaryField(field, builder);
-         }
-         if (i != fields.length - 1)
-            builder.append(", ");
-      }
-      builder.append(")");
+  public StandardSQLTableManager(ExoDatasource datasource) {
+    exoDatasource = datasource;
+  }
 
-      // print out the sql string
-      Connection conn = exoDatasource.getConnection();
-      conn.setAutoCommit(false);
-      Statement statement = conn.createStatement();
-      LOG.info("QUERY: \n  " + builder + "\n");
-      if (dropIfExist && hasTable(type))
-         statement.execute("DROP TABLE IF EXISTS " + table.name());
-      statement.execute(builder.toString());
-      statement.close();
-      conn.commit();
-      exoDatasource.closeConnection(conn);
-   }
+  public <T extends DBObject> void createTable(Class<T> type, boolean dropIfExist) throws Exception {
+    Table table = type.getAnnotation(Table.class);
+    if (table == null) {
+      throw new Exception("Cannot find the annotation for class " + type.getClass().getName());
+    }
+    StringBuilder builder = new StringBuilder(1000);
+    builder.append("CREATE TABLE ").append(table.name()).append(" (");
+    appendId(builder);
+    TableField[] fields = table.field();
+    for (int i = 0; i < fields.length; i++) {
+      TableField field = fields[i];
+      String fieldType = field.type();
+      if ("string".equals(fieldType)) {
+        appendStringField(field, builder);
+      } else if ("int".equals(fieldType)) {
+        appendIntegerField(field, builder);
+      } else if ("long".equals(fieldType)) {
+        appendLongField(field, builder);
+      } else if ("float".equals(fieldType)) {
+        appendFloatField(field, builder);
+      } else if ("double".equals(fieldType)) {
+        appendDoubleField(field, builder);
+      } else if ("boolean".equals(fieldType)) {
+        appendBooleanField(field, builder);
+      } else if ("date".equals(fieldType)) {
+        appendDateField(field, builder);
+      } else if ("binary".equals(fieldType)) {
+        appendBinaryField(field, builder);
+      }
+      if (i != fields.length - 1)
+        builder.append(", ");
+    }
+    builder.append(")");
 
-   public <T extends DBObject> void dropTable(Class<T> type) throws Exception
-   {
-      Table table = type.getAnnotation(Table.class);
-      if (table == null)
-      {
-         throw new Exception("Can not find the annotation for class " + type.getClass().getName());
-      }
-      Connection conn = exoDatasource.getConnection();
-      Statement s = conn.createStatement();
-      s.execute("DROP TABLE " + table.name());
-      s.close();
-      conn.commit();
-      exoDatasource.closeConnection(conn);
-   }
+    // print out the sql string
+    Connection conn = exoDatasource.getConnection();
+    conn.setAutoCommit(false);
+    Statement statement = conn.createStatement();
+    LOG.info("QUERY: \n  " + builder + "\n");
+    if (dropIfExist && hasTable(type))
+      statement.execute("DROP TABLE IF EXISTS " + table.name());
+    statement.execute(builder.toString());
+    statement.close();
+    conn.commit();
+    exoDatasource.closeConnection(conn);
+  }
 
-   public <T extends DBObject> boolean hasTable(Class<T> type) throws Exception
-   {
-      Table table = type.getAnnotation(Table.class);
-      if (table == null)
-      {
-         throw new Exception("Can not find the annotation for class " + type.getClass().getName());
-      }
-      Connection connection = exoDatasource.getConnection();
-      Statement statement = connection.createStatement();
-      try
-      {
-         if (statement.execute("SELECT 1 FROM " + table.name()) == true)
-            return true;
-      }
-      catch (SQLException ex)
-      {
-         return false;
-      }
-      finally
-      {
-         statement.close();
-         exoDatasource.closeConnection(connection);
-      }
+  public <T extends DBObject> void dropTable(Class<T> type) throws Exception {
+    Table table = type.getAnnotation(Table.class);
+    if (table == null) {
+      throw new Exception("Can not find the annotation for class " + type.getClass().getName());
+    }
+    Connection conn = exoDatasource.getConnection();
+    Statement s = conn.createStatement();
+    s.execute("DROP TABLE " + table.name());
+    s.close();
+    conn.commit();
+    exoDatasource.closeConnection(conn);
+  }
+
+  public <T extends DBObject> boolean hasTable(Class<T> type) throws Exception {
+    Table table = type.getAnnotation(Table.class);
+    if (table == null) {
+      throw new Exception("Can not find the annotation for class " + type.getClass().getName());
+    }
+    Connection connection = exoDatasource.getConnection();
+    Statement statement = connection.createStatement();
+    try {
+      if (statement.execute("SELECT 1 FROM " + table.name()) == true)
+        return true;
+    } catch (SQLException ex) {
       return false;
-   }
+    } finally {
+      statement.close();
+      exoDatasource.closeConnection(connection);
+    }
+    return false;
+  }
 
-   protected void appendId(StringBuilder builder)
-   {
-      builder.append("ID BIGINT NOT NULL PRIMARY KEY, ");
-   }
+  protected void appendId(StringBuilder builder) {
+    builder.append("ID BIGINT NOT NULL PRIMARY KEY, ");
+  }
 
-   protected void appendStringField(TableField field, StringBuilder builder) throws Exception
-   {
-      if (field.length() < 1)
-      {
-         throw new Exception("You forget to specify  the length for field " + field.name() + " , type " + field.type());
-      }
-      builder.append(field.name()).append(" ").append("VARCHAR(" + field.length() + ")");
-      if (!field.nullable())
-         builder.append(" NOT NULL ");
-   }
+  protected void appendStringField(TableField field, StringBuilder builder) throws Exception {
+    if (field.length() < 1) {
+      throw new Exception("You forget to specify  the length for field " + field.name()
+          + " , type " + field.type());
+    }
+    builder.append(field.name()).append(" ").append("VARCHAR(" + field.length() + ")");
+    if (!field.nullable())
+      builder.append(" NOT NULL ");
+  }
 
-   protected void appendIntegerField(TableField field, StringBuilder builder)
-   {
+  protected void appendIntegerField(TableField field, StringBuilder builder) {
       builder.append(field.name()).append(" INTEGER");
    }
 

@@ -36,77 +36,64 @@ import org.etk.core.membership.MembershipType;
    @TableField(name = "MT_DESCRIPTION", type = "string", length = 500),
    @TableField(name = "CREATED_DATE", type = "date", length = 100),
    @TableField(name = "MODIFIED_DATE", type = "date", length = 100)})
-public class MembershipTypeImpl extends DBObject implements MembershipType
-{
+public class MembershipTypeImpl extends DBObject implements MembershipType {
 
-   private String name;
+  private String name;
 
-   private String description;
+  private String description;
 
-   private String owner;
+  private String owner;
 
-   private Date createdDate;
+  private Date   createdDate;
 
-   private Date modifiedDate;
+  private Date   modifiedDate;
 
-   public MembershipTypeImpl()
-   {
-   }
+  public MembershipTypeImpl() {
+  }
 
-   public MembershipTypeImpl(String name, String owner, String desc)
-   {
-      this.name = name;
-      this.owner = owner;
-      this.description = desc;
-   }
+  public MembershipTypeImpl(String name, String owner, String desc) {
+    this.name = name;
+    this.owner = owner;
+    this.description = desc;
+  }
 
-   public String getName()
-   {
-      return name;
-   }
+  public String getName() {
+    return name;
+  }
 
-   public void setName(String s)
-   {
-      name = s;
-   }
+  public void setName(String s) {
+    name = s;
+  }
 
-   public String getDescription()
-   {
-      return description;
-   }
+  public String getDescription() {
+    return description;
+  }
 
-   public void setDescription(String s)
-   {
-      description = s;
-   }
+  public void setDescription(String s) {
+    description = s;
+  }
 
-   public String getOwner()
-   {
-      return owner;
-   }
+  public String getOwner() {
+    return owner;
+  }
 
-   public void setOwner(String s)
-   {
-      owner = s;
-   }
+  public void setOwner(String s) {
+    owner = s;
+  }
 
-   public Date getCreatedDate()
-   {
-      return createdDate;
-   }
+  public Date getCreatedDate() {
+    return createdDate;
+  }
 
-   public void setCreatedDate(Date d)
-   {
-      createdDate = d;
-   }
+  public void setCreatedDate(Date d) {
+    createdDate = d;
+  }
 
-   public Date getModifiedDate()
-   {
-      return modifiedDate;
-   }
+  public Date getModifiedDate() {
+    return modifiedDate;
+  }
 
-   public void setModifiedDate(Date d)
-   {
-      modifiedDate = d;
-   }
+  public void setModifiedDate(Date d) {
+    modifiedDate = d;
+  }
 }

@@ -27,165 +27,148 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by The eXo Platform SAS.
+ * Created by The eXo Platform SAS. <br/>
+ * Date: 2009
  * 
- * <br/>Date: 2009
- *
- * @author <a href="mailto:anatoliy.bazko@exoplatform.com.ua">Anatoliy Bazko</a> 
- * @version $Id: CacheableGroupHandlerImpl.java 287 2009-10-16 08:08:49Z tolusha $
+ * @author <a href="mailto:anatoliy.bazko@exoplatform.com.ua">Anatoliy Bazko</a>
+ * @version $Id: CacheableGroupHandlerImpl.java 287 2009-10-16 08:08:49Z tolusha
+ *          $
  */
-public class CacheableGroupHandlerImpl implements GroupHandler
-{
+public class CacheableGroupHandlerImpl implements GroupHandler {
 
-   private final ExoCache groupCache;
+  private final ExoCache     groupCache;
 
-   private final ExoCache membershipCache;
+  private final ExoCache     membershipCache;
 
-   private final GroupHandler groupHandler;
+  private final GroupHandler groupHandler;
 
-   /**
-    * CacheableUserHandler  constructor.
-    *
-    * @param OrganizationCacheHandler
-    *             - organization cache handler
-    * @param handler
-    *             - user handler
-    */
-   public CacheableGroupHandlerImpl(OrganizationCacheHandler organizationCacheHandler, GroupHandler handler)
-   {
-      this.groupCache = organizationCacheHandler.getGroupCache();
-      this.membershipCache = organizationCacheHandler.getMembershipCache();
-      this.groupHandler = handler;
-   }
+  /**
+   * CacheableUserHandler constructor.
+   * 
+   * @param OrganizationCacheHandler - organization cache handler
+   * @param handler - user handler
+   */
+  public CacheableGroupHandlerImpl(OrganizationCacheHandler organizationCacheHandler,
+                                   GroupHandler handler) {
+    this.groupCache = organizationCacheHandler.getGroupCache();
+    this.membershipCache = organizationCacheHandler.getMembershipCache();
+    this.groupHandler = handler;
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public void addChild(Group parent, Group child, boolean broadcast) throws Exception
-   {
-      groupHandler.addChild(parent, child, broadcast);
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public void addChild(Group parent, Group child, boolean broadcast) throws Exception {
+    groupHandler.addChild(parent, child, broadcast);
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public void addGroupEventListener(GroupEventListener listener)
-   {
-      groupHandler.addGroupEventListener(listener);
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public void addGroupEventListener(GroupEventListener listener) {
+    groupHandler.addGroupEventListener(listener);
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public void createGroup(Group group, boolean broadcast) throws Exception
-   {
-      groupHandler.createGroup(group, broadcast);
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public void createGroup(Group group, boolean broadcast) throws Exception {
+    groupHandler.createGroup(group, broadcast);
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Group createGroupInstance()
-   {
-      return groupHandler.createGroupInstance();
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public Group createGroupInstance() {
+    return groupHandler.createGroupInstance();
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Group findGroupById(String groupId) throws Exception
-   {
-      Group group = (Group)groupCache.get(groupId);
-      if (group != null)
-         return group;
-
-      group = groupHandler.findGroupById(groupId);
-      if (group != null)
-         groupCache.put(groupId, group);
-
+  /**
+   * {@inheritDoc}
+   */
+  public Group findGroupById(String groupId) throws Exception {
+    Group group = (Group) groupCache.get(groupId);
+    if (group != null)
       return group;
-   }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Collection findGroupByMembership(String userName, String membershipType) throws Exception
-   {
-      Collection<Group> groups = groupHandler.findGroupByMembership(userName, membershipType);
+    group = groupHandler.findGroupById(groupId);
+    if (group != null)
+      groupCache.put(groupId, group);
 
-      for (Group group : groups)
-         groupCache.put(group.getId(), groups);
+    return group;
+  }
 
-      return groups;
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public Collection findGroupByMembership(String userName, String membershipType) throws Exception {
+    Collection<Group> groups = groupHandler.findGroupByMembership(userName, membershipType);
 
-   /**
-    * {@inheritDoc}
-    */
-   public Collection findGroups(Group parent) throws Exception
-   {
-      Collection<Group> groups = groupHandler.findGroups(parent);
-      for (Group group : groups)
-         groupCache.put(group.getId(), groups);
+    for (Group group : groups)
+      groupCache.put(group.getId(), groups);
 
-      return groups;
-   }
+    return groups;
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Collection findGroupsOfUser(String user) throws Exception
-   {
-      Collection<Group> groups = groupHandler.findGroupsOfUser(user);
-      for (Group group : groups)
-         groupCache.put(group.getId(), groups);
+  /**
+   * {@inheritDoc}
+   */
+  public Collection findGroups(Group parent) throws Exception {
+    Collection<Group> groups = groupHandler.findGroups(parent);
+    for (Group group : groups)
+      groupCache.put(group.getId(), groups);
 
-      return groups;
-   }
+    return groups;
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Collection getAllGroups() throws Exception
-   {
-      Collection<Group> groups = groupHandler.getAllGroups();
-      for (Group group : groups)
-         groupCache.put(group.getId(), groups);
+  /**
+   * {@inheritDoc}
+   */
+  public Collection findGroupsOfUser(String user) throws Exception {
+    Collection<Group> groups = groupHandler.findGroupsOfUser(user);
+    for (Group group : groups)
+      groupCache.put(group.getId(), groups);
 
-      return groups;
-   }
+    return groups;
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public Group removeGroup(Group group, boolean broadcast) throws Exception
-   {
-      Group gr = groupHandler.removeGroup(group, broadcast);
-      if (gr != null)
-      {
-         groupCache.remove(gr.getId());
+  /**
+   * {@inheritDoc}
+   */
+  public Collection getAllGroups() throws Exception {
+    Collection<Group> groups = groupHandler.getAllGroups();
+    for (Group group : groups)
+      groupCache.put(group.getId(), groups);
 
-         List<Membership> memberships = membershipCache.getCachedObjects();
-         for (Membership membership : memberships)
-         {
-            if (membership.getGroupId().equals(gr.getId()))
-            {
-               membershipCache.remove(membership.getId());
-               membershipCache.remove(new MembershipCacheKey(membership));
-            }
-         }
+    return groups;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Group removeGroup(Group group, boolean broadcast) throws Exception {
+    Group gr = groupHandler.removeGroup(group, broadcast);
+    if (gr != null) {
+      groupCache.remove(gr.getId());
+
+      List<Membership> memberships = membershipCache.getCachedObjects();
+      for (Membership membership : memberships) {
+        if (membership.getGroupId().equals(gr.getId())) {
+          membershipCache.remove(membership.getId());
+          membershipCache.remove(new MembershipCacheKey(membership));
+        }
       }
+    }
 
-      return gr;
-   }
+    return gr;
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public void saveGroup(Group group, boolean broadcast) throws Exception
-   {
-      groupHandler.saveGroup(group, broadcast);
-      groupCache.put(group.getId(), group);
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public void saveGroup(Group group, boolean broadcast) throws Exception {
+    groupHandler.saveGroup(group, broadcast);
+    groupCache.put(group.getId(), group);
+  }
 
 }

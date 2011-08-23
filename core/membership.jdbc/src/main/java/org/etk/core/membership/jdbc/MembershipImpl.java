@@ -23,13 +23,6 @@ import org.etk.component.database.annotation.Table;
 import org.etk.component.database.annotation.TableField;
 import org.etk.core.membership.Membership;
 
-/*
-import org.exoplatform.services.database.DBObject;
-import org.exoplatform.services.database.annotation.Table;
-import org.exoplatform.services.database.annotation.TableField;
-import org.exoplatform.services.organization.Membership;
-*/
-
 @Table(name = "EX0_MEMBERSHIP", field = {
    @TableField(name = "MEMBERSHIP_ID", type = "string", length = 100, unique = true, nullable = false),
    @TableField(name = "MEMBERSHIP_TYPE", type = "string", length = 100),

@@ -40,173 +40,156 @@ import java.util.List;
  * benjmestrallet@users.sourceforge.net Author : Tuan Nguyen
  * tuan08@users.sourceforge.net Date: Aug 22, 2003 Time: 4:51:21 PM
  */
-public class UserProfileDAOImpl implements UserProfileHandler, UserProfileEventListenerHandler
-{
-   static private UserProfile NOT_FOUND = new UserProfileImpl();
+public class UserProfileDAOImpl implements UserProfileHandler, UserProfileEventListenerHandler {
+  static private UserProfile             NOT_FOUND                  = new UserProfileImpl();
 
-   private static final String queryFindUserProfileByName =
-      "from u in class org.etk.core.membership.impl.UserProfileData " + "where u.userName = ?";
+  private static final String            queryFindUserProfileByName = "from u in class org.etk.core.membership.impl.UserProfileData "
+                                                                        + "where u.userName = ?";
 
-   private HibernateService service_;
+  private HibernateService               service_;
 
-   private ExoCache cache_;
+  private ExoCache                       cache_;
 
-   private List<UserProfileEventListener> listeners_;
+  private List<UserProfileEventListener> listeners_;
 
-   public UserProfileDAOImpl(HibernateService service, CacheService cservice) throws Exception
-   {
-      service_ = service;
-      cache_ = cservice.getCacheInstance(getClass().getName());
-      listeners_ = new ArrayList<UserProfileEventListener>(3);
-   }
+  public UserProfileDAOImpl(HibernateService service, CacheService cservice) throws Exception {
+    service_ = service;
+    cache_ = cservice.getCacheInstance(getClass().getName());
+    listeners_ = new ArrayList<UserProfileEventListener>(3);
+  }
 
-   public void addUserProfileEventListener(UserProfileEventListener listener)
-   {
-      listeners_.add(listener);
-   }
+  public void addUserProfileEventListener(UserProfileEventListener listener) {
+    listeners_.add(listener);
+  }
 
-   final public UserProfile createUserProfileInstance()
-   {
-      return new UserProfileImpl();
-   }
+  final public UserProfile createUserProfileInstance() {
+    return new UserProfileImpl();
+  }
 
-   public UserProfile createUserProfileInstance(String userName)
-   {
-      return new UserProfileImpl(userName);
-   }
+  public UserProfile createUserProfileInstance(String userName) {
+    return new UserProfileImpl(userName);
+  }
 
-   void createUserProfileEntry(UserProfile up, Session session) throws Exception
-   {
-      UserProfileData upd = new UserProfileData();
-      upd.setUserProfile(up);
-      session.save(upd);
+  void createUserProfileEntry(UserProfile up, Session session) throws Exception {
+    UserProfileData upd = new UserProfileData();
+    upd.setUserProfile(up);
+    session.save(upd);
+    session.flush();
+    cache_.remove(up.getUserName());
+  }
+
+  public void saveUserProfile(UserProfile profile, boolean broadcast) throws Exception {
+    Session session = service_.openSession();
+    UserProfileData upd = (UserProfileData) service_.findOne(session,
+                                                             queryFindUserProfileByName,
+                                                             profile.getUserName());
+    if (upd == null) {
+      upd = new UserProfileData();
+      upd.setUserProfile(profile);
+      if (broadcast)
+        preSave(profile, true);
+      session = service_.openSession();
+      session.save(profile.getUserName(), upd);
+      if (broadcast)
+        postSave(profile, true);
       session.flush();
-      cache_.remove(up.getUserName());
-   }
+    } else {
+      upd.setUserProfile(profile);
+      if (broadcast)
+        preSave(profile, false);
+      session = service_.openSession();
+      session.update(upd);
+      if (broadcast)
+        postSave(profile, false);
+      session.flush();
+    }
+    cache_.put(profile.getUserName(), profile);
+  }
 
-   public void saveUserProfile(UserProfile profile, boolean broadcast) throws Exception
-   {
-      Session session = service_.openSession();
-      UserProfileData upd = (UserProfileData)service_.findOne(session, queryFindUserProfileByName, profile.getUserName());
-      if (upd == null)
-      {
-         upd = new UserProfileData();
-         upd.setUserProfile(profile);
-         if (broadcast)
-            preSave(profile, true);
-         session = service_.openSession();
-         session.save(profile.getUserName(), upd);
-         if (broadcast)
-            postSave(profile, true);
-         session.flush();
-      }
-      else
-      {
-         upd.setUserProfile(profile);
-         if (broadcast)
-            preSave(profile, false);
-         session = service_.openSession();
-         session.update(upd);
-         if (broadcast)
-            postSave(profile, false);
-         session.flush();
-      }
-      cache_.put(profile.getUserName(), profile);
-   }
+  public UserProfile removeUserProfile(String userName, boolean broadcast) throws Exception {
+    Session session = service_.openSession();
+    try {
+      UserProfileData upd = (UserProfileData) service_.findExactOne(session,
+                                                                    queryFindUserProfileByName,
+                                                                    userName);
+      UserProfile profile = upd.getUserProfile();
+      if (broadcast)
+        preDelete(profile);
+      session = service_.openSession();
+      session.delete(upd);
+      if (broadcast)
+        postDelete(profile);
+      session.flush();
+      cache_.remove(userName);
+      return profile;
+    } catch (Exception exp) {
+      return null;
+    }
+  }
 
-   public UserProfile removeUserProfile(String userName, boolean broadcast) throws Exception
-   {
-      Session session = service_.openSession();
-      try
-      {
-         UserProfileData upd = (UserProfileData)service_.findExactOne(session, queryFindUserProfileByName, userName);
-         UserProfile profile = upd.getUserProfile();
-         if (broadcast)
-            preDelete(profile);
-         session = service_.openSession();
-         session.delete(upd);
-         if (broadcast)
-            postDelete(profile);
-         session.flush();
-         cache_.remove(userName);
-         return profile;
-      }
-      catch (Exception exp)
-      {
-         return null;
-      }
-   }
-
-   public UserProfile findUserProfileByName(String userName) throws Exception
-   {
-      UserProfile up = (UserProfile)cache_.get(userName);
-      if (up != null)
-      {
-         if (NOT_FOUND == up)
-            return null;
-         return up;
-      }
-      Session session = service_.openSession();
-      up = findUserProfileByName(userName, session);
-      if (up != null)
-         cache_.put(userName, up);
-      else
-         cache_.put(userName, NOT_FOUND);
+  public UserProfile findUserProfileByName(String userName) throws Exception {
+    UserProfile up = (UserProfile) cache_.get(userName);
+    if (up != null) {
+      if (NOT_FOUND == up)
+        return null;
       return up;
-   }
+    }
+    Session session = service_.openSession();
+    up = findUserProfileByName(userName, session);
+    if (up != null)
+      cache_.put(userName, up);
+    else
+      cache_.put(userName, NOT_FOUND);
+    return up;
+  }
 
-   public UserProfile findUserProfileByName(String userName, Session session) throws Exception
-   {
-      UserProfileData upd = (UserProfileData)service_.findOne(session, queryFindUserProfileByName, userName);
-      if (upd != null)
-      {
-         return upd.getUserProfile();
-      }
-      return null;
-   }
+  public UserProfile findUserProfileByName(String userName, Session session) throws Exception {
+    UserProfileData upd = (UserProfileData) service_.findOne(session,
+                                                             queryFindUserProfileByName,
+                                                             userName);
+    if (upd != null) {
+      return upd.getUserProfile();
+    }
+    return null;
+  }
 
-   static void removeUserProfileEntry(String userName, Session session) throws Exception
-   {
-      Object user = session.createQuery(queryFindUserProfileByName).setString(0, userName).uniqueResult();
-      if (user != null)
-         session.delete(user);
-   }
+  static void removeUserProfileEntry(String userName, Session session) throws Exception {
+    Object user = session.createQuery(queryFindUserProfileByName)
+                         .setString(0, userName)
+                         .uniqueResult();
+    if (user != null)
+      session.delete(user);
+  }
 
-   public Collection findUserProfiles() throws Exception
-   {
-      return null;
-   }
+  public Collection findUserProfiles() throws Exception {
+    return null;
+  }
 
-   private void preSave(UserProfile profile, boolean isNew) throws Exception
-   {
-      for (UserProfileEventListener listener : listeners_)
-         listener.preSave(profile, isNew);
-   }
+  private void preSave(UserProfile profile, boolean isNew) throws Exception {
+    for (UserProfileEventListener listener : listeners_)
+      listener.preSave(profile, isNew);
+  }
 
-   private void postSave(UserProfile profile, boolean isNew) throws Exception
-   {
-      for (UserProfileEventListener listener : listeners_)
-         listener.postSave(profile, isNew);
-   }
+  private void postSave(UserProfile profile, boolean isNew) throws Exception {
+    for (UserProfileEventListener listener : listeners_)
+      listener.postSave(profile, isNew);
+  }
 
-   private void preDelete(UserProfile profile) throws Exception
-   {
-      for (UserProfileEventListener listener : listeners_)
-         listener.preDelete(profile);
-   }
+  private void preDelete(UserProfile profile) throws Exception {
+    for (UserProfileEventListener listener : listeners_)
+      listener.preDelete(profile);
+  }
 
-   private void postDelete(UserProfile profile) throws Exception
-   {
-      for (UserProfileEventListener listener : listeners_)
-         listener.postDelete(profile);
-   }
+  private void postDelete(UserProfile profile) throws Exception {
+    for (UserProfileEventListener listener : listeners_)
+      listener.postDelete(profile);
+  }
 
-   /**
-    * {@inheritDoc}
-    */
-   public List<UserProfileEventListener> getUserProfileListeners()
-   {
-      return Collections.unmodifiableList(listeners_);
-   }
+  /**
+   * {@inheritDoc}
+   */
+  public List<UserProfileEventListener> getUserProfileListeners() {
+    return Collections.unmodifiableList(listeners_);
+  }
 
 }

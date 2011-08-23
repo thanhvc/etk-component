@@ -93,6 +93,11 @@ public class TestOrganizationService extends BasicTestCase {
     groupHandler_ = service_.getGroupHandler();
     mtHandler_ = service_.getMembershipTypeHandler();
     membershipHandler_ = service_.getMembershipHandler();
+    
+    Query query = new Query();
+    query.setUserName(USER + "*");
+    PageList users = userHandler_.findUsers(query);
+    List<User> allUsers = users.getAll();
   }
 
   public void tearDown() throws Exception {

@@ -18,24 +18,7 @@
  */
 package org.etk.core.membership.jdbc;
 
-/*
- import org.exoplatform.commons.utils.IdentifierUtil;
- import org.exoplatform.services.database.DBObjectMapper;
- import org.exoplatform.services.database.DBObjectQuery;
- import org.exoplatform.services.database.DBPageList;
- import org.exoplatform.services.database.ExoDatasource;
- import org.exoplatform.services.database.StandardSQLDAO;
- import org.exoplatform.services.listener.ListenerService;
- import org.exoplatform.services.log.ExoLogger;
- import org.exoplatform.services.log.Log;
- import org.exoplatform.services.organization.Group;
- import org.exoplatform.services.organization.Membership;
- import org.exoplatform.services.organization.MembershipEventListener;
- import org.exoplatform.services.organization.MembershipHandler;
- import org.exoplatform.services.organization.MembershipType;
- import org.exoplatform.services.organization.OrganizationService;
- import org.exoplatform.services.organization.User;
- */
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
