@@ -44,10 +44,10 @@
             <properties-param>
                <name>ref-addresses</name>
                <description>ref-addresses</description>
-               <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-               <property name="url" value="jdbc:hsqldb:file:../temp/data/exodb" />
-               <property name="username" value="sa" />
-               <property name="password" value="" />
+               <property name="driverClassName" value="org.postgresql.Driver" />
+               <property name="url" value="jdbc:postgresql://localhost/exodb" />
+               <property name="username" value="root" />
+               <property name="password" value="gtn" />
             </properties-param>
          </init-params>
       </component-plugin>

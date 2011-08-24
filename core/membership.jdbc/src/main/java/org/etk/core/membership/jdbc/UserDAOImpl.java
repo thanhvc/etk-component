@@ -98,8 +98,7 @@ public class UserDAOImpl extends StandardSQLDAO<UserImpl> implements UserHandler
     }
 
     if (log.isDebugEnabled()) {
-      log.debug("+++++++++++AUTHENTICATE USERNAME " + username + " AND PASS " + password + " - "
-          + authenticated);
+      log.debug("+++++++++++AUTHENTICATE USERNAME " + username + " AND PASS " + password + " - " + authenticated);
     }
     if (authenticated) {
       UserImpl userImpl = (UserImpl) user;

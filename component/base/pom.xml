@@ -40,6 +40,10 @@
       <version>1.0.1B</version>
     </dependency>
     <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.ow2.jotm</groupId>
       <artifactId>jotm-core</artifactId>
       <exclusions>
