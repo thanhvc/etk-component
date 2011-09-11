@@ -57,7 +57,7 @@
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 
-   	         <dependency>
+		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
@@ -94,12 +94,9 @@
 							<tasks>
 								<echo>Creating Access Policy for tests</echo>
 								<makeurl file="${settings.localRepository}" property="localRepositoryURL" />
-								<makeurl file="${project.build.outputDirectory}"
-									property="outputDirectoryURL" />
-								<makeurl file="${project.build.testOutputDirectory}"
-									property="testOutputDirectoryURL" />
-								<copy todir="${project.build.testOutputDirectory}"
-									overwrite="true">
+								<makeurl file="${project.build.outputDirectory}" property="outputDirectoryURL" />
+								<makeurl file="${project.build.testOutputDirectory}" property="testOutputDirectoryURL" />
+								<copy todir="${project.build.testOutputDirectory}" overwrite="true">
 									<fileset dir="${project.basedir}/src/test/resources/">
 										<include name="test.policy" />
 									</fileset>

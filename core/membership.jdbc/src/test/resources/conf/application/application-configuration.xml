@@ -59,9 +59,8 @@
       <properties-param>
         <name>hibernate.properties</name>
         <description>Default Hibernate Service</description>
-        <property name="hibernate.show_sql" value="false" />
-        <property name="hibernate.cglib.use_reflection_optimizer"
-          value="true" />
+        <property name="hibernate.show_sql" value="false" />  
+        <property name="hibernate.cglib.use_reflection_optimizer" value="true" />
         <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/exodb" />
         <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
         <property name="hibernate.connection.autocommit" value="true" />
