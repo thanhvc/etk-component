@@ -40,8 +40,12 @@ public class ETKBinding {
   
   final List<MethodBinding> methods;
   final List<MethodBinding> unmodifiableMethods;
-  public ETKBinding(ETKInfo etkInfo) {
+  
+  //define this name by annotation
+  final String entityName;
+  public ETKBinding(ETKInfo etkInfo, String entityName) {
     this.etkInfo = etkInfo;
+    this.entityName = entityName;
     
     this.properties = new HashMap<String, PropertyBinding>();
     this.unmodifiableProperties = Collections.unmodifiableMap(this.properties);
@@ -61,4 +65,14 @@ public class ETKBinding {
     }
     visitor.endBean();
   }
+
+  public ETKInfo getEtkInfo() {
+    return etkInfo;
+  }
+
+  public String getEntityName() {
+    return entityName;
+  }
+  
+  
 }

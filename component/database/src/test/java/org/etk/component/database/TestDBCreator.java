@@ -36,16 +36,15 @@ import javax.sql.DataSource;
  * @author <a href="anatoliy.bazko@exoplatform.org">Anatoliy Bazko</a>
  * @version $Id: TestDBCreator.java 4584 2011-07-01 13:39:07Z tolusha $
  */
-public class TestDBCreator extends TestCase
-{
+public class TestDBCreator extends TestCase {
 
-   protected DBCreator dbCreator;
+  protected DBCreator dbCreator;
 
-   private InitialContextInitializer initContext;
+  private InitialContextInitializer initContext;
 
-   private ApplicationContainer container;
+  private ApplicationContainer container;
 
-   @Override
+  @Override
   public void setUp() throws Exception {
     container = ApplicationContainer.getInstance();
     dbCreator = (DBCreator) container.getComponentInstanceOfType(DBCreator.class);
@@ -84,18 +83,18 @@ public class TestDBCreator extends TestCase
   public void testDBCreateWithSpecificProperties() throws Exception {
     assertNotNull(dbCreator);
 
-    String serverUrl = "jdbc:hsqldb:file:target/temp/data/dbcreator_test";
+    String serverUrl = "jdbc:postgresql://localhost/txdb";
     Map<String, String> connectionProperties = new HashMap<String, String>();
-    connectionProperties.put("driverClassName", "org.hsqldb.jdbcDriver");
-    connectionProperties.put("username", "sa");
-    connectionProperties.put("password", "");
+    connectionProperties.put("driverClassName", "org.postgresql.Driver");
+    connectionProperties.put("username", "root");
+    connectionProperties.put("password", "gtn");
 
     ConfigurationManager cm = (ConfigurationManager) container.getComponentInstanceOfType(ConfigurationManager.class);
     DBCreator dbCreator = new DBCreator(serverUrl,
                                         connectionProperties,
                                         "classpath:/dbcreator/test.sql",
-                                        "sa",
-                                        "",
+                                        "root",
+                                        "gtn",
                                         cm);
 
     DBConnectionInfo dbInfo = dbCreator.createDatabase("testdb");
@@ -125,7 +124,7 @@ public class TestDBCreator extends TestCase
   }
 
   public void testDBCreateMultiThread() throws Exception {
-    DBCreateThread[] queue = new DBCreateThread[100];
+    DBCreateThread[] queue = new DBCreateThread[10];
 
     for (int i = 0; i < queue.length; i++) {
       queue[i] = new DBCreateThread(i);

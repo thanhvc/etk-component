@@ -48,7 +48,7 @@ public class TestDatabaseService extends BasicTestCase {
     DatabaseService service = (DatabaseService) pcontainer.getComponentInstanceOfType(XAPoolTxSupportDatabaseService.class);
     assertNotNull(service);
     dropTable(service);
-    //assertConfiguration(service);
+    assertConfiguration(service);
     assertDBTableManager(service);
     assertIDGenerator(service);
   }

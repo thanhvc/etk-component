@@ -35,7 +35,7 @@ public class PropertyBinding<P extends PropertyInfo> {
   ETKBinding owner;
 
   /** The optional parent. */
-  PropertyBinding parent;
+  PropertyBinding<P> parent;
 
   /** . */
   final P property;
@@ -44,7 +44,7 @@ public class PropertyBinding<P extends PropertyInfo> {
     this.property = property;
   }
 
-  public PropertyBinding getParent() {
+  public PropertyBinding<P> getParent() {
     return parent;
   }
 

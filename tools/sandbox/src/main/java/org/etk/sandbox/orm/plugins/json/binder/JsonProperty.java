@@ -14,27 +14,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.model.plugins.entity.binding;
+package org.etk.sandbox.orm.plugins.json.binder;
 
-import org.etk.orm.plugins.bean.ValueKind;
+
+import org.etk.sandbox.orm.binder.PropertyBinder;
+import org.etk.sandbox.orm.binding.PropertyBinding;
+import org.etk.sandbox.orm.core.ObjectContext;
+import org.etk.sandbox.orm.info.PropertyInfo;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
- *          exo@exoplatform.com
- * Jul 15, 2011  
+ *          thanhvucong.78@google.com
+ * Aug 19, 2011  
  */
-public class BindingVisitor {
+public class JsonProperty<O extends ObjectContext<O>> extends PropertyBinder<PropertyInfo, O> {
 
-  public void startBean(EntityBinding binding) { }
-
-  public void singleValueMapping(PropertyValueBinding<ValueKind.Single> binding) { }
-
-  public void multiValueMapping(PropertyValueBinding<ValueKind.Multi> binding) { }
-
-  public void propertiesBinding(PropertiesBinding<?> binding) { }
-
-  public void attributeBinding(AttributeBinding binding) { }
+  private final String jsonPropertyName;
   
-  public void endBean() { }
+  public JsonProperty(Class<O> contextType, PropertyBinding pBinding) {
+    super(contextType, pBinding);
+    this.jsonPropertyName = pBinding.getName();
+  }
+  
+  @Override
+  public Object get(O context) throws Throwable {
+    return get(context);
+  }
+
+ 
 }

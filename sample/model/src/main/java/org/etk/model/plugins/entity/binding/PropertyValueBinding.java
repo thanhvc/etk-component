@@ -5,13 +5,13 @@ import org.etk.model.plugins.entity.SimpleValueInfo;
 import org.etk.model.plugins.json.PropertyDefinitionMapping;
 import org.etk.orm.plugins.bean.ValueKind;
 
-public class ValueBinding<K extends ValueKind> extends
-           PropertyBinding<PropertyInfo<SimpleValueInfo<K>, ValueKind.Single>, SimpleValueInfo<K>, ValueKind.Single> {
+public class PropertyValueBinding<K extends ValueKind> extends
+           AbstractPropertyBinding<PropertyInfo<SimpleValueInfo<K>, ValueKind.Single>, SimpleValueInfo<K>, ValueKind.Single> {
 
   /** . */
   final PropertyDefinitionMapping<?> propertyDefinition;
 
-  public ValueBinding(PropertyInfo<SimpleValueInfo<K>, ValueKind.Single> property,
+  public PropertyValueBinding(PropertyInfo<SimpleValueInfo<K>, ValueKind.Single> property,
                       PropertyDefinitionMapping propertyDefinition) {
     super(property);
 
@@ -23,7 +23,7 @@ public class ValueBinding<K extends ValueKind> extends
     if (parent == null) {
       return true;
     } else {
-      ValueBinding<?> a = (ValueBinding<?>) parent;
+      PropertyValueBinding<?> a = (PropertyValueBinding<?>) parent;
       return propertyDefinition.getMetaType() != a.propertyDefinition.getMetaType();
     }
   }
@@ -35,9 +35,9 @@ public class ValueBinding<K extends ValueKind> extends
   @Override
   public void accept(BindingVisitor visitor) {
     if (property.getValueKind() == ValueKind.SINGLE) {
-      visitor.singleValueMapping((ValueBinding<ValueKind.Single>) this);
+      visitor.singleValueMapping((PropertyValueBinding<ValueKind.Single>) this);
     } else {
-      visitor.multiValueMapping((ValueBinding<ValueKind.Multi>) this);
+      visitor.multiValueMapping((PropertyValueBinding<ValueKind.Multi>) this);
     }
   }
 

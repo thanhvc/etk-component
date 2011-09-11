@@ -23,7 +23,7 @@ import org.etk.model.apt.FormatterStyle;
 import org.etk.model.apt.TypeFormatter;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.MethodBinding;
-import org.etk.model.plugins.entity.binding.PropertyBinding;
+import org.etk.model.plugins.entity.binding.AbstractPropertyBinding;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.reflect.api.MethodInfo;
 import org.etk.reflect.api.TypeInfo;
@@ -44,7 +44,7 @@ public class DumpUtils {
 
       System.out.println("|       Getter        |       Setter        |                    Type                  |");
       System.out.println("----------------------------------------------------------------------------------------");
-      for (PropertyBinding proBinding : binding.getProperties().values()) {
+      for (AbstractPropertyBinding proBinding : binding.getProperties().values()) {
         dumpPropertyBinding(binding.getEntity().getClassType(), proBinding);
       }
       System.out.println("-----------------------------------------------------------------------------------------");
@@ -66,7 +66,7 @@ public class DumpUtils {
     }
   }
 
-  private static void dumpPropertyBinding(ClassTypeInfo owner, PropertyBinding proBinding) {
+  private static void dumpPropertyBinding(ClassTypeInfo owner, AbstractPropertyBinding proBinding) {
 
     TypeInfo type = proBinding.getValue().getEffectiveType();
     StringBuilder toto = new StringBuilder();

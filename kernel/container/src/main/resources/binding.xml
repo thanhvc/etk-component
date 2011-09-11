@@ -12,16 +12,14 @@
     <value name="date"  usage="optional" get-method="getDate" set-method="setDate"/>
     <structure map-as="org.etk.kernel.container.xml.object.XMLMap" usage="optional"
                get-method="getMap" set-method="setMap"/>
-    <structure map-as="org.etk.kernel.container.xml.object.XMLCollection" usage="optional"
-               get-method="getCollection" set-method="setCollection"/>
+    <structure map-as="org.etk.kernel.container.xml.object.XMLCollection" usage="optional" get-method="getCollection" set-method="setCollection"/>
     <structure map-as="org.etk.kernel.container.xml.object.XMLNativeArray" usage="optional"
                get-method="getNativeArray" set-method="setNativeArray"/>
     <structure map-as="org.etk.kernel.container.xml.object.XMLObject" usage="optional"
                get-method="getObject" set-method="setObject"/>
   </mapping>
 
-  <mapping name="value" class="org.etk.kernel.container.xml.object.XMLValue" 
-           extends="org.etk.kernel.container.xml.object.XMLBaseObject">
+  <mapping name="value" class="org.etk.kernel.container.xml.object.XMLValue" extends="org.etk.kernel.container.xml.object.XMLBaseObject">
     <structure using="base-object"/>
   </mapping>
 
@@ -70,9 +68,7 @@
     <value name="description"  field="description" usage="optional"/>
   </mapping>
 
-  <mapping name="value-param" 
-           class="org.etk.kernel.container.xml.ValueParam" 
-           extends="org.etk.kernel.container.xml.Parameter">
+  <mapping name="value-param" class="org.etk.kernel.container.xml.ValueParam" extends="org.etk.kernel.container.xml.Parameter">
     <structure map-as="org.etk.kernel.container.xml.Parameter"/>
     <value name="value"  field="value" deserializer="org.etk.kernel.container.xml.Deserializer.resolveString"/>
   </mapping>
@@ -108,8 +104,7 @@
     <value name="type"  field="type" />
     <value name="description" field="description" usage="optional" />
     <value name="priority" field="priority"  usage="optional" />
-    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" 
-               get-method="getInitParams" set-method="setInitParams"/>
+    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" get-method="getInitParams" set-method="setInitParams"/>
   </mapping>
 
   <mapping name="external-component-plugins" class="org.etk.kernel.container.xml.ExternalComponentPlugins">
@@ -122,12 +117,10 @@
     <value name="type"  field="type" />
     <value name="description" field="description" usage="optional" />
     <value name="priority" field="priority"  usage="optional" />
-    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" 
-               get-method="getInitParams" set-method="setInitParams"/>
+    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" get-method="getInitParams" set-method="setInitParams"/>
   </mapping>
 
-  <mapping name="manageable-components"
-           class="org.etk.kernel.container.xml.ManageableComponents">
+  <mapping name="manageable-components" class="org.etk.kernel.container.xml.ManageableComponents">
     <collection item-type="java.lang.String"  field="componentsType">
       <value name="component-type" style="element"/>
     </collection>
@@ -135,10 +128,8 @@
 
   <mapping name="component-lifecycle-plugin" class="org.etk.kernel.container.xml.ComponentLifecyclePlugin" pre-get="preGet">
     <value name="type"  field="type" />
-    <structure map-as="org.etk.kernel.container.xml.ManageableComponents"
-               get-method="getManageableComponents" set-method="setManageableComponents"/>
-    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" 
-               get-method="getInitParams" set-method="setInitParams"/>
+    <structure map-as="org.etk.kernel.container.xml.ManageableComponents" get-method="getManageableComponents" set-method="setManageableComponents"/>
+    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" get-method="getInitParams" set-method="setInitParams"/>
   </mapping>
 
   <mapping name="component" class="org.etk.kernel.container.xml.Component" pre-get="preGet">
@@ -150,10 +141,8 @@
     <!-- threadlocal components -->
     <value name="multi-instance" field="multiInstance" usage="optional"/>
 
-    <collection name="component-plugins" field="componentPlugins" usage="optional"
-                item-type="org.etk.kernel.container.xml.ComponentPlugin" />
-    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" 
-               get-method="getInitParams" set-method="setInitParams"/>
+    <collection name="component-plugins" field="componentPlugins" usage="optional" item-type="org.etk.kernel.container.xml.ComponentPlugin" />
+    <structure map-as="org.etk.kernel.container.xml.InitParams" usage="optional" get-method="getInitParams" set-method="setInitParams"/>
   </mapping>
 
   <!-- configuration object mapping -->

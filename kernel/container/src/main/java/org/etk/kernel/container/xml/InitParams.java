@@ -6,12 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-//import org.exoplatform.container.xml.ObjectParameter;
-//import org.exoplatform.container.xml.Parameter;
-//import org.exoplatform.container.xml.PropertiesParam;
-//import org.exoplatform.container.xml.ValueParam;
-//import org.exoplatform.container.xml.ValuesParam;
-
 public class InitParams extends HashMap<String, Object> {
 
 	public InitParams() {

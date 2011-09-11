@@ -26,22 +26,22 @@ import org.etk.orm.plugins.bean.ValueKind;
  *          thanhvc@exoplatform.com
  * Jul 14, 2011  
  */
-public abstract class PropertyBinding<P extends PropertyInfo<V, K>, V extends ValueInfo, K extends ValueKind> {
+public abstract class AbstractPropertyBinding<P extends PropertyInfo<V, K>, V extends ValueInfo, K extends ValueKind> {
 
   /** . */
   EntityBinding owner;
 
   /** The optional parent. */
-  PropertyBinding parent;
+  AbstractPropertyBinding parent;
 
   /** . */
   final P property;
 
-  public PropertyBinding(P property) {
+  public AbstractPropertyBinding(P property) {
     this.property = property;
   }
 
-  public PropertyBinding getParent() {
+  public AbstractPropertyBinding getParent() {
     return parent;
   }
 

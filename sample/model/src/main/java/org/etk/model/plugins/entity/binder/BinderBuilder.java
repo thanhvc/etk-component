@@ -26,7 +26,7 @@ import org.etk.model.plugins.entity.binding.AttributeBinding;
 import org.etk.model.plugins.entity.binding.BindingVisitor;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.EntityTypeKind;
-import org.etk.model.plugins.entity.binding.ValueBinding;
+import org.etk.model.plugins.entity.binding.PropertyValueBinding;
 import org.etk.model.plugins.entity.binding.ValueTypeFactory;
 import org.etk.model.plugins.entity.type.SimpleTypeResolver;
 import org.etk.model.plugins.json.JSONAttributePropertyBinder;
@@ -106,7 +106,7 @@ public class BinderBuilder {
     }
 
     @Override
-    public void singleValueMapping(ValueBinding<ValueKind.Single> mapping) {
+    public void singleValueMapping(PropertyValueBinding<ValueKind.Single> mapping) {
       if (mapping.getValue().getValueKind() == ValueKind.SINGLE) {
         SimpleTypeProvider vt = valueTypeFactory.create(mapping.getValue().getDeclaredType(), mapping.getPropertyDefinition().getMetaType());
         JSONPropertySingleValuedPropertyBinder mapper = new JSONPropertySingleValuedPropertyBinder(contextType, vt, mapping);
@@ -115,7 +115,7 @@ public class BinderBuilder {
     }
 
     @Override
-    public void multiValueMapping(ValueBinding<ValueKind.Multi> mapping) {
+    public void multiValueMapping(PropertyValueBinding<ValueKind.Multi> mapping) {
       
     }
 

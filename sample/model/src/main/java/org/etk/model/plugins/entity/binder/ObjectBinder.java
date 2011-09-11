@@ -25,7 +25,7 @@ import org.etk.model.core.MethodInvoker;
 import org.etk.model.core.ObjectContext;
 import org.etk.model.plugins.entity.binding.EntityBinding;
 import org.etk.model.plugins.entity.binding.EntityTypeKind;
-import org.etk.model.plugins.entity.binding.PropertyBinding;
+import org.etk.model.plugins.entity.binding.AbstractPropertyBinding;
 import org.etk.orm.api.format.ObjectFormatter;
 import org.etk.reflect.api.MethodInfo;
 
@@ -85,7 +85,7 @@ public class ObjectBinder<C extends ObjectContext<C>> {
     // Build the dispatcher map
     Map<Method, MethodInvoker<C>> dispatchers = new HashMap<Method, MethodInvoker<C>>();
     for (PropertyBinder<?, ?, C, ?> propertyMapper : propertyMappers) {
-      PropertyBinding<?, ?, ?> info = propertyMapper.getInfo();
+      AbstractPropertyBinding<?, ?, ?> info = propertyMapper.getInfo();
       MethodInfo getter = info.getProperty().getGetter();
       if (getter != null) {
         dispatchers.put((Method)getter.unwrap(), propertyMapper.getGetter());

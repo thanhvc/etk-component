@@ -19,7 +19,7 @@ package org.etk.model.plugins.entity.binder;
 import org.etk.model.core.MethodInvoker;
 import org.etk.model.core.ObjectContext;
 import org.etk.model.plugins.entity.PropertyInfo;
-import org.etk.model.plugins.entity.binding.PropertyBinding;
+import org.etk.model.plugins.entity.binding.AbstractPropertyBinding;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
 
@@ -35,9 +35,9 @@ public abstract class PropertyBinder<P extends PropertyInfo<V, K>, V extends Val
   protected final Class<O> contextType;
 
   /** . */
-  protected final PropertyBinding<P, V, K> info;
+  protected final AbstractPropertyBinding<P, V, K> info;
 
-  public PropertyBinder(Class<O> contextType, PropertyBinding<P, V, K> info) {
+  public PropertyBinder(Class<O> contextType, AbstractPropertyBinding<P, V, K> info) {
     this.contextType = contextType;
     this.info = info;
   }
@@ -46,7 +46,7 @@ public abstract class PropertyBinder<P extends PropertyInfo<V, K>, V extends Val
     return contextType;
   }
 
-  public PropertyBinding<P, V, K> getInfo() {
+  public AbstractPropertyBinding<P, V, K> getInfo() {
     return info;
   }
 

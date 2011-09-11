@@ -20,7 +20,7 @@ import org.etk.model.core.ObjectContext;
 import org.etk.model.plugins.entity.PropertyInfo;
 import org.etk.model.plugins.entity.SimpleValueInfo;
 import org.etk.model.plugins.entity.binder.PropertyBinder;
-import org.etk.model.plugins.entity.binding.ValueBinding;
+import org.etk.model.plugins.entity.binding.PropertyValueBinding;
 import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.model.plugins.vt2.ValueDefinition;
 import org.etk.orm.plugins.bean.ValueKind;
@@ -43,7 +43,7 @@ public class JSONPropertySingleValuedPropertyBinder <O extends ObjectContext<O>,
 
   public JSONPropertySingleValuedPropertyBinder(Class<O> contextType,
                                                 SimpleTypeProvider<I, E> vt,
-                                                ValueBinding<ValueKind.Single> info) {
+                                                PropertyValueBinding<ValueKind.Single> info) {
     super(contextType, info);
 
     //

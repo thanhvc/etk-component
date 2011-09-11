@@ -5,7 +5,7 @@ import org.etk.model.plugins.vt2.PropertyMetaType;
 import org.etk.orm.plugins.bean.ValueInfo;
 import org.etk.orm.plugins.bean.ValueKind;
 
-public class PropertiesBinding<V extends ValueInfo> extends PropertyBinding<PropertyInfo<V, ValueKind.Map>,V, ValueKind.Map> {
+public class PropertiesBinding<V extends ValueInfo> extends AbstractPropertyBinding<PropertyInfo<V, ValueKind.Map>,V, ValueKind.Map> {
 
   /** . */
   private final PropertyMetaType<?> metaType;

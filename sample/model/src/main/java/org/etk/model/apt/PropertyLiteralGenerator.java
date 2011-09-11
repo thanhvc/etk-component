@@ -7,7 +7,7 @@ import javax.annotation.processing.Filer;
 import javax.tools.JavaFileObject;
 
 import org.etk.model.plugins.entity.binding.EntityBinding;
-import org.etk.model.plugins.entity.binding.PropertyBinding;
+import org.etk.model.plugins.entity.binding.AbstractPropertyBinding;
 import org.etk.orm.api.PropertyLiteral;
 import org.etk.orm.apt.FormatterStyle;
 import org.etk.orm.apt.TypeFormatter;
@@ -41,7 +41,7 @@ class PropertyLiteralGenerator {
     //
     code.append("public class ").append(owner.getSimpleName()).append("_ {\n");
 
-    for (PropertyBinding pm : entityBinding.getProperties().values()) {
+    for (AbstractPropertyBinding pm : entityBinding.getProperties().values()) {
       TypeInfo type = pm.getValue().getEffectiveType();
       StringBuilder toto = new StringBuilder();
       new TypeFormatter(owner, FormatterStyle.CAST, toto).format(type);

@@ -68,7 +68,7 @@ public class ETKBindingBuilder {
     private void resolve(ETKInfo info) {
       ETKBinding binding = etkBindings.get(info);
       if (binding == null) {
-        etkBindings.put(info, new ETKBinding(info));
+        etkBindings.put(info, new ETKBinding(info, ""));
       }
     }
     

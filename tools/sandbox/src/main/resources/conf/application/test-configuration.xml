@@ -10,4 +10,30 @@
             <type>org.etk.sandbox.service.MockFooBarPublisher</type>
           </component-plugin>
         </external-component-plugins>
+        
+   <component>
+      <key>org.etk.sandbox.entity.plugins.jdbc.Datasource</key>
+      <type>org.etk.sandbox.entity.plugins.jdbc.Datasource</type>
+      <init-params>
+               <value-param>
+                  <name>db-connection</name>
+                  <value>postgresql-connection</value>
+               </value-param>
+         <properties-param>
+            <name>db-connection</name>
+            <description>database connection properties</description>
+            <property name="driverClassName" value="org.postgresql.Driver" />
+            <property name="url" value="jdbc:postgresql://localhost/dbcreator1" />
+            <property name="username" value="root" />
+            <property name="password" value="gtn" />
+         </properties-param>
+         <properties-param>
+            <name>db-creation</name>
+            <description>database creation properties</description>
+            <property name="scriptPath" value="classpath:/dbcreator/test.sql" />
+            <property name="username" value="root" />
+            <property name="password" value="gtn" />
+         </properties-param>
+      </init-params>
+   </component>
 </configuration>

@@ -26,7 +26,7 @@ import org.etk.orm.plugins.bean.ValueKind;
  *          exo@exoplatform.com
  * Jul 15, 2011  
  */
-public class AttributeBinding extends PropertyBinding<PropertyInfo<SimpleValueInfo, ValueKind.Single>, SimpleValueInfo, ValueKind.Single> {
+public class AttributeBinding extends AbstractPropertyBinding<PropertyInfo<SimpleValueInfo, ValueKind.Single>, SimpleValueInfo, ValueKind.Single> {
 
   /** . */
   private final AttributeType type;

@@ -21,6 +21,8 @@ import java.util.Map;
 import org.etk.reflect.api.ClassTypeInfo;
 import org.etk.sandbox.orm.binding.BindingVisitor;
 import org.etk.sandbox.orm.binding.ETKBinding;
+import org.etk.sandbox.orm.binding.MethodBinding;
+import org.etk.sandbox.orm.binding.PropertyBinding;
 import org.etk.sandbox.orm.core.ObjectContext;
 
 /**
@@ -31,10 +33,19 @@ import org.etk.sandbox.orm.core.ObjectContext;
  */
 public class ETKBinderBuilder {
 
-  public void build(Map<ClassTypeInfo, ETKBinding> bindingMap) {
+  private final Map<ClassTypeInfo, ETKBinding> bindingMap;
+  
+  public ETKBinderBuilder(Map<ClassTypeInfo, ETKBinding> bindingMap) {
+    this.bindingMap = bindingMap;
+  }
+  
+  public void build() {
     Context ctx = new Context();
     ctx.start();
     
+    for (ETKBinding binding : bindingMap.values()){
+      binding.accept(ctx);
+    }
   }
   
   
@@ -47,6 +58,17 @@ public class ETKBinderBuilder {
     public void start() {
             
     }
+    @Override
+    public PropertyBinder<?, ?> propertyBinder(PropertyBinding<?> proBinding) {
+      return null;
+    }
+    
+    @Override
+    public MethodBinder<?> methodBinder(MethodBinding mBinding) {
+      return null;
+    }
+    
+    
   }
   
   

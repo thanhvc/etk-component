@@ -209,7 +209,7 @@ public class BindingBuilder {
       }
 
       //
-      Map<String, PropertyBinding<?, ?, ?>> properties = new HashMap<String, PropertyBinding<?, ?, ?>>();
+      Map<String, AbstractPropertyBinding<?, ?, ?>> properties = new HashMap<String, AbstractPropertyBinding<?, ?, ?>>();
 
       for (PropertyInfo<?, ?> property : entityInfo.getProperties().values()) {
 
@@ -223,7 +223,7 @@ public class BindingBuilder {
         }
 
         // Build the correct mapping or fail
-        PropertyBinding<?, ?, ?> mapping = null;
+        AbstractPropertyBinding<?, ?, ?> mapping = null;
         if (annotations.size() == 1) {
           Annotation annotation = annotations.iterator().next();
           ValueInfo value = property.getValue();
@@ -297,7 +297,7 @@ public class BindingBuilder {
 
       // Wire
       entityMapping.properties.putAll(properties);
-      for (PropertyBinding<?, ?, ?> propertyMapping : entityMapping.properties.values()) {
+      for (AbstractPropertyBinding<?, ?, ?> propertyMapping : entityMapping.properties.values()) {
         propertyMapping.owner = entityMapping;
       }
 
@@ -313,7 +313,7 @@ public class BindingBuilder {
       entityMapping.methods.addAll(methodMappings);
     }
     
-    private <K extends ValueKind> ValueBinding<K> createValueMapping(Property propertyAnnotation,
+    private <K extends ValueKind> PropertyValueBinding<K> createValueMapping(Property propertyAnnotation,
                                                                      PropertyInfo<SimpleValueInfo<K>, ValueKind.Single> property) {
 
       //
@@ -346,7 +346,7 @@ public class BindingBuilder {
                                                                                       false);
 
       //
-      return new ValueBinding<K>(property, propertyDefinition);
+      return new PropertyValueBinding<K>(property, propertyDefinition);
     }
     
     

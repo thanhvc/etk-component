@@ -43,10 +43,10 @@ public class EntityBinding {
   EntityBinding parent;
 
   /** . */
-  final Map<String, PropertyBinding<?, ?, ?>> properties;
+  final Map<String, AbstractPropertyBinding<?, ?, ?>> properties;
 
   /** . */
-  final Map<String, PropertyBinding<?, ?, ?>> unmodifiableProperties;
+  final Map<String, AbstractPropertyBinding<?, ?, ?>> unmodifiableProperties;
 
   /** . */
   final List<MethodBinding> methods;
@@ -78,7 +78,7 @@ public class EntityBinding {
     this.prefix = prefix;
     
     
-    this.properties = new HashMap<String, PropertyBinding<?, ?, ?>>();
+    this.properties = new HashMap<String, AbstractPropertyBinding<?, ?, ?>>();
     this.unmodifiableProperties = Collections.unmodifiableMap(properties);
     this.methods = new ArrayList<MethodBinding>();
     this.unmodifiableMethods = Collections.unmodifiableList(methods);
@@ -101,7 +101,7 @@ public class EntityBinding {
     return entityInfo;
   }
 
-  public Map<String, PropertyBinding<?, ?, ?>> getProperties() {
+  public Map<String, AbstractPropertyBinding<?, ?, ?>> getProperties() {
     return properties;
   }
 
@@ -113,8 +113,8 @@ public class EntityBinding {
     return prefix;
   }
 
-  public <M extends PropertyBinding<?, ?, ?>> M getPropertyMapping(String name, Class<M> type) {
-    PropertyBinding<?, ?, ?> mapping = properties.get(name);
+  public <M extends AbstractPropertyBinding<?, ?, ?>> M getPropertyMapping(String name, Class<M> type) {
+    AbstractPropertyBinding<?, ?, ?> mapping = properties.get(name);
     if (type.isInstance(mapping)) {
       return type.cast(mapping);
     } else {
@@ -125,7 +125,7 @@ public class EntityBinding {
 
   public void accept(BindingVisitor visitor) {
     visitor.startBean(this);
-    for (PropertyBinding<?, ?, ?> property : properties.values()) {
+    for (AbstractPropertyBinding<?, ?, ?> property : properties.values()) {
       property.accept(visitor);
     }
     for (MethodBinding method : methods) {

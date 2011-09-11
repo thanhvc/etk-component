@@ -16,6 +16,9 @@
  */
 package org.etk.sandbox.orm.binding;
 
+import org.etk.sandbox.orm.binder.MethodBinder;
+import org.etk.sandbox.orm.binder.PropertyBinder;
+
 
 /**
  * Created by The eXo Platform SAS
@@ -27,4 +30,8 @@ public class BindingVisitor {
 
   public void start(ETKBinding binding) { }
   public void endBean() { }
+  
+  public PropertyBinder<?, ?> propertyBinder(PropertyBinding<?> proBinding) { return null; }
+   
+  public MethodBinder<?> methodBinder(MethodBinding mBinding) { return null; }
 }
