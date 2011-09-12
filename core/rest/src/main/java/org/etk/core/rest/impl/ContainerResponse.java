@@ -23,7 +23,7 @@ public class ContainerResponse implements GenericContainerResponse {
   /**
    * Logger.
    */
-  private static final Logger        LOG = Logger.getLogger(ContainerResponse.class.getName());
+  private static final Logger LOG = Logger.getLogger(ContainerResponse.class.getName());
 
   /**
    * See {@link ContainerResponseWriter}.

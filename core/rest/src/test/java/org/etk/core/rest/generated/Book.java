@@ -4,9 +4,6 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2011.08.25 at 10:00:15 AM ICT 
 
-//
-
-
 package org.etk.core.rest.generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
