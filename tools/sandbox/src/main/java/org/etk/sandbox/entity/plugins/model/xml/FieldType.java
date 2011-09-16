@@ -19,8 +19,7 @@ package org.etk.sandbox.entity.plugins.model.xml;
 import java.io.Serializable;
 
 import org.etk.common.logging.Logger;
-import org.etk.entity.engine.plugins.jdbc.JdbcValueHandler;
-
+import org.etk.sandbox.entity.plugins.config.JdbcValueHandler;
 /**
  * Generic Entity - FieldType model class
  */
@@ -35,7 +34,6 @@ public class FieldType implements Serializable {
 
   /** The java-type of the Field */
   protected String              javaType         = null;
-
   /** The JDBC value handler for this Field */
   protected JdbcValueHandler<?> jdbcValueHandler = null;
 

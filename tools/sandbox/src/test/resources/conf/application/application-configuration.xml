@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+	<component>
+		<key>org.etk.sandbox.entity.plugins.config.DatasourceConfig</key>
+		<type>org.etk.sandbox.entity.plugins.config.DatasourceConfig</type>
+		<init-params>
+			<value-param>
+				<name>db-connection</name>
+				<value>postgresql-connection</value>
+			</value-param>
+			<properties-param>
+				<name>postgresql-connection</name>
+				<description>postgresql database connection properties</description>
+				<property name="helper-class" value="org.ofbiz.entity.datasource.GenericHelperDAO" />
+				<property name="schema-name" value="public" />
+				<property name="field-type-name" value="postgres" />
+				<property name="check-on-start" value="true" />
+				<property name="add-missing-on-start" value="true" />
+				<property name="use-fk-initially-deferred" value="false" />
+				<property name="alias-view-columns" value="false" />
+				<property name="join-style" value="ansi" />
+				<property name="use-binary-type-for-blob" value="true" />
+				<property name="use-order-by-nulls" value="true" />
+				<property name="jdbc-driver" value="org.postgresql.Driver" />
+				<property name="jdbc-uri" value="jdbc:postgresql://localhost/dbcreator1" />
+				<property name="jdbc-username" value="root" />
+				<property name="jdbc-password" value="gtn" />
+				<property name="pool-minsize" value="2" />
+				<property name="pool-maxsize" value="250" />
+				<property name="time-between-eviction-runs-millis" value="600000" />
+			</properties-param>
+			<properties-param>
+				<name>mysql-connection</name>
+				<description>mysql database connection properties</description>
+				<property name="helper-class" value="org.ofbiz.entity.datasource.GenericHelperDAO" />
+				<property name="field-type-name" value="mysql" />
+				<property name="check-on-start" value="true" />
+				<property name="add-missing-on-start" value="true" />
+				<property name="check-pks-on-start" value="false" />
+				<property name="use-foreign-keys" value="true" />
+				<property name="alias-view-columns" value="false" />
+				<property name="drop-fk-use-foreign-key-keyword" value="true" />
+				<property name="table-type" value="InnoDB" />
+				<property name="character-set" value="latin1" />
+				<property name="collate" value="latin1_general_cs" />
+				<property name="jdbc-driver" value="com.mysql.jdbc.Drive" />
+				<property name="jdbc-uri" value="jdbc:mysql://127.0.0.1/dbcreator1?autoReconnect=true" />
+				<property name="jdbc-username" value="root" />
+				<property name="jdbc-password" value="gtn" />
+				<property name="isolation-level" value="ReadCommitted" />
+				<property name="pool-minsize" value="2" />
+				<property name="pool-maxsize" value="250" />
+				<property name="time-between-eviction-runs-millis" value="600000" />
+			</properties-param>
+		</init-params>
+	</component>
+	<component>
+		<key>org.etk.sandbox.entity.plugins.config.FieldTypeConfig</key>
+		<type>org.etk.sandbox.entity.plugins.config.FieldTypeConfig</type>
+		<init-params>
+			<value-param>
+				<name>postgres</name>
+				<value>entityconf/fieldtype/fieldtypepostgres.xml</value>
+			</value-param>
+			<value-param>
+				<name>mysql</name>
+				<value>entityconf/fieldtype/fieldtypemysql.xml</value>
+			</value-param>
+			<value-param>
+				<name>oracle</name>
+				<value>entityconf/fieldtype/fieldtypeoracle.xml</value>
+			</value-param>
+			<value-param>
+				<name>mssql</name>
+				<value>entityconf/fieldtype/fieldtypemssql.xml</value>
+			</value-param>
+		</init-params>
+	</component>
+	
+	<external-component-plugins>
+    <target-component>org.etk.service.foo.spi.FooService</target-component>
+    <component-plugin>
+      <name>MockFooBarPublisher</name>
+      <set-method>addFooListener</set-method>
+      <type>org.etk.sandbox.service.MockFooBarPublisher</type>
+    </component-plugin>
+  </external-component-plugins>
+</configuration>
+

@@ -30,6 +30,7 @@ import org.etk.common.logging.Logger;
 import org.etk.sandbox.entity.plugins.model.xml.Configuration;
 import org.etk.sandbox.entity.plugins.model.xml.Deserializer;
 import org.etk.sandbox.entity.plugins.model.xml.Entity;
+import org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel;
 
 /**
  * Created by The eXo Platform SAS Author : eXoPlatform exo@exoplatform.com Aug
@@ -193,28 +194,15 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
     }
   }
 
-  public Entity getEntity(String packageName, String entityName) {
-    return configurations.getEntity(packageName, entityName);
-  }
-  
-  public Entity getEntity(String tableName) {
-    return configurations.getEntity(tableName);
-  }
-
+ 
   
 
-  public Collection getEntities() {
+  public Collection<FieldTypeModel> getFieldTypeModels() {
     if (configurations == null)
       return null;
-    return configurations.getEntities();
+    return configurations.getFieldTypeList();
   }
   
-  public Collection getViews() {
-    if (configurations == null)
-      return null;
-    return configurations.getViews();
-  }
-
   public boolean isValidateSchema() {
     return validateSchema;
   }

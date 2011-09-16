@@ -66,6 +66,60 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jibx</groupId>
+				<artifactId>maven-jibx-plugin</artifactId>
+				<version>${org.jibx.version}</version>
+				<configuration>
+					<directory>src/main/resources</directory>
+					<includes>
+						<includes>binding.xml</includes>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>bind</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources1</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+					<execution>
+						<id>attach-sources2</id>
+						<goals>
+							<goal>test-jar-no-fork</goal>
+						</goals>
+						<phase>test-compile</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 	<profiles>
 		<profile>
 			<id>run-chp02a</id>

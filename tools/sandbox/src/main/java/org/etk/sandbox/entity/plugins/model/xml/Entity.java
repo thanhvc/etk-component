@@ -32,7 +32,7 @@ import org.etk.kernel.container.xml.ObjectParameter;
 import org.etk.kernel.container.xml.PropertiesParam;
 import org.etk.kernel.container.xml.ValueParam;
 import org.etk.kernel.container.xml.ValuesParam;
-import org.etk.sandbox.entity.plugins.config.DatasourceInfo;
+import org.etk.sandbox.entity.plugins.config.DatasourceConfig;
 import org.jibx.runtime.IMarshallingContext;
 
 import javolution.util.FastList;
@@ -206,7 +206,7 @@ public class Entity implements Comparable<Entity> {
 
   
   /** The table-name of the Entity including a Schema name if specified in the datasource config */
-  public String getTableName(DatasourceInfo datasourceInfo) {
+  public String getTableName(DatasourceConfig datasourceInfo) {
       if (datasourceInfo != null && datasourceInfo.schemaName != null) {
           return datasourceInfo.schemaName + "." + this.tableName;
       } else {

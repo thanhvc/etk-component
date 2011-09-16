@@ -20,9 +20,11 @@ import java.util.Map;
 
 import javolution.util.FastMap;
 
+import org.etk.common.logging.Logger;
 import org.etk.kernel.container.configuration.ConfigurationException;
 import org.etk.kernel.container.xml.InitParams;
 import org.etk.kernel.container.xml.PropertiesParam;
+import org.etk.kernel.container.xml.ValueParam;
 
 /**
  * Created by The eXo Platform SAS
@@ -30,8 +32,9 @@ import org.etk.kernel.container.xml.PropertiesParam;
  *          thanhvc@exoplatform.com
  * Sep 12, 2011  
  */
-public class DatasourceInfo {
+public class DatasourceConfig {
 
+  private static final Logger logger = Logger.getLogger(DatasourceConfig.class);
   private final static String CONNECTION_PROPERTIES = "db-connection";
   
   private final static String HELPER_CLASS = "helper-class";
@@ -54,7 +57,7 @@ public class DatasourceInfo {
 
   //TODO Add more for MYSQL
   
-  
+  public String dbConnection = null;
   public String schemaName = null;
   public boolean useSchemas = true;
   public boolean checkOnStart = true;
@@ -93,13 +96,18 @@ public class DatasourceInfo {
   
   Map<String, String> connectionProperties = FastMap.newInstance();
   
-  public DatasourceInfo(InitParams params) throws ConfigurationException {
+  public DatasourceConfig(InitParams params) throws ConfigurationException {
     
     if (params == null) {
       throw new ConfigurationException("Initializations parameters expected");
     }
+    ValueParam valParam = params.getValueParam(CONNECTION_PROPERTIES);
+    this.dbConnection = valParam == null ? "postgresql-connection" : valParam.getValue();
 
-    PropertiesParam prop = params.getPropertiesParam(CONNECTION_PROPERTIES);
+    if (logger.isDebugEnabled()) logger.debug("db-connection = " + this.dbConnection);
+    
+    //
+    PropertiesParam prop = params.getPropertiesParam(this.dbConnection);
 
     if (prop != null) {
       

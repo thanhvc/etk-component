@@ -23,9 +23,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javolution.util.FastMap;
+import javolution.util.FastList;
 
 import org.etk.common.logging.Logger;
 import org.jibx.runtime.BindingDirectory;
@@ -34,8 +33,8 @@ import org.jibx.runtime.IMarshallingContext;
 
 /**
  * Created by The eXo Platform SAS
- * Author : eXoPlatform
- *          exo@exoplatform.com
+ * Author : Thanh_VuCong
+ *          thanhvc@exoplatform.com
  * Aug 26, 2011  
  */
 public final class Configuration implements Cloneable {
@@ -43,63 +42,46 @@ public final class Configuration implements Cloneable {
   private static final Logger log = Logger.getLogger(Configuration.class);
   public static final String KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
   
-  /** The map which contains the Entities Map binding from entityDef.xml.*/
-  private Map<String, Entity> entitiesMap = FastMap.newInstance();
-  /** The map which contains the View Entities Map binding from entityDef.xml*/
-  private Map<String, ViewEntity> viewsMap = FastMap.newInstance();
+  /** The map which contains the FieldTypeModel Map binding from fieldtypeXXX.xml.*/
+  private Collection<FieldTypeModel> fieldTypeList = FastList.newInstance();
+ 
   private ArrayList<String> imports;
   
   /**
-   * Adds the Entity to the EntityMap which contains the Entity objects 
-   * to configure in the entitydef.xml
+   * Adds the FieldTypeModel to the fieldTypeMap which contains the FieldTypeModel objects 
+   * to configure in the fieldtypeXXX.xml
    *   
    * @param object
    */
-  public void addEntity(Object object) {
-    Entity entity = (Entity) object;
-    String key = entity.getPackageName() + "." + entity.getEntityName();
-    entitiesMap.put(key, entity);
+  public void addFieldTypeModel(Object object) {
+    FieldTypeModel fieldTypeModel = (FieldTypeModel) object;
+    fieldTypeList.add(fieldTypeModel);
   }
+  
+  
+  
+  public boolean hasFieldTypeModel() {
+    return fieldTypeList.size() > 0;
+  }
+  
+ 
   
   /**
-   * Adds the View Entity to the ViewMap which contains the View objects 
-   * to configure in the entitydef.xml
-   *   
-   * @param object
-   */
-  public void addView(Object object) {
-    ViewEntity entityView = (ViewEntity) object;
-    String key = entityView.getPackageName() + "." + entityView.getViewName();
-    viewsMap.put(key, entityView);
-    
-    //need to processing when view relate to provided Entity.
-    
-  }
-  
-  public boolean hasEntity() {
-    return entitiesMap.size() > 0;
-  }
-  
-  public boolean hasView() {
-    return viewsMap.size() > 0;
-  }
-  
-  /**
-   * Gets the Entity Iterator for Binding.xml mapping
+   * Gets the FieldType Iterator for Binding.xml mapping
    * @return
    */
-  public Iterator getEntityIterator() {
-    return this.entitiesMap.values().iterator();
+  public Iterator<FieldTypeModel> getFieldTypeModelIterator() {
+    return this.fieldTypeList.iterator();
   }
   
-  /**
-   * Gets the View Iterator for Binding.xml mapping
-   * @return
-   */
-  public Iterator getViewIterator() {
-    return this.viewsMap.values().iterator();
-  }
+   
   
+  public Collection<FieldTypeModel> getFieldTypeList() {
+    return fieldTypeList;
+  }
+
+
+
   public void addImport(String url) {
     if (imports == null)
       imports = new ArrayList<String>();
@@ -110,35 +92,7 @@ public final class Configuration implements Cloneable {
     return imports;
   }
   
-  /**
-   * 
-   * @return
-   */
-  public Collection getEntities() {
-    return entitiesMap.values();
-  }
-  
-  /**
-   * 
-   * @return
-   */
-  public Collection getViews() {
-    return viewsMap.values();
-  }
-
-  public Entity getEntity(String packageName, String entityName) {
-    String key = packageName + "." + entityName;
-    return entitiesMap.get(key);
-  }
-
-  /**
-   * Gets the Entity which uses the entityFullName = packageName + "." + entityName
-   * @param entityFullName
-   * @return
-   */
-  public Entity getEntity(String entityFullName) {
-    return entitiesMap.get(entityFullName);
-  }
+ 
   
   /**
    * Put all of the component, containerLifecyclePlugin, and componentLifecyclePlugin 
@@ -146,8 +100,7 @@ public final class Configuration implements Cloneable {
    * to the current(Configuration).
    */
   public void mergeConfiguration(Configuration other) {
-    this.entitiesMap.putAll(other.entitiesMap);
-    this.viewsMap.putAll(other.viewsMap);
+    this.fieldTypeList.addAll(other.fieldTypeList);
   }
 
   /**
