@@ -17,7 +17,6 @@
 package org.etk.sandbox.entity.plugins.model.xml;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,17 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
-import org.etk.kernel.container.configuration.ConfigurationManagerImpl;
-import org.etk.kernel.container.xml.ObjectParameter;
-import org.etk.kernel.container.xml.PropertiesParam;
-import org.etk.kernel.container.xml.ValueParam;
-import org.etk.kernel.container.xml.ValuesParam;
-import org.etk.sandbox.entity.plugins.config.DatasourceConfig;
-import org.jibx.runtime.IMarshallingContext;
-
 import javolution.util.FastList;
 import javolution.util.FastMap;
+
+import org.etk.kernel.container.configuration.ConfigurationManagerImpl;
+import org.etk.sandbox.entity.plugins.config.DatasourceConfig;
+import org.jibx.runtime.IMarshallingContext;
 
 /**
  * Created by The eXo Platform SAS Author : eXoPlatform
@@ -57,7 +51,8 @@ public class Entity implements Comparable<Entity> {
 
   private Map<String, Field> fieldMap              = FastMap.newInstance();
 
-  private List<Field>        pks                   = FastList.newInstance();
+  private Collection<PKField> pks                  = FastList.newInstance();
+  private List<Field> pkFields               = FastList.newInstance();
 
   private List<Field>        nopkg                 = FastList.newInstance();
 
@@ -92,6 +87,10 @@ public class Entity implements Comparable<Entity> {
    */
   protected String           dependentOn           = "";
 
+  /** An indicator to specify if this entity is never cached.
+   * If true causes the delegator to not clear caches on write and to not get
+   * from cache on read showing a warning messages to that effect
+   */
   protected boolean          neverCache            = false;
 
   protected boolean          neverCheck            = false;
@@ -119,6 +118,13 @@ public class Entity implements Comparable<Entity> {
     Field field = (Field) object;
     fieldMap.put(field.getName(), field);
   }
+  /**
+   * Gets FieldIterator
+   * @return
+   */
+  public Iterator<Field> getFieldIterator() {
+    return fieldMap.values().iterator();
+  }
 
   /**
    * Adds the field for the Entity.
@@ -127,7 +133,15 @@ public class Entity implements Comparable<Entity> {
    */
   public void addPKField(Object object) {
     PKField pkfield = (PKField) object;
-    pks.add(fieldMap.get(pkfield.getFieldName()));
+    Field field = fieldMap.get(pkfield.getFieldName());
+    pkfield.setField(field);
+    
+    pkFields.add(field);
+    pks.add(pkfield);
+  }
+
+  public Iterator<PKField> getPKFieldIterator() {
+    return pks.iterator();
   }
 
   /**
@@ -154,7 +168,7 @@ public class Entity implements Comparable<Entity> {
     return fieldMap.values();
   }
 
-  public List<Field> getPkgs() {
+  public Collection<PKField> getPkgs() {
     return pks;
   }
 
@@ -278,7 +292,7 @@ public class Entity implements Comparable<Entity> {
     this.fieldMap = fields;
   }
 
-  public void setPkgs(List<Field> pkgs) {
+  public void setPkgs(Collection<PKField> pkgs) {
     this.pks = pkgs;
   }
 
@@ -303,16 +317,6 @@ public class Entity implements Comparable<Entity> {
   }
 
   // TODO Check binding.xml
-  public Iterator<Field> getFieldsIterator() {
-    return fieldMap.values().iterator();
-  }
-
-  // TODO Check binding.xml
-  public Iterator<Field> getPksIterator() {
-    return pks.iterator();
-  }
-
-  // TODO Check binding.xml
   public Iterator<Field> getNopksIterator() {
     return this.nopkg.iterator();
   }
@@ -329,15 +333,15 @@ public class Entity implements Comparable<Entity> {
     return fieldMap.keySet();
   }
 
-  public List<String> getPkFieldNames() {
-    return getFieldNamesFromFieldVector(pks);
+  public Collection<String> getPkFieldNames() {
+    return getFieldNamesFromFieldVector(pkFields);
   }
 
   public List<String> getNoPkFieldNames() {
     return getFieldNamesFromFieldVector(nopkg);
   }
 
-  public List<String> getFieldNamesFromFieldVector(Field... modelFields) {
+  public Collection<String> getFieldNamesFromFieldVector(Field... modelFields) {
     return getFieldNamesFromFieldVector(Arrays.asList(modelFields));
   }
 
@@ -360,6 +364,25 @@ public class Entity implements Comparable<Entity> {
   public void setDoLock(boolean doLock) {
     this.doLock = doLock;
   }
+  
+  /** An indicator to specify if this entity is never cached.
+   * If true causes the delegator to not clear caches on write and to not get
+   * from cache on read showing a warning messages to that effect
+   */
+  public boolean getNeverCache() {
+      return this.neverCache;
+  }
+
+ 
+  /**
+   * An indicator to specific if this entity should ignore automatic DB checks.
+   * This should be set when the entity is mapped to a database view to prevent
+   * warnings and attempts to modify the schema.     
+   */
+  public boolean getNeverCheck() {
+      return neverCheck;
+  }
+
 
   public boolean lock() {
     if (doLock && isField(STAMP_FIELD)) {
@@ -382,7 +405,7 @@ public class Entity implements Comparable<Entity> {
 
   public Field getOnlyPk() {
     if (this.pks.size() == 1) {
-      return this.pks.get(0);
+      return this.pkFields.get(0);
     } else {
       throw new IllegalArgumentException("Error in getOnlyPk, the [" + this.getEntityName()
           + "] entity has more than one pk!");
@@ -390,7 +413,7 @@ public class Entity implements Comparable<Entity> {
   }
 
   public List<Field> getPkFieldsUnmodifiable() {
-    return Collections.unmodifiableList(this.pks);
+    return Collections.unmodifiableList(this.pkFields);
   }
 
   public String fieldNameString() {

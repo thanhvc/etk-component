@@ -38,7 +38,10 @@ public class DatasourceConfig {
   private final static String CONNECTION_PROPERTIES = "db-connection";
   
   private final static String HELPER_CLASS = "helper-class";
+  
+  
   private final static String SCHEMA_NAME = "schema-name";
+  private final static String ENTITY_MODEL_FILE = "entity-model-file";
   private final static String FIELD_TYPE_NAME = "field-type-name";
   private final static String CHECK_ON_START = "check-on-start";
   private final static String ADD_MISSING_ON_START = "add-missing-on-start";
@@ -93,6 +96,7 @@ public class DatasourceConfig {
   public String jdbcUsername = null;
   public String jdbcPassword = null;
   public String fieldTypeName = null;
+  public String entityModelFile = null;
   
   Map<String, String> connectionProperties = FastMap.newInstance();
   
@@ -132,10 +136,17 @@ public class DatasourceConfig {
       }
       
       this.schemaName = prop.getProperty(SCHEMA_NAME);
+      
       this.fieldTypeName = prop.getProperty(FIELD_TYPE_NAME);
       if (fieldTypeName == null) {
         throw new ConfigurationException("field-type-name expected in db-connection properties section");
       }
+      
+      this.entityModelFile = prop.getProperty(ENTITY_MODEL_FILE);
+      if (entityModelFile == null) {
+        throw new ConfigurationException("entity-model-file expected in db-connection properties section");
+      }
+      
       this.checkOnStart = !"false".equals(prop.getProperty(CHECK_ON_START));
       this.checkPrimaryKeysOnStart = !"false".equals(prop.getProperty("check-pks-on-start"));
       this.addMissingOnStart = "true".equals(prop.getProperty(ADD_MISSING_ON_START));

@@ -22,9 +22,11 @@ import java.util.Map;
 import javolution.util.FastMap;
 
 import org.etk.common.logging.Logger;
+import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.container.configuration.ConfigurationException;
 import org.etk.kernel.container.xml.InitParams;
 import org.etk.kernel.container.xml.ValueParam;
+import org.etk.sandbox.entity.plugins.model.xml.FieldType;
 import org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel;
 
 /**
@@ -41,6 +43,17 @@ public class FieldTypeConfig {
   private DatasourceConfig datasourceInfo;
   private Map<String, Collection<FieldTypeModel>> fieldTypeModelMap = FastMap.newInstance();
   
+  public static FieldTypeConfig getInstance() {
+    ApplicationContainer container = ApplicationContainer.getInstance();
+    return (FieldTypeConfig) container.getComponentInstanceOfType(FieldTypeConfig.class);
+  }
+  
+  /**
+   * When you want to get instance, please use the getInstance() method.
+   * @param params
+   * @param datasourceInfo
+   * @throws ConfigurationException
+   */
   public FieldTypeConfig(InitParams params, DatasourceConfig datasourceInfo) throws ConfigurationException {
     if (params == null) {
       throw new ConfigurationException("Initializations parameters expected");
@@ -81,4 +94,15 @@ public class FieldTypeConfig {
   public void setFieldTypeModelList(Collection<FieldTypeModel> fieldTypeModelList) {
     this.fieldTypeModelMap.put(this.fieldTypeName, fieldTypeModelList);
   }
+  //TODO need to unitTest this method
+  public FieldType getFieldType(String fieldType) {
+    Collection<FieldTypeModel> fieldTypes = getFieldTypeModelList();
+    FieldType got = null;
+    for(FieldTypeModel typeModel : fieldTypes) {
+      got = typeModel.getFieldType(fieldType);
+      break;
+    }
+    return got;
+  }
+  
 }

@@ -14,36 +14,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.entity.plugins.model.xml;
+package org.etk.sandbox.entity.base.utils;
+
+import java.util.Collection;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Aug 29, 2011  
+ * Sep 19, 2011  
  */
-public class PKField {
+public class UtilValidate {
 
-  private String fieldName = null;
-  private Field field = null;
-
-  public String getFieldName() {
-    return fieldName;
-  }
-
-  public void setFieldName(String fieldName) {
-    this.fieldName = fieldName;
-  }
-
-  public Field getField() {
-    return field;
-  }
-
-  public void setField(Field field) {
-    this.field = field;
-  }
   
-  
-  
-  
+  /** Check whether collection c is NOT empty. */
+  public static <E> boolean isNotEmpty(Collection<E> c) {
+    return ((c != null) && (c.size() > 0));
+  }
+  /** Check whether string s is NOT empty. */
+  public static boolean isNotEmpty(String s) {
+      return ((s != null) && (s.length() > 0));
+  }
 }

@@ -14,36 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.entity.plugins.model.xml;
+package org.etk.sandbox.entity.base.lang;
 
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Aug 29, 2011  
+ * Sep 6, 2011  
  */
-public class PKField {
+/** Factory interface. */
+public interface Factory<R, A> {
 
-  private String fieldName = null;
-  private Field field = null;
+    /** Returns an instance of <code>R</code>. This is a basic factory interface
+     * that is meant to be extended. Sub-interfaces declare types for
+     * <code>A</code> (the <code>getInstance</code> argument), and
+     * <code>R</code> (the type returned by <code>getInstance</code>).
+     *
+     * @param obj Optional object to be used in <code>R</code>'s construction,
+     * or to be used as a selector key
+     * @return An instance of <code>R</code>
+     */
+    public R getInstance(A obj);
 
-  public String getFieldName() {
-    return fieldName;
-  }
-
-  public void setFieldName(String fieldName) {
-    this.fieldName = fieldName;
-  }
-
-  public Field getField() {
-    return field;
-  }
-
-  public void setField(Field field) {
-    this.field = field;
-  }
-  
-  
-  
-  
 }

@@ -64,4 +64,8 @@ public class FieldTypeModel {
   public boolean hasFieldType() {
     return fieldTypeMap.size() > 0;
   }
+  
+  public FieldType getFieldType(String fieldType) {
+    return fieldTypeMap.get(fieldType);
+  }
 }

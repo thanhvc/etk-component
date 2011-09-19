@@ -20,6 +20,7 @@ package org.etk.component.database;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.etk.component.base.transaction.TransactionService;
 
@@ -37,7 +38,7 @@ public interface DatabaseService
     * @return
     * @throws Exception
     */
-   public ExoDatasource getDatasource() throws Exception;
+   public ExoDatasource getDatasource() throws SQLException;
 
    /**
     * This method should look up the datasouce by the datasource name and return.
@@ -47,16 +48,16 @@ public interface DatabaseService
     * @return
     * @throws Exception
     */
-   public ExoDatasource getDatasource(String dsname) throws Exception;
+   public ExoDatasource getDatasource(String dsname) throws SQLException;
 
    // TODO: This method should be removed and used the getDataSource method
-   public Connection getConnection() throws Exception;
+   public Connection getConnection() throws SQLException;
 
    // TODO: This method should be removed and used the getDataSource method
-   public Connection getConnection(String dsName) throws Exception;
+   public Connection getConnection(String dsName) throws SQLException;
 
    // TODO: This method should be removed and used the getDataSource method
-   public void closeConnection(Connection conn) throws Exception;
+   public void closeConnection(Connection conn) throws SQLException;
 
    /**
     * This method should return the transaction service
@@ -64,6 +65,6 @@ public interface DatabaseService
     * @return
     * @throws Exception
     */
-   public TransactionService getTransactionService() throws Exception;
+   public TransactionService getTransactionService() throws SQLException;
 
 }

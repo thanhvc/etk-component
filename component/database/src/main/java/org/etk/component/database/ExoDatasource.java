@@ -143,7 +143,7 @@ public class ExoDatasource {
    * @return
    * @throws Exception
    */
-  public Connection getConnection() throws Exception {
+  public Connection getConnection() throws SQLException {
     return xaDatasource_.getConnection();
   }
 
@@ -154,7 +154,7 @@ public class ExoDatasource {
    * @param conn
    * @throws Exception
    */
-  public void closeConnection(Connection conn) throws Exception {
+  public void closeConnection(Connection conn) throws SQLException {
     // long startGet = System.currentTimeMillis();
     conn.close();
     // totalCloseConnect += System.currentTimeMillis() - startGet;

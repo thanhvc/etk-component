@@ -14,36 +14,24 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.entity.plugins.model.xml;
+package org.etk.sandbox.entity.core;
 
 /**
- * Created by The eXo Platform SAS
- * Author : eXoPlatform
- *          exo@exoplatform.com
- * Aug 29, 2011  
+ * GenericDataSourceException
+ *
  */
-public class PKField {
+@SuppressWarnings("serial")
+public class GenericDataSourceException extends GenericEntityException {
 
-  private String fieldName = null;
-  private Field field = null;
+    public GenericDataSourceException() {
+        super();
+    }
 
-  public String getFieldName() {
-    return fieldName;
-  }
+    public GenericDataSourceException(String str) {
+        super(str);
+    }
 
-  public void setFieldName(String fieldName) {
-    this.fieldName = fieldName;
-  }
-
-  public Field getField() {
-    return field;
-  }
-
-  public void setField(Field field) {
-    this.field = field;
-  }
-  
-  
-  
-  
+    public GenericDataSourceException(String str, Throwable nested) {
+        super(str, nested);
+    }
 }

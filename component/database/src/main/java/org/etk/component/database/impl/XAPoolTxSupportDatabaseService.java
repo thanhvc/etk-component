@@ -27,6 +27,7 @@ import org.etk.kernel.container.xml.InitParams;
 import org.etk.kernel.container.xml.PropertiesParam;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -62,33 +63,33 @@ public class XAPoolTxSupportDatabaseService implements DatabaseService
       }
    }
 
-   public ExoDatasource getDatasource() throws Exception
+   public ExoDatasource getDatasource() throws SQLException
    {
       return defaultDS_;
    }
 
-   public ExoDatasource getDatasource(String dsName) throws Exception
+   public ExoDatasource getDatasource(String dsName) throws SQLException
    {
       return datasources_.get(dsName);
    }
 
-   public Connection getConnection() throws Exception
+   public Connection getConnection() throws SQLException
    {
       return defaultDS_.getConnection();
    }
 
-   public Connection getConnection(String dsName) throws Exception
+   public Connection getConnection(String dsName) throws SQLException
    {
       ExoDatasource ds = datasources_.get(dsName);
       return ds.getConnection();
    }
 
-   public void closeConnection(Connection conn) throws Exception
+   public void closeConnection(Connection conn) throws SQLException
    {
       defaultDS_.closeConnection(conn);
    }
 
-   public TransactionService getTransactionService() throws Exception
+   public TransactionService getTransactionService() throws SQLException
    {
       return txService_;
    }

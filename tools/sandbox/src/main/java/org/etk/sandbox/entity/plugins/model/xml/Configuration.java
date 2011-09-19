@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javolution.util.FastList;
+import javolution.util.FastMap;
 
 import org.etk.common.logging.Logger;
 import org.jibx.runtime.BindingDirectory;
@@ -32,56 +34,111 @@ import org.jibx.runtime.IBindingFactory;
 import org.jibx.runtime.IMarshallingContext;
 
 /**
- * Created by The eXo Platform SAS
- * Author : Thanh_VuCong
- *          thanhvc@exoplatform.com
- * Aug 26, 2011  
+ * Created by The eXo Platform SAS Author : Thanh_VuCong thanhvc@exoplatform.com
+ * Aug 26, 2011
  */
 public final class Configuration implements Cloneable {
 
-  private static final Logger log = Logger.getLogger(Configuration.class);
-  public static final String KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
-  
-  /** The map which contains the FieldTypeModel Map binding from fieldtypeXXX.xml.*/
-  private Collection<FieldTypeModel> fieldTypeList = FastList.newInstance();
- 
-  private ArrayList<String> imports;
+  private static final Logger        log                          = Logger.getLogger(Configuration.class);
+
+  public static final String         KERNEL_CONFIGURATION_1_0_URI = "http://www.exoplaform.org/xml/ns/kernel_1_0.xsd";
+
+  /**
+   * The map which contains the FieldTypeModel Map binding from
+   * fieldtypeXXX.xml.
+   */
+  private Collection<FieldTypeModel> fieldTypeList                = FastList.newInstance();
+
+  /** The map which contains the Entities Map binding from entityDef.xml. */
+  private Map<String, Entity>        entitiesMap                  = FastMap.newInstance();
+
+  private ArrayList<String>          imports;
+
+  /* ========================ENTITY MAPPING METHOD ======================= */
+  /**
+   * Adds the Entity to the EntityMap which contains the Entity objects to
+   * configure in the entitydef.xml
+   * 
+   * @param object
+   */
+  public void addEntity(Object object) {
+    Entity entity = (Entity) object;
+    String key = entity.getPackageName() + "." + entity.getEntityName();
+    entitiesMap.put(key, entity);
+  }
+  /**
+   * Provides to binding.xml to check having any entity. 
+   * @return
+   */
+  public boolean hasEntity() {
+    return entitiesMap.size() > 0;
+  }
+  /**
+   * Gets the Entity Iterator for Binding.xml mapping
+   * @return
+   */
+  public Iterator<Entity> getEntityIterator() {
+    return this.entitiesMap.values().iterator();
+  }
   
   /**
-   * Adds the FieldTypeModel to the fieldTypeMap which contains the FieldTypeModel objects 
-   * to configure in the fieldtypeXXX.xml
-   *   
+   * Gets Entity list
+   * @return
+   */
+  public Collection<Entity> getEntities() {
+    return entitiesMap.values();
+  }
+  /**
+   * Gets entity by packageName and entityName
+   * 
+   * @param packageName
+   * @param entityName
+   * @return
+   */
+  public Entity getEntity(String packageName, String entityName) {
+    String key = packageName + "." + entityName;
+    return entitiesMap.get(key);
+  }
+  
+  /**
+   * Gets the Entity which uses the entityFullName = packageName + "." + entityName
+   * @param entityFullName
+   * @return
+   */
+  public Entity getEntity(String entityFullName) {
+    return entitiesMap.get(entityFullName);
+  }
+
+  /* ========================FIELDTYPE MAPPING METHOD ======================= */
+  /**
+   * Adds the FieldTypeModel to the fieldTypeMap which contains the
+   * FieldTypeModel objects to configure in the fieldtypeXXX.xml
+   * 
    * @param object
    */
   public void addFieldTypeModel(Object object) {
     FieldTypeModel fieldTypeModel = (FieldTypeModel) object;
     fieldTypeList.add(fieldTypeModel);
   }
-  
-  
-  
+
   public boolean hasFieldTypeModel() {
     return fieldTypeList.size() > 0;
   }
-  
- 
-  
+
   /**
    * Gets the FieldType Iterator for Binding.xml mapping
+   * 
    * @return
    */
   public Iterator<FieldTypeModel> getFieldTypeModelIterator() {
     return this.fieldTypeList.iterator();
   }
-  
-   
-  
+
   public Collection<FieldTypeModel> getFieldTypeList() {
     return fieldTypeList;
   }
 
-
-
+  /* ========================FIELDTYPE MAPPING METHOD ======================= */
   public void addImport(String url) {
     if (imports == null)
       imports = new ArrayList<String>();
@@ -91,15 +148,14 @@ public final class Configuration implements Cloneable {
   public List getImports() {
     return imports;
   }
-  
- 
-  
+
   /**
-   * Put all of the component, containerLifecyclePlugin, and componentLifecyclePlugin 
-   * from other which was contained in other(different Configuration) 
-   * to the current(Configuration).
+   * Put all of the component, containerLifecyclePlugin, and
+   * componentLifecyclePlugin from other which was contained in other(different
+   * Configuration) to the current(Configuration).
    */
   public void mergeConfiguration(Configuration other) {
+    this.entitiesMap.putAll(other.entitiesMap);
     this.fieldTypeList.addAll(other.fieldTypeList);
   }
 

@@ -1,11 +1,35 @@
 <binding>
   <!-- the default deserializer to use for String -->
   <format type="java.lang.String" deserializer="org.etk.sandbox.entity.plugins.model.xml.Deserializer.resolveString"/>
- <!-- configuration entity mapping -->
+  <!-- configuration entity mapping -->
+  <mapping name="entity" class="org.etk.sandbox.entity.plugins.model.xml.Entity" pre-get="preGet">
+    <value name="entity-name"  field="entityName" style="attribute"/>
+    <value name="table-name"  field="tableName" style="attribute"/>
+    <value name="package-name"  field="packageName" style="attribute"/>
+    <value name="description" field="description" style="attribute" usage="optional"/>
+    <value name="dependent-on" field="dependentOn" style="attribute" usage="optional"/>
+    <value name="never-cache" field="neverCache" style="attribute" usage="optional"/>
+    <value name="never-check" field="neverCheck" style="attribute" usage="optional"/>
+    <value name="auto-clear-cache" field="autoClearCache" style="attribute" usage="optional"/>
+    <value name="priority" field="priority" style="attribute" usage="optional"/>
+    <collection name="fields" item-type="org.etk.sandbox.entity.plugins.model.xml.Field" add-method="addField" iter-method="getFieldIterator"/>
+    <collection name="primary-keys" item-type="org.etk.sandbox.entity.plugins.model.xml.PKField" add-method="addPKField" iter-method="getPKFieldIterator"/>
+  </mapping>
+  <!-- field object mapping -->
+  <mapping name="field" class="org.etk.sandbox.entity.plugins.model.xml.Field">
+    <value name="name"  field="name" style="attribute"/>
+    <value name="col-name"  field="colName" style="attribute" usage="optional"/>
+    <value name="type"  field="type" style="attribute"/>
+  </mapping>
+   <!-- primary key object mapping -->
+  <mapping name="prim-key" class="org.etk.sandbox.entity.plugins.model.xml.PKField">
+    <value name="field-name"  field="fieldName" style="attribute"/>
+  </mapping>
+  <!-- configuration field-type-model mapping -->
   <mapping name="fieldtypemodel" class="org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel" pre-get="preGet">
    <collection item-type="org.etk.sandbox.entity.plugins.model.xml.FieldType" usage="optional" add-method="addFieldType" iter-method="getFieldTypeIterator" test-method="hasFieldType"/>
   </mapping>
-  <!-- fieldtype object mapping -->
+  <!-- field-type object mapping -->
   <mapping name="field-type-def" class="org.etk.sandbox.entity.plugins.model.xml.FieldType">
     <value name="type"  field="type" style="attribute"/>
     <value name="sql-type"  field="sqlType" style="attribute"/>
@@ -15,6 +39,5 @@
   <!-- configuration object mapping -->
   <mapping name="configuration" class="org.etk.sandbox.entity.plugins.model.xml.Configuration">
     <collection item-type="org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel" usage="optional" add-method="addFieldTypeModel" iter-method="getFieldTypeModelIterator" test-method="hasFieldTypeModel"/>
-    
   </mapping> 
 </binding>

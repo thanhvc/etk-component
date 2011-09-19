@@ -81,6 +81,12 @@ public class EntityConfigurationTest extends AbstractApplicationTest {
     assertTrue(fieldTypeConfig.getFieldTypeModelList().size() > 0);
     
     validateFieldType(fieldTypeConfig.getFieldTypeModelList());
+    
+    //Unmarshaller the EntityModel
+    URL entityModelURL = cl.getResource(datasourceInfo.entityModelFile);
+    Configuration entityModelConf = unmarshaller.unmarshall(entityModelURL);
+    
+    
   }
   
   private void validateFieldType(Collection<FieldTypeModel> fieldTypeModelList) throws Exception {
@@ -97,4 +103,18 @@ public class EntityConfigurationTest extends AbstractApplicationTest {
       log.info("type = '" + type.getType() + "' sql-type = '" + type.getSqlType() + "' java-type = '" + type.getJavaType() + "'");
     }
   }
+  /*
+  public void testEntityMapping() throws Exception {
+    //Unmarshaller the FieldTypeConfig
+    ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    URL fieldTypeURL = cl.getResource(fieldTypeConfig.getFieldTypeXMLFile());
+    Configuration fieldTypeConf = unmarshaller.unmarshall(fieldTypeURL);
+    //Unmarshaller the EntityModel
+    URL entityModelURL = cl.getResource(datasourceInfo.entityModelFile);
+    Configuration entityModelConf = unmarshaller.unmarshall(entityModelURL);
+    //merge configuration
+    entityModelConf.mergeConfiguration(fieldTypeConf);
+    
+    
+  }*/
 }
