@@ -14,6 +14,7 @@
     <value name="priority" field="priority" style="attribute" usage="optional"/>
     <collection name="fields" item-type="org.etk.sandbox.entity.plugins.model.xml.Field" add-method="addField" iter-method="getFieldIterator"/>
     <collection name="primary-keys" item-type="org.etk.sandbox.entity.plugins.model.xml.PKField" add-method="addPKField" iter-method="getPKFieldIterator"/>
+    <collection name="relations" item-type="org.etk.sandbox.entity.plugins.model.xml.Relation" add-method="addRelation" iter-method="getRelationIterator"/>
   </mapping>
   <!-- field object mapping -->
   <mapping name="field" class="org.etk.sandbox.entity.plugins.model.xml.Field">
@@ -24,6 +25,16 @@
    <!-- primary key object mapping -->
   <mapping name="prim-key" class="org.etk.sandbox.entity.plugins.model.xml.PKField">
     <value name="field-name"  field="fieldName" style="attribute"/>
+  </mapping>
+  <!-- relation mapping -->
+  <mapping name="relation" class="org.etk.sandbox.entity.plugins.model.xml.Relation">
+    <value name="type"  field="type" style="attribute"/>
+    <value name="rel-entity-name" field="relEntityName" style="attribute"/>
+    <collection add-method="addKeyMap" iter-method="getKeyMapIterator"/>
+  </mapping>
+  <mapping name="key-map" class="org.etk.sandbox.entity.plugins.model.xml.KeyMap">
+    <value name="field-name"  field="fieldName" style="attribute"/>
+    <value name="rel-field-name" field="relFieldName" style="attribute"/>
   </mapping>
   <!-- configuration field-type-model mapping -->
   <mapping name="fieldtypemodel" class="org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel" pre-get="preGet">
@@ -38,6 +49,7 @@
  
   <!-- configuration object mapping -->
   <mapping name="configuration" class="org.etk.sandbox.entity.plugins.model.xml.Configuration">
+    <collection item-type="org.etk.sandbox.entity.plugins.model.xml.Entity" usage="optional" add-method="addEntity" iter-method="getEntityIterator" test-method="hasEntity"/>
     <collection item-type="org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel" usage="optional" add-method="addFieldTypeModel" iter-method="getFieldTypeModelIterator" test-method="hasFieldTypeModel"/>
   </mapping> 
 </binding>

@@ -16,6 +16,11 @@
  */
 package org.etk.sandbox.entity.plugins.model.xml;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import javolution.util.FastList;
+
 /**
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
@@ -24,4 +29,31 @@ package org.etk.sandbox.entity.plugins.model.xml;
  */
 public class Relation {
 
+  private String type = "";
+  private String relationEntityName = "";
+  Collection<KeyMap> keyMaps = FastList.newInstance();
+  
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
+  public String getRelationEntityName() {
+    return relationEntityName;
+  }
+  public void setRelationEntityName(String relationEntityName) {
+    this.relationEntityName = relationEntityName;
+  }
+  
+  public void addKeyMap(Object object) {
+    KeyMap keyMap = (KeyMap) object;
+    keyMaps.add(keyMap);
+  }
+  
+  public Iterator<KeyMap> getKeyMapIterator() {
+    return keyMaps.iterator();
+  }
+  
+  
 }

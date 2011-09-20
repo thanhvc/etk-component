@@ -2,6 +2,7 @@ package org.etk.sandbox.entity.plugins.jdbc;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -24,7 +25,8 @@ import javolution.util.FastList;
 import javolution.util.FastMap;
 
 import org.etk.common.logging.Logger;
-
+import org.etk.kernel.container.KernelContainer;
+import org.etk.kernel.container.component.ComponentLifecycle;
 import org.etk.sandbox.entity.base.concurrent.ExecutionPool;
 import org.etk.sandbox.entity.base.utils.UtilTimer;
 import org.etk.sandbox.entity.base.utils.UtilValidate;
@@ -32,27 +34,37 @@ import org.etk.sandbox.entity.core.GenericEntityException;
 import org.etk.sandbox.entity.plugins.config.DatasourceConfig;
 import org.etk.sandbox.entity.plugins.config.FieldTypeConfig;
 import org.etk.sandbox.entity.plugins.datasource.GenericHelperInfo;
+import org.etk.sandbox.entity.plugins.model.configuration.ConfigurationUnmarshaller;
+import org.etk.sandbox.entity.plugins.model.xml.Configuration;
 import org.etk.sandbox.entity.plugins.model.xml.Entity;
 import org.etk.sandbox.entity.plugins.model.xml.Field;
 import org.etk.sandbox.entity.plugins.model.xml.FieldType;
 
-public class DatabaseUtil {
-
-  public static final Logger logger = Logger.getLogger(DatabaseUtil.class);
+public class DatabaseManager implements ComponentLifecycle {
+  public static final Logger logger = Logger.getLogger(DatabaseManager.class);
 
   protected DatasourceConfig datasourceInfo = null;
   protected GenericHelperInfo helperInfo = null;
   protected FieldTypeConfig fieldTypeConfig = null;
+  private Configuration entityModelConf = null;
   
   boolean isLegacy = false;
   protected ExecutorService executor;
   
-  public DatabaseUtil(DatasourceConfig datasourceInfo, FieldTypeConfig fieldTypeConfig) {
-    // FIXME get datasource from the Component.
+  public DatabaseManager(DatasourceConfig datasourceInfo, FieldTypeConfig fieldTypeConfig) {
     this.datasourceInfo = datasourceInfo;
+    this.fieldTypeConfig = fieldTypeConfig;
     this.isLegacy = true;
   }
   
+  /**
+   * Gets the EntityModel configuration which keep the Meta data which configured in XML file
+   * @return
+   */
+  public Configuration getEntityModelConf() {
+    return entityModelConf;
+  }
+
   protected <T> Future<T> submitWork(Callable<T> callable) {
     if (this.executor == null) {
       FutureTask<T> task = new FutureTask<T>(callable);
@@ -181,35 +193,352 @@ public class DatabaseUtil {
     // Create the task to create table
     List<Future<CreateTableCallable>> tableFutures = FastList.newInstance();
     for (Entity entity : modelEntityList) {
+
+
       curEnt++;
 
-      if (entity.getNeverCheck()) {
-        String entMessage = "(" + timer.timeSinceLast() + "ms) NOT Checking #" + curEnt + "/"
-            + totalEnt + " Entity " + entity.getEntityName();
-        logger.info(entMessage);
-        if (messages != null)
-          messages.add(entMessage);
-        continue;
+      // if this is a view entity, do not check it...
+     if (entity.getNeverCheck()) {
+          String entMessage = "(" + timer.timeSinceLast() + "ms) NOT Checking #" + curEnt + "/" + totalEnt + " Entity " + entity.getEntityName();
+          logger.info(entMessage);
+          if (messages != null) messages.add(entMessage);
+          continue;
       }
 
-      String plainTableName = entity.getTableName();
+      String plainTableName = entity.getPlainTableName();
       String tableName;
-
       if (UtilValidate.isNotEmpty(schemaName)) {
-        tableName = schemaName + "." + plainTableName;
+          tableName = schemaName + "." + plainTableName;
       } else {
-        tableName = plainTableName;
+          tableName = plainTableName;
       }
-      String entMessage = "(" + timer.timeSinceLast() + "ms) Checking #" + curEnt + "/" + totalEnt
-          + " Entity " + entity.getEntityName() + " with table " + tableName;
+      String entMessage = "(" + timer.timeSinceLast() + "ms) Checking #" + curEnt + "/" + totalEnt +
+          " Entity " + entity.getEntityName() + " with table " + tableName;
 
-      logger.debug(entMessage);
-      if (messages != null)
-        messages.add(entMessage);
+      logger.info(entMessage);
+      if (messages != null) messages.add(entMessage);
 
+      // -make sure all entities have a corresponding table
+      if (tableNames.contains(tableName)) {
+        tableNames.remove(tableName);
+
+        if (colInfo != null) {
+          Map<String, Field> fieldColNames = FastMap.newInstance();
+          Iterator<Field> fieldIter = entity.getFieldIterator();
+          while (fieldIter.hasNext()) {
+            Field field = fieldIter.next();
+            fieldColNames.put(field.getColName(), field);
+          }
+
+          Map<String, ColumnCheckInfo> colMap = colInfo.get(tableName);
+          if (colMap != null) {
+            for (ColumnCheckInfo ccInfo : colMap.values()) {
+              // -list all columns that do not have a corresponding field
+              if (fieldColNames.containsKey(ccInfo.columnName)) {
+                Field field = null;
+
+                field = fieldColNames.remove(ccInfo.columnName);
+                FieldType modelFieldType = fieldTypeConfig.getFieldType(field.getType());
+
+                if (modelFieldType != null) {
+                  // make sure each corresponding column is of the correct type
+                  String fullTypeStr = modelFieldType.getSqlType();
+                  String typeName;
+                  int columnSize = -1;
+                  int decimalDigits = -1;
+
+                  int openParen = fullTypeStr.indexOf('(');
+                  int closeParen = fullTypeStr.indexOf(')');
+                  int comma = fullTypeStr.indexOf(',');
+
+                  if (openParen > 0 && closeParen > 0 && closeParen > openParen) {
+                    typeName = fullTypeStr.substring(0, openParen);
+                    if (comma > 0 && comma > openParen && comma < closeParen) {
+                      String csStr = fullTypeStr.substring(openParen + 1, comma);
+                      try {
+                        columnSize = Integer.parseInt(csStr);
+                      } catch (NumberFormatException e) {
+                        logger.error(e.getMessage(), e);
+                      }
+
+                      String ddStr = fullTypeStr.substring(comma + 1, closeParen);
+                      try {
+                        decimalDigits = Integer.parseInt(ddStr);
+                      } catch (NumberFormatException e) {
+                        logger.warn(e.getMessage(), e);
+                      }
+                    } else {
+                      String csStr = fullTypeStr.substring(openParen + 1, closeParen);
+                      try {
+                        columnSize = Integer.parseInt(csStr);
+                      } catch (NumberFormatException e) {
+                        logger.warn(e.getMessage(), e);
+                      }
+                    }
+                  } else {
+                    typeName = fullTypeStr;
+                  }
+
+                  // override the default typeName with the sqlTypeAlias if it
+                  // is specified
+                  if (UtilValidate.isNotEmpty(modelFieldType.getSqlTypeAlias())) {
+                    typeName = modelFieldType.getSqlTypeAlias();
+                  }
+
+                  // NOTE: this may need a toUpperCase in some cases, keep an
+                  // eye on it, okay just compare with ignore case
+                  if (!ccInfo.typeName.equalsIgnoreCase(typeName)) {
+                    String message = "WARNING: Column [" + ccInfo.columnName + "] of table ["
+                        + tableName + "] of entity [" + entity.getEntityName() + "] is of type ["
+                        + ccInfo.typeName + "] in the database, but is defined as type ["
+                        + typeName + "] in the entity definition.";
+                    logger.error(message);
+                    if (messages != null)
+                      messages.add(message);
+                  }
+                  if (columnSize != -1 && ccInfo.columnSize != -1
+                      && columnSize != ccInfo.columnSize && (columnSize * 3) != ccInfo.columnSize) {
+                    String message = "WARNING: Column [" + ccInfo.columnName + "] of table ["
+                        + tableName + "] of entity [" + entity.getEntityName()
+                        + "] has a column size of [" + ccInfo.columnSize
+                        + "] in the database, but is defined to have a column size of ["
+                        + columnSize + "] in the entity definition.";
+                    logger.warn(message);
+                    if (messages != null)
+                      messages.add(message);
+                    if (columnSize > ccInfo.columnSize && colWrongSize != null) {
+                      // add item to list of wrong sized columns; only if the
+                      // entity is larger
+                      colWrongSize.add(entity.getEntityName() + "." + field.getName());
+                    }
+                  }
+                  if (decimalDigits != -1 && decimalDigits != ccInfo.decimalDigits) {
+                    String message = "WARNING: Column [" + ccInfo.columnName + "] of table ["
+                        + tableName + "] of entity [" + entity.getEntityName()
+                        + "] has a decimalDigits of [" + ccInfo.decimalDigits
+                        + "] in the database, but is defined to have a decimalDigits of ["
+                        + decimalDigits + "] in the entity definition.";
+                    logger.warn(message);
+                    if (messages != null)
+                      messages.add(message);
+                  }
+
+                  // do primary key matching check
+                  if (checkPks && ccInfo.isPk && !field.getIsPk()) {
+                    String message = "WARNING: Column ["
+                        + ccInfo.columnName
+                        + "] of table ["
+                        + tableName
+                        + "] of entity ["
+                        + entity.getEntityName()
+                        + "] IS a primary key in the database, but IS NOT a primary key in the entity definition. The primary key for this table needs to be re-created or modified so that this column is NOT part of the primary key.";
+                    logger.error(message);
+                    if (messages != null)
+                      messages.add(message);
+                  }
+                  if (checkPks && !ccInfo.isPk && field.getIsPk()) {
+                    String message = "WARNING: Column ["
+                        + ccInfo.columnName
+                        + "] of table ["
+                        + tableName
+                        + "] of entity ["
+                        + entity.getEntityName()
+                        + "] IS NOT a primary key in the database, but IS a primary key in the entity definition. The primary key for this table needs to be re-created or modified to add this column to the primary key. Note that data may need to be added first as a primary key column cannot have an null values.";
+                    logger.error(message);
+                    if (messages != null)
+                      messages.add(message);
+                  }
+                } else {
+                  String message = "Column [" + ccInfo.columnName + "] of table [" + tableName
+                      + "] of entity [" + entity.getEntityName() + "] has a field type name of ["
+                      + field.getType() + "] which is not found in the field type definitions";
+                  logger.error(message);
+                  if (messages != null)
+                    messages.add(message);
+                }
+              } else {
+                String message = "Column [" + ccInfo.columnName + "] of table [" + tableName
+                    + "] of entity [" + entity.getEntityName()
+                    + "] exists in the database but has no corresponding field"
+                    + ((checkPks && ccInfo.isPk) ? " (and it is a PRIMARY KEY COLUMN)" : "");
+                logger.warn(message);
+                if (messages != null)
+                  messages.add(message);
+              }
+            }
+
+            // -display message if number of table columns does not match number
+            // of entity fields
+            if (colMap.size() != entity.getFields().size()) {
+              String message = "Entity [" + entity.getEntityName() + "] has "
+                  + entity.getFields().size() + " fields but table [" + tableName + "] has "
+                  + colMap.size() + " columns.";
+              logger.warn(message);
+              if (messages != null)
+                messages.add(message);
+            }
+          }
+
+          // -list all fields that do not have a corresponding column
+          for (String colName : fieldColNames.keySet()) {
+            Field field = fieldColNames.get(colName);
+            String message = "Field [" + field.getName() + "] of entity [" + entity.getEntityName()
+                + "] is missing its corresponding column [" + field.getColName() + "]"
+                + (field.getIsPk() ? " (and it is a PRIMARY KEY FIELD)" : "");
+
+            logger.warn(message);
+            if (messages != null)
+              messages.add(message);
+
+            if (addMissing) {
+              // add the column
+              String errMsg = addColumn(entity, field);
+
+              if (UtilValidate.isNotEmpty(errMsg)) {
+                message = "Could not add column [" + field.getColName() + "] to table ["
+                    + tableName + "]: " + errMsg;
+                logger.warn(message);
+                if (messages != null)
+                  messages.add(message);
+              } else {
+                message = "Added column ["
+                    + field.getColName()
+                    + "] to table ["
+                    + tableName
+                    + "]"
+                    + (field.getIsPk() ? " (NOTE: this is a PRIMARY KEY FIELD, but the primary key was not updated automatically (not considered a safe operation), be sure to fill in any needed data and re-create the primary key)"
+                                      : "");
+                logger.warn(message);
+                if (messages != null)
+                  messages.add(message);
+              }
+            }
+          }
+        }
+      } else {
+        String message = "Entity [" + entity.getEntityName() + "] has no table in the database";
+        logger.warn(message);
+        if (messages != null)
+          messages.add(message);
+
+        if (addMissing) {
+          // create the table
+          tableFutures.add(submitWork(new CreateTableCallable(entity, modelEntities, tableName)));
+        }
+      }
+      
+      for (CreateTableCallable tableCallable: ExecutionPool.getAllFutures(tableFutures)) {
+        tableCallable.updateData(messages, entitiesAdded);
+    }
+
+    timer.timerString("After Individual Table/Column Check");
     }// end for
-    
+
+    timer.timerString("Finished Checking Entity Database");
   }
+  
+  public String addColumn(Entity entity, Field field) {
+    if (entity == null || field == null)
+        return "Entity or Field where null, cannot add column";
+    
+    Connection connection = null;
+    Statement stmt = null;
+
+    try {
+        connection = getConnection();
+    } catch (SQLException e) {
+        String errMsg = "Unable to establish a connection with the database Error was: " + e.toString();
+        logger.error(errMsg, e );
+        return errMsg;
+    } catch (GenericEntityException e) {
+        String errMsg = "Unable to establish a connection with the database ... Error was: " + e.toString();
+        logger.error(errMsg, e );
+        return errMsg;
+    }
+
+    FieldType type = fieldTypeConfig.getFieldType(field.getType());
+
+    if (type == null) {
+        return "Field type [" + type + "] not found for field [" + field.getName() + "] of entity [" + entity.getEntityName() + "], not adding column.";
+    }
+
+    StringBuilder sqlBuf = new StringBuilder("ALTER TABLE ");
+    sqlBuf.append(entity.getTableName(datasourceInfo));
+    sqlBuf.append(" ADD ");
+    sqlBuf.append(field.getColName());
+    sqlBuf.append(" ");
+    sqlBuf.append(type.getSqlType());
+
+    if ("String".equals(type.getJavaType()) || "java.lang.String".equals(type.getJavaType())) {
+        // if there is a characterSet, add the CHARACTER SET arg here
+        if (UtilValidate.isNotEmpty(this.datasourceInfo.characterSet)) {
+            sqlBuf.append(" CHARACTER SET ");
+            sqlBuf.append(this.datasourceInfo.characterSet);
+        }
+
+        // if there is a collate, add the COLLATE arg here
+        if (UtilValidate.isNotEmpty(this.datasourceInfo.collate)) {
+            sqlBuf.append(" COLLATE ");
+            sqlBuf.append(this.datasourceInfo.collate);
+        }
+    }
+
+    String sql = sqlBuf.toString();
+    if (logger.isDebugEnabled()) logger.debug("[addColumn] sql=" + sql);
+    try {
+        stmt = connection.createStatement();
+        stmt.executeUpdate(sql);
+    } catch (SQLException e) {
+        // if that failed try the alternate syntax real quick
+        StringBuilder sql2Buf = new StringBuilder("ALTER TABLE ");
+        sql2Buf.append(entity.getTableName(datasourceInfo));
+        sql2Buf.append(" ADD COLUMN ");
+        sql2Buf.append(field.getColName());
+        sql2Buf.append(" ");
+        sql2Buf.append(type.getSqlType());
+
+        if ("String".equals(type.getJavaType()) || "java.lang.String".equals(type.getJavaType())) {
+            // if there is a characterSet, add the CHARACTER SET arg here
+            if (UtilValidate.isNotEmpty(this.datasourceInfo.characterSet)) {
+                sql2Buf.append(" CHARACTER SET ");
+                sql2Buf.append(this.datasourceInfo.characterSet);
+            }
+
+            // if there is a collate, add the COLLATE arg here
+            if (UtilValidate.isNotEmpty(this.datasourceInfo.collate)) {
+                sql2Buf.append(" COLLATE ");
+                sql2Buf.append(this.datasourceInfo.collate);
+            }
+        }
+
+        String sql2 = sql2Buf.toString();
+        
+        if (logger.isDebugEnabled()) logger.debug("[addColumn] sql failed, trying sql2=" + sql2);
+        try {
+            stmt = connection.createStatement();
+            stmt.executeUpdate(sql2);
+        } catch (SQLException e2) {
+            // if this also fails report original error, not this error...
+            return "SQL Exception while executing the following:\n" + sql + "\nError was: " + e.toString();
+        }
+    } finally {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+        }
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+          logger.error(e.getMessage(), e);
+        }
+    }
+    return null;
+}
   
   /*=======================================================================*/
   public Map<String, Map<String, ColumnCheckInfo>> getColumnInfo(Set<String> tableNames,
@@ -526,8 +855,7 @@ public class DatabaseUtil {
         logger.warn("getTables returned null set");
       }
     } catch (SQLException e) {
-      String message = "Unable to get list of table information, let's try the create anyway... Error was:"
-          + e.toString();
+      String message = "Unable to get list of table information, let's try the create anyway... Error was:" + e.toString();
       logger.error(message);
       if (messages != null)
         messages.add(message);
@@ -535,8 +863,7 @@ public class DatabaseUtil {
       try {
         connection.close();
       } catch (SQLException e2) {
-        String message2 = "Unable to close database connection, continuing anyway... Error was:"
-            + e2.toString();
+        String message2 = "Unable to close database connection, continuing anyway... Error was:" + e2.toString();
         logger.error(message2);
         if (messages != null)
           messages.add(message2);
@@ -605,8 +932,7 @@ public class DatabaseUtil {
       try {
         tableSet.close();
       } catch (SQLException e) {
-        String message = "Unable to close ResultSet for table list, continuing anyway... Error was:"
-            + e.toString();
+        String message = "Unable to close ResultSet for table list, continuing anyway... Error was:" + e.toString();
         logger.error(message);
         if (messages != null)
           messages.add(message);
@@ -615,8 +941,7 @@ public class DatabaseUtil {
       try {
         connection.close();
       } catch (SQLException e) {
-        String message = "Unable to close database connection, continuing anyway... Error was:"
-            + e.toString();
+        String message = "Unable to close database connection, continuing anyway... Error was:" + e.toString();
         logger.error(message);
         if (messages != null)
           messages.add(message);
@@ -904,81 +1229,45 @@ public class DatabaseUtil {
     sqlBuf.append(" (");
     Iterator<Field> fieldIter = entity.getFieldIterator();
     while (fieldIter.hasNext()) {
-        Field field = fieldIter.next();
-        FieldType type = fieldTypeConfig.getFieldType(field.getType());
-        if (type == null) {
-            return "Field type [" + type + "] not found for field [" + field.getName() + "] of entity [" + entity.getEntityName() + "], not creating table.";
+      Field field = fieldIter.next();
+      FieldType type = fieldTypeConfig.getFieldType(field.getType());
+      if (type == null) {
+        return "Field type [" + type + "] not found for field [" + field.getName()
+            + "] of entity [" + entity.getEntityName() + "], not creating table.";
+      }
+
+      sqlBuf.append(field.getColName());
+      sqlBuf.append(" ");
+      sqlBuf.append(type.getSqlType());
+
+      if ("String".equals(type.getJavaType()) || "java.lang.String".equals(type.getJavaType())) {
+        // if there is a characterSet, add the CHARACTER SET arg here
+        if (UtilValidate.isNotEmpty(this.datasourceInfo.characterSet)) {
+          sqlBuf.append(" CHARACTER SET ");
+          sqlBuf.append(this.datasourceInfo.characterSet);
         }
-
-        sqlBuf.append(field.getColName());
-        sqlBuf.append(" ");
-        sqlBuf.append(type.getSqlType());
-
-        if ("String".equals(type.getJavaType()) || "java.lang.String".equals(type.getJavaType())) {
-            // if there is a characterSet, add the CHARACTER SET arg here
-            if (UtilValidate.isNotEmpty(this.datasourceInfo.characterSet)) {
-                sqlBuf.append(" CHARACTER SET ");
-                sqlBuf.append(this.datasourceInfo.characterSet);
-            }
-            // if there is a collate, add the COLLATE arg here
-            if (UtilValidate.isNotEmpty(this.datasourceInfo.collate)) {
-                sqlBuf.append(" COLLATE ");
-                sqlBuf.append(this.datasourceInfo.collate);
-            }
+        // if there is a collate, add the COLLATE arg here
+        if (UtilValidate.isNotEmpty(this.datasourceInfo.collate)) {
+          sqlBuf.append(" COLLATE ");
+          sqlBuf.append(this.datasourceInfo.collate);
         }
+      }
 
-        if (field.getIsNotNull() || field.getIsPk()) {
-            if (this.datasourceInfo.alwaysUseConstraintKeyword) {
-                sqlBuf.append(" CONSTRAINT NOT NULL, ");
-            } else {
-                sqlBuf.append(" NOT NULL, ");
-            }
+      if (field.getIsNotNull() || field.getIsPk()) {
+        if (this.datasourceInfo.alwaysUseConstraintKeyword) {
+          sqlBuf.append(" CONSTRAINT NOT NULL, ");
         } else {
-            sqlBuf.append(", ");
+          sqlBuf.append(" NOT NULL, ");
         }
+      } else {
+        sqlBuf.append(", ");
+      }
     }
-
-    /*
     
-    String pkName = makePkConstraintName(entity, this.datasourceInfo.constraintNameClipLength);
-    if (this.datasourceInfo.usePkConstraintNames) {
-        sqlBuf.append("CONSTRAINT ");
-        sqlBuf.append(pkName);
-    }
     sqlBuf.append(" PRIMARY KEY (");
     entity.colNameString(entity.getPkFieldsUnmodifiable(), sqlBuf, "");
     sqlBuf.append(")");
-
-    if (addFks) {
-        // NOTE: This is kind of a bad idea anyway since ordering table creations is crazy, if not impossible
-
-        // go through the relationships to see if any foreign keys need to be added
-        Iterator<Relation> relationsIter = entity.getRelationsIterator();
-        while (relationsIter.hasNext()) {
-            Relation modelRelation = relationsIter.next();
-            if ("one".equals(modelRelation.getType())) {
-                Entity relModelEntity = modelEntities.get(modelRelation.getRelEntityName());
-                if (relModelEntity == null) {
-                    logger.logError("Error adding foreign key: ModelEntity was null for related entity name " + modelRelation.getRelEntityName());
-                    continue;
-                }
-                if (relModelEntity instanceof ViewEntity) {
-                    logger.error("Error adding foreign key: related entity is a view entity for related entity name " + modelRelation.getRelEntityName());
-                    continue;
-                }
-
-                String fkConstraintClause = makeFkConstraintClause(entity, modelRelation, relModelEntity, this.datasourceInfo.constraintNameClipLength, this.datasourceInfo.fkStyle, this.datasourceInfo.useFkInitiallyDeferred);
-                if (UtilValidate.isNotEmpty(fkConstraintClause)) {
-                    sqlBuf.append(", ");
-                    sqlBuf.append(fkConstraintClause);
-                } else {
-                    continue;
-                }
-            }
-        }
-    }*/
-    
-
+    //add FK here
     sqlBuf.append(")");
 
     // if there is a tableType, add the TYPE arg here
@@ -1055,5 +1344,35 @@ public class DatabaseUtil {
           }
           return tableName;
       }
+  }
+
+  @Override
+  public void initComponent(KernelContainer container) throws Exception {
+    ConfigurationUnmarshaller unmarshaller = new ConfigurationUnmarshaller();
+    //Unmarshaller the FieldTypeConfig
+    ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    URL fieldTypeURL = cl.getResource(fieldTypeConfig.getFieldTypeXMLFile());
+    Configuration fieldTypeConf = unmarshaller.unmarshall(fieldTypeURL);
+    fieldTypeConfig.setFieldTypeModelList(fieldTypeConf.getFieldTypeList());
+    //Unmarshaller the EntityModel
+    URL entityModelURL = cl.getResource(datasourceInfo.entityModelFile);
+    entityModelConf = unmarshaller.unmarshall(entityModelURL);
+    //merge configuration
+    entityModelConf.mergeConfiguration(fieldTypeConf);
+  }
+
+  @Override
+  public void startComponent(KernelContainer container) throws Exception {
+    
+  }
+
+  @Override
+  public void stopComponent(KernelContainer container) throws Exception {
+   
+  }
+
+  @Override
+  public void destroyComponent(KernelContainer container) throws Exception {
+    
   }
 }

@@ -100,6 +100,10 @@ public final class Configuration implements Cloneable {
     return entitiesMap.get(key);
   }
   
+  public Map<String, Entity> getEntityMap() {
+    return entitiesMap;
+  }
+  
   /**
    * Gets the Entity which uses the entityFullName = packageName + "." + entityName
    * @param entityFullName

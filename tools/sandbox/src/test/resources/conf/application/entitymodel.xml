@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
-	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
-  <!-- Define Entity list -->
-  <entity entity-name="Testing" package-name="org.ofbiz.entity.test" title="Testing Entity">
-	  <field name="testingId" type="id-ne" />
-	  <field name="testingTypeId" type="id-ne" />
-	  <field name="testingName" type="name" enable-audit-log="true" />
-	  <field name="description" type="description" />
-	  <field name="comments" type="comment" />
-	  <field name="testingSize" type="numeric" />
-	  <field name="testingDate" type="date-time" />
-	  <prim-key field="testingId" />
+  xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+  xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+  <entity title="Customer Entity" version="1.0" entity-name="Customer"
+    table-name="CUSTOMER" package-name="org.etk.entity.engine.sample">
+    <fields>
+      <field name="customerId" col-name="CUSTOMER_ID" type="id-ne"></field>
+      <field name="name" col-name="NAME" type="long-varchar"></field>
+      <field name="jobTitle" col-name="JOB_TITLE" type="long-varchar"></field>
+      <field name="fieldTwo" col-name="FIELD_TWO" type="long-varchar"></field>
+    </fields>
+    <!-- Define primary key for the entity -->
+    <primary-keys>
+      <prim-key field-name="customerId" />
+    </primary-keys>
+    <!-- Define relations for the entity -->
+    <reletaions>
+      <relation type="one" rel-entity-name="Address">
+        <key-map field-name="customerId" rel-field-name="customerId" />
+      </relation>
+    </reletaions>
+  </entity>
+
+  <entity title="Address Entity" version="1.0" package-name="org.etk.entity.engine.sample" entity-name="Address" table-name="ADDRESS">
+    <fields>
+      <field name="addressId" col-name="ADDRESS_ID" type="id-ne"></field>
+      <field name="customerId" col-name="CUSTOMER_ID" type="id-ne"></field>
+      <field name="address1" col-name="ADDRESS_1" type="long-varchar"></field>
+      <field name="address2" col-name="ADDRESS_2" type="long-varchar"></field>
+      <field name="city" col-name="CITY" type="long-varchar"></field>
+      <field name="postCode" col-name="POST_CODE" type="short-varchar"></field>
+    </fields>
+    <!-- Define primary key for the entity -->
+    <primary-keys>
+      <prim-key field-name="addressId" />
+    </primary-keys>
+    <!-- Define relations for the entity -->
+    <reletaions>
+      <relation type="many" rel-entity-name="Customer">
+        <key-map field-name="customerId" rel-field-name="customerId" />
+      </relation>
+    </reletaions>
   </entity>
   
 </configuration>

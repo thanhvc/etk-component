@@ -52,7 +52,7 @@ public class Entity implements Comparable<Entity> {
   private Map<String, Field> fieldMap              = FastMap.newInstance();
 
   private Collection<PKField> pks                  = FastList.newInstance();
-  private List<Field> pkFields               = FastList.newInstance();
+  private List<Field> pkFields                     = FastList.newInstance();
 
   private List<Field>        nopkg                 = FastList.newInstance();
 
@@ -135,9 +135,11 @@ public class Entity implements Comparable<Entity> {
     PKField pkfield = (PKField) object;
     Field field = fieldMap.get(pkfield.getFieldName());
     pkfield.setField(field);
-    
-    pkFields.add(field);
-    pks.add(pkfield);
+    if (field != null) {
+      field.setPk(true);
+      pkFields.add(field);
+      pks.add(pkfield);
+    }
   }
 
   public Iterator<PKField> getPKFieldIterator() {
@@ -166,6 +168,14 @@ public class Entity implements Comparable<Entity> {
 
   public Collection<Field> getFields() {
     return fieldMap.values();
+  }
+  
+  /**
+   * Gets fieldMap which contains the key(column name) and value(Field)
+   * @return
+   */
+  public Map<String, Field> getFieldMap() {
+    return this.fieldMap;
   }
 
   public Collection<PKField> getPkgs() {
@@ -441,5 +451,53 @@ public class Entity implements Comparable<Entity> {
     returnString.append(flds.get(i).getName());
     returnString.append(afterLast);
     return returnString.toString();
+  }
+  
+  public StringBuilder colNameString(StringBuilder sb, String prefix,  Field... flds) {
+    return colNameString(Arrays.asList(flds), sb, prefix);
+  }
+  public StringBuilder colNameString(List<Field> flds, StringBuilder sb, String prefix) {
+    return colNameString(flds, sb, prefix, ", ", "", false);
+  }
+
+
+  public StringBuilder colNameString(StringBuilder sb,
+                                     String prefix,
+                                     String separator,
+                                     String afterLast,
+                                     boolean alias,
+                                     Field... flds) {
+    
+    return colNameString(Arrays.asList(flds), sb, prefix, separator, afterLast, alias);
+  }
+
+  public StringBuilder colNameString(List<Field> flds,
+                                     StringBuilder sb,
+                                     String prefix,
+                                     String separator,
+                                     String afterLast,
+                                     boolean alias) {
+    if (flds.size() < 1) {
+      return sb;
+    }
+
+    sb.append(prefix);
+    Iterator<Field> fldsIt = flds.iterator();
+    while (fldsIt.hasNext()) {
+      Field field = fldsIt.next();
+      sb.append(field.getColName());
+      if (fldsIt.hasNext()) {
+        sb.append(separator);
+      }
+    }
+
+    sb.append(afterLast);
+    return sb;
+  }
+  
+  @Override
+  public String toString() {
+    StringBuffer sb = new StringBuffer();
+    return sb.append("Entity's name = ").append(this.packageName).append(".").append(this.entityName).toString();
   }
 }

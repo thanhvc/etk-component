@@ -20,42 +20,26 @@ package org.etk.sandbox.entity.plugins.model.xml;
  * Created by The eXo Platform SAS
  * Author : eXoPlatform
  *          exo@exoplatform.com
- * Aug 26, 2011  
+ * Sep 20, 2011  
  */
-public class Field {
+public class KeyMap {
 
-  private String name;
-  private String colName;
-  private String type;
-  /** boolean which specifies whether or not the Field is a Primary Key */
-  private boolean isPk = false;
+  private String fieldName = "";
+  private String relFieldName = "";
   
-  public String getName() {
-    return name;
+  
+  public String getFieldName() {
+    return fieldName;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setFieldName(String fieldName) {
+    this.fieldName = fieldName;
   }
-  public String getColName() {
-    return colName;
+  public String getRelFieldName() {
+    return relFieldName;
   }
-  public void setColName(String colName) {
-    this.colName = colName;
-  }
-  public String getType() {
-    return type;
-  }
-  public void setType(String type) {
-    this.type = type;
-  }
-  public boolean getIsNotNull() {
-    return true;
-  }
-  public boolean getIsPk() {
-    return isPk;
+  public void setRelFieldName(String relFieldName) {
+    this.relFieldName = relFieldName;
   }
   
-  public void setPk(boolean isPK) {
-    this.isPk = isPK;
-  }
+  
 }

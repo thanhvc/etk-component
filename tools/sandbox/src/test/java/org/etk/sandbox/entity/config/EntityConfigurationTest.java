@@ -14,18 +14,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.etk.sandbox.entity;
+package org.etk.sandbox.entity.config;
 
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+
+import javolution.util.FastList;
 
 import org.etk.common.logging.Logger;
 import org.etk.kernel.test.spi.AbstractApplicationTest;
+import org.etk.sandbox.entity.BaseEntityTestCase;
 import org.etk.sandbox.entity.plugins.config.DatasourceConfig;
 import org.etk.sandbox.entity.plugins.config.FieldTypeConfig;
+import org.etk.sandbox.entity.plugins.jdbc.DatabaseManager;
 import org.etk.sandbox.entity.plugins.model.configuration.ConfigurationUnmarshaller;
 import org.etk.sandbox.entity.plugins.model.xml.Configuration;
+import org.etk.sandbox.entity.plugins.model.xml.Entity;
+import org.etk.sandbox.entity.plugins.model.xml.Field;
 import org.etk.sandbox.entity.plugins.model.xml.FieldType;
 import org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel;
 
@@ -35,13 +42,9 @@ import org.etk.sandbox.entity.plugins.model.xml.FieldTypeModel;
  *          exo@exoplatform.com
  * Sep 16, 2011  
  */
-public class EntityConfigurationTest extends AbstractApplicationTest {
+public class EntityConfigurationTest extends BaseEntityTestCase {
 
   private Logger log = Logger.getLogger(EntityConfigurationTest.class);
-
-  private DatasourceConfig datasourceInfo = null;
-  private FieldTypeConfig fieldTypeConfig = null;
-  private ConfigurationUnmarshaller unmarshaller;
   
   @Override
   protected void end() {
@@ -54,20 +57,19 @@ public class EntityConfigurationTest extends AbstractApplicationTest {
 
   @Override
   protected void setUp() throws Exception {
-    datasourceInfo = (DatasourceConfig) getContainer().getComponentInstanceOfType(DatasourceConfig.class);
-    fieldTypeConfig = (FieldTypeConfig) getContainer().getComponentInstanceOfType(FieldTypeConfig.class);
-    unmarshaller = new ConfigurationUnmarshaller();
+    super.setUp();
   }
 
   @Override
   protected void tearDown() throws Exception {
-    datasourceInfo = null;
+    super.tearDown();
   }
   
   public void testPostgresDatasource() throws Exception {
     assertEquals("Db-conection must not be null.", "postgresql-connection", datasourceInfo.dbConnection);
   }
   
+  /*========================Field Mapping ======================*/
   public void testFieldTypeReader() throws Exception {
     assertEquals("FieldTypeConfig must not be null.", "entityconf/fieldtype/fieldtypepostgres.xml", fieldTypeConfig.getFieldTypeXMLFile());
     
@@ -81,29 +83,10 @@ public class EntityConfigurationTest extends AbstractApplicationTest {
     assertTrue(fieldTypeConfig.getFieldTypeModelList().size() > 0);
     
     validateFieldType(fieldTypeConfig.getFieldTypeModelList());
-    
-    //Unmarshaller the EntityModel
-    URL entityModelURL = cl.getResource(datasourceInfo.entityModelFile);
-    Configuration entityModelConf = unmarshaller.unmarshall(entityModelURL);
-    
-    
   }
   
-  private void validateFieldType(Collection<FieldTypeModel> fieldTypeModelList) throws Exception {
-    assertEquals("fieldTypeModelList's size must be equal 1. ", 1, fieldTypeModelList.size());
-    for(FieldTypeModel model : fieldTypeModelList) {
-      assertEquals("fieldTypeList's size must be equal 31. ", 31, model.getFieldTypeSize());
-      dumpFieldType(model.getFieldTypeIterator());
-    }
-  }
-
-  private void dumpFieldType(Iterator<FieldType> fieldTypeIterator) {
-    while(fieldTypeIterator.hasNext()) {
-      FieldType type = fieldTypeIterator.next();
-      log.info("type = '" + type.getType() + "' sql-type = '" + type.getSqlType() + "' java-type = '" + type.getJavaType() + "'");
-    }
-  }
-  /*
+  
+  /*========================Entity Mapping ======================*/
   public void testEntityMapping() throws Exception {
     //Unmarshaller the FieldTypeConfig
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -114,7 +97,22 @@ public class EntityConfigurationTest extends AbstractApplicationTest {
     Configuration entityModelConf = unmarshaller.unmarshall(entityModelURL);
     //merge configuration
     entityModelConf.mergeConfiguration(fieldTypeConf);
+        
+    dumpEntities(entityModelConf.getEntities());
     
+  }
+  
+  
+  
+  /*========================Database Manager ======================*/
+  public void testDatabaseManager() throws Exception {
     
-  }*/
+    Configuration entityModelConf = dbManager.getEntityModelConf();
+    assertNotNull(entityModelConf);
+    
+    dumpEntities(entityModelConf.getEntities());
+    List<String> messages = FastList.newInstance();
+    dbManager.checkDb(entityModelConf.getEntityMap(), messages, true);
+    
+  }
 }
