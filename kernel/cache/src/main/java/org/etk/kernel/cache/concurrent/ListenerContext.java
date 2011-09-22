@@ -29,7 +29,7 @@ public class ListenerContext<K, V> implements CacheListenerContext, CacheInfo {
   /** . */
   private final ConcurrentFIFOExoCache cache;
 
-  /** . */
+  @SuppressWarnings("unchecked")
   final CacheListener<? super K, ? super V> listener;
 
   public ListenerContext(CacheListener<? super K, ? super V> listener, ConcurrentFIFOExoCache cache) {

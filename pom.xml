@@ -58,6 +58,7 @@
     <org.etk.kernel.version>0.1-Beta1-SNAPSHOT</org.etk.kernel.version>
     <org.etk.core.version>0.1-Beta1-SNAPSHOT</org.etk.core.version>
     <org.etk.tools.version>0.1-Beta1-SNAPSHOT</org.etk.tools.version>
+    <org.etk.web.version>0.1-Beta1-SNAPSHOT</org.etk.web.version>
     <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>
    <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
     <!-- Plugins settings -->

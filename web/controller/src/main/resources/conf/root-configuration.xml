@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
+   xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
+
+   <container-lifecycle-plugin>
+      <type>org.etk.kernel.container.monitor.jvm.AddJVMComponentsToRootContainer</type>
+   </container-lifecycle-plugin>
+
+   <component>
+      <key>org.etk.kernel.container.monitor.jvm.OperatingSystemInfo</key>
+      <jmx-name>info:type=OperatingSystemInfo</jmx-name>
+      <type>org.etk.kernel.container.monitor.jvm.OperatingSystemInfoImpl</type>
+   </component>
+  
+	 <component>
+		  <type>org.etk.kernel.container.definition.ApplicationContainerConfig</type>
+	 </component>	  
+</configuration>
