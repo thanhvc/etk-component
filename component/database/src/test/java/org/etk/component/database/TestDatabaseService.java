@@ -29,7 +29,6 @@ import org.etk.kernel.container.ApplicationContainer;
 import org.etk.kernel.test.BasicTestCase;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.transaction.UserTransaction;

@@ -42,76 +42,63 @@ import java.util.Set;
 
 import javax.security.auth.login.LoginException;
 
-/**
- * Created by The eXo Platform SAS . An authentication wrapper over Organization
- * service TODO move it to Organization Service / Auth
- * 
- * @author Gennady Azarenkov
- * @version $Id:$
- */
+public class OrganizationAuthenticatorImpl implements Authenticator {
 
-public class OrganizationAuthenticatorImpl implements Authenticator
-{
+  protected static Logger log = Logger.getLogger(OrganizationAuthenticatorImpl.class);
 
-   protected static Logger log = Logger.getLogger(OrganizationAuthenticatorImpl.class);
+  private final OrganizationService orgService;
 
-   private final OrganizationService orgService;
+  private final PasswordEncrypter   encrypter;
 
-   private final PasswordEncrypter encrypter;
+  private final RolesExtractor      rolesExtractor;
 
-   private final RolesExtractor rolesExtractor;
+  public OrganizationAuthenticatorImpl(OrganizationService orgService,
+                                       RolesExtractor rolesExtractor,
+                                       PasswordEncrypter encrypter) {
+    this.orgService = orgService;
+    this.encrypter = encrypter;
+    this.rolesExtractor = rolesExtractor;
+  }
 
-   public OrganizationAuthenticatorImpl(OrganizationService orgService, RolesExtractor rolesExtractor,
-      PasswordEncrypter encrypter)
-   {
-      this.orgService = orgService;
-      this.encrypter = encrypter;
-      this.rolesExtractor = rolesExtractor;
-   }
+  public OrganizationAuthenticatorImpl(OrganizationService orgService, RolesExtractor rolesExtractor) {
+    this(orgService, rolesExtractor, null);
+  }
 
-   public OrganizationAuthenticatorImpl(OrganizationService orgService, RolesExtractor rolesExtractor)
-   {
-      this(orgService, rolesExtractor, null);
-   }
+  public OrganizationAuthenticatorImpl(OrganizationService orgService) {
+    this(orgService, null, null);
+  }
 
-   public OrganizationAuthenticatorImpl(OrganizationService orgService)
-   {
-      this(orgService, null, null);
-   }
+  public OrganizationService getOrganizationService() {
+    return orgService;
+  }
 
-   public OrganizationService getOrganizationService()
-   {
-      return orgService;
-   }
+  /*
+   * (non-Javadoc)
+   * @see
+   * org.exoplatform.services.security.Authenticator#createIdentity(java.lang
+   * .String)
+   */
+  public Identity createIdentity(String userId) throws Exception {
+    Set<MembershipEntry> entries = new HashSet<MembershipEntry>();
+    begin(orgService);
+    Collection<Membership> memberships = orgService.getMembershipHandler()
+                                                   .findMembershipsByUser(userId);
+    end(orgService);
+    if (memberships != null) {
+      for (Membership membership : memberships)
+        entries.add(new MembershipEntry(membership.getGroupId(), membership.getMembershipType()));
+    }
+    if (rolesExtractor == null)
+      return new Identity(userId, entries);
+    return new Identity(userId, entries, rolesExtractor.extractRoles(userId, entries));
+  }
 
-   /*
-    * (non-Javadoc)
-    * @see
-    * org.exoplatform.services.security.Authenticator#createIdentity(java.lang
-    * .String)
-    */
-   public Identity createIdentity(String userId) throws Exception
-   {
-      Set<MembershipEntry> entries = new HashSet<MembershipEntry>();
-      begin(orgService);
-      Collection<Membership> memberships = orgService.getMembershipHandler().findMembershipsByUser(userId);
-      end(orgService);
-      if (memberships != null)
-      {
-         for (Membership membership : memberships)
-            entries.add(new MembershipEntry(membership.getGroupId(), membership.getMembershipType()));
-      }
-      if (rolesExtractor == null)
-         return new Identity(userId, entries);
-      return new Identity(userId, entries, rolesExtractor.extractRoles(userId, entries));
-   }
-
-   /*
-    * (non-Javadoc)
-    * @see
-    * org.exoplatform.services.security.Authenticator#validateUser(org.exoplatform
-    * .services.security.Credential[])
-    */
+  /*
+   * (non-Javadoc)
+   * @see
+   * org.exoplatform.services.security.Authenticator#validateUser(org.exoplatform
+   * .services.security.Credential[])
+   */
   public String validateUser(Credential[] credentials) throws LoginException, Exception {
     String username = null;
     String password = null;

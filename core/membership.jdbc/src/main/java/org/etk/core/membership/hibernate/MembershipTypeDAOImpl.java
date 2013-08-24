@@ -35,80 +35,67 @@ import java.util.List;
  */
 public class MembershipTypeDAOImpl implements MembershipTypeHandler
 {
-   private static final String queryFindMembershipType =
-      "from m in class org.etk.core.membership.impl.MembershipTypeImpl " + "where m.name = ? ";
+  private static final String queryFindMembershipType    = "from m in class org.etk.core.membership.impl.MembershipTypeImpl "
+                                                             + "where m.name = ? ";
 
-   private static final String queryFindAllMembershipType =
-      "from m in class org.etk.core.membership.impl.MembershipTypeImpl";
+  private static final String queryFindAllMembershipType = "from m in class org.etk.core.membership.impl.MembershipTypeImpl";
 
-   private HibernateService service_;
+  private HibernateService    service_;
 
-   public MembershipTypeDAOImpl(HibernateService service)
-   {
-      service_ = service;
-   }
+  public MembershipTypeDAOImpl(HibernateService service) {
+    service_ = service;
+  }
 
-   final public MembershipType createMembershipTypeInstance()
-   {
-      return new MembershipTypeImpl();
-   }
+  final public MembershipType createMembershipTypeInstance() {
+    return new MembershipTypeImpl();
+  }
 
-   public MembershipType createMembershipType(MembershipType mt, boolean broadcast) throws Exception
-   {
-      Session session = service_.openSession();
-      Date now = new Date();
-      mt.setCreatedDate(now);
-      mt.setModifiedDate(now);
-      session.save(mt);
+  public MembershipType createMembershipType(MembershipType mt, boolean broadcast) throws Exception {
+    Session session = service_.openSession();
+    Date now = new Date();
+    mt.setCreatedDate(now);
+    mt.setModifiedDate(now);
+    session.save(mt);
+    session.flush();
+    return mt;
+  }
+
+  public MembershipType saveMembershipType(MembershipType mt, boolean broadcast) throws Exception {
+    Session session = service_.openSession();
+    Date now = new Date();
+    mt.setModifiedDate(now);
+    session.update(mt);
+    session.flush();
+    return mt;
+  }
+
+  public MembershipType findMembershipType(String name) throws Exception {
+    Session session = service_.openSession();
+    MembershipType m = (MembershipType) service_.findOne(session, queryFindMembershipType, name);
+    return m;
+  }
+
+  public MembershipType removeMembershipType(String name, boolean broadcast) throws Exception {
+    Session session = service_.openSession();
+    MembershipTypeImpl m = (MembershipTypeImpl) session.get(MembershipTypeImpl.class, name);
+    try {
+      List entries = session.createQuery("from m in class "
+          + " org.etk.core.membership.impl.MembershipImpl " + "where m.membershipType = '" + name
+          + "'").list();
+      for (int i = 0; i < entries.size(); i++)
+        session.delete(entries.get(i));
+    } catch (Exception exp) {
+    }
+
+    if (m != null) {
+      session.delete(m);
       session.flush();
-      return mt;
-   }
+    }
+    return m;
+  }
 
-   public MembershipType saveMembershipType(MembershipType mt, boolean broadcast) throws Exception
-   {
-      Session session = service_.openSession();
-      Date now = new Date();
-      mt.setModifiedDate(now);
-      session.update(mt);
-      session.flush();
-      return mt;
-   }
-
-   public MembershipType findMembershipType(String name) throws Exception
-   {
-      Session session = service_.openSession();
-      MembershipType m = (MembershipType)service_.findOne(session, queryFindMembershipType, name);
-      return m;
-   }
-
-   public MembershipType removeMembershipType(String name, boolean broadcast) throws Exception
-   {
-      Session session = service_.openSession();
-      MembershipTypeImpl m = (MembershipTypeImpl)session.get(MembershipTypeImpl.class, name);
-      try
-      {
-         List entries =
-            session.createQuery(
-               "from m in class " + " org.etk.core.membership.impl.MembershipImpl "
-                  + "where m.membershipType = '" + name + "'").list();
-         for (int i = 0; i < entries.size(); i++)
-            session.delete(entries.get(i));
-      }
-      catch (Exception exp)
-      {
-      }
-
-      if (m != null)
-      {
-         session.delete(m);
-         session.flush();
-      }
-      return m;
-   }
-
-   public Collection findMembershipTypes() throws Exception
-   {
-      Session session = service_.openSession();
-      return session.createQuery(queryFindAllMembershipType).list();
-   }
+  public Collection findMembershipTypes() throws Exception {
+    Session session = service_.openSession();
+    return session.createQuery(queryFindAllMembershipType).list();
+  }
 }

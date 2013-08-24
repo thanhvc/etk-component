@@ -20,13 +20,6 @@ package org.etk.core.membership.impl;
 
 import java.util.Collection;
 
-/**
- * May 28, 2004
- * 
- * @author: Tuan Nguyen
- * @email: tuan08@users.sourceforge.net
- * @version: $ID$
- **/
 public class UserBackupData
 {
    private UserImpl user;

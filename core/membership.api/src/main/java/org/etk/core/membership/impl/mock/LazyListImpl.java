@@ -29,6 +29,10 @@ import java.util.ArrayList;
  * @version $Revision$
  */
 public class LazyListImpl extends ArrayList<User> implements ListAccess<User> {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
 
   public User[] load(int index, int length) throws Exception, IllegalArgumentException {
     User[] users = new User[length];

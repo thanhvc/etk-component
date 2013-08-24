@@ -35,63 +35,52 @@ import org.exoplatform.services.organization.Membership;
    @TableField(name = "MEMBERSHIP_TYPE", type = "string", length = 100),
    @TableField(name = "GROUP_ID", type = "string", length = 100),
    @TableField(name = "USER_NAME", type = "string", length = 500)})
-public class MembershipImpl extends DBObject implements Membership
-{
+public class MembershipImpl extends DBObject implements Membership {
 
-   private String id = null;
+  private String id             = null;
 
-   private String membershipType = "member";
+  private String membershipType = "member";
 
-   private String groupId = null;
+  private String groupId        = null;
 
-   private String userName = null;
+  private String userName       = null;
 
-   public MembershipImpl()
-   {
-   }
+  public MembershipImpl() {
+  }
 
-   public String getId()
-   {
-      return id;
-   }
+  public String getId() {
+    return id;
+  }
 
-   public void setId(String id)
-   {
-      this.id = id;
-   }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-   public String getMembershipType()
-   {
-      return membershipType;
-   }
+  public String getMembershipType() {
+    return membershipType;
+  }
 
-   public void setMembershipType(String type)
-   {
-      this.membershipType = type;
-   }
+  public void setMembershipType(String type) {
+    this.membershipType = type;
+  }
 
-   public String getUserName()
-   {
-      return userName;
-   }
+  public String getUserName() {
+    return userName;
+  }
 
-   public void setUserName(String user)
-   {
-      this.userName = user;
-   }
+  public void setUserName(String user) {
+    this.userName = user;
+  }
 
-   public String getGroupId()
-   {
-      return groupId;
-   }
+  public String getGroupId() {
+    return groupId;
+  }
 
-   public void setGroupId(String group)
-   {
-      this.groupId = group;
-   }
+  public void setGroupId(String group) {
+    this.groupId = group;
+  }
 
-   public String toString()
-   {
-      return "Membership[" + id + "]";
-   }
+  public String toString() {
+    return "Membership[" + id + "]";
+  }
 }

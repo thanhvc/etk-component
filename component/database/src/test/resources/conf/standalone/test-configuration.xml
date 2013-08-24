@@ -51,7 +51,7 @@
       </component-plugins>
    </component>
 
-   <component>
+    <component>
       <key>org.etk.component.database.creator.DBCreator</key>
       <type>org.etk.component.database.creator.DBCreator</type>
       <init-params>

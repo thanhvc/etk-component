@@ -26,12 +26,6 @@ import org.etk.component.database.jdbc.CreateDBSchemaPlugin;
 import org.etk.component.database.jdbc.DBSchemaCreator;
 import org.etk.kernel.container.ApplicationContainer;
 
-/**
- * Created by The eXo Platform SAS .
- * 
- * @author <a href="mailto:geaz@users.sourceforge.net">Gennady Azarenkov </a>
- * @version $Id: DBCreatorTest.java 5569 2006-05-17 12:48:47Z lautarul $
- */
 public class DBCreatorTest extends TestCase
 {
 

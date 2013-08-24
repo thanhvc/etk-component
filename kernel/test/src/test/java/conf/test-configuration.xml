@@ -18,6 +18,47 @@
          </properties-param>
       </init-params>
    </component>
+          
+   <component>
+      <key>org.etk.kernel.test.params.map.I18NResourceBundleProcessor</key>
+      <type>org.etk.kernel.test.params.map.I18NResourceBundleProcessor</type>
+       <init-params>
+         <object-param>
+          <name>activityConfiguration</name>
+          <object type="org.etk.kernel.test.params.map.ActivityResourceBundlePlugin">
+          <field name="activityTypeMap">
+            <map type="java.util.HashMap">
+            <entry>
+              <key>
+                <string>social:spaces-created</string>
+              </key>
+              <value>
+                <object-param>
+                  <object type="org.etk.kernel.test.params.map.ActivityResourceBundlePlugin">
+                  <field name="activityTypeMap"><string>social:spaces-created</string></field>
+                  <field name="resourceKey"><string>SOCIAL.ACTIVITY.SPACE.CREATED</string></field>
+                  <field name="resourceNameSpace"><string>SocialActivityPubliser</string></field>
+                </object-param>
+              </value>
+            </entry>
+            <entry>
+              <key>
+                <string>social:spaces-renamed</string>
+              </key>
+              <value>
+                <object-param>
+                  <object type="org.etk.kernel.test.params.map.ActivityResourceBundlePlugin">
+                  <field name="activityTypeMap"><string>social:spaces-renamed</string></field>
+                  <field name="resourceKey"><string>SOCIAL.ACTIVITY.SPACE.RENAMED</string></field>
+                  <field name="resourceNameSpace"><string>SocialActivityPubliser</string></field>
+                </object-param>
+              </value>
+            </entry>
+            </map>
+            </field>   
+         </object-param>
+      </init-params>
+   </component>
    
   <component>
     <key>MockService</key>

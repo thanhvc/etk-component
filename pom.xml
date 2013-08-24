@@ -3,7 +3,7 @@
    
    <groupId>org.etk</groupId>
    <artifactId>org.etk.parent</artifactId>
-   <version>0.1-Beta1-SNAPSHOT</version>
+   <version>0.1-SNAPSHOT</version>
    <packaging>pom</packaging>
 
    <name>Engineering toolkit Framework</name>
@@ -12,7 +12,7 @@
 
   <organization>
     <name>Social Team</name>
-    <url>http://www.thanhvc.com.vn</url>
+    <url>http://github.com/thanhvc/</url>
   </organization>
   <licenses>
     <license>
@@ -40,7 +40,6 @@
 
 
   <properties>
- 
     <!-- Dependencies versions -->
     <junit.version>3.8.2</junit.version>
     <json_simple.version>1.1</json_simple.version>
@@ -53,13 +52,11 @@
     <javax.xml.bind.version>2.1</javax.xml.bind.version>
     <picocontainer.version>1.1</picocontainer.version>
     <org.apache.httpclient.version>4.1.1</org.apache.httpclient.version>
-    <org.etk.version>0.1-Beta1-SNAPSHOT</org.etk.version>
-    <org.etk.component.version>0.1-Beta1-SNAPSHOT</org.etk.component.version>
-    <org.etk.kernel.version>0.1-Beta1-SNAPSHOT</org.etk.kernel.version>
-    <org.etk.core.version>0.1-Beta1-SNAPSHOT</org.etk.core.version>
-    <org.etk.tools.version>0.1-Beta1-SNAPSHOT</org.etk.tools.version>
+    <project.version>0.1-SNAPSHOT</project.version>
+    <!-- It is used for orm component-->
     <org.exoplatform.kernel.version>2.3.0-CR2</org.exoplatform.kernel.version>
-   <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
+    <!-- It is used for orm component-->
+    <org.exoplatform.portal.version>3.2.0-PLF-SNAPSHOT</org.exoplatform.portal.version>
     <!-- Plugins settings -->
 
     <!-- Cross plugins settings -->
@@ -86,18 +83,173 @@
       <dependency>
         <groupId>org.etk</groupId>
         <artifactId>org.etk.core</artifactId>
-        <version>${org.etk.core.version}</version>
-      </dependency>
+        <version>${project.version}</version>
+      </dependency>	
       <dependency>
         <groupId>org.etk</groupId>
         <artifactId>org.etk.tools</artifactId>
-        <version>${org.etk.tools.version}</version>
+        <version>${project.version}</version>
       </dependency>
+      <!-- Component -->
+      <dependency>
+        <groupId>org.etk</groupId>
+        <artifactId>component</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.component</groupId>
+        <artifactId>org.etk.component.common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.component</groupId>
+        <artifactId>org.etk.component.base</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.component</groupId>
+	    <artifactId>org.etk.component.database</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.core</groupId>
+        <artifactId>org.etk.core.orm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    <!-- CORE DEPENDENCIES CONFIGURATIONS-->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>core</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.core</groupId>
+      <artifactId>org.etk.core.membership.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.core</groupId>
+	  <artifactId>org.etk.core.membership.jdbc</artifactId>
+	  <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.core</groupId>
+      <artifactId>org.etk.core.rest</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.core</groupId>
+      <artifactId>org.etk.core.security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.core</groupId>
+      <artifactId>org.etk.core.service</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+     <!--EXTRAS DEPENDENCIES CONFIGURATIONS -->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>extras</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.etk.extras</groupId>
+      <artifactId>org.etk.extras.benches</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--TOOLS DEPENDENCIES CONFIGURATIONS -->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>tools</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.tools</groupId>
+      <artifactId>org.etk.tools.junit</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.tools</groupId>
+	  <artifactId>org.etk.tools.sandbox</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--WEB DEPENDENCIES CONFIGURATIONS -->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>web</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.web</groupId>
+      <artifactId>org.etk.web.controller</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.web</groupId>
+      <artifactId>org.etk.web.resource</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.web</groupId>
+      <artifactId>org.etk.web.sandbox</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.web</groupId>
+      <artifactId>org.etk.web.sandbox</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--SAMPLE DEPENDENCIES CONFIGURATIONS -->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>sample</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.sample</groupId>
+      <artifactId>org.etk.sample.model</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!--KERNEL DEPENDENCIES CONFIGURATIONS -->
+    <dependency>
+      <groupId>org.etk</groupId>
+      <artifactId>kernel</artifactId>
+      <type>pom</type>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.kernel</groupId>
+      <artifactId>org.etk.kernel.reflection</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.kernel</groupId>
+      <artifactId>org.etk.kernel.container</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.kernel</groupId>
+      <artifactId>org.etk.kernel.test</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.etk.kernel</groupId>
+      <artifactId>org.etk.kernel.cache</artifactId>
+      <version>${project.version}</version>
+    </dependency>
       <!-- External dependencies -->
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>3.8.2</version>
+        <version>${junit.version}</version>
       </dependency>
 
       <dependency>
@@ -109,11 +261,6 @@
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
         <version>0.9.17</version>
-      </dependency>
-      <dependency>
-        <groupId>org.exoplatform.kernel</groupId>
-        <artifactId>exo.kernel.component.cache</artifactId>
-        <version>${org.exoplatform.kernel.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.servlet</groupId>
@@ -144,6 +291,11 @@
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
         <version>${org.hsqldb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>8.4-702.jdbc4</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -362,17 +514,7 @@
   </build>
 
   <profiles>
-<!--
-     <profile>
-        <id>Java5</id>
-        <activation>
-           <jdk>1.5</jdk>
-        </activation>
-        <modules>
-           <module>core</module>
-        </modules>
-     </profile>
--->     
+ 
      <profile>
         <id>Java6</id>
         <activation>
@@ -456,8 +598,6 @@
         </plugins>
       </build>
     </profile>
-
-  
   </profiles>
 
 </project>

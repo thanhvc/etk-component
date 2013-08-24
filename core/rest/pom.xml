@@ -3,19 +3,27 @@
   <parent>
     <groupId>org.etk</groupId>
     <artifactId>core</artifactId>
-    <version>0.1-Beta1-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.etk.core</groupId>
   <artifactId>org.etk.core.rest</artifactId>
-  <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Rest Service</name>
   <description>Engineer Toolkit Framework Rest Service</description>
   <dependencies>
       <dependency>
         <groupId>org.etk.tools</groupId>
         <artifactId>org.etk.tools.junit</artifactId>
-        <version>${org.etk.tools.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.kernel</groupId>
+        <artifactId>org.etk.kernel.test</artifactId>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.etk.core</groupId>
+        <artifactId>org.etk.core.service</artifactId>
       </dependency>
       <dependency>
         <groupId>javax.xml.bind</groupId>
@@ -55,16 +63,7 @@
        <version>1.4</version>
       <scope>compile</scope>
     </dependency>
-      <dependency>
-        <groupId>org.etk.kernel</groupId>
-        <artifactId>org.etk.kernel.test</artifactId>
-        <version>${org.etk.kernel.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.etk.core</groupId>
-        <artifactId>org.etk.core.service</artifactId>
-        <version>${org.etk.core.version}</version>
-      </dependency>
+      
   </dependencies>
   <profiles>
     <profile>

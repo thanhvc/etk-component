@@ -3,29 +3,26 @@
   <parent>
     <groupId>org.etk</groupId>
     <artifactId>core</artifactId>
-    <version>0.1-Beta1-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.etk.core</groupId>
   <artifactId>org.etk.core.orm</artifactId>
-  <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineer Toolkit Framework Object Relation Mapping</name>
   <description>Engineer Toolkit Framework Object Relation Mapping</description>
   <dependencies>
       <dependency>
         <groupId>org.etk.tools</groupId>
         <artifactId>org.etk.tools.junit</artifactId>
-        <version>${org.etk.tools.version}</version>
+        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.container</artifactId>
-        <version>${org.etk.kernel.version}</version>
       </dependency>
       <dependency>
         <groupId>org.etk.kernel</groupId>
         <artifactId>org.etk.kernel.reflection</artifactId>
-        <version>${org.etk.kernel.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.jcr</groupId>
@@ -52,7 +49,6 @@
       <dependency>
         <groupId>org.hsqldb</groupId>
         <artifactId>hsqldb</artifactId>
-        <version>${org.hsqldb.version}</version>
       </dependency>
   </dependencies>
   <profiles>

@@ -21,86 +21,68 @@ package org.etk.core.membership;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by The eXo Platform SAS . Author : Tuan Nguyen
- * tuan08@users.sourceforge.net Date: Jun 14, 2003 Time: 1:12:22 PM
- */
-public class Query implements Serializable
-{
+public class Query implements Serializable {
 
-   private String userName_;
+  private String userName_;
 
-   private String fname_;
+  private String fname_;
 
-   private String lname_;
+  private String lname_;
 
-   private String email_;
+  private String email_;
 
-   private Date from_;
+  private Date   from_;
 
-   private Date to_;
+  private Date   to_;
 
-   public Query()
-   {
-   }
+  public Query() {
+  }
 
-   public String getUserName()
-   {
-      return userName_;
-   }
+  public String getUserName() {
+    return userName_;
+  }
 
-   public void setUserName(String s)
-   {
-      userName_ = s;
-   }
+  public void setUserName(String s) {
+    userName_ = s;
+  }
 
-   public String getFirstName()
-   {
-      return fname_;
-   }
+  public String getFirstName() {
+    return fname_;
+  }
 
-   public void setFirstName(String s)
-   {
-      fname_ = s;
-   }
+  public void setFirstName(String s) {
+    fname_ = s;
+  }
 
-   public String getLastName()
-   {
-      return lname_;
-   }
+  public String getLastName() {
+    return lname_;
+  }
 
-   public void setLastName(String s)
-   {
-      lname_ = s;
-   }
+  public void setLastName(String s) {
+    lname_ = s;
+  }
 
-   public String getEmail()
-   {
-      return email_;
-   }
+  public String getEmail() {
+    return email_;
+  }
 
-   public void setEmail(String s)
-   {
-      email_ = s;
-   }
+  public void setEmail(String s) {
+    email_ = s;
+  }
 
-   public Date getFromLoginDate()
-   {
-      return from_;
-   }
+  public Date getFromLoginDate() {
+    return from_;
+  }
 
-   public void setFromLoginDate(Date d)
-   {
-      from_ = d;
-   }
+  public void setFromLoginDate(Date d) {
+    from_ = d;
+  }
 
-   public Date getToLoginDate()
-   {
-      return to_;
-   }
+  public Date getToLoginDate() {
+    return to_;
+  }
 
-   public void setToLoginDate(Date d)
-   {
-      to_ = d;
-   }
+  public void setToLoginDate(Date d) {
+    to_ = d;
+  }
 }

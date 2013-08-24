@@ -4,12 +4,11 @@
     <parent>
       <groupId>org.etk</groupId>
       <artifactId>org.etk.parent</artifactId>
-      <version>0.1-Beta1-SNAPSHOT</version>
+      <version>0.1-SNAPSHOT</version>
     </parent>
 
   <groupId>org.etk</groupId>
   <artifactId>sample</artifactId>
-  <version>0.1-Beta1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Engineering Toolkit Framework Sample</name>
   <description>Engineering Toolkit Framework Sample</description>

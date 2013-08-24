@@ -33,11 +33,7 @@ import org.etk.core.membership.impl.GroupImpl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-/**
- * Created by The eXo Platform SAS Author : Mestrallet Benjamin
- * benjmestrallet@users.sourceforge.net Author : Tuan Nguyen
- * tuan08@users.sourceforge.net Date: Aug 22, 2003 Time: 4:51:21 PM
- */
+
 public class GroupDAOImpl implements GroupHandler, GroupEventListenerHandler {
   public static final String queryFindGroupByName = "from g in class org.etk.core.membership.impl.GroupImpl "
       + "where g.groupName = ? ";

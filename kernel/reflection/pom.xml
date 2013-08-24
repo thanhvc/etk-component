@@ -3,60 +3,12 @@
   <parent>
     <groupId>org.etk</groupId>
     <artifactId>kernel</artifactId>
-    <version>0.1-Beta1-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>org.etk.kernel</groupId>
   <artifactId>org.etk.kernel.reflection</artifactId>
-  <version>0.1-Beta1-SNAPSHOT</version>
   <name>Engineering Toolkit Framework Reflection</name>
   <description>Engineering Toolkit Framework Relection</description>
-
-  <profiles>
-    <profile>
-      <id>Java6</id>
-      <activation>
-        <jdk>1.6</jdk>
-      </activation>
-
-    </profile>
-  </profiles>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>test-jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources1</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-            <phase>compile</phase>
-          </execution>
-          <execution>
-            <id>attach-sources2</id>
-            <goals>
-              <goal>test-jar-no-fork</goal>
-            </goals>
-            <phase>test-compile</phase>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>

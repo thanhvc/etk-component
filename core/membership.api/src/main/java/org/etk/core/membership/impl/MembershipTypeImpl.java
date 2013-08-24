@@ -23,97 +23,82 @@ import org.etk.core.membership.MembershipType;
 import java.util.Date;
 
 /**
- * Created by The eXo Platform SAS . Author : Tuan Nguyen
- * tuan08@users.sourceforge.net Date: Jun 14, 2003 Time: 1:12:22 PM
  * 
  * @hibernate.class table="EXO_MEMBERSHIP_TYPE"
  */
-public class MembershipTypeImpl implements MembershipType
-{
+public class MembershipTypeImpl implements MembershipType {
 
-   private String name;
+  private String name;
 
-   private String description;
+  private String description;
 
-   private String owner;
+  private String owner;
 
-   private Date createdDate;
+  private Date   createdDate;
 
-   private Date modifiedDate;
+  private Date   modifiedDate;
 
-   public MembershipTypeImpl()
-   {
-   }
+  public MembershipTypeImpl() {
+  }
 
-   public MembershipTypeImpl(String name, String owner, String desc)
-   {
-      this.name = name;
-      this.owner = owner;
-      this.description = desc;
-   }
+  public MembershipTypeImpl(String name, String owner, String desc) {
+    this.name = name;
+    this.owner = owner;
+    this.description = desc;
+  }
 
-   /**
-    * @hibernate.id generator-class="assigned"
-    **/
-   public String getName()
-   {
-      return name;
-   }
+  /**
+   * @hibernate.id generator-class="assigned"
+   **/
+  public String getName() {
+    return name;
+  }
 
-   public void setName(String s)
-   {
-      name = s;
-   }
+  public void setName(String s) {
+    name = s;
+  }
 
-   /**
-    * @hibernate.property
-    **/
-   public String getDescription()
-   {
-      return description;
-   }
+  /**
+   * @hibernate.property
+   **/
+  public String getDescription() {
+    return description;
+  }
 
-   public void setDescription(String s)
-   {
-      description = s;
-   }
+  public void setDescription(String s) {
+    description = s;
+  }
 
-   /**
-    * @hibernate.property
-    **/
-   public String getOwner()
-   {
-      return owner;
-   }
+  /**
+   * @hibernate.property
+   **/
+  public String getOwner() {
+    return owner;
+  }
 
-   public void setOwner(String s)
-   {
-      owner = s;
-   }
+  public void setOwner(String s) {
+    owner = s;
+  }
 
-   /**
-    * @hibernate.property
-    **/
-   public Date getCreatedDate()
-   {
-      return createdDate;
-   }
+  /**
+   * @hibernate.property
+   **/
+  public Date getCreatedDate() {
+    return createdDate;
+  }
 
-   public void setCreatedDate(Date d)
-   {
-      createdDate = d;
-   }
+  public void setCreatedDate(Date d) {
+    createdDate = d;
+  }
 
-   /**
-    * @hibernate.property
-    **/
-   public Date getModifiedDate()
-   {
-      return modifiedDate;
-   }
+  /**
+   * @hibernate.property
+   **/
+  public Date getModifiedDate() {
+    return modifiedDate;
+  }
 
-   public void setModifiedDate(Date d)
-   {
-      modifiedDate = d;
-   }
+  public void setModifiedDate(Date d) {
+    modifiedDate = d;
+  }
 }
